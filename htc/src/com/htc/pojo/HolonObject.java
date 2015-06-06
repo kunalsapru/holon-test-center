@@ -14,7 +14,15 @@ public class HolonObject {
 	private boolean lineConnectedState;//True for connected and false for not connected
 	private int priority;// HolonObjectType Priority; lesser value means higher priority with '0' having the highest priority
 	private List<HolonElement> listOfHe;
-	
+	private LatLng location;
+	public LatLng getLocation() {
+		return location;
+	}
+
+	public void setLocation(LatLng location) {
+		this.location = location;
+	}
+
 	public HolonManager getHolonManager() {
 		return holonManager;
 	}
