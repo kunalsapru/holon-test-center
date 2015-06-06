@@ -89,5 +89,5 @@ public class HolonElement {
 		this.holonCoordinator = holonCoordinator;
 	}
 	
-	
+	/* There is change here in HolonElement.java */
 }
