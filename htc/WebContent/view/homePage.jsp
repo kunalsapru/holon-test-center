@@ -12,6 +12,7 @@
 <script type="text/javascript" src="js/googleMaps.js"></script>
 <script type="text/javascript" src="js/gmaps.js"></script>
 <script type="text/javascript" src="js/jquery.fancybox.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
 <script type="text/javascript" src="js/jquery.fancybox.pack.js"></script>
 <LINK href="css/contextMenu.css" rel="stylesheet" type="text/css">
 <LINK href="css/jquery.fancybox.css" rel="stylesheet" type="text/css" media="screen">
