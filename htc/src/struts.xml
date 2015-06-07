@@ -24,6 +24,7 @@
     </global-results>
      
      <action name="createHolons" class="com.htc.action.HolonCrudAction" method="createHolons" />
+     <action name="createHolonsFromFactory" class="com.htc.action.HolonFactory" method="createHolonsFromFactory" />
 
     </package>
 

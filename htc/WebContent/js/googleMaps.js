@@ -171,7 +171,7 @@ $(document).ready(function() {
 		var dataAttr4 = "Vier";
 		var dataAttributes={dataAttr1:dataAttr1,dataAttr2:dataAttr2,dataAttr3:dataAttr3,dataAttr4:dataAttr4};
 
-		ajaxRequest("createHolons", dataAttributes, callBackCreateHolons, {}); 
+		ajaxRequest("createHolonsFromFactory", dataAttributes, callBackCreateHolonsFromFactory, {}); 
 			
 	  });
 	
@@ -186,7 +186,7 @@ $(document).ready(function() {
 	
 });
 
-function callBackCreateHolons(dataFromFactory, options){
+function callBackCreateHolonsFromFactory(dataFromFactory, options){
 	
 //	 alert("TEST --"+dataFromFactory);
 	 var long=[8.555232882499695,8.555393815040588,8.554060757160187,8.55423241853714,8.555128276348114,8.555310666561127];
