@@ -2,8 +2,10 @@ package com.htc.pojo;
 
 import java.util.List;
 
-public class HolonObject {
+import org.apache.log4j.Logger;
 
+public class HolonObject {
+	static Logger log = Logger.getLogger(HolonObject.class);
 	public enum HolonObjectType{
 		Hosptitals,GovernmentInfrastructure,Physicians,Police,FireDepartment,Industries,HouseHold,
 		PowerPlant, Transformers

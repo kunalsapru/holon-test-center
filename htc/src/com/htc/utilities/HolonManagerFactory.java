@@ -3,9 +3,12 @@ package com.htc.utilities;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.htc.pojo.HolonManager;
 
 public class HolonManagerFactory {
+	static Logger log = Logger.getLogger(HolonManagerFactory.class);
 	public static List<HolonManager> holonManagers;
 	public static final String TAG="HolonManagerFactory";
 	
@@ -17,13 +20,13 @@ public class HolonManagerFactory {
 	}
 	
 	static{
-        System.out.println("Static Block for 'HolonManagerFactory.java' ");
+        log.info("Static Block for 'HolonManagerFactory.java' ");
 	}
 
 	
 	public static  List<HolonManager> buildHolonManagers(int numberOfHolonManagers) {//Has to be static because we do not need object of class to call this method
 		List<HolonManager> localHmList=new LinkedList<HolonManager>();
-		System.out.println("HolonObjectFactory generating Random HolonObjects....");
+		log.info("HolonObjectFactory generating Random HolonObjects....");
 		for(int i=0;i< numberOfHolonManagers;i++){
 			HolonManager hm = new HolonManager();
 			generateRandomValuesForHolonManager(hm);

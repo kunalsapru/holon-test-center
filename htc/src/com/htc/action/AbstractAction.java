@@ -1,16 +1,17 @@
 package com.htc.action;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+import org.apache.log4j.Logger;
 
 import com.htc.service.ServiceAware;
 
 public abstract class AbstractAction extends ServiceAware {
 
 	private static final long serialVersionUID = 1L;
-	protected final Log logger = LogFactory.getLog(getClass());
+	static Logger log = Logger.getLogger(AbstractAction.class);
 	
 	public String execute() {
+		log.info("Inside AbstractAction");
 		return "success";
 	} 
 

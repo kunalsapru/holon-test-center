@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 
 import com.htc.action.AbstractAction;
@@ -12,7 +13,7 @@ import com.opensymphony.xwork2.ActionContext;
 public class CommonUtilities extends AbstractAction{
 
 	private static final long serialVersionUID = 1L;
-	
+	static Logger log = Logger.getLogger(CommonUtilities.class);
 	protected HttpServletResponse response;
 	protected HttpServletRequest request;
 	protected HttpSession httpSession;

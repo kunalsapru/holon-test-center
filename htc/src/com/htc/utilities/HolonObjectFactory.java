@@ -3,11 +3,13 @@ package com.htc.utilities;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.htc.pojo.HolonObject;
 import com.htc.pojo.HolonObject.HolonObjectType;
 
 public class HolonObjectFactory {
-
+	static Logger log = Logger.getLogger(HolonObjectFactory.class);
 	public static List<HolonObject> holonObjects;
 	public static final String TAG="HolonObjectFactory";
 	
@@ -21,7 +23,7 @@ public class HolonObjectFactory {
 
 	
 	static{
-        System.out.println("Static Block for 'HolonObjectFactory.java' ");
+        log.info("Static Block for 'HolonObjectFactory.java' ");
       //To ensure exception object is created only once and thus optimize on performance!
 //        holonObjects=new LinkedList<HolonObject>();
 	}
@@ -29,7 +31,7 @@ public class HolonObjectFactory {
 	
 	public static  List<HolonObject> buildHolonObjects(int numberOfHolonObjects) {//Has to be static because we do not need object of class to call this method
 		List<HolonObject> localHoList=new LinkedList<HolonObject>();
-		System.out.println("HolonObjectFactory generating Random HolonObjects....");
+		log.info("HolonObjectFactory generating Random HolonObjects....");
 		for(int i=0;i< numberOfHolonObjects;i++){
 			HolonObject ho = new HolonObject();
 			generateRandomValuesForHolonObject(ho);

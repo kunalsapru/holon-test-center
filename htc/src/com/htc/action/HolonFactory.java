@@ -3,6 +3,8 @@ package com.htc.action;
 import java.io.IOException;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.htc.pojo.HolonElement;
 import com.htc.pojo.HolonObject;
 import com.htc.utilities.CommonUtilities;
@@ -11,10 +13,11 @@ import com.htc.utilities.HolonObjectFactory;
 public class HolonFactory extends CommonUtilities{
 	
 	private static final long serialVersionUID = 1L;
+	static Logger log = Logger.getLogger(HolonFactory.class);
 	private static StringBuffer holonInfo = new StringBuffer("");
 
 	public void createHolonsFromFactory(){
-
+		log.info("Inside createHolonsFromFactory");
 		List<HolonObject> holonObjects = HolonObjectFactory.buildHolonObjects(10);
 		displayListOfHolonObject(holonObjects);
 
@@ -23,7 +26,7 @@ public class HolonFactory extends CommonUtilities{
 		String dataAttr3 = getRequest().getParameter("dataAttr3")!=null?getRequest().getParameter("dataAttr3"):"BLANK";
 		String dataAttr4 = getRequest().getParameter("dataAttr4")!=null?getRequest().getParameter("dataAttr4"):"BLANK";
 
-		System.out.println("Data Attributes from JSP::"+dataAttr1+dataAttr2+dataAttr3+dataAttr4);
+		log.info("Data Attributes from JSP::"+dataAttr1+dataAttr2+dataAttr3+dataAttr4);
 
 		//Create Holons in Database
 		

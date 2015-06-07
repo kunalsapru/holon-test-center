@@ -1,5 +1,7 @@
 package com.htc.pojo;
 
+import org.apache.log4j.Logger;
+
 
 /**
  * 
@@ -15,7 +17,7 @@ package com.htc.pojo;
  */
 
 public class PowerLine {
-
+	static Logger log = Logger.getLogger(PowerLine.class);
 	private String id;
 	private String type;
 	private int currentCapacity;
@@ -26,6 +28,7 @@ public class PowerLine {
 	private String reasonDown;
 	
 	public PowerLine(LatLng source, LatLng destination, int maximumCapacity, String type) {
+		log.info("Creating PowerLine Obj");
 		this.source = source;
 		this.destination = destination;
 		this.maximumCapacity = maximumCapacity;

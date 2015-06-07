@@ -3,10 +3,12 @@ package com.htc.utilities;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.htc.pojo.HolonElement;
 
 public class HolonElementFactory {
-
+	static Logger log = Logger.getLogger(HolonElementFactory.class);
 	public static List<HolonElement> holonElements;
 	public static final String TAG="HolonElementFactory";
 //	private static RandomDataGenerator randomDataGenerator;
@@ -23,14 +25,15 @@ public class HolonElementFactory {
 	
 	
 	static{
-        System.out.println("Static Block for 'HolonElementFactory.java' ");
+        log.info("Static Block for 'HolonElementFactory.java' ");
 //        randomDataGenerator = new RandomDataGenerator();
 	}
 	
 	
 	public static List<HolonElement> buildHolonElements(int numberOfHolonElements) {//Has to be static because we do not need object of class to call this method
+		log.info("Inside buildHolonElements");
 		List<HolonElement> localHeList=new LinkedList<HolonElement>();
-		System.out.println("HolonElementFactory generating Random HolonElements....");
+		log.info("HolonElementFactory generating Random HolonElements....");
 		for(int i=0;i< numberOfHolonElements;i++){
 	    HolonElement he = new HolonElement();
 	    generateRandomValuesForHolonElement(he);

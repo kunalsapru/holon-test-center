@@ -3,6 +3,7 @@ package com.htc.utilities;
 import java.util.Random;
 
 import org.apache.commons.lang.xwork.RandomStringUtils;
+import org.apache.log4j.Logger;
 
 /**
  * A class which gives utility methods to generate random values for each primitive type in java and user defined enums.
@@ -12,7 +13,7 @@ import org.apache.commons.lang.xwork.RandomStringUtils;
  *
  */
 public class RandomDataGenerator {
-
+	static Logger log = Logger.getLogger(RandomDataGenerator.class);
 	private static  Random randomGenerator=new Random();
 	
 	
@@ -22,7 +23,7 @@ public class RandomDataGenerator {
 	public  static int generateRandomValueIntForUpperBound(int upperbound){
 		//note a single Random object is reused here
 	    int randomInt = randomGenerator.nextInt(upperbound);
-	    System.out.println("Generated : " + randomInt);
+	    log.info("Generated : " + randomInt);
 	    return randomInt;
 	}
 	
@@ -36,7 +37,7 @@ public class RandomDataGenerator {
 	    // compute a fraction of the range, 0 <= frac < range
 	    long fraction = (long)(range * randomGenerator.nextDouble());
 	    int randomNumber =  (int)(fraction + aStart);    
-//	    System.out.println("Generated Random Value in Range between "+aStart+ "and" + aEnd +"which is :"+ randomNumber);
+//	    log.info("Generated Random Value in Range between "+aStart+ "and" + aEnd +"which is :"+ randomNumber);
 	    return randomNumber;
 	  }
 	

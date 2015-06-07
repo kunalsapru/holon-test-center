@@ -1,5 +1,7 @@
 package com.htc.interceptor;
 
+import org.apache.log4j.Logger;
+
 import com.htc.action.AbstractAction;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.Interceptor;
@@ -7,7 +9,7 @@ import com.opensymphony.xwork2.interceptor.Interceptor;
 public class SessionInterceptor extends AbstractAction implements Interceptor {
 
 	private static final long serialVersionUID = 1L;
-
+	static Logger log = Logger.getLogger(SessionInterceptor.class);
 	@Override
 	public void destroy() {
 		// TODO Auto-generated method stub
@@ -21,7 +23,7 @@ public class SessionInterceptor extends AbstractAction implements Interceptor {
 	@Override
 	public String intercept(ActionInvocation invocation) throws Exception {
 		String actionName = invocation.getInvocationContext().getName();
-		System.out.println("Inside Interceptor -- Action Name --> "+actionName);
+		log.info("Inside Interceptor -- Action Name --> "+actionName);
 		return invocation.invoke();
 	}
 
