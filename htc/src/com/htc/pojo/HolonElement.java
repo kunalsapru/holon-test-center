@@ -1,5 +1,12 @@
 package com.htc.pojo;
 
+
+/**
+ * This class 'HolonElement' models a physical entity(Note:not an abstract entity). Each HE corresponds to physical electrical appliances
+ * like TV,Fride,Washing Machine etc 
+ * @author Achal
+ *
+ */
 public class HolonElement {
 
 	public enum HolonElementState{
