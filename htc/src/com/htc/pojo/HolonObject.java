@@ -4,6 +4,14 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+
+/**
+ * This class models a physical entity(Note:Not a abstract entity). Each HO may be physically compared to a building on the map.
+ * Each HO has one HM and may have multiple HEs 
+ * 
+ * @author Achal
+ *
+ */
 public class HolonObject {
 	static Logger log = Logger.getLogger(HolonObject.class);
 	public enum HolonObjectType{

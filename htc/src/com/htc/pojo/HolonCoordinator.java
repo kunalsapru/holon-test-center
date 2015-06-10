@@ -3,7 +3,12 @@ package com.htc.pojo;
 import java.util.List;
 
 
-
+/**
+ * This class 'HolonCoordinator'models an abstract concept called HolonCoordinator(HK). Every Holon has only one HK and this HK 
+ * The HK is managing and communicating with the HMs inside its own holon and exchanging information with the HKs of other holons.
+ * @author Achal
+ *
+ */
 public class HolonCoordinator {
 
 	
