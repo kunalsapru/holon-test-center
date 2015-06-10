@@ -171,7 +171,8 @@ $(document).ready(function() {
 		var dataAttr4 = "Vier";
 		var dataAttributes={dataAttr1:dataAttr1,dataAttr2:dataAttr2,dataAttr3:dataAttr3,dataAttr4:dataAttr4};
 
-		ajaxRequest("createHolonsFromFactory", dataAttributes, callBackCreateHolonsFromFactory, {}); 
+		ajaxRequest("createHolonsFromFactory", dataAttributes, callBackCreateHolonsFromFactory, {});
+		//$("#addHolonFactory").attr("disabled", true);//Disable button once Holon Created
 			
 	  });
 	
