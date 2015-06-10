@@ -5,9 +5,11 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.htc.pojo.HolonCoordinator;
 import com.htc.pojo.HolonElement;
 import com.htc.pojo.HolonObject;
 import com.htc.utilities.CommonUtilities;
+import com.htc.utilities.HolonCoordinatorFactory;
 import com.htc.utilities.HolonObjectFactory;
 
 public class HolonFactory extends CommonUtilities{
@@ -18,7 +20,13 @@ public class HolonFactory extends CommonUtilities{
 
 	public void createHolonsFromFactory(){
 		log.info("Inside createHolonsFromFactory");
-		List<HolonObject> holonObjects = HolonObjectFactory.buildHolonObjects(10);
+		List<HolonObject> holonObjects;
+		if(HolonCoordinatorFactory.noOfHolonManagersGenerated==0){
+			holonObjects = HolonObjectFactory.buildHolonObjects(10);
+		}
+		else{
+			 holonObjects = HolonObjectFactory.buildHolonObjects((HolonCoordinatorFactory.noOfHolonManagersGenerated));
+		}//This "if else" is for persistent state of the elements inside a "Holon".Because no of Hms and Hos should be same!
 		displayListOfHolonObject(holonObjects);
 
 		String dataAttr1 = getRequest().getParameter("dataAttr1")!=null?getRequest().getParameter("dataAttr1"):"BLANK";

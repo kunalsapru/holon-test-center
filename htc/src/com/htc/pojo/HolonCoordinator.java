@@ -35,12 +35,18 @@ public class HolonCoordinator {
 		this.listOfHm = listOfHm;
 	}
 	
-	//yet to implement
+	/**
+	 * yet to implement; implementation requires future requirements
+	 * @param Hm
+	 */
 	public void contactHolonManager(HolonManager Hm){
 		
 	}
 	
-	//yet to implement
+	/**
+	 * yet to implement; implementation requires future requirements
+	 * @param Hk
+	 */
 	public void contactNeighBourHolonCoordinator(HolonCoordinator Hk){
 		
 	}
