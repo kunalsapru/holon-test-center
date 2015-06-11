@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.htc.pojo.HolonCoordinator;
 import com.htc.pojo.HolonElement;
 import com.htc.pojo.HolonObject;
 import com.htc.utilities.CommonUtilities;

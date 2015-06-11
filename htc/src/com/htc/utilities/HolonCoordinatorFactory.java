@@ -6,9 +6,6 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.htc.pojo.HolonCoordinator;
-import com.htc.pojo.HolonManager;
-import com.htc.pojo.HolonObject;
-import com.htc.pojo.HolonObject.HolonObjectType;
 
 public class HolonCoordinatorFactory {
 
