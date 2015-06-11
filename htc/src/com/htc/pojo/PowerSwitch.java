@@ -1,12 +1,12 @@
 package com.htc.pojo;
 
-public class Switch {
+public class PowerSwitch {
 
 	private String id;
 	private LatLng location;
 	private boolean status;
 	private PowerLine powerLine;
-	private String belongsTo;
+	private int belongsTo;
 	
 	public String getId() {
 		return id;
@@ -32,10 +32,10 @@ public class Switch {
 	public void setPowerLine(PowerLine powerLine) {
 		this.powerLine = powerLine;
 	}
-	public String getBelongsTo() {
+	public int getBelongsTo() {
 		return belongsTo;
 	}
-	public void setBelongsTo(String belongsTo) {
+	public void setBelongsTo(int belongsTo) {
 		this.belongsTo = belongsTo;
 	}
 	

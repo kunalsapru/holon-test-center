@@ -27,6 +27,14 @@ public class HolonObject {
 	private LatLng location;
 	private int id;
 	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public LatLng getLocation() {
 		return location;
 	}
