@@ -25,6 +25,8 @@ public class HolonObject {
 	private int priority;// HolonObjectType Priority; lesser value means higher priority with '0' having the highest priority
 	private List<HolonElement> listOfHe;
 	private LatLng location;
+	private int id;
+	
 	public LatLng getLocation() {
 		return location;
 	}
