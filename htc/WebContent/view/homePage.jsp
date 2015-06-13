@@ -7,10 +7,11 @@
 <title>HTC Home Page</title>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=drawing"></script>
-<script type="text/javascript" src="js/googleMaps1.js"></script>
+<script type="text/javascript" src="js/googleMaps.js"></script>
 <script type="text/javascript" src="js/gmaps.js"></script>
 <script type="text/javascript" src="js/toggle.js"></script>
 <script type="text/javascript" src="js/rightPanel.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
 <LINK href="css/contextMenu1.css" rel="stylesheet" type="text/css"/>
 <LINK href="css/style1.css" rel="stylesheet" type="text/css"/>
 <LINK href="css/rightPanel.css" rel="stylesheet" type="text/css"/>
