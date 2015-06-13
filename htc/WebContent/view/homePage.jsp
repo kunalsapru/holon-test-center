@@ -34,7 +34,7 @@
   <!-- End Right Panel -->
     <div data-role="main" class="ui-content">
     <a href="#overlayPanel" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Overlay Panel</a>
-    <div id="googleMap" style="height:610px;width:1060px;float:right;"></div>
+    <div id="googleMap" style="height:612px;width:1060px;float:right;"></div>
 	<div id="elementInfo">
 	<table>
 	<tr><td>Holon Element Type:</td>
