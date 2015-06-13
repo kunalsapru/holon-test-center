@@ -48,7 +48,8 @@ public class HolonManagerFactory {
 	
 	private static void generateRandomValuesForHolonManager(HolonManager hm){
 		
-		hm.setName(RandomDataGenerator.generateRandomValueString(4));
+		hm.setName(RandomDataGenerator.generateRandomValueString(4));//A string of length 4
+//		hm.setHolonCoordinator(HolonCoordinatorFactory.getHolonCoordinators().get(0));
 		
 	}
 	

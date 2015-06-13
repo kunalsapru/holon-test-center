@@ -14,7 +14,7 @@ public class HolonElement {
 	}
 	
 	public enum HolonElementType{
-		Fridge,TV,WashingMachine,SolarPanel,Microwave,Light,Battery,Generator,PowerLines
+		Fridge,TV,WashingMachine,SolarPanel,Microwave,Light,Battery,Generator,PowerLines,gas2Power
 	}
 	
 	private int id;

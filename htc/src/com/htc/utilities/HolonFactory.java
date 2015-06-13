@@ -44,7 +44,7 @@ public class HolonFactory {
 	
 	private static void generateRandomValuesForHolon(Holon h){
 
-		h.setName(RandomDataGenerator.generateRandomValueString(10));//A string of length 10.
+		h.setName(RandomDataGenerator.generateRandomValueString(10));//A string of length 10 for Holons.
 		h.setHoloncoordinator(HolonCoordinatorFactory.buildSingleHolonCoordinator());//This inturn will create hms and hos in atomic fashion
 		h.setListOfHm(HolonManagerFactory.getHolonManagers());
 		h.setListOfHo(HolonObjectFactory.getHolonObjects());

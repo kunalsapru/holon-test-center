@@ -6,7 +6,7 @@ public class Holon {
 
 	private int id;
 	private String name;
-	private HolonCoordinator holoncoordinator;
+	private HolonCoordinator holonCoordinator;
 	private List<HolonManager> listOfHm;
 	private List<HolonObject> listOfHo;
 	
@@ -22,11 +22,11 @@ public class Holon {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public HolonCoordinator getHoloncoordinator() {
-		return holoncoordinator;
+	public HolonCoordinator getHolonCoordinator() {
+		return holonCoordinator;
 	}
-	public void setHoloncoordinator(HolonCoordinator holoncoordinator) {
-		this.holoncoordinator = holoncoordinator;
+	public void setHoloncoordinator(HolonCoordinator holonCoordinator) {
+		this.holonCoordinator = holonCoordinator;
 	}
 	public List<HolonManager> getListOfHm() {
 		return listOfHm;

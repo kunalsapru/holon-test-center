@@ -26,6 +26,7 @@ public class HolonObject {
 	private List<HolonElement> listOfHe;
 	private LatLng location;
 	private int id;
+	private boolean canCommunicate;
 	
 	public int getId() {
 		return id;
@@ -87,5 +88,13 @@ public class HolonObject {
 
 	public void setPriority(int priority) {
 		this.priority = priority;
+	}
+
+	public boolean isCanCommunicate() {
+		return canCommunicate;
+	}
+
+	public void setCanCommunicate(boolean canCommunicate) {
+		this.canCommunicate = canCommunicate;
 	}
 }

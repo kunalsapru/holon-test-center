@@ -11,15 +11,15 @@ public class HolonCoordinatorFactory {
 
 	
 	static Logger log = Logger.getLogger(HolonObjectFactory.class);
-	public static List<HolonCoordinator> holoncoordinators;
+	public static List<HolonCoordinator> holonCoordinators;
 	public static final String TAG="HolonCoordinatorFactory";
 	public static int noOfHolonManagersGenerated;
 	
-	public static List<HolonCoordinator> getHoloncoordinators() {
-		return holoncoordinators;
+	public static List<HolonCoordinator> getHolonCoordinators() {
+		return holonCoordinators;
 	}
-	public static void setHoloncoordinators(List<HolonCoordinator> holoncoordinators) {
-		HolonCoordinatorFactory.holoncoordinators = holoncoordinators;
+	public static void setHolonCoordinators(List<HolonCoordinator> holonCoordinators) {
+		HolonCoordinatorFactory.holonCoordinators = holonCoordinators;
 	}
 	
 	/**
@@ -36,7 +36,7 @@ public class HolonCoordinatorFactory {
 			generateRandomValuesForHolonCoordinator(hk);
 			localHkList.add(hk);
 		}
-		setHoloncoordinators(localHkList);
+		setHolonCoordinators(localHkList);
 		return localHkList;
 	}
 	
@@ -49,11 +49,11 @@ public class HolonCoordinatorFactory {
 	
 	private static void generateRandomValuesForHolonCoordinator(HolonCoordinator hk){
 		
-		hk.setName(RandomDataGenerator.generateRandomValueString(8));// 8 is the length of the string.
+		hk.setName(RandomDataGenerator.generateRandomValueString(8));// 8 is the length of the string for HK
 		int randomval=RandomDataGenerator.generateRandomValueIntForUpperBound(9);
 		noOfHolonManagersGenerated=randomval;//This info will be used when created HolonObjects as noofHolonManagers==noofHolonObjects
 		hk.setListOfHm(HolonManagerFactory.buildHolonManagers(randomval));//The very first time generate; next time just use it, don't regenerate
-		HolonObjectFactory.buildHolonObjects(randomval);//Just build HolonObjects here;
+		HolonObjectFactory.buildHolonObjects(randomval);//Just build HolonObjects here; This will inturn create holon elements
 		//Note:Creation of Holon Objects and Holon Managers should be an atomic operation!
 	}
 }
