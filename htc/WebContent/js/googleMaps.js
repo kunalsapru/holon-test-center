@@ -17,6 +17,10 @@ $(document).ready(function() {
 		$(this).parent().fadeOut("slow",function(c){});
 	});
 	
+	$("#addSwitch").click(function(){
+		alert();
+	});
+	
 	 $(document).on("click", "#moreInfo", function(){
 		 var clicked= $("#moreInfo").attr("value");
 		 var holonDetail=infowindowArray[clicked].split("@");
@@ -235,7 +239,7 @@ $(document).ready(function() {
 		
 	});
 	
-	 $("#addHolonFactory").click(function(){
+	 /*$("#addHolonFactory").click(function(){
 		 $("#displayHolonDetails").hide();
 
 			var dataAttr1 = "Ein";
@@ -319,7 +323,7 @@ $(document).ready(function() {
 			infowindowrect1.open(map,rectangle3);
 		  });
 
-}
+}*/
 	
 	$("#clear").click(function(){
 		 //location.reload();

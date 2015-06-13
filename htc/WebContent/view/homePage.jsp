@@ -20,20 +20,46 @@
 <body>
 <!-- For Right Panel -->
 <div data-role="page" id="pageone">
-  <div data-role="panel" id="overlayPanel" data-display="overlay"> 
+  <!-- <div data-role="panel" id="overlayPanel" data-display="overlay"> 
     <h2>Options</h2>
     <input type="button" id="addHolonObject" value="Add Holon Object" class="button1"/>
 	<input type="button" id="addHolonFactory" value="Add Holon from Factory" class="button1"/>
 	<input type="button" id="clear" value="Clear Map" class="button1"/><br/><br/><br/>
-    <a href="#pageone" data-rel="close" class="ui-btn ui-btn-inline ui-shadow ui-corner-all ui-btn-a ui-icon-delete ui-btn-icon-left">Close panel</a>
-  </div> 
+  </div>  -->
   
   <!-- End Right Panel -->
     <div data-role="main" class="ui-content">
-	<a href="#overlayPanel" class="ui-btn ui-btn-inline ui-corner-all ui-shadow"><img src="image/menu.png" height=20 width=20/></a>
-    <div id="googleMap" style="height:612px;width:1060px;float:right;"></div>
+	<!-- <a href="#overlayPanel" class="ui-btn ui-btn-inline ui-corner-all ui-shadow"><img src="image/menu.png" height=20 width=20/></a>
+    -->
+    <div id="nav">
+	<!-- <input type="button" id="addHolonFactory" value="Add Holon from Factory" class="button1"/>
+ -->	
+ 	<ul data-role="listview" data-inset="true">
+ 	 <li data-role="list-divider" role="heading" id="addHolonObject">Add New Holon Object</li>
+ 	</ul>
+ 	<ul data-role="listview" data-inset="true">
+ 	 <li data-role="list-divider" role="heading" id="clear">Clear Map</li>
+ 	 </ul>
+    <ul data-role="listview" data-inset="true" data-theme="a">
+    <li data-role="list-divider" role="heading">Holon Object</li>
+      <li class="button1"><a href="#" id="editHolonElements">Edit Holon Elements</a></li>
+      <li><a href="#" id="connect">Connect to PowerSource</a></li>
+      <li><a href="#" id="switch">Switch</a></li>
+      <li><a href="#" id="showHolonElements">Show Holon Elements</a></li>
+      <li><a href="#" id="consumption">Consumption</a></li>
+    </ul>
+    <ul data-role="listview" data-inset="true" data-theme="a">
+    <li data-role="list-divider" role="heading">Switch</li>
+     <li><a href="#" id="addSwitch">Add new Switch</a></li>
+    </ul>
+    <ul data-role="listview" data-inset="true" data-theme="a">
+    <li data-role="list-divider" role="heading">Power Line</li>
+     <li><a href="#" id="addPowerLine">Add new Power Line</a></li>
+    </ul>
+    </div>
+     <div id="googleMap" style="height:612px;width:1060px;float:right;"></div>
 	<div id="elementInfo">
-	<span id="close">x</span>
+	<span id="close">x</span><br>
 	<table>
 	<tr><td>Holon Element Type:</td>
 	<td>
