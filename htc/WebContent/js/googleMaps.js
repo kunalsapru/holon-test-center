@@ -13,6 +13,9 @@ $(document).ready(function() {
 	//Div to add details about the new elements inserted
 	$("#elementInfo").hide();
 	$("#displayHolonDetails").hide();
+	$("#close").click(function(){
+		$(this).parent().fadeOut("slow",function(c){});
+	});
 	
 	 $(document).on("click", "#moreInfo", function(){
 		 var clicked= $("#moreInfo").attr("value");
