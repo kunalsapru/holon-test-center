@@ -15,11 +15,7 @@
 <LINK href="css/contextMenu1.css" rel="stylesheet" type="text/css"/>
 <LINK href="css/style1.css" rel="stylesheet" type="text/css"/>
 <LINK href="css/rightPanel.css" rel="stylesheet" type="text/css"/>
-<script>
-  $(function() {
-    $( "#elementInfo" ).dialog();
-  });
-  </script>
+
 </head>
 <body>
 <!-- For Right Panel -->
