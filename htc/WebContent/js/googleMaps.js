@@ -322,9 +322,10 @@ $(document).ready(function() {
 }
 	
 	$("#clear").click(function(){
-		 location.reload();
-		 $("#displayHolonDetails").hide();
+		 //location.reload();
+		$("#displayHolonDetails").hide();
 		 //$("#nav").hide();
+		initialize();
 	  });
 	//Map click event
 	google.maps.event.addListener(map, 'click', function(event) {
