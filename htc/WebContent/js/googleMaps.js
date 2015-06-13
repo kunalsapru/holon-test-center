@@ -2,6 +2,13 @@ $(document).ready(function() {
 	//call initialize function
 	initialize();
 	var drawingManager;
+	var switchMarker;
+	var switchMarkerImage = {
+		    url: 'image/switch-on.png',
+		    size: new google.maps.Size(300, 300),
+		    origin: new google.maps.Point(0,0),
+		    anchor: new google.maps.Point(0, 32)
+		  };
 	var infowindow="";
 	//Array of Markers and Infowindow
 	var infowindowArray=[];
@@ -17,10 +24,24 @@ $(document).ready(function() {
 		$(this).parent().fadeOut("slow",function(c){});
 	});
 	
-	$("#addSwitch").click(function(){
-		alert();
+	$("#addSwitch").on('click',function(){
+		google.maps.event.addListener(map, 'click', function(event) {
+			addSwitchMarker(event.latLng);
+			});
 	});
 	
+	
+	function addSwitchMarker(pos) {
+	    var marker = new google.maps.Marker({
+	        position: pos,
+	        draggable: false,
+	        icon:switchMarkerImage,
+	        map: map,
+	        id:'switchOn'
+	    });
+	    map.setCenter(marker.getPosition())
+	}
+
 	 $(document).on("click", "#moreInfo", function(){
 		 var clicked= $("#moreInfo").attr("value");
 		 var holonDetail=infowindowArray[clicked].split("@");
