@@ -20,12 +20,6 @@
 <body>
 <!-- For Right Panel -->
 <div data-role="page" id="pageone">
-  <!-- <div data-role="panel" id="overlayPanel" data-display="overlay"> 
-    <h2>Options</h2>
-    <input type="button" id="addHolonObject" value="Add Holon Object" class="button1"/>
-	<input type="button" id="addHolonFactory" value="Add Holon from Factory" class="button1"/>
-	<input type="button" id="clear" value="Clear Map" class="button1"/><br/><br/><br/>
-  </div>  -->
   
   <!-- End Right Panel -->
     <div data-role="main" class="ui-content">
