@@ -24,6 +24,13 @@ body {
     float:left;
     padding:5px; 
 }
+
+#googleMap {
+    height:612px;
+    width:1060px;
+    float:right;
+}
+
 #displayHolonDetails
 {
     line-height:30px;
@@ -41,3 +48,9 @@ body {
 	cursor: pointer;
 	cursor: hand;	
 }
+
+#pageone {
+	
+	margin-left:auto;
+    margin-right:auto;
+    }

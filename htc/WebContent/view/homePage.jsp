@@ -59,7 +59,7 @@
      <li><a href="#" id="clear">Clear Map</a></li>
     </ul>
     </div>
-     <div id="googleMap" style="height:612px;width:1060px;float:right;"></div>
+     <div id="googleMap"></div>
 	<div id="elementInfo">
 	<span id="close">x</span><br>
 	<table>
