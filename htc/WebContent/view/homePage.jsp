@@ -14,6 +14,7 @@
 <script type="text/javascript" src="js/toggle.js"></script>
 <script type="text/javascript" src="js/rightPanel.js"></script>
 <script type="text/javascript" src="js/common.js"></script>
+<script type="text/javascript" src="js/createHolon.js"></script>
 <LINK href="css/contextMenu.css" rel="stylesheet" type="text/css" />
 <LINK href="css/style.css" rel="stylesheet" type="text/css" />
 <LINK href="css/rightPanel.css" rel="stylesheet" type="text/css" />
