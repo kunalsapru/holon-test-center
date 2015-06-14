@@ -26,9 +26,10 @@ body {
 }
 
 #googleMap {
-    height:612px;
-    width:1060px;
+    height:611px;
+    width:1115px;
     float:right;
+    overflow:auto;
 }
 
 #displayHolonDetails
@@ -41,7 +42,8 @@ body {
     height:500px;	 
     position:absolute;
    top:100px;
-   right:0;     
+   right:0;   
+   overflow:auto;  
 }
 
 #addHolonObject:hover, #clear:hover {

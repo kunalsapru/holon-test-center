@@ -1622,7 +1622,7 @@ body.ui-mobile-viewport, div.ui-mobile-viewport {
 	border-width: 0;
 	overflow: visible;
 	overflow-x: hidden;
-	padding: 1em
+
 }
 
 .ui-corner-all>.ui-header:first-child, .ui-corner-all>.ui-content:first-child,
