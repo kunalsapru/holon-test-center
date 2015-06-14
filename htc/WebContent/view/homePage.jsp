@@ -37,9 +37,6 @@
  	<ul data-role="listview" data-inset="true">
  	 <li data-role="list-divider" role="heading" id="addHolonObject">Add New Holon Object</li>
  	</ul>
- 	<ul data-role="listview" data-inset="true">
- 	 <li data-role="list-divider" role="heading" id="clear">Clear Map</li>
- 	 </ul>
     <ul data-role="listview" data-inset="true" data-theme="a">
     <li data-role="list-divider" role="heading">Holon Object</li>
       <li class="button1"><a href="#" id="editHolonElements">Edit Holon Elements</a></li>
@@ -55,6 +52,11 @@
     <ul data-role="listview" data-inset="true" data-theme="a">
     <li data-role="list-divider" role="heading">Power Line</li>
      <li><a href="#" id="addPowerLine">Add new Power Line</a></li>
+    </ul>
+    <ul data-role="listview" data-inset="true" data-theme="a">
+    <li data-role="list-divider" role="heading">Map Options</li>
+     <li><a href="#" id="addSwitch">Distance Calculator</a></li>
+     <li><a href="#" id="clear">Clear Map</a></li>
     </ul>
     </div>
      <div id="googleMap" style="height:612px;width:1060px;float:right;"></div>
