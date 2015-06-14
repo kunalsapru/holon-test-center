@@ -12,8 +12,8 @@
 <script type="text/javascript" src="js/toggle.js"></script>
 <script type="text/javascript" src="js/rightPanel.js"></script>
 <script type="text/javascript" src="js/common.js"></script>
-<LINK href="css/contextMenu1.css" rel="stylesheet" type="text/css"/>
-<LINK href="css/style1.css" rel="stylesheet" type="text/css"/>
+<LINK href="css/contextMenu.css" rel="stylesheet" type="text/css"/>
+<LINK href="css/style.css" rel="stylesheet" type="text/css"/>
 <LINK href="css/rightPanel.css" rel="stylesheet" type="text/css"/>
 
 </head>
