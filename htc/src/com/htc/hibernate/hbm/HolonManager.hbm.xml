@@ -1,9 +1,8 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 11 Jun, 2015 12:09:30 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="HolonManager" table="holon_manager" optimistic-lock="version">
+    <class name="com.htc.hibernate.pojo.HolonManager" table="holon_manager" optimistic-lock="version">
         <id name="id" type="int">
             <column name="id" />
             <generator class="increment" />

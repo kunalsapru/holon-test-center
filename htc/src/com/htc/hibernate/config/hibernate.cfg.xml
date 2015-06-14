@@ -30,6 +30,16 @@
 		<!-- Drop and re-create the database schema on startup -->
 		<!-- <property name="hibernate.hbm2ddl.auto">create</property> -->
 
+        <mapping resource="com/htc/hibernate/hbm/HollonElementState.hbm.xml" />
+        <mapping resource="com/htc/hibernate/hbm/Holon.hbm.xml" />
+        <mapping resource="com/htc/hibernate/hbm/HolonCoordinator.hbm.xml" />
+        <mapping resource="com/htc/hibernate/hbm/HolonElement.hbm.xml" />
         <mapping resource="com/htc/hibernate/hbm/HolonElementType.hbm.xml" />
+        <mapping resource="com/htc/hibernate/hbm/HolonManager.hbm.xml" />
+        <mapping resource="com/htc/hibernate/hbm/HolonObject.hbm.xml" />
+        <mapping resource="com/htc/hibernate/hbm/HolonObjectType.hbm.xml" />
+        <mapping resource="com/htc/hibernate/hbm/LatLng.hbm.xml" />
+        <mapping resource="com/htc/hibernate/hbm/PowerLine.hbm.xml" />
+        <mapping resource="com/htc/hibernate/hbm/Switch.hbm.xml" />
     </session-factory>
 </hibernate-configuration>
