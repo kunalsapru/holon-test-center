@@ -9,6 +9,8 @@ $(document).ready(function() {
 		    origin: new google.maps.Point(0,0),
 		    anchor: new google.maps.Point(0, 32)
 		  };
+	var startPowerLine;
+	var next=0;
 	var infowindow="";
 	//Array of Markers and Infowindow
 	var infowindowArray=[];
@@ -166,10 +168,47 @@ $(document).ready(function() {
 		// $("#elementInfo").toggle("slide",{direction:"right"});
 	});
 	
-
+	$("#addPowerLine").click(function(){
+		if(next==1)
+			{
+			var start=startPowerLine[0];
+			var end=startPowerLine[1];
+			}
+		next=0;
+		//cursorCrossHair();
+		
+		
+		/*alert(startPowerLine);
+		alert(endPowerLine);*/
+		drawPowerLine(start,end)
+	});
 	
+	google.maps.event.addListener(map, 'click', function(event) {
+		startPowerLine[next]= event.latLng;
+		alert(startPowerLine[next]);
+		next++;
+		
+		});
 });
 
+
+function drawPowerLine(start,end){
+		  var request = {
+		      origin:start,
+		      destination:end,
+		      travelMode: google.maps.TravelMode.DRIVING
+		  };
+		  directionsService.route(request, function(response, status) {
+		    if (status == google.maps.DirectionsStatus.OK) {
+		      directionsDisplay.setDirections(response);
+		    }
+		  });
+		
+}
+
+function cursorCrossHair(){
+	$("#googleMap").css('cursor', 'pointer');
+}
 
 function initialize() {
 	  mapProp = {
