@@ -4,7 +4,7 @@ $(document).ready(function() {
 	var drawingManager;
 	var switchMarker;
 	var switchMarkerImage = {
-		    url: 'image/switch-on.png',
+		    url: 'css/images/switch-on.png',
 		    size: new google.maps.Size(300, 300),
 		    origin: new google.maps.Point(0,0),
 		    anchor: new google.maps.Point(0, 32)
