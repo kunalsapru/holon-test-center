@@ -17,12 +17,10 @@ public class HolonElementTypeHome {
 		Transaction tx = null;
 		try
 		{
-			//this line get session for connection.
-			session = HibernateSessionFactory.getSessionFactory().getCurrentSession();
-			//this line has transaction definition.
-			tx = session.beginTransaction();
+			session = HibernateSessionFactory.getSessionFactory().getCurrentSession();//Getting Hibernate session from factory
+			tx = session.beginTransaction();//Beginning Hibernate transaction, this is required to use save function.
 			holonElementType_id = (Integer)session.save(transientInstance);
-			tx.commit();
+			tx.commit();// Committing transaction changes
 		} catch (Exception exp){
 			exp.printStackTrace();
 		}
