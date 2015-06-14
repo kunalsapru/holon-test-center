@@ -26,6 +26,16 @@ public class HolonObject {
 	private List<HolonElement> listOfHe;
 	private LatLng location;
 	private int id;
+	private String name;
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	private boolean canCommunicate;
 	
 	public int getId() {

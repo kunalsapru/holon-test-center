@@ -2,16 +2,16 @@ package com.htc.pojo;
 
 public class PowerSwitch {
 
-	private String id;
+	private int id;
 	private LatLng location;
 	private boolean status;
 	private PowerLine powerLine;
 	private int belongsTo;
 	
-	public String getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	public LatLng getLocation() {

@@ -18,28 +18,32 @@ import org.apache.log4j.Logger;
 
 public class PowerLine {
 	static Logger log = Logger.getLogger(PowerLine.class);
-	private String id;
+	private int id;
 	private int currentCapacity;
-	public void setType(Type type) {
-		this.type = type;
-	}
-
 	private int maximumCapacity;
 	private LatLng source;
 	private LatLng destination;
 	private boolean isConnected;
 	private String reasonDown;
-	private Type type;
+	private LineType type;
+	public enum LineType{mainLine, subLine};
 	
-	public PowerLine(LatLng source, LatLng destination, int maximumCapacity, Type type) {
+	public void setType(LineType type) {
+		this.type = type;
+	}
+	
+	/*
+	 *  constructor to initialise a powerline with default values
+	 */
+	public PowerLine(LatLng source, LatLng destination, int maximumCapacity, LineType type) {
 		log.info("Creating PowerLine Obj");
 		this.source = source;
 		this.destination = destination;
 		this.maximumCapacity = maximumCapacity;
 		this.type = type;
 	}
-
-	public enum Type{mainLine, subLine};
+	
+	
 	public String getReasonDown() {
 		return reasonDown;
 	}
@@ -48,15 +52,15 @@ public class PowerLine {
 		this.reasonDown = reasonDown;
 	}
 
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
-	public Type getType() {
+	public LineType getType() {
 		return type;
 	}
 

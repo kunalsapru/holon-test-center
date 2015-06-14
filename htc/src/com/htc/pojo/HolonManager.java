@@ -13,7 +13,6 @@ public class HolonManager {
 	private int id;
 	private String name;
 	private HolonCoordinator holonCoordinator;
-	//listHolonElements;
 	
 	public int getId() {
 		return id;

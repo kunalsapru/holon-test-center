@@ -18,13 +18,20 @@ public class HolonElement {
 	}
 	
 	private int id;
-	private HolonElementType holonElementType;//Fridge,TV,SolarPanel etc
-	private HolonElementState holonElementState;//OverSupply,NormalSupply,MinimumSupply,BrownOut,HeartBeat,BlackOut
+	private String name;
+	private HolonElementType holonElementType;
+	private HolonElementState holonElementState;
 	private String usage;
 	private int maxCapacity;
 	private int minCapacity;
 	private int currentCapacity;
-	private boolean currentEnergyStatus;//on or off
+	private boolean currentEnergyStatus;
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
 	private String history;
 	private HolonManager holonManager;
 	private HolonCoordinator holonCoordinator;
