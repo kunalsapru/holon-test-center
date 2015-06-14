@@ -29,31 +29,66 @@
 			<div id="nav">
 
 				<ul data-role="listview" data-inset="true">
-					<li data-role="list-divider" role="heading" id="addHolonObject">Add
-						New Holon Object</li>
+					<li data-role="list-divider" id="addHolonObject">Add New Holon
+						Object</li>
 				</ul>
-				<ul data-role="listview" data-inset="true" data-theme="a">
-					<li data-role="list-divider" role="heading">Holon Object</li>
-					<li class="button1"><a href="#" id="editHolonElements">Edit
-							Holon Elements</a></li>
-					<li><a href="#" id="connect">Connect to PowerSource</a></li>
-					<li><a href="#" id="switch">Switch</a></li>
-					<li><a href="#" id="showHolonElements">Show Holon Elements</a></li>
-					<li><a href="#" id="consumption">Consumption</a></li>
+
+				<ul data-inset="true" style="padding-left: 0px;">
+					<li>
+						<div data-role="collapsible">
+							<h4>Holon Object</h4>
+							<ul data-role="listview">
+								<li><a href="#" id="editHolonElement">Edit Holon
+										Elements</a></li>
+								<li><a href="#" id="connect">Connect to PowerSource</a></li>
+								<li><a href="#" id="switch">Switch</a></li>
+								<li><a href="#" id="showHolonElements">Show Holon
+										Elements</a></li>
+								<li><a href="#" id="consumption">Consumption</a></li>
+							</ul>
+						</div>
+					</li>
 				</ul>
-				<ul data-role="listview" data-inset="true" data-theme="a">
-					<li data-role="list-divider" role="heading">Switch</li>
-					<li><a href="#" id="addSwitch">Add new Switch</a></li>
+
+				<ul data-count-theme="c" data-inset="true"
+					style="padding-left: 0px;">
+					<li>
+						<div data-role="collapsible">
+							<h4>Switch</h4>
+							<ul data-role="listview">
+								<li><a href="#" id="addSwitch">Add new Switch</a></li>
+
+							</ul>
+						</div>
+					</li>
 				</ul>
-				<ul data-role="listview" data-inset="true" data-theme="a">
-					<li data-role="list-divider" role="heading">Power Line</li>
-					<li><a href="#" id="addPowerLine">Add new Power Line</a></li>
+				<ul data-count-theme="c" data-inset="true"
+					style="padding-left: 0px;">
+					<li class="custom-li">
+						<div data-role="collapsible">
+							<h4>Power Line</h4>
+							<ul data-role="listview">
+								<li><a href="#" id="addPowerLine">Add new Power Line</a></li>
+
+							</ul>
+						</div>
+					</li>
 				</ul>
-				<ul data-role="listview" data-inset="true" data-theme="a">
-					<li data-role="list-divider" role="heading">Map Options</li>
-					<li><a href="#" id="addSwitch">Distance Calculator</a></li>
-					<li><a href="#" id="clear">Clear Map</a></li>
+
+				<ul data-count-theme="c" data-inset="true"
+					style="padding-left: 0px;">
+					<li class="custom-li">
+						<div data-role="collapsible">
+							<h4>Map Options</h4>
+							<ul data-role="listview">
+								<li><a href="#" id="addSwitch">Distance Calculator</a></li>
+								<li><a href="#" id="clear">Clear Map</a></li>
+
+							</ul>
+						</div>
+					</li>
 				</ul>
+
 			</div>
 			<div id="googleMap"></div>
 			<div id="elementInfo">
