@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 11 Jun, 2015 12:09:30 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Switch" table="switch" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="increment" />
+        </id>
+        <property name="location" type="int">
+            <column name="location" not-null="true" unique="true" />
+        </property>
+        <property name="status" type="java.lang.Byte">
+            <column name="status" />
+        </property>
+        <property name="powerLine" type="java.lang.Integer">
+            <column name="power_line" unique="true" />
+        </property>
+        <property name="belongsTo" type="string">
+            <column name="belongs_to" />
+        </property>
+    </class>
+</hibernate-mapping>

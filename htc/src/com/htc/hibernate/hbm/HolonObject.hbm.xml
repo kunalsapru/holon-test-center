@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 11 Jun, 2015 12:09:30 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="HolonObject" table="holon_object" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="increment" />
+        </id>
+        <property name="holonObjectType" type="java.lang.Integer">
+            <column name="holon_object_type" unique="true" />
+        </property>
+        <property name="lineConnectedState" type="java.lang.Byte">
+            <column name="line_connected_state" />
+        </property>
+        <property name="priority" type="java.lang.Integer">
+            <column name="priority" />
+        </property>
+        <property name="location" type="java.lang.Integer">
+            <column name="location" unique="true" />
+        </property>
+        <property name="holonCoordinator" type="java.lang.Integer">
+            <column name="holon_coordinator" unique="true" />
+        </property>
+        <property name="holon" type="java.lang.Integer">
+            <column name="holon" unique="true" />
+        </property>
+    </class>
+</hibernate-mapping>

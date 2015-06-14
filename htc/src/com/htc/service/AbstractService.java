@@ -1,9 +1,7 @@
 package com.htc.service;
 
-import org.apache.log4j.Logger;
-
-import com.htc.dao.CreateHolonsDao;
-import com.htc.daoImpl.CreateHolonsDaoImpl;
+import com.htc.dao.HolonElementTypeDao;
+import com.htc.daoImpl.HolonElementTypeDaoImpl;
 
 
 /**
@@ -11,19 +9,17 @@ import com.htc.daoImpl.CreateHolonsDaoImpl;
  * 
  */
 public class AbstractService {
-	static Logger log = Logger.getLogger(AbstractService.class);
 	
-	private CreateHolonsDao createHolonsDao=new CreateHolonsDaoImpl();
+	private HolonElementTypeDao holonElementTypeDao = new HolonElementTypeDaoImpl() ;
 
-	public CreateHolonsDao getCreateHolonsDao() {
-		return createHolonsDao;
+	public HolonElementTypeDao getHolonElementTypeDao() {
+		return holonElementTypeDao;
 	}
 
-	public void setCreateHolonsDao(CreateHolonsDao createHolonsDao) {
-		this.createHolonsDao = createHolonsDao;
+	public void setHolonElementTypeDao(HolonElementTypeDao holonElementTypeDao) {
+		this.holonElementTypeDao = holonElementTypeDao;
 	}
-	
-	
-	
+
+
 
 }

@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 11 Jun, 2015 12:09:30 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="PowerLine" table="power_line" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="increment" />
+        </id>
+        <property name="type" type="string">
+            <column name="type" not-null="true" />
+        </property>
+        <property name="currentCapacity" type="int">
+            <column name="current_capacity" not-null="true" />
+        </property>
+        <property name="maximumCapacity" type="int">
+            <column name="maximum_capacity" not-null="true" />
+        </property>
+        <property name="isConnected" type="byte">
+            <column name="isConnected" not-null="true" />
+        </property>
+        <property name="reasonDown" type="string">
+            <column name="reason_down" />
+        </property>
+        <property name="source" type="java.lang.Integer">
+            <column name="source" unique="true" />
+        </property>
+        <property name="destination" type="java.lang.Integer">
+            <column name="destination" unique="true" />
+        </property>
+    </class>
+</hibernate-mapping>

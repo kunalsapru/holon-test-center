@@ -1,9 +1,8 @@
 package com.htc.service;
 
-import org.apache.log4j.Logger;
-
 import com.opensymphony.xwork2.ActionSupport;
-import com.htc.serviceImpl.CreateHolonsServiceImpl;
+import com.htc.serviceImpl.HolonElementTypeServiceImpl;
+
 /**
  * The Class ServiceAware.
  * 
@@ -11,15 +10,16 @@ import com.htc.serviceImpl.CreateHolonsServiceImpl;
 public abstract class ServiceAware extends ActionSupport {
 	
 	private static final long serialVersionUID = 1L;
-	static Logger log = Logger.getLogger(ServiceAware.class);
-	private CreateHolonsService createHolonsService=new CreateHolonsServiceImpl();
 
-	public CreateHolonsService getCreateHolonsService() {
-		return createHolonsService;
+	private HolonElementTypeService holonElementTypeService = new HolonElementTypeServiceImpl();
+
+	public HolonElementTypeService getHolonElementTypeService() {
+		return holonElementTypeService;
 	}
 
-	public void setCreateHolonsService(CreateHolonsService createHolonsService) {
-		this.createHolonsService = createHolonsService;
+	public void setHolonElementTypeService(
+			HolonElementTypeService holonElementTypeService) {
+		this.holonElementTypeService = holonElementTypeService;
 	}
 
 }

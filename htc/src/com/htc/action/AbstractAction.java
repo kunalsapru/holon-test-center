@@ -1,6 +1,5 @@
 package com.htc.action;
 
-
 import org.apache.log4j.Logger;
 
 import com.htc.service.ServiceAware;
@@ -11,8 +10,8 @@ public abstract class AbstractAction extends ServiceAware {
 	static Logger log = Logger.getLogger(AbstractAction.class);
 	
 	public String execute() {
-		log.info("Inside AbstractAction");
+		log.debug("Inside AbstractAction");
 		return "success";
-	} 
+	}
 
 }

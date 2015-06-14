@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 11 Jun, 2015 12:09:30 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="HolonElement" table="holon_element" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="increment" />
+        </id>
+        <property name="holonElementType" type="java.lang.Integer">
+            <column name="holon_element_type" unique="true" />
+        </property>
+        <property name="holonElementState" type="java.lang.Integer">
+            <column name="holon_element_state" unique="true" />
+        </property>
+        <property name="usage" type="string">
+            <column name="usage" />
+        </property>
+        <property name="maxCapacity" type="java.lang.Integer">
+            <column name="max_capacity" />
+        </property>
+        <property name="minCapacity" type="java.lang.Integer">
+            <column name="min_capacity" />
+        </property>
+        <property name="currentCapacity" type="java.lang.Integer">
+            <column name="current_capacity" />
+        </property>
+        <property name="currentEnergyStatus" type="java.lang.Byte">
+            <column name="current_energy_status" />
+        </property>
+        <property name="history" type="binary">
+            <column name="history" />
+        </property>
+        <property name="holonManager" type="java.lang.Integer">
+            <column name="holon_manager" unique="true" />
+        </property>
+        <property name="holonObject" type="java.lang.Integer">
+            <column name="holon_object" unique="true" />
+        </property>
+    </class>
+</hibernate-mapping>

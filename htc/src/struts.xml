@@ -25,6 +25,7 @@
      
      <action name="createHolons" class="com.htc.action.HolonCrudAction" method="createHolons" />
      <action name="createHolonsFromFactory" class="com.htc.action.HolonFactory" method="createHolonsFromFactory" />
+     <action name="createHolonElementType" class="com.htc.action.HolonElementTypeAction" method="createHolonElementType" />
 
     </package>
 
