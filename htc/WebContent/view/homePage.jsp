@@ -82,7 +82,7 @@
 						<div data-role="collapsible">
 							<h4>Map Options</h4>
 							<ul data-role="listview">
-								<li><a href="#" id="addSwitch">Distance Calculator</a></li>
+								<li><a href="#" id="calcDistance">Distance Calculator</a></li>
 								<li><a href="#" id="clear">Clear Map</a></li>
 
 							</ul>

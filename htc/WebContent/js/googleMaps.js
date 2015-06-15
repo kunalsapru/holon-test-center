@@ -1,6 +1,10 @@
 $(document).ready(function() {
 	//call initialize function
 	initialize();
+	//Global Variables for distance calculation
+	var dPointA=new google.maps.LatLng(49.863915, 8.555046);
+	var dPointB=new google.maps.LatLng(49.861304, 8.554177);
+	//Global Variables for distance calculation
 	var drawingManager;
 	var switchMarker;
 	var switchMarkerImage = {
@@ -183,12 +187,32 @@ $(document).ready(function() {
 		drawPowerLine(start,end)
 	});
 	
-	google.maps.event.addListener(map, 'click', function(event) {
+	/*google.maps.event.addListener(map, 'click', function(event) {
 		startPowerLine[next]= event.latLng;
 		alert(startPowerLine[next]);
 		next++;
 		
-		});
+		});*/
+	
+	$("#calcDistance").on('click',function(){
+	
+		if(dPointA==undefined || dPointB==undefined )
+			{
+			//alert("abhinav1");
+				alert("Please select points on the Map to calculate the distance.")
+			}
+		else{
+			//alert("abhinav2");
+			var dist=google.maps.geometry.spherical.computeDistanceBetween(dPointA,dPointB);
+			drawPowerLine(dPointA,dPointB);
+			alert("The distance between selected points is "+dist+"m.");			
+		}
+		
+	});
+	
+	function cursorCrossHair(){
+		$("#googleMap").css('cursor', 'pointer');
+	}
 });
 
 
@@ -206,9 +230,10 @@ function drawPowerLine(start,end){
 		
 }
 
-function cursorCrossHair(){
-	$("#googleMap").css('cursor', 'pointer');
-}
+
+
+
+
 
 function initialize() {
 	  mapProp = {
