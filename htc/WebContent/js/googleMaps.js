@@ -2,8 +2,12 @@ $(document).ready(function() {
 	//call initialize function
 	initialize();
 	//Global Variables for distance calculation
-	var dPointA=new google.maps.LatLng(49.863915, 8.555046);
-	var dPointB=new google.maps.LatLng(49.861304, 8.554177);
+	var dPointA;//=new google.maps.LatLng(49.863915, 8.555046);
+	var dPointB;//=new google.maps.LatLng(49.861304, 8.554177);
+	var dist;
+	var distMarkers=[];
+	var infowindow;
+	var ro;
 	//Global Variables for distance calculation
 	var drawingManager;
 	var switchMarker;
@@ -198,17 +202,64 @@ $(document).ready(function() {
 	
 		if(dPointA==undefined || dPointB==undefined )
 			{
-			//alert("abhinav1");
-				alert("Please select points on the Map to calculate the distance.")
+			
+				alert("Please select two points on the Map to calculate the distance.")
 			}
 		else{
-			//alert("abhinav2");
-			var dist=google.maps.geometry.spherical.computeDistanceBetween(dPointA,dPointB);
+			//alert("abhinav1");
+			dist=google.maps.geometry.spherical.computeDistanceBetween(dPointA,dPointB);
 			drawPowerLine(dPointA,dPointB);
-			alert("The distance between selected points is "+dist+"m.");			
+			alert("The distance between selected points is "+dist+"m.");
+			dPointA=undefined;
+			dPointB=undefined;	
+			deleteMarkers();
 		}
 		
 	});
+	
+	 infowindow = new google.maps.InfoWindow({
+	      content: "The distance between selected points is "+dist+"m."
+	  });
+	
+	function clearMarkers() {
+		  setAllMap(null);
+		}
+	
+	function deleteMarkers() {
+		  clearMarkers();
+		  distMarkers = [];
+		}
+	function setAllMap(map) {
+		  for (var i = 0; i < distMarkers.length; i++) {
+		    distMarkers[i].setMap(map);
+		  }
+		}
+	
+	google.maps.event.addListener(map, 'click', function(event) {
+		
+		if(dPointA==undefined)
+			{
+			//alert("AbhinavMark A "+event.latLng);
+				dPointA=event.latLng;
+				placeMarker(event.latLng);
+			}
+		else{	
+			//alert("AbhinavMark B"+event.latLng);
+				dPointB=event.latLng;
+				placeMarker(event.latLng);
+				
+			}
+		});
+	
+	function placeMarker(location) {
+		//alert("AbhinavMark Place"+ location);
+        var clickedLocation = new google.maps.LatLng(location);
+        var marker = new google.maps.Marker({
+            position: location,
+            map: map
+        });
+        distMarkers.push(marker);
+    }
 	
 	function cursorCrossHair(){
 		$("#googleMap").css('cursor', 'pointer');
@@ -217,16 +268,20 @@ $(document).ready(function() {
 
 
 function drawPowerLine(start,end){
+		
 		  var request = {
 		      origin:start,
 		      destination:end,
 		      travelMode: google.maps.TravelMode.DRIVING
 		  };
-		  directionsService.route(request, function(response, status) {
+		ro= directionsService.route(request, function(response, status) {
 		    if (status == google.maps.DirectionsStatus.OK) {
 		      directionsDisplay.setDirections(response);
+		      
 		    }
+		    
 		  });
+	
 		
 }
 
