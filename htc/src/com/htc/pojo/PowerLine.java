@@ -23,6 +23,7 @@ public class PowerLine {
 	private int maximumCapacity;
 	private LatLng source;
 	private LatLng destination;
+	private Double length;
 	private boolean isConnected;
 	private String reasonDown;
 	private LineType type;
