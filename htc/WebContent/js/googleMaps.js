@@ -6,7 +6,9 @@ $(document).ready(function() {
 	var dPointB;//=new google.maps.LatLng(49.861304, 8.554177);
 	var dist;
 	var distMarkers=[];
-	var infowindow;
+	var infowinDist=new google.maps.InfoWindow({
+	      content: "The distance between selected points is "+dist+"m."
+	  });
 	var ro;
 	//Global Variables for distance calculation
 	var drawingManager;
@@ -203,13 +205,15 @@ $(document).ready(function() {
 		if(dPointA==undefined || dPointB==undefined )
 			{
 			
-				alert("Please select two points on the Map to calculate the distance.")
+				//alert("Please select two points on the Map to calculate the distance.")
+				swal({   title: "Points??",   text: "Please select two points on the Map to calculate the distance.",   type: "error",   confirmButtonText: "Sure!" });
 			}
 		else{
 			//alert("abhinav1");
 			dist=google.maps.geometry.spherical.computeDistanceBetween(dPointA,dPointB);
-			drawPowerLine(dPointA,dPointB);
-			alert("The distance between selected points is "+dist+"m.");
+			drawRoute(dPointA,dPointB,infowinDist,map);
+			//alert("The distance between selected points is "+dist+"m.");
+			swal({   title: "Distance",   text: "The distance between selected points is "+dist+"m.",   type: "success",   confirmButtonText: "Nice!" });
 			dPointA=undefined;
 			dPointB=undefined;	
 			deleteMarkers();
@@ -217,9 +221,7 @@ $(document).ready(function() {
 		
 	});
 	
-	 infowindow = new google.maps.InfoWindow({
-	      content: "The distance between selected points is "+dist+"m."
-	  });
+	 
 	
 	function clearMarkers() {
 		  setAllMap(null);
@@ -267,14 +269,38 @@ $(document).ready(function() {
 });
 
 
-function drawPowerLine(start,end){
+
+
+
+function drawRoute(start,end,infowindow,map){
+	alert("infowin "+infowindow+" "+"map "+map+" this "+this)
+	
+	  var request = {
+	      origin:start,
+	      destination:end,
+	      travelMode: google.maps.TravelMode.DRIVING,
+	      //click:infowindow.open(map,ro)
+	  };
+	ro= directionsService.route(request, function(response, status) {
+	    if (status == google.maps.DirectionsStatus.OK) {
+	      directionsDisplay.setDirections(response);
+	      
+	    }
+	    
+	  });
+
+	
+}
+
+
+function drawPowerLine(start,end,infowindow){
 		
 		  var request = {
 		      origin:start,
 		      destination:end,
-		      travelMode: google.maps.TravelMode.DRIVING
-		  };
-		ro= directionsService.route(request, function(response, status) {
+		      travelMode: google.maps.TravelMode.DRIVING,
+		      };
+		directionsService.route(request, function(response, status) {
 		    if (status == google.maps.DirectionsStatus.OK) {
 		      directionsDisplay.setDirections(response);
 		      
@@ -284,10 +310,6 @@ function drawPowerLine(start,end){
 	
 		
 }
-
-
-
-
 
 
 function initialize() {
