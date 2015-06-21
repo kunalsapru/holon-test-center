@@ -2,28 +2,40 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-    <class name="com.htc.hibernate.pojo.HolonObject" table="holon_object" optimistic-lock="version">
+    <class name="com.htc.hibernate.pojo.HolonObject" table="holon_object" catalog="htc" optimistic-lock="version">
         <id name="id" type="int">
             <column name="id" />
             <generator class="increment" />
         </id>
-        <property name="holonObjectType" type="java.lang.Integer">
-            <column name="holon_object_type" unique="true" />
-        </property>
-        <property name="lineConnectedState" type="java.lang.Byte">
+        <many-to-one name="holon" class="com.htc.hibernate.pojo.Holon" fetch="select">
+            <column name="holon" />
+        </many-to-one>
+        <many-to-one name="holonCoordinator" class="com.htc.hibernate.pojo.HolonCoordinator" fetch="select">
+            <column name="holon_coordinator" />
+        </many-to-one>
+        <many-to-one name="holonObjectType" class="com.htc.hibernate.pojo.HolonObjectType" fetch="select">
+            <column name="holon_object_type" />
+        </many-to-one>
+        <many-to-one name="latLng" class="com.htc.hibernate.pojo.LatLng" fetch="select">
+            <column name="location" />
+        </many-to-one>
+        <property name="lineConnectedState" type="java.lang.Boolean">
             <column name="line_connected_state" />
         </property>
         <property name="priority" type="java.lang.Integer">
             <column name="priority" />
         </property>
-        <property name="location" type="java.lang.Integer">
-            <column name="location" unique="true" />
-        </property>
-        <property name="holonCoordinator" type="java.lang.Integer">
-            <column name="holon_coordinator" unique="true" />
-        </property>
-        <property name="holon" type="java.lang.Integer">
-            <column name="holon" unique="true" />
-        </property>
+        <set name="holonElements" table="holon_element" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="holon_object" />
+            </key>
+            <one-to-many class="com.htc.hibernate.pojo.HolonElement" />
+        </set>
+        <set name="holonManagers" table="holon_manager" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="holon_object" />
+            </key>
+            <one-to-many class="com.htc.hibernate.pojo.HolonManager" />
+        </set>
     </class>
 </hibernate-mapping>

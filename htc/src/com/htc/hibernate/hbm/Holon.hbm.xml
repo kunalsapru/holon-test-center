@@ -2,19 +2,31 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-    <class name="com.htc.hibernate.pojo.Holon" table="holon" optimistic-lock="version">
+    <class name="com.htc.hibernate.pojo.Holon" table="holon" catalog="htc" optimistic-lock="version">
         <id name="id" type="int">
             <column name="id" />
             <generator class="increment" />
         </id>
+        <many-to-one name="latLng" class="com.htc.hibernate.pojo.LatLng" fetch="select">
+            <column name="holon_center" />
+        </many-to-one>
         <property name="name" type="string">
             <column name="name" />
         </property>
         <property name="radius" type="java.lang.Integer">
             <column name="radius" />
         </property>
-        <property name="holonCenter" type="java.lang.Integer">
-            <column name="holon_center" unique="true" />
-        </property>
+        <set name="holonObjects" table="holon_object" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="holon" />
+            </key>
+            <one-to-many class="com.htc.hibernate.pojo.HolonObject" />
+        </set>
+        <set name="holonCoordinators" table="holon_coordinator" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="holon" />
+            </key>
+            <one-to-many class="com.htc.hibernate.pojo.HolonCoordinator" />
+        </set>
     </class>
 </hibernate-mapping>

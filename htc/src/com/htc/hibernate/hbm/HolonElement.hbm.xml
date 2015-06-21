@@ -2,17 +2,23 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-    <class name="com.htc.hibernate.pojo.HolonElement" table="holon_element" optimistic-lock="version">
+    <class name="com.htc.hibernate.pojo.HolonElement" table="holon_element" catalog="htc" optimistic-lock="version">
         <id name="id" type="int">
             <column name="id" />
             <generator class="increment" />
         </id>
-        <property name="holonElementType" type="java.lang.Integer">
-            <column name="holon_element_type" unique="true" />
-        </property>
-        <property name="holonElementState" type="java.lang.Integer">
-            <column name="holon_element_state" unique="true" />
-        </property>
+        <many-to-one name="holonElementState" class="com.htc.hibernate.pojo.HolonElementState" fetch="select">
+            <column name="holon_element_state" />
+        </many-to-one>
+        <many-to-one name="holonElementType" class="com.htc.hibernate.pojo.HolonElementType" fetch="select">
+            <column name="holon_element_type" />
+        </many-to-one>
+        <many-to-one name="holonManager" class="com.htc.hibernate.pojo.HolonManager" fetch="select">
+            <column name="holon_manager" />
+        </many-to-one>
+        <many-to-one name="holonObject" class="com.htc.hibernate.pojo.HolonObject" fetch="select">
+            <column name="holon_object" />
+        </many-to-one>
         <property name="usage" type="string">
             <column name="usage" />
         </property>
@@ -25,17 +31,11 @@
         <property name="currentCapacity" type="java.lang.Integer">
             <column name="current_capacity" />
         </property>
-        <property name="currentEnergyStatus" type="java.lang.Byte">
+        <property name="currentEnergyStatus" type="java.lang.Boolean">
             <column name="current_energy_status" />
         </property>
         <property name="history" type="binary">
             <column name="history" />
-        </property>
-        <property name="holonManager" type="java.lang.Integer">
-            <column name="holon_manager" unique="true" />
-        </property>
-        <property name="holonObject" type="java.lang.Integer">
-            <column name="holon_object" unique="true" />
         </property>
     </class>
 </hibernate-mapping>

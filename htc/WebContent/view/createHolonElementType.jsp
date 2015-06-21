@@ -20,6 +20,33 @@
 	function createHolonElementCallBack(data, options) {
 		$("#listHolonElementTypes").append(data);
 	}
+	
+	function editHolonElement(holonElementTypeId) {
+		alert(holonElementTypeId);
+		var dataAttributes = {
+			holonElementTypeId : holonElementTypeId
+		};
+		ajaxRequest("editHolonElementType", dataAttributes,
+				createHolonElementCallBack, {})
+	}
+
+	function editHolonElementCallBack(data, options) {
+		alert(data);
+	}
+
+	function deleteHolonElement(holonElementTypeId) {
+		alert(holonElementTypeId);
+		var dataAttributes = {
+			holonElementTypeId : holonElementTypeId
+		};
+		ajaxRequest("deleteHolonElementType", dataAttributes,
+				deleteHolonElementCallBack, {})
+	}
+
+	function deleteHolonElementCallBack(data, options) {
+		alert(data);
+	}
+	
 </script>
 
 </head>
@@ -45,9 +72,12 @@
 						<td><input type="text" id="holonElementTypeNameID" /></td>
 					</tr>
 					<tr>
-						<td colspan="2" align="center"><input type="button"
+						<td align="center"><input type="button"
 							style="cursor: pointer;" value="Save Holon Element Type"
 							onclick="createHolonElement()" /></td>
+						<td align="center"><input type="button"
+							style="cursor: pointer;" value="Edit Holon Element Type"
+							onclick="editHolonElement()" /></td>
 					</tr>
 				</tbody>
 			</table>

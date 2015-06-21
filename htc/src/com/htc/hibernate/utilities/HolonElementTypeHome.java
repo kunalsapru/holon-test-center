@@ -1,7 +1,8 @@
 package com.htc.hibernate.utilities;
+
+import java.util.ArrayList;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-
 import com.htc.hibernate.config.HibernateSessionFactory;
 import com.htc.hibernate.pojo.HolonElementType;
 
@@ -10,108 +11,85 @@ import com.htc.hibernate.pojo.HolonElementType;
  * @see .HolonElementType
  */
 public class HolonElementTypeHome {
-
+	
 	public Integer persist(HolonElementType transientInstance) {
 		Integer holonElementType_id=null;
 		Session session = null;
 		Transaction tx = null;
-		try
-		{
+		try {
 			session = HibernateSessionFactory.getSessionFactory().getCurrentSession();//Getting Hibernate session from factory
-			tx = session.beginTransaction();//Beginning Hibernate transaction, this is required to use save function.
+			tx = session.beginTransaction();// active transaction session
 			holonElementType_id = (Integer)session.save(transientInstance);
 			tx.commit();// Committing transaction changes
 		} catch (Exception exp){
 			exp.printStackTrace();
 		}
 		return holonElementType_id;
+	}
 	
-/*		log.debug("persisting HolonElementType instance");
-		try {
-			sessionFactory.getCurrentSession().persist(transientInstance);
-			log.info("persist successful");
-		} catch (RuntimeException re) {
-			log.error("persist failed", re);
-			re.printStackTrace();
-			throw re;
-		}*/
-	}
-
-/*	public void attachDirty(HolonElementType instance) {
-		log.debug("attaching dirty HolonElementType instance");
-		try {
-			sessionFactory.getCurrentSession().saveOrUpdate(instance);
-			log.debug("attach successful");
-		} catch (RuntimeException re) {
-			log.error("attach failed", re);
-			throw re;
-		}
-	}
-
-	public void attachClean(HolonElementType instance) {
-		log.debug("attaching clean HolonElementType instance");
-		try {
-			sessionFactory.getCurrentSession().lock(instance, LockMode.NONE);
-			log.debug("attach successful");
-		} catch (RuntimeException re) {
-			log.error("attach failed", re);
-			throw re;
-		}
-	}
-
-	public void delete(HolonElementType persistentInstance) {
-		log.debug("deleting HolonElementType instance");
-		try {
-			sessionFactory.getCurrentSession().delete(persistentInstance);
-			log.debug("delete successful");
-		} catch (RuntimeException re) {
-			log.error("delete failed", re);
-			throw re;
-		}
-	}
-
 	public HolonElementType merge(HolonElementType detachedInstance) {
-		log.debug("merging HolonElementType instance");
+		Session session = null;
+		Transaction tx = null;
 		try {
-			HolonElementType result = (HolonElementType) sessionFactory
-					.getCurrentSession().merge(detachedInstance);
-			log.debug("merge successful");
+			session = HibernateSessionFactory.getSessionFactory().getCurrentSession();
+			tx = session.beginTransaction();
+			HolonElementType result = (HolonElementType) session.merge(detachedInstance);
+			tx.commit();
 			return result;
 		} catch (RuntimeException re) {
-			log.error("merge failed", re);
+			System.out.println("Merge Failed...");
 			throw re;
 		}
 	}
 
 	public HolonElementType findById(int id) {
-		log.debug("getting HolonElementType instance with id: " + id);
+		Session session = null;
+		Transaction tx = null;
+		System.out.println("Holon Element Type ID = "+id);
 		try {
-			HolonElementType instance = (HolonElementType) sessionFactory
-					.getCurrentSession().get("HolonElementType", id);
-			if (instance == null) {
-				log.debug("get successful, no instance found");
-			} else {
-				log.debug("get successful, instance found");
-			}
+			session = HibernateSessionFactory.getSessionFactory().getCurrentSession();
+			tx = session.beginTransaction();
+			HolonElementType instance = (HolonElementType) session.get(HolonElementType.class, id);
+			tx.commit();
 			return instance;
 		} catch (RuntimeException re) {
-			log.error("get failed", re);
+			System.out.println("Exception --> "+re.getMessage());
 			throw re;
 		}
 	}
 
-	public List findByExample(HolonElementType instance) {
-		log.debug("finding HolonElementType instance by example");
+	public boolean delete(HolonElementType persistentInstance) {
+		Session session = null;
+		Transaction tx = null;
+		boolean deleteStatus = false;
 		try {
-			List results = sessionFactory.getCurrentSession()
-					.createCriteria("HolonElementType")
-					.add(Example.create(instance)).list();
-			log.debug("find by example successful, result size: "
-					+ results.size());
-			return results;
+			session = HibernateSessionFactory.getSessionFactory().getCurrentSession();
+			tx = session.beginTransaction();
+			session.delete(persistentInstance);
+			tx.commit();
+			deleteStatus = true;
+			return deleteStatus;
 		} catch (RuntimeException re) {
-			log.error("find by example failed", re);
-			throw re;
+			System.out.println("Delete Failed...");
 		}
-	}*/
+		return deleteStatus;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public ArrayList<HolonElementType> getAllHolonElementType() {
+		Session session = null;
+		Transaction tx = null;
+		ArrayList<HolonElementType> listHolonElementType = null;
+		try {
+			session = HibernateSessionFactory.getSessionFactory().getCurrentSession();
+			tx = session.beginTransaction();
+			listHolonElementType = (ArrayList<HolonElementType>) session.createQuery("from HolonElementType h").list();
+			tx.commit();
+			return listHolonElementType;
+		} catch (RuntimeException re) {
+			System.out.println("get holon element type list failed");
+		}
+		return listHolonElementType;
+	}
+
 }

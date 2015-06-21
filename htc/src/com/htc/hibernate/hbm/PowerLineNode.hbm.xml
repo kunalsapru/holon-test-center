@@ -2,11 +2,14 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-    <class name="com.htc.hibernate.pojo.HollonElementState" table="hollon_element_state" optimistic-lock="version">
+    <class name="com.htc.hibernate.pojo.PowerLineNode" table="power_line_node" catalog="htc" optimistic-lock="version">
         <id name="id" type="int">
             <column name="id" />
             <generator class="increment" />
         </id>
+        <many-to-one name="latLng" class="com.htc.hibernate.pojo.LatLng" fetch="select">
+            <column name="location" />
+        </many-to-one>
         <property name="name" type="string">
             <column name="name" />
         </property>

@@ -25,7 +25,17 @@
      
      <action name="createHolons" class="com.htc.action.HolonCrudAction" method="createHolons" />
      <action name="createHolonsFromFactory" class="com.htc.action.HolonFactory" method="createHolonsFromFactory" />
+     
      <action name="createHolonElementType" class="com.htc.action.HolonElementTypeAction" method="createHolonElementType" />
+     <action name="editHolonElementType" class="com.htc.action.HolonElementTypeAction" method="editHolonElementType" />
+     <action name="deleteHolonElementType" class="com.htc.action.HolonElementTypeAction" method="deleteHolonElementType" />
+     <action name="getListHolonElementType" class="com.htc.action.HolonElementTypeAction" method="getListHolonElementType" />
+     
+     <action name="createHolonElementState" class="com.htc.action.HolonElementStateAction" method="createHolonElementState" />
+     <action name="editHolonElementState" class="com.htc.action.HolonElementStateAction" method="editHolonElementState" />
+     <action name="deleteHolonElementState" class="com.htc.action.HolonElementStateAction" method="deleteHolonElementState" />
+     <action name="getListHolonElementState" class="com.htc.action.HolonElementStateAction" method="getListHolonElementState" />
+
      <action name="dataGenerator" class="com.htc.action.DataGeneratorAction" method="dataGenerator" />
 
     </package>

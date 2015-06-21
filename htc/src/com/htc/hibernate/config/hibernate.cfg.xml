@@ -8,7 +8,7 @@
         <property name="hibernate.connection.password">root</property>
         <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/htc</property>
         <property name="hibernate.connection.username">root</property>
-        <property name="hibernate.default_schema">htc</property>
+<!--         <property name="hibernate.default_schema">htc</property> -->
         <property name="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
         <property name="hibernate.search.autoregister_listeners">false</property>
         <property name="hibernate.validator.apply_to_ddl">false</property>
@@ -30,7 +30,7 @@
 		<!-- Drop and re-create the database schema on startup -->
 		<!-- <property name="hibernate.hbm2ddl.auto">create</property> -->
 
-        <mapping resource="com/htc/hibernate/hbm/HollonElementState.hbm.xml" />
+        <mapping resource="com/htc/hibernate/hbm/HolonElementState.hbm.xml" />
         <mapping resource="com/htc/hibernate/hbm/Holon.hbm.xml" />
         <mapping resource="com/htc/hibernate/hbm/HolonCoordinator.hbm.xml" />
         <mapping resource="com/htc/hibernate/hbm/HolonElement.hbm.xml" />
@@ -40,6 +40,7 @@
         <mapping resource="com/htc/hibernate/hbm/HolonObjectType.hbm.xml" />
         <mapping resource="com/htc/hibernate/hbm/LatLng.hbm.xml" />
         <mapping resource="com/htc/hibernate/hbm/PowerLine.hbm.xml" />
-        <mapping resource="com/htc/hibernate/hbm/Switch.hbm.xml" />
+        <mapping resource="com/htc/hibernate/hbm/PowerLineNode.hbm.xml" />
+        <mapping resource="com/htc/hibernate/hbm/PowerSwitch.hbm.xml" />
     </session-factory>
 </hibernate-configuration>

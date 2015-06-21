@@ -2,11 +2,17 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-    <class name="com.htc.hibernate.pojo.PowerLine" table="power_line" optimistic-lock="version">
+    <class name="com.htc.hibernate.pojo.PowerLine" table="power_line" catalog="htc" optimistic-lock="version">
         <id name="id" type="java.lang.Integer">
             <column name="id" />
             <generator class="increment" />
         </id>
+        <many-to-one name="latLngBySource" class="com.htc.hibernate.pojo.LatLng" fetch="select">
+            <column name="source" />
+        </many-to-one>
+        <many-to-one name="latLngByDestination" class="com.htc.hibernate.pojo.LatLng" fetch="select">
+            <column name="destination" />
+        </many-to-one>
         <property name="type" type="string">
             <column name="type" not-null="true" />
         </property>
@@ -16,17 +22,17 @@
         <property name="maximumCapacity" type="int">
             <column name="maximum_capacity" not-null="true" />
         </property>
-        <property name="isConnected" type="byte">
+        <property name="isConnected" type="boolean">
             <column name="isConnected" not-null="true" />
         </property>
         <property name="reasonDown" type="string">
             <column name="reason_down" />
         </property>
-        <property name="source" type="java.lang.Integer">
-            <column name="source" unique="true" />
-        </property>
-        <property name="destination" type="java.lang.Integer">
-            <column name="destination" unique="true" />
-        </property>
+        <set name="powerSwitches" table="power_switch" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="power_line" />
+            </key>
+            <one-to-many class="com.htc.hibernate.pojo.PowerSwitch" />
+        </set>
     </class>
 </hibernate-mapping>
