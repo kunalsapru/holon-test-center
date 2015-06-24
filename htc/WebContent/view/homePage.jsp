@@ -32,22 +32,19 @@
 			<div id="nav">
 
 				<ul data-role="listview" data-inset="true">
-					<li data-role="list-divider" id="addHolonObject">Add New Holon
-						Object</li>
+					<li data-role="list-divider" id="addHolonObject" title="Add New Holon Object">Add New Holon Object</li>
 				</ul>
 
 				<ul data-inset="true" style="padding-left: 0px;">
 					<li>
 						<div data-role="collapsible">
-							<h4>Holon Object</h4>
+							<h4 title="Holon Object">Holon Object</h4>
 							<ul data-role="listview">
-								<li><a href="#" id="editHolonElement">Edit Holon
-										Elements</a></li>
-								<li><a href="#" id="connect">Connect to PowerSource</a></li>
-								<li><a href="#" id="switch">Switch</a></li>
-								<li><a href="#" id="showHolonElements">Show Holon
-										Elements</a></li>
-								<li><a href="#" id="consumption">Consumption</a></li>
+								<li><a href="#" id="editHolonElement" title="Edit Holon Elements">Edit Holon Elements</a></li>
+								<li><a href="#" id="connect" title="Connect to PowerSource">Connect to PowerSource</a></li>
+								<li><a href="#" id="switch" title="Switch">Switch</a></li>
+								<li><a href="#" id="showHolonElements" title="Show Holon Elements">Show Holon Elements</a></li>
+								<li><a href="#" id="consumption" title="Consumption">Consumption</a></li>
 							</ul>
 						</div>
 					</li>
@@ -57,10 +54,9 @@
 					style="padding-left: 0px;">
 					<li>
 						<div data-role="collapsible">
-							<h4>Switch</h4>
+							<h4 title="Switch">Switch</h4>
 							<ul data-role="listview">
-								<li><a href="#" id="addSwitch">Add new Switch</a></li>
-
+								<li><a href="#" id="addSwitch" title="Add new Switch">Add new Switch</a></li>
 							</ul>
 						</div>
 					</li>
@@ -69,9 +65,9 @@
 					style="padding-left: 0px;">
 					<li class="custom-li">
 						<div data-role="collapsible">
-							<h4>Power Line</h4>
+							<h4 title="Power Line">Power Line</h4>
 							<ul data-role="listview">
-								<li><a href="#" id="addPowerLine">Add new Power Line</a></li>
+								<li><a href="#" id="addPowerLine" title="Add new Power Line">Add new Power Line</a></li>
 
 							</ul>
 						</div>
@@ -82,10 +78,10 @@
 					style="padding-left: 0px;">
 					<li class="custom-li">
 						<div data-role="collapsible">
-							<h4>Map Options</h4>
+							<h4 title="Map Options">Map Options</h4>
 							<ul data-role="listview">
-								<li><a href="#" id="calcDistance">Distance Calculator</a></li>
-								<li><a href="#" id="clear">Clear Map</a></li>
+								<li><a href="#" id="calcDistance" title="Distance Calculator">Distance Calculator</a></li>
+								<li><a href="#" id="clear" title="Clear Map">Clear Map</a></li>
 
 							</ul>
 						</div>
