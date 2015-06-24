@@ -20,7 +20,7 @@ body {
 #nav {
     line-height:30px;
     height:611px;
-    width:250px;
+    width:20%;
     float:left;
     padding:5px; 
     overflow-Y:scroll;
@@ -28,7 +28,7 @@ body {
 
 #googleMap {
     height:611px;
-    width:1050px;
+    width:78%;
     float:right;
     overflow:auto;
 }
