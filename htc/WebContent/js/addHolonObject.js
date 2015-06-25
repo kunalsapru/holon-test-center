@@ -25,7 +25,7 @@ $(document).ready(function() {
     	    drawingControl: true,
     	    drawingControlOptions: {
     	      position: google.maps.ControlPosition.TOP_CENTER,
-    	      drawingModes: [google.maps.drawing.OverlayType.RECTANGLE,google.maps.drawing.OverlayType.POLYLINE]
+    	      drawingModes: [google.maps.drawing.OverlayType.RECTANGLE]
     	    },
             rectangleOptions: {
                 geodesic:true,
@@ -39,7 +39,7 @@ $(document).ready(function() {
                 strokeOpacity: 2.0,
                 strokeWeight: 4.0
             }
-    	    });
+    	    });}
      // Setting the layout on the map 
 		drawingHolonManager.setMap(map);
      // Event when the overlay is complete 
@@ -194,12 +194,12 @@ $(document).ready(function() {
 	  });
 	  //End of Save Button
 	  
-		}	  
-	 
-		}
+		}	   
+		
 		else
 		{
-			$(this).css("background-color", "rgb(233,233,233)");		
+			$(this).css("background-color", "rgb(233,233,233)");
+			drawingHolonManager.setMap(null);
 		
 		}		
 		
