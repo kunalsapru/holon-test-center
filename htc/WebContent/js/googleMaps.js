@@ -362,7 +362,7 @@ $(document)
 								// $("#elementInfo").toggle("slide",{direction:"right"});
 							});
 
-					$("#addPowerLine").click(function() {
+					/*$("#addPowerLine").click(function() {
 						if (next == 1) {
 							var start = startPowerLine[0];
 							var end = startPowerLine[1];
@@ -370,11 +370,11 @@ $(document)
 						next = 0;
 						// cursorCrossHair();
 
-						/*
+						
 						 * alert(startPowerLine); alert(endPowerLine);
-						 */
+						 
 						drawPowerLine(start, end)
-					});
+					});*/
 
 					/*
 					 * google.maps.event.addListener(map, 'click',
