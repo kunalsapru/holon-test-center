@@ -7,9 +7,6 @@
             <column name="id" />
             <generator class="increment" />
         </id>
-        <many-to-one name="holonObject" class="com.htc.hibernate.pojo.HolonObject" fetch="select">
-            <column name="holon_object" />
-        </many-to-one>
         <property name="name" type="string">
             <column name="name" />
         </property>
@@ -19,5 +16,11 @@
             </key>
             <one-to-many class="com.htc.hibernate.pojo.HolonElement" />
         </set>
+        <set name="holonObjects" table="holon_object" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="holon_manager" />
+            </key>
+            <one-to-many class="com.htc.hibernate.pojo.HolonObject" />
+        </set>        
     </class>
 </hibernate-mapping>

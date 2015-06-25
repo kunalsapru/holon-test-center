@@ -15,11 +15,11 @@ public class HolonObject implements java.io.Serializable {
 	private Holon holon;
 	private HolonCoordinator holonCoordinator;
 	private HolonObjectType holonObjectType;
+	private HolonManager holonManager;
 	private LatLng latLng;
 	private Boolean lineConnectedState;
 	private Integer priority;
 	private Set holonElements = new HashSet(0);
-	private Set holonManagers = new HashSet(0);
 
 	public HolonObject() {
 	}
@@ -29,7 +29,7 @@ public class HolonObject implements java.io.Serializable {
 	}
 
 	public HolonObject(int id, Holon holon, HolonCoordinator holonCoordinator,
-			HolonObjectType holonObjectType, LatLng latLng,
+			HolonObjectType holonObjectType, HolonManager holonManager, LatLng latLng,
 			Boolean lineConnectedState, Integer priority, Set holonElements,
 			Set holonManagers) {
 		this.id = id;
@@ -40,7 +40,7 @@ public class HolonObject implements java.io.Serializable {
 		this.lineConnectedState = lineConnectedState;
 		this.priority = priority;
 		this.holonElements = holonElements;
-		this.holonManagers = holonManagers;
+		this.setHolonManager(holonManager);
 	}
 
 	public Holon getHolon() {
@@ -53,10 +53,6 @@ public class HolonObject implements java.io.Serializable {
 
 	public Set getHolonElements() {
 		return this.holonElements;
-	}
-
-	public Set getHolonManagers() {
-		return this.holonManagers;
 	}
 
 	public HolonObjectType getHolonObjectType() {
@@ -91,10 +87,6 @@ public class HolonObject implements java.io.Serializable {
 		this.holonElements = holonElements;
 	}
 
-	public void setHolonManagers(Set holonManagers) {
-		this.holonManagers = holonManagers;
-	}
-
 	public void setHolonObjectType(HolonObjectType holonObjectType) {
 		this.holonObjectType = holonObjectType;
 	}
@@ -113,6 +105,14 @@ public class HolonObject implements java.io.Serializable {
 
 	public void setPriority(Integer priority) {
 		this.priority = priority;
+	}
+
+	public HolonManager getHolonManager() {
+		return holonManager;
+	}
+
+	public void setHolonManager(HolonManager holonManager) {
+		this.holonManager = holonManager;
 	}
 
 }

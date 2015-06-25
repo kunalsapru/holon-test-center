@@ -7,17 +7,20 @@
             <column name="id" />
             <generator class="increment" />
         </id>
-        <many-to-one name="holon" class="com.htc.hibernate.pojo.Holon" fetch="select">
+        <many-to-one name="holon" class="com.htc.hibernate.pojo.Holon" fetch="select" lazy="false">
             <column name="holon" />
         </many-to-one>
-        <many-to-one name="holonCoordinator" class="com.htc.hibernate.pojo.HolonCoordinator" fetch="select">
+        <many-to-one name="holonCoordinator" class="com.htc.hibernate.pojo.HolonCoordinator" fetch="select" lazy="false">
             <column name="holon_coordinator" />
         </many-to-one>
-        <many-to-one name="holonObjectType" class="com.htc.hibernate.pojo.HolonObjectType" fetch="select">
+        <many-to-one name="holonObjectType" class="com.htc.hibernate.pojo.HolonObjectType" fetch="select" lazy="false">
             <column name="holon_object_type" />
         </many-to-one>
-        <many-to-one name="latLng" class="com.htc.hibernate.pojo.LatLng" fetch="select">
+        <many-to-one name="latLng" class="com.htc.hibernate.pojo.LatLng" fetch="select" lazy="false">
             <column name="location" />
+        </many-to-one>
+        <many-to-one name="holonManager" class="com.htc.hibernate.pojo.HolonManager" fetch="select" lazy="false">
+            <column name="holon_manager" />
         </many-to-one>
         <property name="lineConnectedState" type="java.lang.Boolean">
             <column name="line_connected_state" />
@@ -30,12 +33,6 @@
                 <column name="holon_object" />
             </key>
             <one-to-many class="com.htc.hibernate.pojo.HolonElement" />
-        </set>
-        <set name="holonManagers" table="holon_manager" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="holon_object" />
-            </key>
-            <one-to-many class="com.htc.hibernate.pojo.HolonManager" />
         </set>
     </class>
 </hibernate-mapping>

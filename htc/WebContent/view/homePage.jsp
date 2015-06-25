@@ -14,11 +14,6 @@
 <script type="text/javascript" src="js/toggle.js"></script>
 <script type="text/javascript" src="js/rightPanel.js"></script>
 <script type="text/javascript" src="js/common.js"></script>
-<script type="text/javascript" src="js/powerline.js"></script>
-<script type="text/javascript" src="js/distanceCalc.js"></script>
-<script type="text/javascript" src="js/addHolonObject.js"></script>
-<script type="text/javascript" src="js/canvasjs.min.js"></script>
-<script type="text/javascript" src="js/drawChart.js"></script>
 <script src="js/sweetalert.min.js"></script> 
 <link rel="stylesheet" type="text/css" href="css/sweetalert.css">
 <LINK href="css/contextMenu.css" rel="stylesheet" type="text/css" />
@@ -29,77 +24,69 @@
 <body>
 	<!-- For Right Panel -->
 	<div data-role="page" id="pageone">
-
-		<!-- End Right Panel -->
 		<div data-role="main" class="ui-content">
-
+	<div id="displayHolonDetails" data-role="panel" data-display="overlay" style="display: none;top: auto;" data-swipe-close="false">
+			<div data-role="collapsible" id="displayHolonDetailsData"><h3>Holon Elements</h3></div>
+			</div>
 			<div id="nav">
+			
+			<ul data-role="listview" data-inset="true">
+					<li data-role="list-divider" id="addHolonCoordinator">Add New Holon
+						Coordinator</li>
+				</ul>
 
 				<ul data-role="listview" data-inset="true">
-					<li data-role="list-divider" id="addHolonObject" title="Add New Holon Object">Add New Holon Object</li>
+					<li data-role="list-divider" id="addHolonObject">Add New Holon
+						Object</li>
+				</ul>
+				
+				<ul data-role="listview" data-inset="true">
+					<li data-role="list-divider" id="consumptionGraph">Consumption Graph</li>
+				</ul>
+				
+				<ul data-role="listview" data-inset="true">
+					<li data-role="list-divider" id="showHolonObjects">Show Holon Objects</li>
 				</ul>
 
 				<ul data-inset="true" style="padding-left: 0px;">
 					<li>
 						<div data-role="collapsible">
-							<h4 title="Holon Object">Holon Object</h4>
+							<h4>Modes</h4>
 							<ul data-role="listview">
-								<li><a href="#" id="editHolonElement" title="Edit Holon Elements">Edit Holon Elements</a></li>
-								<li><a href="#" id="connect" title="Connect to PowerSource">Connect to PowerSource</a></li>
-								<li><a href="#" id="switch" title="Switch">Switch</a></li>
-								<li><a href="#" id="showHolonElements" title="Show Holon Elements">Show Holon Elements</a></li>
-								<li><a href="#" id="consumption" title="Consumption">Consumption</a></li>
+								<li><a href="#" id="connectToPowerSource">Connect to PowerSource</a></li>
+								<li><a href="#" id="switch">Switch</a></li>
+								<li><a href="#" id="calcDistance">Calculate Distance</a></li>
+								<li><a href="#" id="addPowerLine">Add New Power Line</a></li>
 							</ul>
 						</div>
 					</li>
 				</ul>
-
-				<ul data-count-theme="c" data-inset="true"
-					style="padding-left: 0px;">
+				
+				<ul data-inset="true" style="padding-left: 0px;">
 					<li>
 						<div data-role="collapsible">
-							<h4 title="Switch">Switch</h4>
+							<h4>Master Tables</h4>
 							<ul data-role="listview">
-								<li><a href="#" id="addSwitch" title="Add new Switch">Add new Switch</a></li>
+								<li><a href="#" id="holonObjectTypeforMasterTables">Holon Object Type</a></li>
+								<li><a href="#" id="holonElementStateforMasterTables">Holon Element State</a></li>
+								<li><a href="#" id="holonElementTypeforMasterTables">Holon Element Type</a></li>
 							</ul>
 						</div>
 					</li>
 				</ul>
-				<ul data-count-theme="c" data-inset="true"
-					style="padding-left: 0px;">
-					<li class="custom-li">
-						<div data-role="collapsible">
-							<h4 title="Power Line">Power Line</h4>
-							<ul data-role="listview">
-								<li><a href="#" id="addPowerLine" title="Add new Power Line">Add new Power Line</a></li>
-
-							</ul>
-						</div>
-					</li>
-				</ul>
-
-				<ul data-count-theme="c" data-inset="true"
-					style="padding-left: 0px;">
-					<li class="custom-li">
-						<div data-role="collapsible">
-							<h4 title="Map Options">Map Options</h4>
-							<ul data-role="listview">
-								<li><a href="#" id="calcDistance" title="Distance Calculator">Distance Calculator</a></li>
-								<li><a href="#" id="clear" title="Clear Map">Clear Map</a></li>
-
-							</ul>
-						</div>
-					</li>
+				<ul data-role="listview" data-inset="true">
+					<li data-role="list-divider" id="clear">Clear Map</li>
 				</ul>
 
 			</div>
 			<div id="googleMap"></div>
-			<div id="elementInfo">
-				<span id="close">x</span><br>
-				<table>
+			
+			<div id="elementInfo" class="ui-content" data-transition="flip" data-overlay-theme="b" data-theme="a" data-content-theme="d">
+			<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+							<table>
 					<tr>
 						<td>Holon Element Type:</td>
-						<td><select name="elementType" class="elementType">
+						<td><div data-role="fieldcontain"><select name="elementType" class="elementType">
 								<option value="fridge">Fridge</option>
 								<option value="tv">TV</option>
 								<option value="washingMachine">WashingMachine</option>
@@ -107,45 +94,40 @@
 								<option value="battery">Battery</option>
 								<option value="generator">Generator</option>
 								<option value="powerLines">PowerLines</option>
-						</select></td>
-					</tr>
-					<tr>
+						</select></div></td>
 						<td>Holon Element State:</td>
-						<td><select name="elementState">
+						<td><div data-role="fieldcontain"><select name="elementState">
 								<option value="overSupply">OverSupply</option>
 								<option value="normalSupply">NormalSupply</option>
 								<option value="minimumSupply">MinimumSupply</option>
 								<option value="brownOut">BrownOut</option>
 								<option value="heartBeat">HeartBeat</option>
 								<option value="blackOut">BlackOut</option>
-						</select></td>
+						</select></div></td>
 					</tr>
 					<tr>
 						<td>Holon Manager:</td>
-						<td><select name="holonManager">
+						<td><div data-role="fieldcontain"><select name="holonManager">
 								<option value="holonManager1">Holon Manager 1</option>
 								<option value="holonManager2">Holon Manager 2</option>
 								<option value="holonManager3">Holon Manager 3</option>
 								<option value="holonManager4">Holon Manager 4</option>
-						</select></td>
-					</tr>
-					<tr>
+						</select></div></td>
+					
 						<td>Holon Coordinator:</td>
 						<td><input id="holonCoordinator" type="text"></td>
 					</tr>
 					<tr>
 						<td>Max Capacity:</td>
 						<td><input id="maxCapacity" type="text"></td>
-					</tr>
-					<tr>
+					
 						<td>Min Capacity:</td>
 						<td><input id="minCapacity" type="text"></td>
 					</tr>
 					<tr>
 						<td>Current Capacity:</td>
 						<td><input id="currentCapacity" type="text"></td>
-					</tr>
-					<tr>
+					
 						<td>Current Energy Status:</td>
 						<td><input id="currentEnergyStatus" type="text"></td>
 					</tr>
@@ -159,9 +141,58 @@
 					</tr>
 				</table>
 			</div>
-			<div id="displayHolonDetails" data-role="collapsible-set"
-				data-content-theme="d"></div>
-			<div id="chartContainer" style="height: 300px; width: 100%;"></div>
+			<div id="holonObjectDetail" class="ui-content" data-transition="flip" data-overlay-theme="b" data-theme="a" data-content-theme="d">
+			<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+			<input type="hidden" id="holonObjectActionState" value="Add" />
+			<input type="hidden" id="hiddenHolonObjectId" value="" />
+			<table id="holonObjectTable">
+			<tr>
+				<td>Holon Object Type:</td>
+						<td><div data-role="fieldcontain"><select name="holonObjectType" id="holonObjectType">
+								<option value="1">Holon Object Type 1</option>
+								<option value="2">Holon Object Type 2</option>
+								<option value="3">Holon Object Type 3</option>
+								<option value="4">Holon ObjectType 4</option>
+						</select></div></td>
+						<td>Holon Manager Name:</td>
+						<td><input id="holonManagerName" type="text"></td>
+					</tr>
+					<tr>
+						<td>Priority:</td>
+						<td><input id="holonObjectPriority" type="text"></td>
+					
+				<td>Holon Coordinator:</td>
+						<td><div data-role="fieldcontain"><select name="holonCoordinatorId" id="holonCoordinatorId">
+								<option value="1">HK1-Red Holon</option>
+								<option value="2">HK2-Yellow Holon</option>
+						</select></div></td>
+					</tr>
+					<tr><td>Latitude NE</td><td><label id="holonObjectLatitudeNE"></label></td>
+					<td>Longtitude NE</td><td><label id="holonObjectLongitudeNE"></label></td></tr>
+					<tr><td>Latitude SW</td><td><label id="holonObjectLatitudeSW"></label></td>
+					<td>Longtitude SW</td><td><label id="holonObjectLongitudeSW"></label></td></tr>
+					<tr>
+						<td></td>
+						<td><input id="saveHolonObject" type='button' class="button" value='Save Holon Object' /></td>
+					</tr>
+			</table>
+			
+			</div>
+			
+			<div id="holonCoordinatorInformation" class="ui-content" data-transition="flip" data-overlay-theme="b" data-theme="a" data-content-theme="d">
+			<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+			<table>
+			<tr><td><label>Name:</label></td><td><input type="text" name="nameCoordinator" id="nameCoordinator"/></td><br></tr>
+			<tr><td><label>Holon:</label></td><td><div data-role="fieldcontain"><select name="holon" id="holon">
+								<option value="holon1">Red Holon</option>
+								<option value="holon2">Yellow Holon</option>
+								<option value="holon3">Blue Holon</option>
+								<option value="holon4">Green Holon</option>
+						</select></div></td></tr>
+			<tr><td></td><td><input type="button" name="saveCoordinator" id="saveCoordinator" value="Save"></td></tr>
+						</table>
+			</div>
+			
 		</div>
 
 	</div>

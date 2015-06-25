@@ -12,8 +12,10 @@ import java.util.Set;
 public class LatLng implements java.io.Serializable {
 
 	private Integer id;
-	private double lat;
-	private double lng;
+	private double lat_ne;
+	private double lng_ne;
+	private double lat_sw;
+	private double lng_sw;
 	private Set holons = new HashSet(0);
 	private Set holonCoordinators = new HashSet(0);
 	private Set holonObjects = new HashSet(0);
@@ -25,16 +27,20 @@ public class LatLng implements java.io.Serializable {
 	public LatLng() {
 	}
 
-	public LatLng(double lat, double lng) {
-		this.lat = lat;
-		this.lng = lng;
+	public LatLng(double lat_ne, double lng_ne, double lat_sw, double lng_sw) {
+		this.lat_ne = lat_ne;
+		this.lng_ne = lng_ne;
+		this.lat_sw = lat_sw;
+		this.lng_sw = lng_sw;
 	}
 
-	public LatLng(double lat, double lng, Set holons, Set holonCoordinators,
+	public LatLng(double lat_ne, double lng_ne,double lat_sw, double lng_sw, Set holons, Set holonCoordinators,
 			Set holonObjects, Set powerLinesForSource, Set powerLineNodes,
 			Set powerLinesForDestination, Set powerSwitches) {
-		this.lat = lat;
-		this.lng = lng;
+		this.lat_ne = lat_ne;
+		this.lng_ne = lng_ne;
+		this.lat_sw = lat_sw;
+		this.lng_sw = lng_sw;
 		this.holons = holons;
 		this.holonCoordinators = holonCoordinators;
 		this.holonObjects = holonObjects;
@@ -60,14 +66,6 @@ public class LatLng implements java.io.Serializable {
 		return this.id;
 	}
 
-	public double getLat() {
-		return this.lat;
-	}
-
-	public double getLng() {
-		return this.lng;
-	}
-
 	public Set getPowerLineNodes() {
 		return this.powerLineNodes;
 	}
@@ -82,6 +80,22 @@ public class LatLng implements java.io.Serializable {
 
 	public Set getPowerSwitches() {
 		return this.powerSwitches;
+	}
+
+	public double getLat_ne() {
+		return lat_ne;
+	}
+
+	public double getLng_ne() {
+		return lng_ne;
+	}
+
+	public double getLat_sw() {
+		return lat_sw;
+	}
+
+	public double getLng_sw() {
+		return lng_sw;
 	}
 
 	public void setHolonCoordinators(Set holonCoordinators) {
@@ -100,13 +114,6 @@ public class LatLng implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public void setLat(double lat) {
-		this.lat = lat;
-	}
-
-	public void setLng(double lng) {
-		this.lng = lng;
-	}
 
 	public void setPowerLineNodes(Set powerLineNodes) {
 		this.powerLineNodes = powerLineNodes;
@@ -123,5 +130,24 @@ public class LatLng implements java.io.Serializable {
 	public void setPowerSwitches(Set powerSwitches) {
 		this.powerSwitches = powerSwitches;
 	}
+
+	public void setLat_ne(double lat_ne) {
+		this.lat_ne = lat_ne;
+	}
+
+	public void setLng_ne(double lng_ne) {
+		this.lng_ne = lng_ne;
+	}
+
+	public void setLat_sw(double lat_sw) {
+		this.lat_sw = lat_sw;
+	}
+
+	public void setLng_sw(double lng_sw) {
+		this.lng_sw = lng_sw;
+	}
+	
+
+
 
 }

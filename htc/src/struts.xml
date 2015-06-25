@@ -23,7 +23,6 @@
          <result name="error">view/error.jsp</result>
     </global-results>
      
-     <action name="createHolons" class="com.htc.action.HolonCrudAction" method="createHolons" />
      <action name="createHolonsFromFactory" class="com.htc.action.HolonFactory" method="createHolonsFromFactory" />
      
      <action name="createHolonElementType" class="com.htc.action.HolonElementTypeAction" method="createHolonElementType" />
@@ -35,6 +34,12 @@
      <action name="editHolonElementState" class="com.htc.action.HolonElementStateAction" method="editHolonElementState" />
      <action name="deleteHolonElementState" class="com.htc.action.HolonElementStateAction" method="deleteHolonElementState" />
      <action name="getListHolonElementState" class="com.htc.action.HolonElementStateAction" method="getListHolonElementState" />
+
+     <action name="createHolonObject" class="com.htc.action.HolonObjectAction" method="createHolonObject" />
+     <action name="editHolonObject" class="com.htc.action.HolonObjectAction" method="editHolonObject" />
+     <action name="showHolonObjects" class="com.htc.action.HolonObjectAction" method="showHolonObjects" />
+     
+     
 
      <action name="dataGenerator" class="com.htc.action.DataGeneratorAction" method="dataGenerator" />
 

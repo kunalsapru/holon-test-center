@@ -12,9 +12,9 @@ import java.util.Set;
 public class HolonManager implements java.io.Serializable {
 
 	private int id;
-	private HolonObject holonObject;
 	private String name;
 	private Set holonElements = new HashSet(0);
+	private Set holonObjects = new HashSet(0);
 
 	public HolonManager() {
 	}
@@ -23,20 +23,15 @@ public class HolonManager implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public HolonManager(int id, HolonObject holonObject, String name,
+	public HolonManager(int id, String name,
 			Set holonElements) {
 		this.id = id;
-		this.holonObject = holonObject;
 		this.name = name;
 		this.holonElements = holonElements;
 	}
 
 	public Set getHolonElements() {
 		return this.holonElements;
-	}
-
-	public HolonObject getHolonObject() {
-		return this.holonObject;
 	}
 
 	public int getId() {
@@ -51,16 +46,20 @@ public class HolonManager implements java.io.Serializable {
 		this.holonElements = holonElements;
 	}
 
-	public void setHolonObject(HolonObject holonObject) {
-		this.holonObject = holonObject;
-	}
-
 	public void setId(int id) {
 		this.id = id;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Set getHolonObjects() {
+		return holonObjects;
+	}
+
+	public void setHolonObjects(Set holonObjects) {
+		this.holonObjects = holonObjects;
 	}
 
 }

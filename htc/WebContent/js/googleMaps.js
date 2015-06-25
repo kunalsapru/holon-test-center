@@ -3,6 +3,15 @@ $(document)
 				function() {
 					// call initialize function
 					initialize();
+					// Global Variables for distance calculation
+					var dPointA;// =new google.maps.LatLng(49.863915, 8.555046);
+					var dPointB;// =new google.maps.LatLng(49.861304, 8.554177);
+					var dist;
+					var distMarkers = [];
+					var infowinDist;
+					var ro;
+					// Global Variables for distance calculation
+					var drawingManager;
 					var switchMarker;
 					var switchMarkerImage = {
 						url : 'css/images/switch-on.png',
@@ -10,18 +19,283 @@ $(document)
 						origin : new google.maps.Point(0, 0),
 						anchor : new google.maps.Point(0, 32)
 					};
+					var clickedValuePanel;
 					var startPowerLine;
 					var next = 0;
+					var infowindow = "";
+					// Array of Markers and Infowindow
+					var infowindowArray = [];
+					var markerslat = [];
+					var markerslng = [];
+					// Variable to get the old content from the info window
 					var contentInfoWindow = "";
 					var clickedToAddElements = "";
 					// Div to add details about the new elements inserted
+					$("#displayHolonDetails").hide();
+					$("#holonObjectDetail").hide();
+					$("#holonCoordinatorInformation").hide();
 					$("#elementInfo").hide();
-					$("#displayHolonDetails").hide();					
-					$("#close").click(function() {
-						$(this).parent().fadeOut("slow", function(c) {
-						});
+					$(document).on("click","#delete",function(){
+						alert("ready");
 					});
+					$("#saveHolonObject").click(function(event){
 
+						//START KUNAL CODE>>>DONT EDIT/REMOVE IT
+						var holonObjectPriority=$("#holonObjectPriority").val();
+						var holonObjectType=$("#holonObjectType option:selected").val();
+						var holonCoordinatorId=$("#holonCoordinatorId option:selected").val();
+						var holonManager=$("#holonManagerName").val();
+						var latNE=$("#holonObjectLatitudeNE").text();
+						var lngNE=$("#holonObjectLongitudeNE").text();
+						var latSW=$("#holonObjectLatitudeSW").text();
+						var lngSW=$("#holonObjectLongitudeSW").text();
+						var holonObjectActionState = $("#holonObjectActionState").val();
+						var hiddenHolonObjectId = $("#hiddenHolonObjectId").val();
+						var hiddenHolonManagerId = $("#hiddenHolonManagerId").val();
+						$( "#holonObjectDetail" ).popup( "close" );
+						
+						var dataAttributes = {
+								holonObjectType : holonObjectType,
+								holonCoordinatorId : holonCoordinatorId,
+								holonManager : holonManager,
+								latNE : latNE,
+								lngNE : lngNE,
+								latSW : latSW,
+								lngSW : lngSW,
+								holonObjectPriority : holonObjectPriority,
+								hiddenHolonObjectId : hiddenHolonObjectId,
+								hiddenHolonManagerId : hiddenHolonManagerId
+							};
+						if(holonObjectActionState == "Edit"){
+							ajaxRequest("editHolonObject", dataAttributes, editHolonObjectCallBack, {});
+						} else {
+							ajaxRequest("createHolonObject", dataAttributes, createHolonObjectCallBack, {});							
+						}
+
+						//END KUNAL CODE>>>DONT EDIT/REMOVE IT
+					});
+					
+					
+					/*$("#addHolonCoordinator").click(function(){
+						$("#holonCoordinatorInformation").show();
+						$("#holonCoordinatorInformation").popup();
+						$("#holonCoordinatorInformation").popup("open");
+					});*/
+					
+					$('#addHolonObject').click(function(){
+						clickedValuePanel=this.id;
+						overlayTool(this.id);
+					});
+					
+					$("#addHolonCoordinator").click(function(){
+						clickedValuePanel=this.id;
+						overlayTool(this.id);
+					});
+					$("#edit").click(function(){
+						alert("Hellooo");
+					});
+					
+					$(document).on('click', '#edit', function(){ 
+					     alert();
+					 });
+					$("#showHolonObjects").click(showHolonObjects);
+					
+					function overlayTool(clickedValue)
+					{
+						
+						$("#displayHolonDetails").hide();
+
+					//	To check If the layout is already present ;
+						
+						if (drawingManager== null){
+							//Creates a new drawing manager object for first time
+							var rectangleColor="black";
+							if(clickedValuePanel=="addHolonCoordinator"){
+								rectangleColor="red";
+							}
+							if(clickedValuePanel=="addHolonObject"){
+								rectangleColor="black";
+							}
+						 drawingManager = new google.maps.drawing.DrawingManager({
+				    	    drawingMode: google.maps.drawing.OverlayType.POLYGON,
+				    	    drawingControl: true,
+				    	    drawingControlOptions: {
+				    	      position: google.maps.ControlPosition.TOP_CENTER,
+				    	      drawingModes: [
+				    	   		 google.maps.drawing.OverlayType.RECTANGLE,
+				    	   		google.maps.drawing.OverlayType.POLYLINE
+				   	   		 
+				    	      ]
+				    	    },
+				            rectangleOptions: {
+				                geodesic:true,
+				                clickable: true,
+				                strokeColor:rectangleColor
+				            },
+				            polylineOptions: {
+				                geodesic:true,
+				                clickable: true,
+				                strokeColor:"yellow",
+				                strokeOpacity: 2.0,
+				                strokeWeight: 4.0
+				            }
+				    	    });
+				     // Setting the layout on the map 
+				      drawingManager.setMap(map);
+				     // Event when the overlay is complete 
+				      google.maps.event.addListener(drawingManager, 'overlaycomplete', function(event) {
+				    	  var newShape = event.overlay; // Object
+				    	  newShape.type = event.type;	// Rectangle
+				    	 // alert(newShape.getBounds());
+				    	  var latNorthEast = newShape.getBounds().getNorthEast().lat(); //get lat of northeast
+				    	  var lngNorthEast = newShape.getBounds().getNorthEast().lng();	//get longitude of north east
+						//START KUNAL CODE>>>DONT EDIT/REMOVE IT
+				    	  var latSouthWest = newShape.getBounds().getSouthWest().lat();
+				    	  var lngSouthWest = newShape.getBounds().getSouthWest().lng();
+
+				    	//END KUNAL CODE>>>DONT EDIT/REMOVE IT
+				    	  markerslat.push(latNorthEast); //add data to array
+				    	  markerslng.push(lngNorthEast); //add data to array
+						//START KUNAL CODE>>>DONT EDIT/REMOVE IT
+
+				    	  $("#holonObjectLatitudeNE").text(latNorthEast);
+				    	  $("#holonObjectLongitudeNE").text(lngNorthEast);
+				    	  $("#holonObjectLatitudeSW").text(latNorthEast);
+				    	  $("#holonObjectLongitudeSW").text(lngNorthEast);
+
+				    	  //END KUNAL CODE>>>DONT EDIT/REMOVE IT
+
+				    	  infowindowArray.push("");
+				    	  if(clickedValuePanel=="addHolonObject"){
+				    		  $("#holonObjectDetail").show();
+					    	  $("#holonObjectDetail").popup();
+					    	  $("#holonObjectDetail").popup("open");
+				    	  }
+				    	  else
+				    		  {
+				    		  $("#holonCoordinatorInformation").show();
+								$("#holonCoordinatorInformation").popup();
+								$("#holonCoordinatorInformation").popup("open");
+				    		  }
+				      
+				    	  //When Rectangle is clicked
+				    	  google.maps.event.addListener(newShape, 'click', function() {
+				    		  $("#displayHolonDetails").empty();
+				    	 
+				    	//to check this event for each newshape clicked
+				    		 var latValueofRectangle = newShape.getBounds().getNorthEast().lat();
+				    		for(var i=0;i<markerslat.length;i++)
+				    		if(latValueofRectangle==markerslat[i])	//Traverse array for the clicked rectangle
+				    		{
+				    			//No element Added
+				    			var clicked = i;
+				    			if(infowindowArray[i]=="" ||infowindowArray[i]== undefined || infowindowArray[i]== null )
+				    				{
+				    					//alert("No element for this Holon Object");
+				    				}
+				    			else{
+				    				
+				    				//Data exist in the array
+				    				//Code to show data in infoWindow 
+				    				if(infowindow)
+									{infowindow.close();}
+				    				//Content for the info window separated by : then ,
+				    				var holonDetail=infowindowArray[i].split("@");
+				    				var data="";
+				    				var dataForInfoWindow="";
+				    				for(var k=0;k<holonDetail.length-1;k++)
+				    					{
+				    						var individualElementDetail=holonDetail[k].split("#");
+				    						for(var l=0;l<individualElementDetail.length;l++)
+				    							{
+				    								if(k==0){
+				    									dataForInfoWindow = dataForInfoWindow+"</br>"+individualElementDetail[l];
+				    								}
+				    							    
+				    								data= data+"</br>"+individualElementDetail[l];
+				    							}
+				    					/*var content=	"<div data-role='collapsible' id='displayHolonDetails" + k + "'><h3>Holon Element " + (k+1) + "</h3><p>"+data+"</p></div>";
+				    						$("#displayHolonDetails").append( content ).collapsibleset('refresh');*/
+				    						data="";
+				    					}
+				    				if(k>1)
+				    					{
+				    					dataForInfoWindow=dataForInfoWindow+"</br></br>"+"<a href='#' id='moreInfo' value="+i+">More Information</a>";
+				    					}
+				    				
+				    				infowindow = new google.maps.InfoWindow({
+				    				      content: dataForInfoWindow,
+				    				      position: newShape.getBounds().getNorthEast()
+				    				  });
+				    				
+				    				infowindow.open(map,newShape);
+				    			}
+				    		}
+				    	 
+				    	  });
+				    	 
+				  	});
+				     //END of overlay Complete 
+					  // Select the data in the info window
+					  $("#saveElementInfo").click(function(){
+						  //$('#dropDownId :selected').text();
+						  var textvalue= "<b>Element Type-</b>"+$("#elementType").find('option:selected').text();
+						  $(".elementType").change(function() {
+							        alert($('.elementType option:selected').html());
+							    });
+						 
+						 var elementState= "<b>Element State-</b>"+"overSupply";
+						 $('#elementState').on('change', function() {
+							  textvalue="<b>Element State-</b>"+$(this).val(); // or $(this).val()
+							});
+						 var holonManager="<b>Holon Manager-</b>"+"Manager1";
+						 $('#holonManager').on('change', function() {
+							  textvalue="<b>Holon Manager-</b>"+$(this).val(); // or $(this).val()
+							});
+						 var holonCoordinator="<b>Holon Coordinator-</b>"+$("#holonCoordinator").val();
+						 var minCapacity="<b>Min Capacity-</b>"+ $("#minCapacity").val();
+						 var maxCapacity= "<b>Max. Capacity-</b>"+$("#maxCapacity").val();
+						 var usage= "<b>Usage-</b>"+$("#usage").val();
+						 var currentCapacity="<b>Current Capacity-</b>"+$("#currentCapacity").val();
+						 var currentEnergyStatus="<b>Current Energy Status-</b>"+$("#currentEnergyStatus").val();
+						 var result=textvalue+"#"+elementState+"#"+holonManager+"#"+holonCoordinator+"#"+minCapacity+"#"+maxCapacity+"#"+usage+"#"+currentCapacity+"#"+currentEnergyStatus;
+						 
+						for(var j=0;j<markerslat.length;j++)
+							{
+								if(clickedToAddElements==markerslat[j])
+									{
+											//get value of the previous from the array
+											var valueFromArray=result+"@"+infowindowArray[j];
+											infowindowArray[j]=valueFromArray;
+											$("#elementName").html("");
+											
+									}
+							}
+						console.log(infowindowArray);
+						console.log(infowindowArray.length);
+						 //Clear the value and hide the div
+						// $("#elementName").val("");
+						 $("#minCapacity").val("");
+						 $("#maxCapacity").val("");
+						 $("#usage").val("");
+						 $("#holonCoordinator").val("");
+						 $("#currentCapacity").val("");
+						 $("#currentEnergyStatus").val("");
+						 $("#displayHolonDetails").empty();						  
+					  });
+					  //End of Save Button
+					  
+					  
+					  
+					 
+					}		
+					}
+					
+					$("#close").click(function(){
+						$(this).parent().fadeOut("slow", function(c) {
+                        });
+					})
+					
 					$("#addSwitch").on(
 							'click',
 							function() {
@@ -31,6 +305,43 @@ $(document)
 										});
 							});
 
+					// START KUNAL CODE --> CRITICAL SECTION DO NOT ENTER
+					function editHolonObjectCallBack(data, options){
+						alert(data);
+					}
+					function createHolonObjectCallBack(data, options) {
+						var dataArray = data.split("!");
+						var holonObjectId = dataArray[0];
+						var holonName= dataArray[1];
+						var holonCoordinatorName_Holon= dataArray[2];	
+						var holonObjectTypeName= dataArray[3];
+						var ne_location= dataArray[4];
+						var sw_location= dataArray[5];
+						var lineConnectedState= dataArray[6];
+						var priority= dataArray[7];
+						var holonManagerName= dataArray[8];
+						
+						var lat=ne_location.split("~");
+						
+						contentString="<b>Priority: </b>"+priority+"<br>"+
+								"<b>Holon Object Id: </b>"+holonObjectId +"<br>"+
+								"<b>Holon Name: </b>"+holonName+"<br>"+
+								"<b>Holon Manager: </b>"+holonManagerName+"<br>"+
+								"<b>North East Location: </b>"+ne_location+"<br>"+
+								"<b>South West Location: </b>"+sw_location+"<br><br>"+
+								"<input type='button' id='editHolonObject' name='editHolonObject' value='Edit Holon Object' onclick='editHolonObject("+holonObjectId+")'/>&nbsp;&nbsp;"+
+								"<input type='button' id='deleteHolonObject' name='deleteHolonObject' value='Delete Holon Object'/>&nbsp;&nbsp;"+
+								"<input type='button' id='addHolonElement' name='addHolonElement' value='Add Holon Element' onclick='addHolonElement("+lat[0]+","+lat[1]+")'/>&nbsp;&nbsp;"+
+								"<input type='button' id='showHolonElement' name='showHolonElement' value='Show Holon Elements' onclick='showHolonElementsForHolon("+lat[0]+","+lat[1]+")'/>";
+						var infowindowHolonObject = new google.maps.InfoWindow({
+						      content: contentString,
+						      position:new google.maps.LatLng(lat[0],lat[1])
+						  });
+						infowindowHolonObject.open(map,map);
+						//alert(contentString);
+					}
+					//END KUNAL CODE
+					
 					function addSwitchMarker(pos) {
 						var marker = new google.maps.Marker({
 							position : pos,
@@ -79,82 +390,161 @@ $(document)
 
 									});
 
-					// Holon object Button click event
-
-					/*
-					 * $("#addHolonFactory").click(function(){
-					 * $("#displayHolonDetails").hide();
-					 * 
-					 * var dataAttr1 = "Ein"; var dataAttr2 = "Zwei"; var
-					 * dataAttr3 = "Drei"; var dataAttr4 = "Vier"; var
-					 * dataAttributes={dataAttr1:dataAttr1,dataAttr2:dataAttr2,dataAttr3:dataAttr3,dataAttr4:dataAttr4};
-					 * 
-					 * ajaxRequest("createHolonsFromFactory", dataAttributes,
-					 * callBackCreateHolons, {}); });
-					 * 
-					 * function callBackCreateHolons(dataFromFactory, options){
-					 *  // alert("TEST --"+dataFromFactory); var
-					 * long=[8.555232882499695,8.555393815040588,8.554060757160187,8.55423241853714,8.555128276348114,8.555310666561127];
-					 * var
-					 * lat=[49.86342249762294,49.86356427407353,49.863567732030546,49.86368184447307,49.86372506881273,49.863795956646065];
-					 * var data= dataFromFactory.split("##"); for(var i=0;i<2;) {
-					 * var rectangle1 = new google.maps.Rectangle({ map: map,
-					 * bounds: new google.maps.LatLngBounds( new
-					 * google.maps.LatLng(lat[i], long[i]), new
-					 * google.maps.LatLng(lat[i+1], long[i+1])) });
-					 * 
-					 * i=i+2;
-					 *  } for(var i=2;i<4;) { var rectangle2 = new
-					 * google.maps.Rectangle({ map: map, bounds: new
-					 * google.maps.LatLngBounds( new google.maps.LatLng(lat[i],
-					 * long[i]), new google.maps.LatLng(lat[i+1], long[i+1]))
-					 * });
-					 * 
-					 * i=i+2;
-					 *  } for(var i=4;i<6;) { var rectangle3 = new
-					 * google.maps.Rectangle({ map: map, bounds: new
-					 * google.maps.LatLngBounds( new google.maps.LatLng(lat[i],
-					 * long[i]), new google.maps.LatLng(lat[i+1], long[i+1]))
-					 * });
-					 * 
-					 * i=i+2;
-					 *  } var infowindowrect1;
-					 * 
-					 * google.maps.event.addListener(rectangle1, 'click',
-					 * function(){ if(infowindowrect1)
-					 * {infowindowrect1.close();} infowindowrect1 = new
-					 * google.maps.InfoWindow({ content: data[0], position: new
-					 * google.maps.LatLng(lat[1], long[1]) });
-					 * infowindowrect1.open(map,rectangle1); });
-					 * google.maps.event.addListener(rectangle2, 'click',
-					 * function(){ if(infowindowrect1)
-					 * {infowindowrect1.close();} infowindowrect1 = new
-					 * google.maps.InfoWindow({ content: data[1], position: new
-					 * google.maps.LatLng(lat[3], long[3]) });
-					 * infowindowrect1.open(map,rectangle2); });
-					 * google.maps.event.addListener(rectangle3, 'click',
-					 * function(){ if(infowindowrect1)
-					 * {infowindowrect1.close();} infowindowrect1 = new
-					 * google.maps.InfoWindow({ content: data[2], position: new
-					 * google.maps.LatLng(lat[5], long[5]) });
-					 * infowindowrect1.open(map,rectangle3); });
-					 *  }
-					 */
-
-					$("#clear").click(function() {
+					$("#clear1").click(function() {
 						// location.reload();
 						$("#displayHolonDetails").hide();
 						// $("#nav").hide();
 						initialize();
 					});
-					
-					
-					
+					// Map click event
+					google.maps.event.addListener(map, 'click',
+							function(event) {
+								// $("#elementInfo").toggle("slide",{direction:"right"});
+							});
+
+					$("#addPowerLine").click(function() {
+						if (next == 1) {
+							var start = startPowerLine[0];
+							var end = startPowerLine[1];
+						}
+						next = 0;
+						// cursorCrossHair();
+
+						/*
+						 * alert(startPowerLine); alert(endPowerLine);
+						 */
+						drawPowerLine(start, end)
+					});
+
+					/*
+					 * google.maps.event.addListener(map, 'click',
+					 * function(event) { startPowerLine[next]= event.latLng;
+					 * alert(startPowerLine[next]); next++;
+					 * 
+					 * });
+					 */
+
+					$("#calcDistance")
+							.on(
+									'click',
+									function() {
+
+										if (dPointA == undefined
+												&& dPointB == undefined) {
+
+											// alert("Please select two points
+											// on the Map to calculate the
+											// distance.")
+											swal({
+												title : "Which are the Points?",
+												text : "Please select two points on the Map to calculate the distance.",
+												type : "error",
+												confirmButtonText : "Sure!"
+											});
+										} else if ((dPointA != undefined && dPointB == undefined)
+												|| (dPointA == undefined && dPointB != undefined)) {
+											swal({
+												title : "Which is the second point?",
+												text : "Please select second point on the Map to calculate the distance.",
+												type : "error",
+												confirmButtonText : "Sure!"
+											});
+										} else {
+											// alert("abhinav1");
+											dist = google.maps.geometry.spherical
+													.computeDistanceBetween(
+															dPointA, dPointB);
+											infowinDist= new google.maps.InfoWindow({
+													content : "The distance between selected points is "
+															+ dist + " meters."
+												});
+											drawRoute(dPointA, dPointB,
+													infowinDist, map);
+											// alert("The distance between
+											// selected points is "+dist+"m.");
+											swal({
+												title : "Distance",
+												text : "The distance between selected points is "
+														+ dist + " meters.",
+												type : "success",
+												confirmButtonText : "Nice!"
+											});
+											dPointA = undefined;
+											dPointB = undefined;
+											deleteMarkers();
+										}
+
+									});
+
+					function clearMarkers() {
+						setAllMap(null);
+					}
+
+					function deleteMarkers() {
+						clearMarkers();
+						distMarkers = [];
+					}
+					function setAllMap(map) {
+						for (var i = 0; i < distMarkers.length; i++) {
+							distMarkers[i].setMap(map);
+						}
+					}
+
+					google.maps.event.addListener(map, 'click',
+							function(event) {
+
+								if (dPointA == undefined) {
+									// alert("AbhinavMark A "+event.latLng);
+									dPointA = event.latLng;
+									placeMarker(event.latLng);
+								} else {
+									// alert("AbhinavMark B"+event.latLng);
+									dPointB = event.latLng;
+									placeMarker(event.latLng);
+
+								}
+							});
+
+					function placeMarker(location) {
+						// alert("AbhinavMark Place"+ location);
+						var clickedLocation = new google.maps.LatLng(location);
+						var marker = new google.maps.Marker({
+							position : location,
+							map : map
+						});
+						distMarkers.push(marker);
+					}
+
 					function cursorCrossHair() {
 						$("#googleMap").css('cursor', 'pointer');
 					}
+					
 				});
 
+function drawRoute(start, end, infowindow, map) {
+	//alert("infowin "+infowindow+" "+"map "+map+" this "+this)
+
+	var request = {
+		origin : start,
+		destination : end,
+		travelMode : google.maps.TravelMode.DRIVING,
+		
+	};
+	ro = directionsService.route(request, function(response, status) {
+		if (status == google.maps.DirectionsStatus.OK) {
+			directionsDisplay.setDirections(response);
+		}
+		
+		response= {
+				
+				click:infowindow.open(map,ro)
+		};
+		
+		
+
+	});
+	
+}
 
 function drawPowerLine(start, end, infowindow) {
 
@@ -175,7 +565,7 @@ function drawPowerLine(start, end, infowindow) {
 
 function initialize() {
 	mapProp = {
-		center : new google.maps.LatLng(49.863393, 8.554789),
+		center : new google.maps.LatLng(49.863772, 8.552666),
 		zoom : 19,
 		mapTypeId : google.maps.MapTypeId.ROADMAP
 	};
@@ -184,4 +574,83 @@ function initialize() {
 	directionsDisplay = new google.maps.DirectionsRenderer();
 	directionsDisplay.setMap(map);
 
+}
+
+function editHolonObject(holonObjectId)
+{
+/*	if(infowindowHolonObject == ""){} 
+	else {
+		infowindowHolonObject.close();
+	}
+*/	$("#holonObjectActionState").val("Edit");
+	$("#hiddenHolonObjectId").val(holonObjectId);
+	$("#holonObjectDetail").popup();
+	$("#holonObjectDetail").popup("open");
+}
+
+function addHolonElement(holonObjectId){
+	$("#elementInfo").show();
+	$("#elementInfo").popup();
+	$("#elementInfo").popup("open");
+}
+
+function showHolonObjects()
+{ 
+	ajaxRequest("showHolonObjects", {}, showHolonObjectsCallBack, {});
+}
+
+function showHolonObjectsCallBack(data, options){
+	alert(data);
+/*	var long=[8.555232882499695,8.555393815040588,8.554060757160187,8.55423241853714,8.555128276348114,8.555310666561127];
+	var lat=[49.86342249762294,49.86356427407353,49.863567732030546,49.86368184447307,49.86372506881273,49.863795956646065];
+	var data=["Hello","Bye","Chao"];
+	var rectangles=[];
+	
+	for (var i = 0,j=0; i < 3; i++) {
+		    var rectangleFromFactory = new google.maps.Rectangle({
+		      map: map,
+		      bounds: new google.maps.LatLngBounds(
+		    	      new google.maps.LatLng(lat[j], long[j]),
+		    	      new google.maps.LatLng(lat[j+1], long[j+1]))
+		    });
+		    attachMessage(rectangleFromFactory,i ,new google.maps.LatLng(lat[j+1], long[j+1]));
+		    j=j+2;
+	}	*/
+}
+
+function attachMessage(marker, num, position) {
+	  var message = ['hi', 'bye', 'chao'];
+	  var infowindow = new google.maps.InfoWindow({
+	    content: message[num],
+	    position:position
+	  });
+
+	  google.maps.event.addListener(marker, 'click', function() {
+	    infowindow.open(marker.get('map'), marker);
+	  });
+}
+
+function showHolonElementsForHolon (holonObjectId){
+	$("#displayHolonDetails").show();
+	$("#displayHolonDetails").empty();
+	var holonElementType=["Fridge","Washing Machine"];
+	var holonManager=["HolonManager1","HolonManager4"];
+	var maxCapacity=["300W","2500W"];
+	var data="";
+	for (var k = 0; k < holonElementType.length; k++) {
+		
+		var individualElementDetail = "<div data-role='collapsible'><h3>Holon Element :"+(k+1)+"</h3><button onclick='delete()' id='delete' class='ui-btn ui-btn-inline ui-icon-delete ui-btn-icon-notext ui-corner-all'>No text</button>" +
+				"<button onclick='edit()' class='ui-btn ui-btn-inline ui-icon-edit ui-btn-icon-notext ui-corner-all' id='edit'>No text</button>"+holonElementType[k]+"</div>"
+		$("#displayHolonDetails").append(individualElementDetail);
+	}
+	console.log($("#displayHolonDetailsData"));
+    $('#displayHolonDetails').panel({ position: "right"});       
+    $('#displayHolonDetails').panel("open");   	
+		
+	
+}
+
+function edit()
+{
+	alert("Clicked Edit");
 }

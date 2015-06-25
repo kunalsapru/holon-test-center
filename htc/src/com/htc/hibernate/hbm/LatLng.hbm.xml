@@ -7,11 +7,17 @@
             <column name="id" />
             <generator class="increment" />
         </id>
-        <property name="lat" type="double">
-            <column name="lat" precision="22" scale="0" not-null="true" />
+        <property name="lat_ne" type="double">
+            <column name="lat_ne" precision="22" scale="0" not-null="true" />
         </property>
-        <property name="lng" type="double">
-            <column name="lng" precision="22" scale="0" not-null="true" />
+        <property name="lng_ne" type="double">
+            <column name="lng_ne" precision="22" scale="0" not-null="true" />
+        </property>
+        <property name="lat_sw" type="double">
+            <column name="lat_sw" precision="22" scale="0" not-null="true" />
+        </property>
+        <property name="lng_sw" type="double">
+            <column name="lng_sw" precision="22" scale="0" not-null="true" />
         </property>
         <set name="holons" table="holon" inverse="true" lazy="true" fetch="select">
             <key>
