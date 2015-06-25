@@ -26,37 +26,37 @@
 	<div data-role="page" id="pageone">
 		<div data-role="main" class="ui-content">
 	<div id="displayHolonDetails" data-role="panel" data-display="overlay" style="display: none;top: auto;" data-swipe-close="false">
-			<div data-role="collapsible" id="displayHolonDetailsData"><h3>Holon Elements</h3></div>
+			<div data-role="collapsible" id="displayHolonDetailsData"><h3 title="Holon Elements">Holon Elements</h3></div>
 			</div>
 			<div id="nav">
 			
 			<ul data-role="listview" data-inset="true">
-					<li data-role="list-divider" id="addHolonCoordinator">Add New Holon
+					<li data-role="list-divider" id="addHolonCoordinator" title="Add New Holon Coordinator">Add New Holon
 						Coordinator</li>
 				</ul>
 
 				<ul data-role="listview" data-inset="true">
-					<li data-role="list-divider" id="addHolonObject">Add New Holon
+					<li data-role="list-divider" id="addHolonObject" title="Add New Holon Object">Add New Holon
 						Object</li>
 				</ul>
 				
 				<ul data-role="listview" data-inset="true">
-					<li data-role="list-divider" id="consumptionGraph">Consumption Graph</li>
+					<li data-role="list-divider" id="consumptionGraph" title="Consumption Graph">Consumption Graph</li>
 				</ul>
 				
 				<ul data-role="listview" data-inset="true">
-					<li data-role="list-divider" id="showHolonObjects">Show Holon Objects</li>
+					<li data-role="list-divider" id="showHolonObjects" title="Show Holon Objects">Show Holon Objects</li>
 				</ul>
 
 				<ul data-inset="true" style="padding-left: 0px;">
 					<li>
 						<div data-role="collapsible">
-							<h4>Modes</h4>
+							<h4 title="Modes">Modes</h4>
 							<ul data-role="listview">
-								<li><a href="#" id="connectToPowerSource">Connect to PowerSource</a></li>
-								<li><a href="#" id="switch">Switch</a></li>
-								<li><a href="#" id="calcDistance">Calculate Distance</a></li>
-								<li><a href="#" id="addPowerLine">Add New Power Line</a></li>
+								<li><a href="#" id="connectToPowerSource" title="Connect to PowerSource">Connect to PowerSource</a></li>
+								<li><a href="#" id="switch" title="Switch">Switch</a></li>
+								<li><a href="#" id="calcDistance" title="Calculate Distance">Calculate Distance</a></li>
+								<li><a href="#" id="addPowerLine" title="Add New Power Line">Add New Power Line</a></li>
 							</ul>
 						</div>
 					</li>
@@ -65,17 +65,17 @@
 				<ul data-inset="true" style="padding-left: 0px;">
 					<li>
 						<div data-role="collapsible">
-							<h4>Master Tables</h4>
+							<h4 title="Master Tables">Master Tables</h4>
 							<ul data-role="listview">
-								<li><a href="#" id="holonObjectTypeforMasterTables">Holon Object Type</a></li>
-								<li><a href="#" id="holonElementStateforMasterTables">Holon Element State</a></li>
-								<li><a href="#" id="holonElementTypeforMasterTables">Holon Element Type</a></li>
+								<li><a href="#" id="holonObjectTypeforMasterTables" title="Holon Object Type">Holon Object Type</a></li>
+								<li><a href="#" id="holonElementStateforMasterTables" title="Holon Element State">Holon Element State</a></li>
+								<li><a href="#" id="holonElementTypeforMasterTables" title="Holon Element Type">Holon Element Type</a></li>
 							</ul>
 						</div>
 					</li>
 				</ul>
 				<ul data-role="listview" data-inset="true">
-					<li data-role="list-divider" id="clear">Clear Map</li>
+					<li data-role="list-divider" id="clear" title="Clear Map">Clear Map</li>
 				</ul>
 
 			</div>
