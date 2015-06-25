@@ -7,14 +7,14 @@
 $(document).ready(function() {
 
 	var lineDrawingManager;
-	var lineArray;
+	var lineArray=[];
 
 	$('#addPowerLine').click(function() {
 		if ($(this).css("background-color") == "rgb(237, 237, 237)") {
 			$(this).css("background-color", "rgb(153,255,255)");
 
 			lineDrawingManager = new google.maps.drawing.DrawingManager({
-				drawingMode : google.maps.drawing.OverlayType.POLYGON,
+				drawingMode :null,
 				drawingControl : true,
 				drawingControlOptions : {
 					position : google.maps.ControlPosition.TOP_CENTER,
@@ -35,12 +35,12 @@ $(document).ready(function() {
 			
 				var newShape = event.overlay; // Object
 		    	newShape.type = event.type;	// Polygon
-		    	alert("abhinav 3"+newShape.type);
-		    	alert(newShape.getPaths().getAt(0));
-		    	
-		    	
-				
-				
+		    	var start=newShape.getPath().getAt(0);
+		    	var end=newShape.getPath().getAt(1);
+		    	var latLangArr=[start,end];
+		    	//alert("lat lang  "+latLangArr);
+		    	lineArray.push(latLangArr);
+		    	//alert("line "+lineArray);
 			});
 
 		} else {
