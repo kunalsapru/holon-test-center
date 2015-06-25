@@ -15,6 +15,7 @@
 <script type="text/javascript" src="js/rightPanel.js"></script>
 <script type="text/javascript" src="js/common.js"></script>
 <script type="text/javascript" src="js/powerline.js"></script>
+<script type="text/javascript" src="js/distanceCalc.js"></script>
 <script src="js/sweetalert.min.js"></script> 
 <link rel="stylesheet" type="text/css" href="css/sweetalert.css">
 <LINK href="css/contextMenu.css" rel="stylesheet" type="text/css" />

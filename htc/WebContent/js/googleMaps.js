@@ -3,14 +3,6 @@ $(document)
 				function() {
 					// call initialize function
 					initialize();
-					// Global Variables for distance calculation
-					var dPointA;// =new google.maps.LatLng(49.863915, 8.555046);
-					var dPointB;// =new google.maps.LatLng(49.861304, 8.554177);
-					var dist;
-					var distMarkers = [];
-					var infowinDist;
-					var ro;
-					// Global Variables for distance calculation
 					var drawingManager;
 					var switchMarker;
 					var switchMarkerImage = {
@@ -356,154 +348,14 @@ $(document)
 						// $("#nav").hide();
 						initialize();
 					});
-					// Map click event
-					google.maps.event.addListener(map, 'click',
-							function(event) {
-								// $("#elementInfo").toggle("slide",{direction:"right"});
-							});
-
-					/*$("#addPowerLine").click(function() {
-						if (next == 1) {
-							var start = startPowerLine[0];
-							var end = startPowerLine[1];
-						}
-						next = 0;
-						// cursorCrossHair();
-
-						
-						 * alert(startPowerLine); alert(endPowerLine);
-						 
-						drawPowerLine(start, end)
-					});*/
-
-					/*
-					 * google.maps.event.addListener(map, 'click',
-					 * function(event) { startPowerLine[next]= event.latLng;
-					 * alert(startPowerLine[next]); next++;
-					 * 
-					 * });
-					 */
-
-					$("#calcDistance")
-							.on(
-									'click',
-									function() {
-
-										if (dPointA == undefined
-												&& dPointB == undefined) {
-
-											// alert("Please select two points
-											// on the Map to calculate the
-											// distance.")
-											swal({
-												title : "Which are the Points?",
-												text : "Please select two points on the Map to calculate the distance.",
-												type : "error",
-												confirmButtonText : "Sure!"
-											});
-										} else if ((dPointA != undefined && dPointB == undefined)
-												|| (dPointA == undefined && dPointB != undefined)) {
-											swal({
-												title : "Which is the second point?",
-												text : "Please select second point on the Map to calculate the distance.",
-												type : "error",
-												confirmButtonText : "Sure!"
-											});
-										} else {
-											// alert("abhinav1");
-											dist = google.maps.geometry.spherical
-													.computeDistanceBetween(
-															dPointA, dPointB);
-											infowinDist= new google.maps.InfoWindow({
-													content : "The distance between selected points is "
-															+ dist + " meters."
-												});
-											drawRoute(dPointA, dPointB,
-													infowinDist, map);
-											// alert("The distance between
-											// selected points is "+dist+"m.");
-											swal({
-												title : "Distance",
-												text : "The distance between selected points is "
-														+ dist + " meters.",
-												type : "success",
-												confirmButtonText : "Nice!"
-											});
-											dPointA = undefined;
-											dPointB = undefined;
-											deleteMarkers();
-										}
-
-									});
-
-					function clearMarkers() {
-						setAllMap(null);
-					}
-
-					function deleteMarkers() {
-						clearMarkers();
-						distMarkers = [];
-					}
-					function setAllMap(map) {
-						for (var i = 0; i < distMarkers.length; i++) {
-							distMarkers[i].setMap(map);
-						}
-					}
-
-					google.maps.event.addListener(map, 'click',
-							function(event) {
-
-								if (dPointA == undefined) {
-									// alert("AbhinavMark A "+event.latLng);
-									dPointA = event.latLng;
-									placeMarker(event.latLng);
-								} else {
-									// alert("AbhinavMark B"+event.latLng);
-									dPointB = event.latLng;
-									placeMarker(event.latLng);
-
-								}
-							});
-
-					function placeMarker(location) {
-						// alert("AbhinavMark Place"+ location);
-						var clickedLocation = new google.maps.LatLng(location);
-						var marker = new google.maps.Marker({
-							position : location,
-							map : map
-						});
-						distMarkers.push(marker);
-					}
-
+					
+					
+					
 					function cursorCrossHair() {
 						$("#googleMap").css('cursor', 'pointer');
 					}
 				});
 
-function drawRoute(start, end, infowindow, map) {
-	//alert("infowin "+infowindow+" "+"map "+map+" this "+this)
-
-	var request = {
-		origin : start,
-		destination : end,
-		travelMode : google.maps.TravelMode.DRIVING,
-		
-	};
-	ro = directionsService.route(request, function(response, status) {
-		if (status == google.maps.DirectionsStatus.OK) {
-			directionsDisplay.setDirections(response);
-		}
-		
-		response= {
-				
-				click:infowindow.open(map,ro)
-		};
-		
-		
-
-	});
-	
-}
 
 function drawPowerLine(start, end, infowindow) {
 
