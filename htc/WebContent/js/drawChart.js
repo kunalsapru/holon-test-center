@@ -4,7 +4,9 @@
 
 $(document)
 		.ready(function () {
-    var chart = new CanvasJS.Chart("chartContainer",
+    
+			$("#consumption").on('click',function() {
+			var chart = new CanvasJS.Chart("chartContainer",
     {      
       title:{
         text: "Consumption Graph for Holon Elements"
@@ -64,5 +66,6 @@ $(document)
       ]
     });
 
-    $('#consumption').click(chart.render());
-})
+    chart.render();
+			})
+			})
