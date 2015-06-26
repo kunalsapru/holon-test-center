@@ -165,8 +165,8 @@
 						<td><input id="holonManagerName" type="text"></td>
 					</tr>
 					<tr>
-						<td>Priority:</td>
-						<td><input id="holonObjectPriority" type="text"></td>
+						<!-- <td>Priority:</td>
+						<td><input id="holonObjectPriority" type="text"></td> -->
 					
 				<td>Holon Coordinator:</td>
 						<td><div data-role="fieldcontain"><select name="holonCoordinatorId" id="holonCoordinatorId">
