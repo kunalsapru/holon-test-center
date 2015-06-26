@@ -5,8 +5,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>HTC Home Page</title>
-<script
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script type="text/javascript"
 	src="https://maps.googleapis.com/maps/api/js?libraries=drawing"></script>
 <script type="text/javascript" src="js/googleMaps.js"></script>
@@ -18,6 +16,8 @@
 <script type="text/javascript" src="js/distanceCalc.js"></script>
 <script type="text/javascript" src="js/addHolonObject.js"></script>
 <script type="text/javascript" src="js/jquery.flot.js"></script>
+<script type="text/javascript" src="js/jquery.flot.time.js"></script>
+<script type="text/javascript" src="js/jquery-2.1.4.js"></script>
 <script type="text/javascript" src="js/drawChart.js"></script>
 <script src="js/sweetalert.min.js"></script> 
 <link rel="stylesheet" type="text/css" href="css/chart.css">
@@ -199,7 +199,17 @@
 			<tr><td></td><td><input type="button" name="saveCoordinator" id="saveCoordinator" value="Save"></td></tr>
 						</table>
 			</div>
-			
+			<div id="masterTableHolonObjectsTypes" class="ui-content"
+				data-transition="flip" data-overlay-theme="b" data-theme="a"
+				data-content-theme="d">
+				<a href="#" data-rel="back" data-role="button" data-theme="a"
+					data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+			</div>
+			<div id="addMasterHolonObjDetail">
+				<label>Object Type:</label><input type="text" id="textObjTypeMaster"></input>
+				<input type="button" id="buttonObjTypeMaster" value="Save" />
+			</div>
+
 		</div>
 
 	</div>

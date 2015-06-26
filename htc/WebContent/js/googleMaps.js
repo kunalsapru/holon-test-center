@@ -30,6 +30,8 @@ $(document)
 					$(document).on("click","#delete",function(){
 						alert("ready");
 					});
+					$("#holonObjectTypeforMasterTables").click(function(){
+						getHolonObjectTypesFromDatabase();});
 					$("#switch").on('click',function(){
 						addNewSwitch=true;
 						//console.log($(this).find("a").attr("id"));
@@ -576,4 +578,22 @@ function showHolonElementsForHolon (holonObjectId){
 function edit()
 {
 	alert("Clicked Edit");
+}
+
+function getHolonObjectTypesFromDatabase()
+{
+var types=["Fridge","Washing Machine"];
+var data="";
+for(var i=0;i<types.length;i++)
+	{
+		data=data+"<tr><td>"+types[i]+"</td><td><button id='editMasterHolonObjectType'>Edit</button></td><td><button id='deleteMasterHolonObjectType'>Delete</button></td></tr>"
+	}
+data="<table border='1'><th>Data Type</th><th></th><th></th>"+data+"</table>";
+$("#masterTableHolonObjectsTypes").empty();
+$("#masterTableHolonObjectsTypes").append("<a href='#' data-rel='back' data-role='button' data-theme='a' data-icon='delete' data-iconpos='notext' class='ui-btn-right'>X</a>"+data);
+$("#masterTableHolonObjectsTypes").append("<br><button id='addMasterHolonObjectType' onclick='addHolonObjectTypeInMaster()'>Add</button>");
+$("#masterTableHolonObjectsTypes").show();
+$("#masterTableHolonObjectsTypes").popup();
+$("#masterTableHolonObjectsTypes").popup("open");
+
 }
