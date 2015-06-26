@@ -14,6 +14,9 @@
 <script type="text/javascript" src="js/toggle.js"></script>
 <script type="text/javascript" src="js/rightPanel.js"></script>
 <script type="text/javascript" src="js/common.js"></script>
+<script type="text/javascript" src="js/powerline.js"></script>
+<script type="text/javascript" src="js/distanceCalc.js"></script>
+<script type="text/javascript" src="js/addHolonObject.js"></script>
 <script src="js/sweetalert.min.js"></script> 
 <link rel="stylesheet" type="text/css" href="css/sweetalert.css">
 <LINK href="css/contextMenu.css" rel="stylesheet" type="text/css" />
@@ -182,7 +185,7 @@
 			<div id="holonCoordinatorInformation" class="ui-content" data-transition="flip" data-overlay-theme="b" data-theme="a" data-content-theme="d">
 			<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
 			<table>
-			<tr><td><label>Name:</label></td><td><input type="text" name="nameCoordinator" id="nameCoordinator"/></td><br></tr>
+			<tr><td><label>Name:</label></td><td><input type="text" name="nameCoordinator" id="nameCoordinator"/></td></tr>
 			<tr><td><label>Holon:</label></td><td><div data-role="fieldcontain"><select name="holon" id="holon">
 								<option value="holon1">Red Holon</option>
 								<option value="holon2">Yellow Holon</option>

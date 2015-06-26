@@ -8,7 +8,7 @@ $(document).ready(function() {
 		var markerslng = [];
 		var infowindowArray = [];
 		var infowindow = "";
-	$('#addHolonObject').click(function(){
+	$('#addHolonObject2').click(function(){
 				//alert($(this).css("background-color") );
 		if ($(this).css("background-color") == "rgb(233, 233, 233)") {
 			$(this).css("background-color", "rgb(153,255,255)");

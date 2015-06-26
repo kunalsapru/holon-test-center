@@ -36,17 +36,27 @@ $(document)
 							distListener=google.maps.event.addListener(map, 'click',
 									function(event) {
 
-										if (dPointA == undefined) {
+										if (dPointA == undefined && dPointB == undefined) {
 											// alert("AbhinavMark A "+event.latLng);
 											dPointA = event.latLng;
 											placeMarker(event.latLng);
-										} else {
+										} else if (dPointA != undefined && dPointB == undefined){
 											// alert("AbhinavMark B"+event.latLng);
 											dPointB = event.latLng;
 											placeMarker(event.latLng);
 
-										}
+										} else
+											{
+											swal({
+												title : "Points Already Selected!",
+												text : "Please click on the button to calculate the distance.",
+												type : "info",
+												confirmButtonText : "Sure!"
+											});
+
+											}
 									});
+							
 
 						}
 						else
@@ -96,10 +106,11 @@ $(document)
 								dPointA = undefined;
 								dPointB = undefined;
 								deleteMarkers();
+								google.maps.event.removeListener(distListener);
+								$(this).css("background-color", "rgb(237,237,237)");
 							}
 							
-							google.maps.event.removeListener(distListener);
-							$(this).css("background-color", "rgb(237,237,237)");
+							
 							}
 
 									});
