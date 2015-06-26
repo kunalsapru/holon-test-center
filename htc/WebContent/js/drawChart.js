@@ -1,6 +1,10 @@
 $(document)
   .ready(function () {
     
+$('#consumptionGraph').hover(function() {
+	$('#consumptionGraph').css('cursor','pointer');
+		  });
+	  
    $("#consumptionGraph").on('click',function() {
 	   var data = [],
 		totalPoints = 300;
