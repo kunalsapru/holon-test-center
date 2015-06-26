@@ -1,5 +1,7 @@
 package com.htc.pojo;
 
+import java.util.ArrayList;
+
 
 /**
  * This class 'HolonElement' models a physical entity(Note:not an abstract entity). Each HE corresponds to physical electrical appliances

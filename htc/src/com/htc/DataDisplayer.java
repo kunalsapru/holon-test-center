@@ -30,6 +30,10 @@ public class DataDisplayer {
 			System.out.println("Holon Manager Name of Holon Object:'"+(i+1)+"' is:"+listOfHo.get(i).getHolonManager().getName());
 			System.out.println("Priority of Holon Object: '"+(i+1)+"' is:"+listOfHo.get(i).getPriority());
 			System.out.println("Line Connected State of Holon Object : '"+(i+1)+"' is:"+listOfHo.get(i).isLineConnectedState());
+			System.out.println("Latitude North East of Holon Object:"+listOfHo.get(i).getLatLngNorthEast().getLat());
+			System.out.println("Longitude North East of Holon Object:"+listOfHo.get(i).getLatLngNorthEast().getLng());
+			System.out.println("Latitude South West of Holon Object:"+listOfHo.get(i).getLatLngSouthWest().getLat());
+			System.out.println("Longitude South West of Holon Object:"+listOfHo.get(i).getLatLngSouthWest().getLng());
 			displayListOfHolonElements(listOfHo.get(i).getListOfHe());
 			System.out.println("*******Completed printing details of one Holon Object*******");
 			

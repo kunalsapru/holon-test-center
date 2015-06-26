@@ -2,6 +2,8 @@ package com.htc.pojo;
 
 import java.util.List;
 
+import com.htc.hibernate.pojo.LatLng;
+
 
 /**
  * This class 'HolonCoordinator'models an abstract concept called HolonCoordinator(HK). Every Holon has only one HK and this HK 
@@ -14,6 +16,7 @@ public class HolonCoordinator {
 	
 	private int id;
 	private String name;
+	private LatLng latLng;
 	private List<HolonManager> listOfHm;
 	
 	public int getId() {

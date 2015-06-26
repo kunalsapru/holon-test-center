@@ -39,24 +39,44 @@
 			<table border="1">
 				<tbody>
 					<tr>
-						<td width="50%">Attribute#1</td>
+						<td width="100%">Number of Holons:</td>
 						<td><input type="text" id="attr1" /></td>
 					</tr>
 					<tr>
-						<td width="50%">Attribute#2</td>
+						<td width="50%">Weight for Hospitals:</td>
 						<td><input type="text" id="attr2" /></td>
 					</tr>
 					<tr>
-						<td width="50%">Attribute#3</td>
+						<td width="50%">Weight for Govt Infrastructure:</td>
 						<td><input type="text" id="attr3" /></td>
 					</tr>
 					<tr>
-						<td width="50%">Attribute#4</td>
+						<td width="50%">Weight for Physician Buildings: </td>
 						<td><input type="text" id="attr4" /></td>
 					</tr>
 					<tr>
-						<td width="50%">Attribute#5</td>
+						<td width="50%">Weight for Police Buildings:</td>
 						<td><input type="text" id="attr5" /></td>
+					</tr>
+					<tr>
+						<td width="50%">Weight for Fire Department:</td>
+						<td><input type="text" id="attr6" /></td>
+					</tr>
+					<tr>
+						<td width="50%">Weight for Industries:</td>
+						<td><input type="text" id="attr7" /></td>
+					</tr>
+					<tr>
+						<td width="50%">Weight for Household Buildings:</td>
+						<td><input type="text" id="attr8" /></td>
+					</tr>
+					<tr>
+						<td width="50%">Weight for PowerPlant:</td>
+						<td><input type="text" id="attr8" /></td>
+					</tr>
+					<tr>
+						<td width="50%">Weight for Transformers:</td>
+						<td><input type="text" id="attr8" /></td>
 					</tr>
 					<tr>
 						<td colspan="2" align="center"><input type="button"

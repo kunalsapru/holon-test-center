@@ -24,9 +24,11 @@ public class HolonObject {
 	private boolean lineConnectedState;//True for connected and false for not connected
 	private int priority;// HolonObjectType Priority; lesser value means higher priority with '0' having the highest priority
 	private List<HolonElement> listOfHe;
-	private LatLng location;
+	private LatLng latLngNorthEast;
+	private LatLng latLngSouthWest;
 	private int id;
 	private String name;
+	private boolean canCommunicate;
 	
 	public String getName() {
 		return name;
@@ -35,8 +37,6 @@ public class HolonObject {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	private boolean canCommunicate;
 	
 	public int getId() {
 		return id;
@@ -44,14 +44,6 @@ public class HolonObject {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public LatLng getLocation() {
-		return location;
-	}
-
-	public void setLocation(LatLng location) {
-		this.location = location;
 	}
 
 	public HolonManager getHolonManager() {
@@ -70,6 +62,7 @@ public class HolonObject {
 	public void setListOfHe(List<HolonElement> listOfHe) {
 		this.listOfHe = listOfHe;
 	}
+	
 
 	public HolonObjectType getHolonObjectType() {
 		
@@ -106,5 +99,21 @@ public class HolonObject {
 
 	public void setCanCommunicate(boolean canCommunicate) {
 		this.canCommunicate = canCommunicate;
+	}
+
+	public LatLng getLatLngNorthEast() {
+		return latLngNorthEast;
+	}
+
+	public void setLatLngNorthEast(LatLng latLngNorthEast) {
+		this.latLngNorthEast = latLngNorthEast;
+	}
+
+	public LatLng getLatLngSouthWest() {
+		return latLngSouthWest;
+	}
+
+	public void setLatLngSouthWest(LatLng latLngSouthWest) {
+		this.latLngSouthWest = latLngSouthWest;
 	}
 }

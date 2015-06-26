@@ -52,6 +52,7 @@ public class HolonCoordinatorFactory {
 		hk.setName(RandomDataGenerator.generateRandomValueString(8));// 8 is the length of the string for HK
 		int randomval=RandomDataGenerator.generateRandomValueIntForUpperBound(9);
 		noOfHolonManagersGenerated=randomval;//This info will be used when created HolonObjects as noofHolonManagers==noofHolonObjects
+		log.info("Number of Holon Objects and Holon Managers generated are:"+randomval);
 		hk.setListOfHm(HolonManagerFactory.buildHolonManagers(randomval));//The very first time generate; next time just use it, don't regenerate
 		HolonObjectFactory.buildHolonObjects(randomval);//Just build HolonObjects here; This will inturn create holon elements
 		//Note:Creation of Holon Objects and Holon Managers should be an atomic operation!

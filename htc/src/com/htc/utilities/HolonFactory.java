@@ -10,7 +10,7 @@ import com.htc.pojo.Holon;
  * This is top level(level 1) class which creates random Holons, which in turn creates random {hms and hos} and only hos creates
  * random hes (the hms do not create hes)
  * 
- * Use this class(or contract) to create the "Initial Back End Data State" for the Map
+ * Use this class(or contract) to create the "Initial Back End Data State" for the google Map
  * 
  * @author Achal
  *

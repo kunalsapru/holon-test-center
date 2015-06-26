@@ -31,6 +31,7 @@ public class HolonObjectFactory {
 	
 	public static  List<HolonObject> buildHolonObjects(int numberOfHolonObjects) {//Has to be static because we do not need object of class to call this method
 		List<HolonObject> localHoList=new LinkedList<HolonObject>();
+		HelperDataStructures.generateHardcodedHolonObjectLatLngList();
 		log.info("HolonObjectFactory generating Random HolonObjects....");
 		for(int i=0;i< numberOfHolonObjects;i++){
 			HolonObject ho = new HolonObject();
@@ -52,8 +53,28 @@ public class HolonObjectFactory {
 		HolonObjectType randomEnum= RandomDataGenerator.getRandomEnum(HolonObject.HolonObjectType.class);
 		ho.setHolonObjectType(randomEnum);
 		ho.setPriority(randomEnum.ordinal());
+		ho.setLineConnectedState(RandomDataGenerator.generateRandomValueBoolean());
+		ho.setLatLngNorthEast(HelperDataStructures.getHolonObjectLatLngObjects().get(0).getLatLngNorthEast());
+		ho.setLatLngSouthWest(HelperDataStructures.getHolonObjectLatLngObjects().get(0).getLatLngSouthWest());
+		HelperDataStructures.getHolonObjectLatLngObjects().remove(0);//Remove the item from the list after assigned to concerned HolonObject
+		
+	}
+	
+	/**
+	 * This method takes a holon object and an array of frequency(probability) and assigns random values to the holon object
+	 * Special note:For the It assigns a 'HolonObjectType' based on the weighted(probability) values in the freq[]
+	 * @param ho
+	 * @param freq
+	 */
+	private static void generateRandomValuesForHolonObject(HolonObject ho,int freq[]){
+		
+		ho.setHolonManager(HolonManagerFactory.buildSingleHolonManager());
+		int randomval=RandomDataGenerator.generateRandomValueIntForUpperBound(9);
+		ho.setListOfHe(HolonElementFactory.buildHolonElements(randomval));
+		HolonObjectType randomEnum= RandomDataGenerator.getRandomEnumWithProbability(HolonObject.HolonObjectType.class, freq);
+		ho.setHolonObjectType(randomEnum);
+		ho.setPriority(randomEnum.ordinal());
 		ho.setLineConnectedState(RandomDataGenerator.generateRandomValueBoolean());	
 	}
-		
 
 }

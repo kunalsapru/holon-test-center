@@ -2,10 +2,14 @@ package com.htc.pojo;
 
 import java.util.List;
 
+import com.htc.hibernate.pojo.LatLng;
+
 public class Holon {
 
 	private int id;
 	private String name;
+	private LatLng latLng;
+	private Integer radius;
 	private HolonCoordinator holonCoordinator;
 	private List<HolonManager> listOfHm;
 	private List<HolonObject> listOfHo;
