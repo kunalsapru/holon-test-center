@@ -97,7 +97,6 @@ public class HolonObjectAction extends CommonUtilities {
 		try {
 		Integer holonObjectTypeId = getRequest().getParameter("holonObjectType")!=null?Integer.parseInt(getRequest().getParameter("holonObjectType")):0;
 		Integer hiddenHolonObjectId = getRequest().getParameter("hiddenHolonObjectId")!=null?Integer.parseInt(getRequest().getParameter("hiddenHolonObjectId")):0;
-		Integer hiddenHolonManagerId = getRequest().getParameter("hiddenHolonManagerId")!=null?Integer.parseInt(getRequest().getParameter("hiddenHolonManagerId")):0;
 		Integer holonCoordinatorId = getRequest().getParameter("holonCoordinatorId")!=null?Integer.parseInt(getRequest().getParameter("holonCoordinatorId")):0;
 		String holonManagerName = getRequest().getParameter("holonManager")!=null?getRequest().getParameter("holonManager"):"";
 		Integer holonObjectPriority = getRequest().getParameter("holonObjectPriority")!=null?Integer.parseInt(getRequest().getParameter("holonObjectPriority")):0;
@@ -112,14 +111,10 @@ public class HolonObjectAction extends CommonUtilities {
 		holonObject.setHolonCoordinator(holonCoordinator);
 		holonObject.setHolonObjectType(holonObjectType);
 		holonObject.setPriority(holonObjectPriority);
-		
+		holonObject.getHolonManager().setName(holonManagerName);
 		//Calling service method to save the object in database and saving the auto-incremented ID in an integer
 		getHolonObjectService().merge(holonObject);
 
-		HolonManager holonManager = getHolonManagerService().findById(hiddenHolonManagerId);
-		holonManager.setName(holonManagerName);
-		getHolonManagerService().merge(holonManager);
-		
 		//Calling the response function and setting the content type of response.
 		getResponse().setContentType("text/html");
 		
@@ -135,22 +130,27 @@ public class HolonObjectAction extends CommonUtilities {
 		try {
 			
 			ArrayList<HolonObject> holonObjectList = getHolonObjectService().getAllHolonObject();
-			StringBuffer[] hoListArray = new StringBuffer[holonObjectList.size()];
+			ArrayList<String> hoListArray = new ArrayList<String>();
 			HolonObject holonObject = null;
+			String ne_location;
+			String sw_location;
 			
 			for(int i=0; i<holonObjectList.size();i++){
-
 				holonObject = holonObjectList.get(i);
-				hoListArray[i].append("<b>Priority: </b>"+holonObject.getPriority()+"<br>"+
+				ne_location = holonObject.getLatLng().getLat_ne()+"~"+holonObject.getLatLng().getLng_ne();
+				sw_location = holonObject.getLatLng().getLat_sw()+"~"+holonObject.getLatLng().getLng_sw();
+				hoListArray.add(ne_location+"^"+sw_location+"!<b>Priority: </b>"+holonObject.getPriority()+"<br>"+
 						"<b>Holon Object Id: </b>"+holonObject.getId() +"<br>"+
-						"<b>Holon Name: </b>"+holonObject.getHolon()+"<br>"+
+						"<b>Holon Name: </b>"+holonObject.getHolon().getName()+"<br>"+
 						"<b>Holon Manager: </b>"+holonObject.getHolonManager().getName()+"<br>"+
 						"<b>North East Location: </b>"+holonObject.getLatLng().getLat_ne()+"~"+holonObject.getLatLng().getLng_ne()+"<br>"+
 						"<b>South West Location: </b>"+holonObject.getLatLng().getLat_sw()+"~"+holonObject.getLatLng().getLng_sw()+"<br><br>"+
-						"<input type='button' id='editHolonObject' name='editHolonObject' value='Edit Holon Object' onclick='editHolonObject("+holonObject.getId()+","+"infowindowHolonObject"+")'/>&nbsp;&nbsp;"+
-						"<input type='button' id='deleteHolonObject' name='deleteHolonObject' value='Delete Holon Object'/>&nbsp;&nbsp;"+
-						"<input type='button' id='addHolonElement' name='addHolonElement' value='Add Holon Element' onclick='addHolonElement("+holonObject.getId()+")'/>&nbsp;&nbsp;"+
-						"<input type='button' id='showHolonElement' name='showHolonElement' value='Show Holon Elements' onclick='showHolonElementsForHolon("+holonObject.getId()+")'/>");
+						"<input type='button' id='editHolonObject' name='editHolonObject' value='Edit Holon Object' onclick='editHolonObject("+
+						holonObject.getId()+")'/>&nbsp;&nbsp;"+ "<input type='button' id='deleteHolonObject' name='deleteHolonObject' "
+								+ "value='Delete Holon Object'/>&nbsp;&nbsp;"+ "<input type='button' id='addHolonElement' name='addHolonElement' "
+										+ "value='Add Holon Element' onclick='addHolonElement(" +holonObject.getId()+")'/>&nbsp;&nbsp;"+
+						"<input type='button' id='showHolonElement' name='showHolonElement' value='Show Holon Elements' "
+						+ "onclick='showHolonElementsForHolon("+holonObject.getId()+")'/>*");
 
 			}
 			

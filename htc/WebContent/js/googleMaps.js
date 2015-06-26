@@ -94,7 +94,10 @@ $(document)
 					
 					function overlayTool(clickedValue)
 					{
-						
+						alert($("#"+clickedValuePanel).css("background-color"));
+						if ($("#"+clickedValuePanel).css("background-color") == "rgb(233, 233, 233)") {
+							$("#"+clickedValuePanel).css("background-color", "rgb(153,255,255)");
+					
 						$("#displayHolonDetails").hide();
 
 					//	To check If the layout is already present ;
@@ -131,7 +134,7 @@ $(document)
 				                strokeOpacity: 2.0,
 				                strokeWeight: 4.0
 				            }
-				    	    });
+				    	    });}
 				     // Setting the layout on the map 
 				      drawingManager.setMap(map);
 				     // Event when the overlay is complete 
@@ -152,8 +155,8 @@ $(document)
 
 				    	  $("#holonObjectLatitudeNE").text(latNorthEast);
 				    	  $("#holonObjectLongitudeNE").text(lngNorthEast);
-				    	  $("#holonObjectLatitudeSW").text(latNorthEast);
-				    	  $("#holonObjectLongitudeSW").text(lngNorthEast);
+				    	  $("#holonObjectLatitudeSW").text(latSouthWest);
+				    	  $("#holonObjectLongitudeSW").text(lngSouthWest);
 
 				    	  //END KUNAL CODE>>>DONT EDIT/REMOVE IT
 
@@ -280,7 +283,13 @@ $(document)
 					  
 					  
 					 
-					}		
+					}
+					else
+					{
+						$("#"+clickedValuePanel).css("background-color", "rgb(233,233,233)");
+						drawingManager.setMap(null);
+						
+					}
 					}
 					
 					$("#close").click(function(){
@@ -456,6 +465,7 @@ function editHolonObject(holonObjectId)
 	}
 */	$("#holonObjectActionState").val("Edit");
 	$("#hiddenHolonObjectId").val(holonObjectId);
+	$("#holonObjectDetail").show();	
 	$("#holonObjectDetail").popup();
 	$("#holonObjectDetail").popup("open");
 }
@@ -472,28 +482,31 @@ function showHolonObjects()
 }
 
 function showHolonObjectsCallBack(data, options){
-	alert(data);
-/*	var long=[8.555232882499695,8.555393815040588,8.554060757160187,8.55423241853714,8.555128276348114,8.555310666561127];
-	var lat=[49.86342249762294,49.86356427407353,49.863567732030546,49.86368184447307,49.86372506881273,49.863795956646065];
-	var data=["Hello","Bye","Chao"];
+	console.log(data);
+	var hoObjectsList = data.split("*");
+	console.log(hoObjectsList);
 	var rectangles=[];
-	
-	for (var i = 0,j=0; i < 3; i++) {
-		    var rectangleFromFactory = new google.maps.Rectangle({
+	for (var i=0; i<hoObjectsList.length-1; i++) {
+		var holonObject = hoObjectsList[i].split("!");
+		var location = holonObject[0];
+		var contentString = holonObject[1];
+		var ne_location_lat = location.split("^")[0].split("~")[0].replace("[","").replace(",","");
+		var ne_location_lng = location.split("^")[0].split("~")[1];
+		var sw_location_lat = location.split("^")[1].split("~")[0];
+		var sw_location_lng = location.split("^")[1].split("~")[1];
+	    var rectangleFromFactory = new google.maps.Rectangle({
 		      map: map,
 		      bounds: new google.maps.LatLngBounds(
-		    	      new google.maps.LatLng(lat[j], long[j]),
-		    	      new google.maps.LatLng(lat[j+1], long[j+1]))
+		    	      new google.maps.LatLng(sw_location_lat, sw_location_lng),
+		    	      new google.maps.LatLng(ne_location_lat, ne_location_lng))
 		    });
-		    attachMessage(rectangleFromFactory,i ,new google.maps.LatLng(lat[j+1], long[j+1]));
-		    j=j+2;
-	}	*/
+		 attachMessage(contentString, rectangleFromFactory, new google.maps.LatLng(ne_location_lat, sw_location_lng));
+	}	
 }
 
-function attachMessage(marker, num, position) {
-	  var message = ['hi', 'bye', 'chao'];
+function attachMessage(contentString, marker, position) {
 	  var infowindow = new google.maps.InfoWindow({
-	    content: message[num],
+	    content: contentString,
 	    position:position
 	  });
 
