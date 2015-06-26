@@ -18,8 +18,6 @@
 <script type="text/javascript" src="js/distanceCalc.js"></script>
 <script type="text/javascript" src="js/addHolonObject.js"></script>
 <script type="text/javascript" src="js/jquery.flot.js"></script>
-<script type="text/javascript" src="js/jquery.flot.time.js"></script>
-<script type="text/javascript" src="js/jquery-2.1.4.js"></script>
 <script type="text/javascript" src="js/drawChart.js"></script>
 <script src="js/sweetalert.min.js"></script> 
 <link rel="stylesheet" type="text/css" href="css/chart.css">
