@@ -6,7 +6,7 @@ $(document)
 					var drawingManager;
 					var switchMarker;
 					var switchMarkerImage = {
-						url : 'css/images/switch-on.png',
+						url : 'css/images/on.png',
 						size : new google.maps.Size(300, 300),
 						origin : new google.maps.Point(0, 0),
 						anchor : new google.maps.Point(0, 32)
@@ -29,6 +29,10 @@ $(document)
 					$("#elementInfo").hide();
 					$(document).on("click","#delete",function(){
 						alert("ready");
+					});
+					$("#switch").on('click',function(){
+						addNewSwitch=true;
+						//console.log($(this).find("a").attr("id"));
 					});
 					$("#saveHolonObject").click(function(event){
 
@@ -94,7 +98,7 @@ $(document)
 					
 					function overlayTool(clickedValue)
 					{
-						alert($("#"+clickedValuePanel).css("background-color"));
+						//alert($("#"+clickedValuePanel).css("background-color"));
 						if ($("#"+clickedValuePanel).css("background-color") == "rgb(233, 233, 233)") {
 							$("#"+clickedValuePanel).css("background-color", "rgb(153,255,255)");
 					
@@ -297,15 +301,6 @@ $(document)
                         });
 					})
 					
-					$("#addSwitch").on(
-							'click',
-							function() {
-								google.maps.event.addListener(map, 'click',
-										function(event) {
-											addSwitchMarker(event.latLng);
-										});
-							});
-
 					// START KUNAL CODE --> CRITICAL SECTION DO NOT ENTER
 					function editHolonObjectCallBack(data, options){
 						alert(data);
@@ -418,7 +413,42 @@ $(document)
 					google.maps.event.addListener(map, 'click',
 							function(event) {
 								// $("#elementInfo").toggle("slide",{direction:"right"});
-							});				
+						var switchMarker="";
+						if(addNewSwitch==true){
+							switchMarker = new google.maps.Marker({
+						        position: event.latLng,
+						        draggable: false,
+						        icon:switchMarkerImage,
+						        map: map,
+						        id:"switchon"
+						    });	
+						}
+						addNewSwitch=false;
+						
+						google.maps.event.addListener(switchMarker, 'click', function(event) {
+							console.log(switchMarker);
+							var currentImage=switchMarker.icon.url;
+								switch (currentImage){
+								case "css/images/on.png":
+									switchMarker.setIcon("css/images/off.png");
+									break;	
+								}
+								
+							if(currentImage==undefined)
+								{
+								currentImage=switchMarker.icon;
+								switch (currentImage){
+								case "css/images/on.png":
+									switchMarker.setIcon("css/images/off.png");
+									break;	
+								case "css/images/off.png" :
+									switchMarker.setIcon("css/images/on.png");
+									break;	
+								}
+								
+								}
+						});
+					});				
 
 					
 					function cursorCrossHair() {
