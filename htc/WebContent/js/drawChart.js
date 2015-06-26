@@ -1,88 +1,81 @@
-/**
- * 
- */
-
 $(document)
-		.ready(function () {
+  .ready(function () {
     
-			$("#consumption").on('click',function() {
-				var data = [],
-				totalPoints = 300;
-			function getRandomData() {
+   $("#consumptionGraph").on('click',function() {
+	   var data = [],
+		totalPoints = 300;
 
-				if (data.length > 0)
-					data = data.slice(1);
+	function getRandomData() {
 
-				// Do a random walk
+		if (data.length > 0)
+			data = data.slice(1);
 
-				while (data.length < totalPoints) {
+		// Do a random walk
 
-					var prev = data.length > 0 ? data[data.length - 1] : 50,
-						y = prev + Math.random() * 10 - 5;
+		while (data.length < totalPoints) {
 
-					if (y < 0) {
-						y = 0;
-					} else if (y > 100) {
-						y = 100;
-					}
+			var prev = data.length > 0 ? data[data.length - 1] : 50,
+				y = prev + Math.random() * 10 - 5;
 
-					data.push(y);
-				}
-
-				// Zip the generated y values with the x values
-
-				var res = [];
-				for (var i = 0; i < data.length; ++i) {
-					res.push([i, data[i]])
-				}
-
-				return res;
+			if (y < 0) {
+				y = 0;
+			} else if (y > 100) {
+				y = 100;
 			}
 
-			// Set up the control widget
+			data.push(y);
+		}
 
-			var updateInterval = 30;
-			/*$("#updateInterval").val(updateInterval).change(function () {
-				var v = $(this).val();
-				if (v && !isNaN(+v)) {
-					updateInterval = +v;
-					if (updateInterval < 1) {
-						updateInterval = 1;
-					} else if (updateInterval > 2000) {
-						updateInterval = 2000;
-					}
-					$(this).val("" + updateInterval);
-				}
-			});*/
+		// Zip the generated y values with the x values
 
-			var plot = $.plot("#chartContainer", [ getRandomData() ], {
-				/*series: {
-					shadowSize: 0	// Drawing is faster without shadows
-				},*/
-				yaxis: {
-					min: 0,
-					max: 300
-				},
-				xaxis: {
-					mode: "time",
-					minTickSize: [1, "hour"],
-					min: 00,
-					max: 24,
-					twelveHourClock: false
-				}
-			});
+		var res = [];
+		for (var i = 0; i < data.length; ++i) {
+			res.push([i, data[i]])
+		}
 
-			function update() {
+		return res;
+	}
 
-				plot.setData([getRandomData()]);
+	// Set up the control widget
 
-				// Since the axes don't change, we don't need to call plot.setupGrid()
-
-				plot.draw();
-				setTimeout(update, updateInterval);
+	var updateInterval = 30;
+	/*$("#updateInterval").val(updateInterval).change(function () {
+		var v = $(this).val();
+		if (v && !isNaN(+v)) {
+			updateInterval = +v;
+			if (updateInterval < 1) {
+				updateInterval = 1;
+			} else if (updateInterval > 2000) {
+				updateInterval = 2000;
 			}
+			$(this).val("" + updateInterval);
+		}
+	});*/
 
-			update();
-			})
+	var plot = $.plot("#chartContainer", [ getRandomData() ], {
+		series: {
+			shadowSize: 0	// Drawing is faster without shadows
+		},
+		yaxis: {
+			min: 0,
+			max: 300
+		},
+		xaxis: {
+			min: 0,
+			max: 60
+		}
+	});
 
-			})
+	function update() {
+
+		plot.setData([getRandomData()]);
+
+		// Since the axes don't change, we don't need to call plot.setupGrid()
+
+		plot.draw();
+		setTimeout(update, updateInterval);
+	}
+
+	update();
+   })
+   })
