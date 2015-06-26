@@ -94,7 +94,7 @@ $(document)
 					
 					function overlayTool(clickedValue)
 					{
-						alert($("#"+clickedValuePanel).css("background-color"));
+						//alert($("#"+clickedValuePanel).css("background-color"));
 						if ($("#"+clickedValuePanel).css("background-color") == "rgb(233, 233, 233)") {
 							$("#"+clickedValuePanel).css("background-color", "rgb(153,255,255)");
 					

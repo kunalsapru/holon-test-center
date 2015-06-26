@@ -17,9 +17,12 @@
 <script type="text/javascript" src="js/powerline.js"></script>
 <script type="text/javascript" src="js/distanceCalc.js"></script>
 <script type="text/javascript" src="js/addHolonObject.js"></script>
-<script type="text/javascript" src="js/canvasjs.min.js"></script>
+<script type="text/javascript" src="js/jquery.flot.js"></script>
+<script type="text/javascript" src="js/jquery.flot.time.js"></script>
+<script type="text/javascript" src="js/jquery-2.1.4.js"></script>
 <script type="text/javascript" src="js/drawChart.js"></script>
 <script src="js/sweetalert.min.js"></script> 
+<link rel="stylesheet" type="text/css" href="css/chart.css">
 <link rel="stylesheet" type="text/css" href="css/sweetalert.css">
 <LINK href="css/contextMenu.css" rel="stylesheet" type="text/css" />
 <LINK href="css/style.css" rel="stylesheet" type="text/css" />
@@ -154,11 +157,12 @@
 			<tr>
 				<td>Holon Object Type:</td>
 						<td><div data-role="fieldcontain"><select name="holonObjectType" id="holonObjectType">
-								<option value="1">Holon Object Type 1</option>
-								<option value="2">Holon Object Type 2</option>
-								<option value="3">Holon Object Type 3</option>
-								<option value="4">Holon ObjectType 4</option>
-						</select></div></td>
+								<option value="1">Hospitals</option>
+								<option value="2">House</option>
+								<option value="3">School</option>
+								<option value="4">PowerPlant</option>
+								<option value="1">Transformer</option>
+							</select></div></td>
 						<td>Holon Manager Name:</td>
 						<td><input id="holonManagerName" type="text"></td>
 					</tr>
@@ -183,7 +187,7 @@
 			</table>
 			
 			</div>
-			
+			<div id="chartContainer" style="height: 300px; width: 30%;"></div>	
 			<div id="holonCoordinatorInformation" class="ui-content" data-transition="flip" data-overlay-theme="b" data-theme="a" data-content-theme="d">
 			<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
 			<table>
@@ -201,7 +205,7 @@
 		</div>
 
 	</div>
-
+		
 
 </body>
 </html>
