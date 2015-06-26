@@ -58,10 +58,11 @@ $(document)
 		},
 		yaxis: {
 			min: 0,
-			max: 100
+			max: 300
 		},
 		xaxis: {
-			show: false
+			min: 0,
+			max: 60
 		}
 	});
 
