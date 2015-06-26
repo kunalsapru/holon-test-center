@@ -292,6 +292,14 @@ $(document)
 					}
 					}
 					
+					$('#addHolonCoordinator').hover(function() {
+						$('#addHolonCoordinator').css('cursor','pointer');
+							  });
+					
+					$('#showHolonObjects').hover(function() {
+						$('#showHolonObjects').css('cursor','pointer');
+							  });
+					
 					$("#close").click(function(){
 						$(this).parent().fadeOut("slow", function(c) {
                         });
