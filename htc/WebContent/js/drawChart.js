@@ -5,7 +5,7 @@
 $(document)
 		.ready(function () {
     
-			$("#consumption").on('click',function() {
+			$("#consumptionGraph").on('click',function() {
 			var chart = new CanvasJS.Chart("chartContainer",
     {      
       title:{
