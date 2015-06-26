@@ -94,7 +94,10 @@ $(document)
 					
 					function overlayTool(clickedValue)
 					{
-						
+						alert($("#"+clickedValuePanel).css("background-color"));
+						if ($("#"+clickedValuePanel).css("background-color") == "rgb(233, 233, 233)") {
+							$("#"+clickedValuePanel).css("background-color", "rgb(153,255,255)");
+					
 						$("#displayHolonDetails").hide();
 
 					//	To check If the layout is already present ;
@@ -131,7 +134,7 @@ $(document)
 				                strokeOpacity: 2.0,
 				                strokeWeight: 4.0
 				            }
-				    	    });
+				    	    });}
 				     // Setting the layout on the map 
 				      drawingManager.setMap(map);
 				     // Event when the overlay is complete 
@@ -280,7 +283,13 @@ $(document)
 					  
 					  
 					 
-					}		
+					}
+					else
+					{
+						$("#"+clickedValuePanel).css("background-color", "rgb(233,233,233)");
+						drawingManager.setMap(null);
+						
+					}
 					}
 					
 					$("#close").click(function(){
