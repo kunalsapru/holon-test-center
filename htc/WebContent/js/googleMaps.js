@@ -36,7 +36,7 @@ $(document)
 						addNewSwitch=true;
 						//console.log($(this).find("a").attr("id"));
 					});
-					$("#addMasterHolonObjDetail").hide();
+					$("#addMasterHolonObjDetail").hide(); 
 					$("#masterTableHolonObjectsTypes").hide();
 					$("#saveHolonObject").click(function(event){
 
