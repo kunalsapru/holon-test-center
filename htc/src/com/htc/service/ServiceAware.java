@@ -10,6 +10,7 @@ import com.htc.serviceImpl.HolonObjectServiceImpl;
 import com.htc.serviceImpl.HolonObjectTypeServiceImpl;
 import com.htc.serviceImpl.HolonServiceImpl;
 import com.htc.serviceImpl.LatLngServiceImpl;
+import com.htc.serviceImpl.PowerLineServiceImpl;
 
 /**
  * The Class ServiceAware.
@@ -28,6 +29,7 @@ public abstract class ServiceAware extends ActionSupport {
 	private HolonObjectService holonObjectService = new HolonObjectServiceImpl();
 	private HolonObjectTypeService holonObjectTypeService = new HolonObjectTypeServiceImpl();
 	private LatLngService latLngService = new LatLngServiceImpl();
+	private PowerLineService powerLineService = new PowerLineServiceImpl();
 	
 	public HolonService getHolonService() {
 		return holonService;
@@ -86,6 +88,12 @@ public abstract class ServiceAware extends ActionSupport {
 	}
 	public void setLatLngService(LatLngService latLngService) {
 		this.latLngService = latLngService;
+	}
+	public PowerLineService getPowerLineService() {
+		return powerLineService;
+	}
+	public void setPowerLineService(PowerLineService powerLineService) {
+		this.powerLineService = powerLineService;
 	}
 	
 }
