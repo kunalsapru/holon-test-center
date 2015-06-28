@@ -36,6 +36,8 @@ $(document)
 						addNewSwitch=true;
 						//console.log($(this).find("a").attr("id"));
 					});
+					$("#addMasterHolonObjDetail").hide(); 
+					$("#masterTableHolonObjectsTypes").hide();
 					$("#saveHolonObject").click(function(event){
 
 						//START KUNAL CODE>>>DONT EDIT/REMOVE IT
