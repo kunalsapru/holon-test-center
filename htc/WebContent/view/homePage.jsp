@@ -16,7 +16,7 @@
 <script type="text/javascript" src="js/common.js"></script>
 <script type="text/javascript" src="js/powerline.js"></script>
 <script type="text/javascript" src="js/distanceCalc.js"></script>
-<script type="text/javascript" src="js/addHolonObject.js"></script>
+<script type="text/javascript" src="js/holonObject.js"></script>
 <script type="text/javascript" src="js/jquery.flot.js"></script>
 <script type="text/javascript" src="js/jquery.flot.time.js"></script>
 <script type="text/javascript" src="js/drawChart.js"></script>
