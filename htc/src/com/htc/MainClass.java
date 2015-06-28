@@ -4,9 +4,7 @@ package com.htc;
 
 import org.apache.log4j.Logger;
 
-import com.htc.pojo.HolonElement;
-import com.htc.pojo.HolonElement.HolonElementType;
-import com.htc.utilities.*;
+import com.htc.utilities.HolonFactory;
 
 public class MainClass {
 	static Logger log = Logger.getLogger(MainClass.class);
