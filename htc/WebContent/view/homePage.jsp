@@ -5,6 +5,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>HTC Home Page</title>
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script type="text/javascript"
 	src="https://maps.googleapis.com/maps/api/js?libraries=drawing"></script>
 <script type="text/javascript" src="js/googleMaps.js"></script>
@@ -17,7 +19,6 @@
 <script type="text/javascript" src="js/addHolonObject.js"></script>
 <script type="text/javascript" src="js/jquery.flot.js"></script>
 <script type="text/javascript" src="js/jquery.flot.time.js"></script>
-<script type="text/javascript" src="js/jquery-2.1.4.js"></script>
 <script type="text/javascript" src="js/drawChart.js"></script>
 <script src="js/sweetalert.min.js"></script> 
 <link rel="stylesheet" type="text/css" href="css/chart.css">
@@ -165,8 +166,8 @@
 						<td><input id="holonManagerName" type="text"></td>
 					</tr>
 					<tr>
-						<!-- <td>Priority:</td>
-						<td><input id="holonObjectPriority" type="text"></td> -->
+						<td>Priority:</td>
+						<td><input id="holonObjectPriority" type="text"></td>
 					
 				<td>Holon Coordinator:</td>
 						<td><div data-role="fieldcontain"><select name="holonCoordinatorId" id="holonCoordinatorId">
