@@ -155,8 +155,8 @@ $(document)
 
 				    	  $("#holonObjectLatitudeNE").text(latNorthEast);
 				    	  $("#holonObjectLongitudeNE").text(lngNorthEast);
-				    	  $("#holonObjectLatitudeSW").text(latNorthEast);
-				    	  $("#holonObjectLongitudeSW").text(lngNorthEast);
+				    	  $("#holonObjectLatitudeSW").text(latSouthWest);
+				    	  $("#holonObjectLongitudeSW").text(lngSouthWest);
 
 				    	  //END KUNAL CODE>>>DONT EDIT/REMOVE IT
 
