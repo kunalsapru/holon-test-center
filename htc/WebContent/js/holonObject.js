@@ -1,10 +1,8 @@
 /**
- * Java Script file for adding new holon objects
+ * Java Script file for functions related to holon objects
  */
 
 function saveHolonObject(){
-
-	//START KUNAL CODE>>>DONT EDIT/REMOVE IT
 	var holonObjectPriority=$("#holonObjectPriority").val();
 	var holonObjectType=$("#holonObjectType option:selected").val();
 	var holonCoordinatorId=$("#holonCoordinatorId option:selected").val();
@@ -17,7 +15,6 @@ function saveHolonObject(){
 	var hiddenHolonObjectId = $("#hiddenHolonObjectId").val();
 	var hiddenHolonManagerId = $("#hiddenHolonManagerId").val();
 	$( "#holonObjectDetail" ).popup( "close" );
-	
 	var dataAttributes = {
 			holonObjectType : holonObjectType,
 			holonCoordinatorId : holonCoordinatorId,
@@ -35,16 +32,12 @@ function saveHolonObject(){
 	} else {
 		ajaxRequest("createHolonObject", dataAttributes, createHolonObjectCallBack, {});							
 	}
-
-	//END KUNAL CODE>>>DONT EDIT/REMOVE IT
 }
 
-// START KUNAL CODE --> CRITICAL SECTION DO NOT ENTER
 function editHolonObjectCallBack(data, options){
 	alert(data);
 }
 function createHolonObjectCallBack(data, options) {
-	alert(data);
 	var dataArray = data.split("!");
 	var holonObjectId = dataArray[0];
 	var holonName= dataArray[1];
@@ -55,9 +48,7 @@ function createHolonObjectCallBack(data, options) {
 	var lineConnectedState= dataArray[6];
 	var priority= dataArray[7];
 	var holonManagerName= dataArray[8];
-	
 	var lat=ne_location.split("~");
-	
 	contentString="<b>Priority: </b>"+priority+"<br>"+
 			"<b>Holon Object Id: </b>"+holonObjectId +"<br>"+
 			"<b>Holon Name: </b>"+holonName+"<br>"+
@@ -73,7 +64,40 @@ function createHolonObjectCallBack(data, options) {
 	      position:new google.maps.LatLng(lat[0],lat[1])
 	  });
 	infowindowHolonObject.open(map,map);
-	//alert(contentString);
 }
-//END KUNAL CODE
 
+function showHolonObjects() {
+	ajaxRequest("showHolonObjects", {}, showHolonObjectsCallBack, {});
+}
+
+function showHolonObjectsCallBack(data, options){
+	var hoObjectsList = data.split("*");
+	var rectangles=[];
+	for (var i=0; i<hoObjectsList.length-1; i++) {
+		var holonObject = hoObjectsList[i].split("!");
+		var location = holonObject[0];
+		var contentString = holonObject[1];
+		var ne_location_lat = location.split("^")[0].split("~")[0].replace("[","").replace(",","");
+		var ne_location_lng = location.split("^")[0].split("~")[1];
+		var sw_location_lat = location.split("^")[1].split("~")[0];
+		var sw_location_lng = location.split("^")[1].split("~")[1];
+	    var rectangleFromFactory = new google.maps.Rectangle({
+		      map: map,
+		      bounds: new google.maps.LatLngBounds(
+		    	      new google.maps.LatLng(sw_location_lat, sw_location_lng),
+		    	      new google.maps.LatLng(ne_location_lat, ne_location_lng))
+		    });
+		 attachMessage(contentString, rectangleFromFactory, new google.maps.LatLng(ne_location_lat, sw_location_lng));
+	}	
+}
+
+function attachMessage(contentString, marker, position) {
+	  var infowindow = new google.maps.InfoWindow({
+	    content: contentString,
+	    position:position
+	  });
+
+	  google.maps.event.addListener(marker, 'click', function() {
+	    infowindow.open(marker.get('map'), marker);
+	  });
+}

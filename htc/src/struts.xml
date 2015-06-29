@@ -42,6 +42,11 @@
      <action name="connectToPowerSource" class="com.htc.action.PowerLineAction" method="connectToPowerSource" />
      <action name="addPowerSwitch" class="com.htc.action.PowerSwitchAction" method="addPowerSwitch" />
      <action name="showHolonObjectConsumption" class="com.htc.action.ConsumptionGraphAction" method="showConsumptionGraph" />
+     
+     <action name="addHolon" class="com.htc.action.HolonAction" method="addHolon" />
+     <action name="editHolon" class="com.htc.action.HolonAction" method="editHolon" />
+     <action name="deleteHolon" class="com.htc.action.HolonAction" method="deleteHolon" />
+     <action name="getListHolon" class="com.htc.action.HolonAction" method="getListHolon" />
 
      <action name="dataGenerator" class="com.htc.action.DataGeneratorAction" method="dataGenerator" />
 

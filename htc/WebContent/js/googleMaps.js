@@ -27,6 +27,8 @@ $(document)
 					$("#holonObjectDetail").hide();
 					$("#holonCoordinatorInformation").hide();
 					$("#elementInfo").hide();
+					$("#addMasterHolonElementTypeDetail").hide();
+					$("#addMasterHolonDetail").hide();
 					$(document).on("click","#delete",function(){
 						alert("ready");
 					});
@@ -38,6 +40,36 @@ $(document)
 					});
 					$("#addMasterHolonObjDetail").hide(); 
 					$("#masterTableHolonObjectsTypes").hide();
+					
+					$("#holonforMasterTables").click(function(){
+						openHolonforMasterTables();
+					});
+					
+					$("#buttonHolonMaster").click(function(){
+						var textHolonMaster= $("#textHolonMaster").val();
+						var dataAttributes = {
+								name:textHolonMaster
+						}
+						
+						$("#addMasterHolonDetail").popup("close");
+						ajaxRequest("addHolon", dataAttributes, addHolonCallBack, {});
+					});
+					
+					$("#holonElementTypeforMasterTables").click(function(){
+						openHolonElementTypeforMasterTables();
+					
+					});
+					
+					$("#buttonHolonElementTypeMaster").click(function(){
+						var textHolonElementTypeMaster= $("#textHolonElementTypeMaster").val();
+						var dataAttributes= {
+								holonElementTypeName : textHolonElementTypeMaster
+						}
+						
+						$("#addMasterHolonElementTypeDetail").popup("close");
+						ajaxRequest("createHolonElementType", dataAttributes, createHolonElementTypeCallBack, {});
+					});
+					
 					$("#saveHolonObject").click(function(event){
 						saveHolonObject();
 					});
@@ -281,6 +313,18 @@ $(document)
 					})
 					
 					
+					// Callback for add a holonName 
+					function addHolonCallBack(data, options)
+					{
+						alert("Holon Name added succesfully");
+					}
+					
+					// Callback for add a holonElemnt Type
+					function createHolonElementTypeCallBack(data,options)
+					{
+						alert("Holon Element Type added succesfully");
+					}
+										
 					function addSwitchMarker(pos) {
 						var marker = new google.maps.Marker({
 							position : pos,
@@ -444,48 +488,11 @@ function editHolonObject(holonObjectId)
 }
 
 function addHolonElement(holonObjectId){
+	//Code to retrieve list from database and add in select
+	getListOfAllHolonElementForElementInfo()
 	$("#elementInfo").show();
 	$("#elementInfo").popup();
 	$("#elementInfo").popup("open");
-}
-
-function showHolonObjects()
-{ 
-	ajaxRequest("showHolonObjects", {}, showHolonObjectsCallBack, {});
-}
-
-function showHolonObjectsCallBack(data, options){
-	console.log(data);
-	var hoObjectsList = data.split("*");
-	console.log(hoObjectsList);
-	var rectangles=[];
-	for (var i=0; i<hoObjectsList.length-1; i++) {
-		var holonObject = hoObjectsList[i].split("!");
-		var location = holonObject[0];
-		var contentString = holonObject[1];
-		var ne_location_lat = location.split("^")[0].split("~")[0].replace("[","").replace(",","");
-		var ne_location_lng = location.split("^")[0].split("~")[1];
-		var sw_location_lat = location.split("^")[1].split("~")[0];
-		var sw_location_lng = location.split("^")[1].split("~")[1];
-	    var rectangleFromFactory = new google.maps.Rectangle({
-		      map: map,
-		      bounds: new google.maps.LatLngBounds(
-		    	      new google.maps.LatLng(sw_location_lat, sw_location_lng),
-		    	      new google.maps.LatLng(ne_location_lat, ne_location_lng))
-		    });
-		 attachMessage(contentString, rectangleFromFactory, new google.maps.LatLng(ne_location_lat, sw_location_lng));
-	}	
-}
-
-function attachMessage(contentString, marker, position) {
-	  var infowindow = new google.maps.InfoWindow({
-	    content: contentString,
-	    position:position
-	  });
-
-	  google.maps.event.addListener(marker, 'click', function() {
-	    infowindow.open(marker.get('map'), marker);
-	  });
 }
 
 function showHolonElementsForHolon (holonObjectId){
@@ -513,8 +520,7 @@ function edit()
 	alert("Clicked Edit");
 }
 
-function getHolonObjectTypesFromDatabase()
-{
+function getHolonObjectTypesFromDatabase() {
 var types=["Fridge","Washing Machine"];
 var data="";
 for(var i=0;i<types.length;i++)
@@ -529,4 +535,31 @@ $("#masterTableHolonObjectsTypes").show();
 $("#masterTableHolonObjectsTypes").popup();
 $("#masterTableHolonObjectsTypes").popup("open");
 
+}
+
+function openHolonforMasterTables() {
+	$("#addMasterHolonDetail").show();
+	$("#addMasterHolonDetail").popup();
+	$("#addMasterHolonDetail").popup("open");
+}
+
+function openHolonElementTypeforMasterTables() {
+	$("#addMasterHolonElementTypeDetail").show();
+	$("#addMasterHolonElementTypeDetail").popup();
+	$("#addMasterHolonElementTypeDetail").popup("open");
+}
+
+function getListOfAllHolonElementForElementInfo() {
+	ajaxRequest("getListHolonElementType", {}, showListHolonElementTypeCallBack, {});
+}
+
+function showListHolonElementTypeCallBack(data,options) {
+	var listHolonElementTypeMaster= data.split("*");
+	$("#selectForHolonElementType").empty();
+	for(var i=0;i<listHolonElementTypeMaster.length-1;i++)
+		{
+		var options= "<option value="+listHolonElementTypeMaster[i]+"id="+listHolonElementTypeMaster[i].split("-")[0]+">"+listHolonElementTypeMaster[i]+"</option>";
+		$("#selectForHolonElementType").append(options);
+		}
+	$("#selectForHolonElementType").selectmenu('refresh', true);
 }
