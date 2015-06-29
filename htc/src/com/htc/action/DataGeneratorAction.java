@@ -3,12 +3,15 @@ package com.htc.action;
 import org.apache.log4j.Logger;
 
 import com.htc.DataDisplayer;
-import com.htc.hibernate.pojo.HolonElementType;
 import com.htc.utilities.CommonUtilities;
 import com.htc.utilities.HolonFactory;
 
 public class DataGeneratorAction extends CommonUtilities {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7944349867221775081L;
 	static Logger log = Logger.getLogger(HolonElementTypeAction.class);
 
 	/**
