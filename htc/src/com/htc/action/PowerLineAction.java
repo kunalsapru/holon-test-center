@@ -14,4 +14,8 @@ public class PowerLineAction {
 		PowerLine subLine = new PowerLine(start, end, maximumCapacity, PowerLine.LineType.subLine);
 		return subLine;
 	}
+	
+	public void connectToPowerSource(){
+		
+	}
 }

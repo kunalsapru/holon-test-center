@@ -16,4 +16,8 @@ public class PowerSwitchAction {
 			powerSwitch.setStatus(false);
 		}
 	}
+	
+	public void addPowerSwitch(){
+		
+	}
 }
