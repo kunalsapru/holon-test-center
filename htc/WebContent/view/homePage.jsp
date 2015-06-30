@@ -116,13 +116,7 @@
 							</div></td>
 						<td>Holon Element State:</td>
 						<td><div data-role="fieldcontain">
-								<select name="elementState">
-									<option value="overSupply">OverSupply</option>
-									<option value="normalSupply">NormalSupply</option>
-									<option value="minimumSupply">MinimumSupply</option>
-									<option value="brownOut">BrownOut</option>
-									<option value="heartBeat">HeartBeat</option>
-									<option value="blackOut">BlackOut</option>
+								<select name="elementState" id="elementState">
 								</select>
 							</div></td>
 					</tr>
@@ -259,6 +253,15 @@
 				<label>Holon Element Type:</label><input type="text"
 					id="textHolonElementTypeMaster"></input> <input type="button"
 					id="buttonHolonElementTypeMaster" value="Save" />
+			</div>
+			<div id="addMasterHolonElementStateDetail" class="ui-content"
+				data-transition="flip" data-overlay-theme="b" data-theme="a"
+				data-content-theme="d">
+				<a href="#" data-rel="back" data-role="button" data-theme="a"
+					data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+				<label>Holon Element State:</label><input type="text"
+					id="textHolonElementStateMaster"></input> <input type="button"
+					id="buttonHolonElementStateMaster" value="Save" />
 			</div>
 		</div>
 
