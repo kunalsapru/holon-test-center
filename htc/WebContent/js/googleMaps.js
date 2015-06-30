@@ -48,7 +48,7 @@ $(document)
 					$("#buttonHolonMaster").click(function(){
 						var textHolonMaster= $("#textHolonMaster").val();
 						var dataAttributes = {
-								name:textHolonMaster
+								holonName:textHolonMaster
 						}
 						
 						$("#addMasterHolonDetail").popup("close");
