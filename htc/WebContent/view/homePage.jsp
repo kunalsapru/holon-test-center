@@ -191,10 +191,7 @@
 
 						<td>Holon Coordinator:</td>
 						<td><div data-role="fieldcontain">
-								<select name="holonCoordinatorId" id="holonCoordinatorId">
-									<option value="1">HK1-Red Holon</option>
-									<option value="2">HK2-Yellow Holon</option>
-								</select>
+								<select name="holonCoordinatorId" id="holonCoordinatorId"></select>
 							</div></td>
 					</tr>
 					<tr>
@@ -232,12 +229,7 @@
 					<tr>
 						<td><label>Holon:</label></td>
 						<td><div data-role="fieldcontain">
-								<select name="holon" id="holon">
-									<option value="holon1">Red Holon</option>
-									<option value="holon2">Yellow Holon</option>
-									<option value="holon3">Blue Holon</option>
-									<option value="holon4">Green Holon</option>
-								</select>
+								<select name="holon" id="holon"></select>
 							</div></td>
 					</tr>
 					<tr>
