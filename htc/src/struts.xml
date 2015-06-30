@@ -48,8 +48,7 @@
 			Objects, PowerSource) -->
 		<!-- <action name="showHolonObjects" class="com.htc.action.HolonObjectAction" 
 			method="showHolonObjects" /> instead of this we can use below -->
-		<action name="showHolons" class="com.htc.action.HolonAction"
-			method="showHolons" />
+		<action name="showHolons" class="com.htc.action.HolonAction" method="showHolons" />
 
 		<!-- HOLON OBJECT LEVEL -->
 
@@ -109,6 +108,47 @@
 
 		<action name="dataGenerator" class="com.htc.action.DataGeneratorAction"
 			method="dataGenerator" />
+
+
+<!-- Actions used by Kunal and Ritka...we will discuss this tomorrow and then modify this XML -->
+
+	<action name="createHolonObjectType" class="com.htc.action.HolonObjectTypeAction" method="createHolonObjectType" /> 
+	<action name="editHolonObjectType" class="com.htc.action.HolonObjectTypeAction" method="editHolonObjectType" /> 
+	<action name="deleteHolonObjectType" class="com.htc.action.HolonObjectTypeAction" method="deleteHolonObjectType" />
+	<action name="getListHolonObjectType" class="com.htc.action.HolonObjectTypeAction" method="getListHolonObjectType" />
+
+	<action name="createHolonElementState" class="com.htc.action.HolonElementStateAction" method="createHolonElementState" />
+	<action name="editHolonElementState" class="com.htc.action.HolonElementStateAction" method="editHolonElementState" />
+	<action name="deleteHolonElementState" class="com.htc.action.HolonElementStateAction" method="deleteHolonElementState" />
+	<action name="getListHolonElementState" class="com.htc.action.HolonElementStateAction" method="getListHolonElementState" />
+
+	<action name="createHolonElementType" class="com.htc.action.HolonElementTypeAction" method="createHolonElementType" /> 
+	<action name="editHolonElementType" class="com.htc.action.HolonElementTypeAction" method="editHolonElementType" /> 
+	<action name="deleteHolonElementType" class="com.htc.action.HolonElementTypeAction" method="deleteHolonElementType" />
+	<action name="getListHolonElementType" class="com.htc.action.HolonElementTypeAction" method="getListHolonElementType" />
+
+	<action name="addHolon" class="com.htc.action.HolonAction" method="addHolon" /> 
+	<action name="editHolon" class="com.htc.action.HolonAction" method="editHolon" /> 
+	<action name="deleteHolon" class="com.htc.action.HolonAction" method="deleteHolon" /> 
+	<action name="getListHolon" class="com.htc.action.HolonAction" method="getListHolon" />
+
+	<action name="createHolonCoordinator" class="com.htc.action.HolonCoordinatorAction" method="createHolonCoordinator" /> 
+	<action name="editHolonCoordinator" class="com.htc.action.HolonCoordinatorAction" method="editHolonCoordinator" /> 
+	<action name="deleteHolonCoordinator" class="com.htc.action.HolonCoordinatorAction" method="deleteHolonCoordinator" /> 
+	<action name="getListHolonCoordinator" class="com.htc.action.HolonCoordinatorAction" method="getListHolonCoordinator" />
+
+	<action name="createHolonObject" class="com.htc.action.HolonObjectAction" method="createHolonObject" />
+	<action name="editHolonObject" class="com.htc.action.HolonObjectAction" method="editHolonObject" />
+	<action name="deleteHolonObject" class="com.htc.action.HolonObjectAction" method="deleteHolonObject" />
+	<action name="showHolonObjects" class="com.htc.action.HolonObjectAction" method="showHolonObjects" />
+
+	<action name="createHolonElement" class="com.htc.action.HolonElementAction" method="createHolonElement" />
+	<action name="editHolonElement" class="com.htc.action.HolonElementAction" method="editHolonElement" />
+	<action name="deleteHolonElement" class="com.htc.action.HolonElementAction" method="deleteHolonElement" />
+	<action name="showHolonElements" class="com.htc.action.HolonElementAction" method="showHolonElements" />
+
+
+<!-- End of actions used by Kunal and Ritika -->
 
 	</package>
 
