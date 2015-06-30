@@ -93,7 +93,7 @@ public class HolonElementStateAction extends CommonUtilities {
 		ArrayList<HolonElementState> holonElementStates = getHolonElementStateService().getAllHolonElementState();
 		StringBuffer holonElementStateNameList = new StringBuffer();
 		for(HolonElementState holonElementState:holonElementStates){
-			holonElementStateNameList.append(holonElementState.getId()+" - "+holonElementState.getName()+"\n");
+			holonElementStateNameList.append(holonElementState.getId()+" - "+holonElementState.getName()+"*");
 		}
 		//Calling the response function and setting the content type of response.
 		getResponse().setContentType("text/html");

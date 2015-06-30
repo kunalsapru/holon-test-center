@@ -28,6 +28,7 @@ $(document)
 					$("#holonCoordinatorInformation").hide();
 					$("#elementInfo").hide();
 					$("#addMasterHolonElementTypeDetail").hide();
+					$("#addMasterHolonElementStateDetail").hide();
 					$("#addMasterHolonDetail").hide();
 					$(document).on("click","#delete",function(){
 						alert("ready");
@@ -60,6 +61,11 @@ $(document)
 					
 					});
 					
+					$("#holonElementStateforMasterTables").click(function(){
+						openHolonElementStateforMasterTables();
+					
+					});
+					
 					$("#buttonHolonElementTypeMaster").click(function(){
 						var textHolonElementTypeMaster= $("#textHolonElementTypeMaster").val();
 						var dataAttributes= {
@@ -69,6 +75,17 @@ $(document)
 						$("#addMasterHolonElementTypeDetail").popup("close");
 						ajaxRequest("createHolonElementType", dataAttributes, createHolonElementTypeCallBack, {});
 					});
+					
+					$("#buttonHolonElementStateMaster").click(function(){
+						var textHolonElementStateMaster= $("#textHolonElementStateMaster").val();
+						var dataAttributes= {
+								holonElementStateName : textHolonElementStateMaster
+						}
+						
+						$("#addMasterHolonElementStateDetail").popup("close");
+						ajaxRequest("createHolonElementState", dataAttributes, createHolonElementStateCallBack, {});
+					});
+					
 					
 					$("#saveHolonObject").click(function(event){
 						saveHolonObject();
@@ -169,15 +186,13 @@ $(document)
 
 				    	  infowindowArray.push("");
 				    	  if(clickedValuePanel=="addHolonObject"){
-				    		  $("#holonObjectDetail").show();
-					    	  $("#holonObjectDetail").popup();
-					    	  $("#holonObjectDetail").popup("open");
+				    		  getHolonObjectTypeFromDatabase();
+				    		  getHolonCoordinatorFromDatabase();
 				    	  }
 				    	  else
 				    		  {
-				    		  $("#holonCoordinatorInformation").show();
-								$("#holonCoordinatorInformation").popup();
-								$("#holonCoordinatorInformation").popup("open");
+				    		  getHolonFromDatabase();
+				    		 
 				    		  }
 				      
 				    	  //When Rectangle is clicked
@@ -324,7 +339,13 @@ $(document)
 					{
 						alert("Holon Element Type added succesfully");
 					}
-										
+					
+					function createHolonElementStateCallBack(data,options)
+					{
+						alert("Holon Element State added succesfully");
+					}
+					
+					
 					function addSwitchMarker(pos) {
 						var marker = new google.maps.Marker({
 							position : pos,
@@ -489,10 +510,9 @@ function editHolonObject(holonObjectId)
 
 function addHolonElement(holonObjectId){
 	//Code to retrieve list from database and add in select
-	getListOfAllHolonElementForElementInfo()
-	$("#elementInfo").show();
-	$("#elementInfo").popup();
-	$("#elementInfo").popup("open");
+	getListOfAllHolonElementForElementInfo();
+	getHolonElementState();
+	
 }
 
 function showHolonElementsForHolon (holonObjectId){
@@ -549,17 +569,100 @@ function openHolonElementTypeforMasterTables() {
 	$("#addMasterHolonElementTypeDetail").popup("open");
 }
 
-function getListOfAllHolonElementForElementInfo() {
-	ajaxRequest("getListHolonElementType", {}, showListHolonElementTypeCallBack, {});
+function openHolonElementStateforMasterTables(){
+	$("#addMasterHolonElementStateDetail").show();
+	$("#addMasterHolonElementStateDetail").popup();
+	$("#addMasterHolonElementStateDetail").popup("open");
 }
 
-function showListHolonElementTypeCallBack(data,options) {
+
+function getListOfAllHolonElementForElementInfo() {
+	ajaxRequest("getListHolonElementType", {}, getListHolonElementTypeCallBack, {});
+}
+
+function getListHolonElementTypeCallBack(data,options) {
 	var listHolonElementTypeMaster= data.split("*");
 	$("#selectForHolonElementType").empty();
 	for(var i=0;i<listHolonElementTypeMaster.length-1;i++)
 		{
-		var options= "<option value="+listHolonElementTypeMaster[i]+"id="+listHolonElementTypeMaster[i].split("-")[0]+">"+listHolonElementTypeMaster[i]+"</option>";
+		var options= "<option value="+listHolonElementTypeMaster[i].split("-")[0]+"id="+listHolonElementTypeMaster[i].split("-")[0]+">"+listHolonElementTypeMaster[i].split("-")[1]+"</option>";
 		$("#selectForHolonElementType").append(options);
 		}
 	$("#selectForHolonElementType").selectmenu('refresh', true);
+	$("#elementInfo").show();
+	$("#elementInfo").popup();
+	$("#elementInfo").popup("open");
+}
+
+function getHolonFromDatabase()
+{
+	ajaxRequest("getListHolon", {}, getHolonFromDatabaseCallBack, {});
+}
+
+function getHolonFromDatabaseCallBack(data,options)
+{
+	var listHolonMaster= data.split("*");
+	$("#holon").empty();
+	for(var i=0;i<listHolonMaster.length-1;i++)
+	{
+	var options= "<option value="+listHolonMaster[i].split("-")[0]+" id= "+listHolonMaster[i].split("-")[0]+">"+listHolonMaster[i].split("-")[1]+"</option>";
+	$("#holon").append(options);
+	}
+$("#holon").selectmenu('refresh', true);
+$("#holonCoordinatorInformation").show();
+$("#holonCoordinatorInformation").popup();
+$("#holonCoordinatorInformation").popup("open");
+		
+}
+
+function getHolonCoordinatorFromDatabase()
+{
+	ajaxRequest("getListHolonCoordinator", {}, getHolonCoordinatorFromDatabaseCallBack, {});
+}
+
+function getHolonCoordinatorFromDatabaseCallBack(data,options)
+{
+	var listHolonCoordinator= data.split("*");
+	$("#holonCoordinatorId").empty();
+	for(var i=0;i<listHolonCoordinator.length-1;i++)
+	{
+	var options= "<option value="+listHolonCoordinator[i].split("-")[0]+" id= "+listHolonCoordinator[i].split("-")[0]+">"+listHolonCoordinator[i].split("-")[1]+"</option>";
+	$("#holonCoordinatorId").append(options);
+	}
+	$("#holonCoordinatorId").selectmenu('refresh', true);
+	$("#holonObjectDetail").show();
+	$("#holonObjectDetail").popup();
+	$("#holonObjectDetail").popup("open");
+}
+
+function getHolonObjectTypeFromDatabase()
+{
+	ajaxRequest("getListHolonObjectType", {}, getHolonObjectTypeFromDatabaseCallBack, {});
+}
+
+function getHolonObjectTypeFromDatabaseCallBack(data,options)
+{
+	var listHolonObjectType= data.split("*");
+	$("#holonObjectType").empty();
+	for(var i=0;i<listHolonObjectType.length-1;i++)
+	{
+	var options= "<option value="+listHolonObjectType[i].split("-")[0]+" id= "+listHolonObjectType[i].split("-")[0]+">"+listHolonObjectType[i].split("-")[1]+"</option>";
+	$("#holonObjectType").append(options);
+	}
+	$("#holonObjectType").selectmenu('refresh', true);
+}
+function getHolonElementState()
+{
+	ajaxRequest("getListHolonElementState", {}, getHolonElementStateCallBack, {});
+}
+
+function getHolonElementStateCallBack(data,options){
+	var listHolonElementState= data.split("*");
+	$("#elementState").empty();
+	for(var i=0;i<listHolonElementState.length-1;i++)
+	{
+	var options= "<option value="+listHolonElementState[i].split("-")[0]+" id= "+listHolonElementState[i].split("-")[0]+">"+listHolonElementState[i].split("-")[1]+"</option>";
+	$("#elementState").append(options);
+	}
+	$("#elementState").selectmenu('refresh', true);
 }

@@ -93,7 +93,7 @@ public class HolonObjectTypeAction extends CommonUtilities {
 		ArrayList<HolonObjectType> holonObjectTypes = getHolonObjectTypeService().getAllHolonObjectType();
 		StringBuffer holonObjectTypeNameList = new StringBuffer();
 		for(HolonObjectType holonObjectType:holonObjectTypes){
-			holonObjectTypeNameList.append(holonObjectType.getId()+" - "+holonObjectType.getName()+"\n");
+			holonObjectTypeNameList.append(holonObjectType.getId()+" - "+holonObjectType.getName()+"*\n");
 		}
 		//Calling the response function and setting the content type of response.
 		getResponse().setContentType("text/html");

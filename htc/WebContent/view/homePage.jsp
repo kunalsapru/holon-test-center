@@ -116,13 +116,7 @@
 							</div></td>
 						<td>Holon Element State:</td>
 						<td><div data-role="fieldcontain">
-								<select name="elementState">
-									<option value="overSupply">OverSupply</option>
-									<option value="normalSupply">NormalSupply</option>
-									<option value="minimumSupply">MinimumSupply</option>
-									<option value="brownOut">BrownOut</option>
-									<option value="heartBeat">HeartBeat</option>
-									<option value="blackOut">BlackOut</option>
+								<select name="elementState" id="elementState">
 								</select>
 							</div></td>
 					</tr>
@@ -174,13 +168,7 @@
 					<tr>
 						<td>Holon Object Type:</td>
 						<td><div data-role="fieldcontain">
-								<select name="holonObjectType" id="holonObjectType">
-									<option value="1">Hospitals</option>
-									<option value="2">House</option>
-									<option value="3">School</option>
-									<option value="4">PowerPlant</option>
-									<option value="1">Transformer</option>
-								</select>
+								<select name="holonObjectType" id="holonObjectType"></select>
 							</div></td>
 						<td>Holon Manager Name:</td>
 						<td><input id="holonManagerName" type="text"></td>
@@ -191,10 +179,7 @@
 
 						<td>Holon Coordinator:</td>
 						<td><div data-role="fieldcontain">
-								<select name="holonCoordinatorId" id="holonCoordinatorId">
-									<option value="1">HK1-Red Holon</option>
-									<option value="2">HK2-Yellow Holon</option>
-								</select>
+								<select name="holonCoordinatorId" id="holonCoordinatorId"></select>
 							</div></td>
 					</tr>
 					<tr>
@@ -232,12 +217,7 @@
 					<tr>
 						<td><label>Holon:</label></td>
 						<td><div data-role="fieldcontain">
-								<select name="holon" id="holon">
-									<option value="holon1">Red Holon</option>
-									<option value="holon2">Yellow Holon</option>
-									<option value="holon3">Blue Holon</option>
-									<option value="holon4">Green Holon</option>
-								</select>
+								<select name="holon" id="holon"></select>
 							</div></td>
 					</tr>
 					<tr>
@@ -273,6 +253,15 @@
 				<label>Holon Element Type:</label><input type="text"
 					id="textHolonElementTypeMaster"></input> <input type="button"
 					id="buttonHolonElementTypeMaster" value="Save" />
+			</div>
+			<div id="addMasterHolonElementStateDetail" class="ui-content"
+				data-transition="flip" data-overlay-theme="b" data-theme="a"
+				data-content-theme="d">
+				<a href="#" data-rel="back" data-role="button" data-theme="a"
+					data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+				<label>Holon Element State:</label><input type="text"
+					id="textHolonElementStateMaster"></input> <input type="button"
+					id="buttonHolonElementStateMaster" value="Save" />
 			</div>
 		</div>
 
