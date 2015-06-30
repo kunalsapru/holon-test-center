@@ -21,9 +21,9 @@ public class PowerLineServiceImpl extends AbstractService implements PowerLineSe
 	}
 
 	@Override
-	public PowerLine findById(int holonObjectId) {
+	public PowerLine findById(int powerLineId) {
 		// TODO Auto-generated method stub
-		return getPowerLineDao().findById(holonObjectId);
+		return getPowerLineDao().findById(powerLineId);
 	}
 
 	@Override

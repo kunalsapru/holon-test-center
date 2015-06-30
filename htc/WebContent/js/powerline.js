@@ -53,10 +53,10 @@ $(document).ready(function() {
 		    			lngEnd : end.lng(),
 		    			isConnected :false,
 		    			resaonDown : "",
-		    		};
+		    				};
 		    	
 		    	if(powerLineType=="MAINLINE"){
-		    	ajaxRequest("drawMainLine", dataAttributes, drawPoweLineCallBack, {});	
+		    	ajaxRequest("drawPowerLine", dataAttributes, drawPoweLineCallBack, {});	
 		    	}
 			});
 
@@ -71,30 +71,28 @@ $(document).ready(function() {
 })
 
 function drawPoweLineCallBack(data, options) {
-//	var dataArray = data.split("!");
-//	var holonObjectId = dataArray[0];
-//	var holonName= dataArray[1];
-//	var holonCoordinatorName_Holon= dataArray[2];	
-//	var holonObjectTypeName= dataArray[3];
-//	var ne_location= dataArray[4];
-//	var sw_location= dataArray[5];
-//	var lineConnectedState= dataArray[6];
-//	var priority= dataArray[7];
-//	var holonManagerName= dataArray[8];
-//	var lat=ne_location.split("~");
-//	contentString="<b>Priority: </b>"+priority+"<br>"+
-//			"<b>Holon Object Id: </b>"+holonObjectId +"<br>"+
-//			"<b>Holon Name: </b>"+holonName+"<br>"+
-//			"<b>Holon Manager: </b>"+holonManagerName+"<br>"+
-//			"<b>North East Location: </b>"+ne_location+"<br>"+
-//			"<b>South West Location: </b>"+sw_location+"<br><br>"+
-//			"<input type='button' id='editHolonObject' name='editHolonObject' value='Edit Holon Object' onclick='editHolonObject("+holonObjectId+")'/>&nbsp;&nbsp;"+
-//			"<input type='button' id='deleteHolonObject' name='deleteHolonObject' value='Delete Holon Object'/>&nbsp;&nbsp;"+
-//			"<input type='button' id='addHolonElement' name='addHolonElement' value='Add Holon Element' onclick='addHolonElement("+lat[0]+","+lat[1]+")'/>&nbsp;&nbsp;"+
-//			"<input type='button' id='showHolonElement' name='showHolonElement' value='Show Holon Elements' onclick='showHolonElementsForHolon("+lat[0]+","+lat[1]+")'/>";
-//	var infowindowHolonObject = new google.maps.InfoWindow({
-//	      content: contentString,
-//	      position:new google.maps.LatLng(lat[0],lat[1])
-//	  });
-//	infowindowHolonObject.open(map,map);
+	var dataArray = data.split("!");
+	var powerLineId = dataArray[0];
+	var isConnected= dataArray[1];
+	var maxCapacity= dataArray[2];	
+	var currentCapacity= dataArray[3];
+	var powerLineType= dataArray[4];
+	var resaonDown= dataArray[5];
+	var latStart= dataArray[6];
+	var lngStart= dataArray[7];
+	var latEnd= dataArray[8];
+	var lngEnd= dataArray[8];
+	
+	contentString="<b>Power Line Type: </b>"+powerLineType+"<br>"+
+			"<b>Power Line Id: </b>"+powerLineId +"<br>"+
+			"<b>Connected : </b>"+isConnected+"<br>"+
+			"<b>Max Capacity: </b>"+maxCapacity+"<br>"+
+			"<b>Current Capacity: </b>"+currentCapacity+"<br>"+
+			"<b>Start Location: </b>"+"("+latStart+")"+",("+lngStart+")"+"<br>"+
+			"<b>End Location: </b>"+"("+latEnd+")"+",("+latEnd+")"+"<br>";
+		var infowindowHolonObject = new google.maps.InfoWindow({
+	      content: contentString,
+	      position:new google.maps.LatLng(latEnd,latEnd)
+	  });
+	infowindowHolonObject.open(map,map);
 }
