@@ -4,10 +4,12 @@
  * 
  * 
  */
+var newShape;
 $(document).ready(function() {
 
 	var lineDrawingManager;
 	var lineArray=[];
+	
 
 	$('#addPowerLine').click(function() {
 		if ($(this).css("background-color") == "rgb(237, 237, 237)") {
@@ -33,7 +35,7 @@ $(document).ready(function() {
 			
 			google.maps.event.addListener(lineDrawingManager, 'overlaycomplete', function(event) {
 			
-				var newShape = event.overlay; // Object
+				newShape = event.overlay; // Object
 		    	newShape.type = event.type;	// Polygon
 		    	var start=newShape.getPath().getAt(0);
 		    	var end=newShape.getPath().getAt(1);
@@ -81,7 +83,7 @@ function drawPoweLineCallBack(data, options) {
 	var latStart= dataArray[6];
 	var lngStart= dataArray[7];
 	var latEnd= dataArray[8];
-	var lngEnd= dataArray[8];
+	var lngEnd= dataArray[9];
 	
 	contentString="<b>Power Line Type: </b>"+powerLineType+"<br>"+
 			"<b>Power Line Id: </b>"+powerLineId +"<br>"+
@@ -89,10 +91,12 @@ function drawPoweLineCallBack(data, options) {
 			"<b>Max Capacity: </b>"+maxCapacity+"<br>"+
 			"<b>Current Capacity: </b>"+currentCapacity+"<br>"+
 			"<b>Start Location: </b>"+"("+latStart+")"+",("+lngStart+")"+"<br>"+
-			"<b>End Location: </b>"+"("+latEnd+")"+",("+latEnd+")"+"<br>";
+			"<b>End Location: </b>"+"("+latEnd+")"+",("+lngEnd+")"+"<br>";
 		var infowindowHolonObject = new google.maps.InfoWindow({
 	      content: contentString,
-	      position:new google.maps.LatLng(latEnd,latEnd)
+	      position:new google.maps.LatLng(latEnd,lngEnd)
 	  });
+	attachMessage(contentString, newShape, new google.maps.LatLng(latEnd,lngEnd));
 	infowindowHolonObject.open(map,map);
 }
+
