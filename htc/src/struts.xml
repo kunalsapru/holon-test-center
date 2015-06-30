@@ -132,7 +132,7 @@
 	<action name="deleteHolon" class="com.htc.action.HolonAction" method="deleteHolon" /> 
 	<action name="getListHolon" class="com.htc.action.HolonAction" method="getListHolon" />
 
-	<action name="addHolonCoordinator" class="com.htc.action.HolonCoordinatorAction" method="addHolonCoordinator" /> 
+	<action name="createHolonCoordinator" class="com.htc.action.HolonCoordinatorAction" method="createHolonCoordinator" /> 
 	<action name="editHolonCoordinator" class="com.htc.action.HolonCoordinatorAction" method="editHolonCoordinator" /> 
 	<action name="deleteHolonCoordinator" class="com.htc.action.HolonCoordinatorAction" method="deleteHolonCoordinator" /> 
 	<action name="getListHolonCoordinator" class="com.htc.action.HolonCoordinatorAction" method="getListHolonCoordinator" />
