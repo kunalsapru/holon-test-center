@@ -33,6 +33,7 @@ $(document)
 					$(document).on("click","#delete",function(){
 						alert("ready");
 					});
+					
 					$("#holonObjectTypeforMasterTables").click(function(){
 						getHolonObjectTypesFromDatabase();});
 					$("#switch").on('click',function(){
@@ -89,6 +90,10 @@ $(document)
 					
 					$("#saveHolonObject").click(function(event){
 						saveHolonObject();
+					});
+					
+					$("#saveCoordinator").click(function(event){
+						saveCoordinator();
 					});
 					
 					

@@ -2,6 +2,8 @@ package com.htc.action;
 
 import java.util.ArrayList;
 
+import org.apache.log4j.Logger;
+
 import com.htc.hibernate.pojo.Holon;
 import com.htc.hibernate.pojo.HolonCoordinator;
 import com.htc.hibernate.pojo.HolonManager;
@@ -13,6 +15,7 @@ import com.htc.utilities.CommonUtilities;
 public class HolonObjectAction extends CommonUtilities {
 
 	private static final long serialVersionUID = 1L;
+	static Logger log = Logger.getLogger(HolonObjectAction.class);
 	
 	public void createHolonObject(){
 
@@ -121,7 +124,7 @@ public class HolonObjectAction extends CommonUtilities {
 		getResponse().getWriter().write("Edit successfull");
 		
 		} catch (Exception e) {
-			System.out.println("Exception "+e.getMessage()+" occurred in action createHolonObject()");
+			log.debug("Exception "+e.getMessage()+" occurred in action createHolonObject()");
 			e.printStackTrace();
 		}
 	}
