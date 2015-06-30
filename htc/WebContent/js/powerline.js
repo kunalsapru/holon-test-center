@@ -42,7 +42,7 @@ $(document).ready(function() {
 		    	var latLangArr=[start,end];
 		    	//alert("lat lang  "+latLangArr);
 		    	lineArray.push(latLangArr);
-		    	alert("line "+lineArray);
+		    	//alert("line "+lineArray);
 		    	var powerLineType="MAINLINE";
 		    	
 		    	var dataAttributes = {
