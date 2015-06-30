@@ -31,7 +31,6 @@ public class HolonCoordinatorAction extends CommonUtilities{
 		
 		for(HolonCoordinator holonCoordinator:holonCoordinators){
 			holonCoordinatorList.append(holonCoordinator.getId()+"-"+holonCoordinator.getName()+"  "+holonCoordinator.getHolon().getName()+"*");
-			System.out.println(holonCoordinator.getHolon().getName());
 		}
 		//Calling the response function and setting the content type of response.
 		getResponse().setContentType("text/html");

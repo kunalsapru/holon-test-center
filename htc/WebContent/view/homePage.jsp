@@ -174,13 +174,7 @@
 					<tr>
 						<td>Holon Object Type:</td>
 						<td><div data-role="fieldcontain">
-								<select name="holonObjectType" id="holonObjectType">
-									<option value="1">Hospitals</option>
-									<option value="2">House</option>
-									<option value="3">School</option>
-									<option value="4">PowerPlant</option>
-									<option value="1">Transformer</option>
-								</select>
+								<select name="holonObjectType" id="holonObjectType"></select>
 							</div></td>
 						<td>Holon Manager Name:</td>
 						<td><input id="holonManagerName" type="text"></td>
