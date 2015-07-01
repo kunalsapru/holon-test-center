@@ -11,6 +11,7 @@ import com.htc.serviceImpl.HolonObjectTypeServiceImpl;
 import com.htc.serviceImpl.HolonServiceImpl;
 import com.htc.serviceImpl.LatLngServiceImpl;
 import com.htc.serviceImpl.PowerLineServiceImpl;
+import com.htc.serviceImpl.PowerSwitchServiceImpl;
 
 /**
  * The Class ServiceAware.
@@ -30,6 +31,7 @@ public abstract class ServiceAware extends ActionSupport {
 	private HolonObjectTypeService holonObjectTypeService = new HolonObjectTypeServiceImpl();
 	private LatLngService latLngService = new LatLngServiceImpl();
 	private PowerLineService powerLineService = new PowerLineServiceImpl();
+	private PowerSwitchService powerSwitchService = new PowerSwitchServiceImpl();
 	
 	public HolonService getHolonService() {
 		return holonService;
@@ -94,6 +96,12 @@ public abstract class ServiceAware extends ActionSupport {
 	}
 	public void setPowerLineService(PowerLineService powerLineService) {
 		this.powerLineService = powerLineService;
+	}
+	public PowerSwitchService getPowerSwitchService() {
+		return powerSwitchService;
+	}
+	public void setPowerSwitchService(PowerSwitchService powerSwitchService) {
+		this.powerSwitchService = powerSwitchService;
 	}
 	
 }

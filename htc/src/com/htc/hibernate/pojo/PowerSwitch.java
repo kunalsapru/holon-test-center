@@ -13,6 +13,8 @@ public class PowerSwitch implements java.io.Serializable {
 	private PowerLine powerLine;
 	private Boolean status;
 	private String belongsTo;
+	private int holonObjectId;
+	private int powerLineId;
 
 	public PowerSwitch() {
 	}
@@ -69,6 +71,22 @@ public class PowerSwitch implements java.io.Serializable {
 
 	public void setStatus(Boolean status) {
 		this.status = status;
+	}
+
+	public int getHolonObjectId() {
+		return holonObjectId;
+	}
+
+	public void setHolonObjectId(int holonObjectId) {
+		this.holonObjectId = holonObjectId;
+	}
+
+	public int getPowerLineId() {
+		return powerLineId;
+	}
+
+	public void setPowerLineId(int powerLineId) {
+		this.powerLineId = powerLineId;
 	}
 
 }
