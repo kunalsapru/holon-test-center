@@ -36,10 +36,7 @@ public class HolonElementAction extends CommonUtilities {
 			holonElement.setCurrentCapacity(currentCapacity);
 			holonElement.setHolonElementState(holonElementState);
 			holonElement.setHolonElementType(holonElementType);
-			holonElement.setHolonManager(holonManager);
 			holonElement.setHolonObject(holonObject);
-			holonElement.setMaxCapacity(maxCapacity);
-			holonElement.setMinCapacity(minCapacity);
 			holonElement.setUsage(usage);
 
 			//Calling service method to save the Element in database and saving the auto-incremented ID in an integer
@@ -76,8 +73,6 @@ public class HolonElementAction extends CommonUtilities {
 			holonElement.setCurrentCapacity(currentCapacity);
 			holonElement.setHolonElementState(holonElementState);
 			holonElement.setHolonElementType(holonElementType);
-			holonElement.setMaxCapacity(maxCapacity);
-			holonElement.setMinCapacity(minCapacity);
 			holonElement.setUsage(usage);
 
 			getHolonElementService().merge(holonElement);
