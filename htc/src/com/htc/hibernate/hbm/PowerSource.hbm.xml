@@ -3,7 +3,7 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated 1 Jul, 2015 9:39:17 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="com.htc.hibernate.pojo.PowerLineNode" table="power_line_node" catalog="htc" optimistic-lock="version">
+    <class name="com.htc.hibernate.pojo.PowerSource" table="power_source" catalog="htc" optimistic-lock="version">
         <id name="id" type="int">
             <column name="id" />
             <generator class="increment" />
@@ -14,5 +14,11 @@
         <property name="name" type="string">
             <column name="name" />
         </property>
+        <set name="powerLines" table="power_line" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="power_source" />
+            </key>
+            <one-to-many class="com.htc.hibernate.pojo.PowerLine" />
+        </set>
     </class>
 </hibernate-mapping>

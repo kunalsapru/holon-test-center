@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 1 Jul, 2015 9:39:17 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="com.htc.hibernate.pojo.HolonElementType" table="holon_element_type" catalog="htc" optimistic-lock="version">
         <id name="id" type="int">
@@ -9,6 +10,12 @@
         </id>
         <property name="name" type="string">
             <column name="name" />
+        </property>
+        <property name="maxCapacity" type="java.lang.Integer">
+            <column name="max_capacity" />
+        </property>
+        <property name="minCapacity" type="java.lang.Integer">
+            <column name="min_capacity" />
         </property>
         <set name="holonElements" table="holon_element" inverse="true" lazy="true" fetch="select">
             <key>

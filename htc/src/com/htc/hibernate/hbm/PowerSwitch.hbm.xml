@@ -1,23 +1,24 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 1 Jul, 2015 9:39:17 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="com.htc.hibernate.pojo.PowerSwitch" table="power_switch" catalog="htc" optimistic-lock="version">
         <id name="id" type="int">
             <column name="id" />
             <generator class="increment" />
         </id>
-        <many-to-one name="latLng" class="com.htc.hibernate.pojo.LatLng" fetch="select">
+        <many-to-one name="holonObject" class="com.htc.hibernate.pojo.HolonObject" fetch="select" lazy="false">
+            <column name="holon_object" />
+        </many-to-one>
+        <many-to-one name="latLng" class="com.htc.hibernate.pojo.LatLng" fetch="select" lazy="false">
             <column name="location" not-null="true" />
         </many-to-one>
-        <many-to-one name="powerLine" class="com.htc.hibernate.pojo.PowerLine" fetch="select">
+        <many-to-one name="powerLine" class="com.htc.hibernate.pojo.PowerLine" fetch="select" lazy="false">
             <column name="power_line" />
         </many-to-one>
         <property name="status" type="java.lang.Boolean">
             <column name="status" />
-        </property>
-        <property name="belongsTo" type="string">
-            <column name="belongs_to" />
         </property>
     </class>
 </hibernate-mapping>
