@@ -17,6 +17,7 @@ public class HolonObjectTypeAction extends CommonUtilities {
 	 * saves it in the database and then returns the ID of newly created row.
 	 */
 	public void createHolonObjectType(){
+		System.out.println("Inside Create action ---");
 
 		HolonObjectType holonObjectType = new HolonObjectType(); // Creating HolonObjectType object to store values
 		String holonObjectTypeName = getRequest().getParameter("holonObjectTypeName")!=null?
@@ -79,7 +80,7 @@ public class HolonObjectTypeAction extends CommonUtilities {
 		try {
 			getResponse().getWriter().write("Delete Status --> "+deleteStatus);
 		} catch (Exception e) {
-			log.debug("Exception "+e.getMessage()+" occurred in action editHolonObjectType()");
+			log.debug("Exception "+e.getMessage()+" occurred in action deleteHolonObjectType()");
 			e.printStackTrace();
 		}
 	}
@@ -89,11 +90,10 @@ public class HolonObjectTypeAction extends CommonUtilities {
 	 */
 	public void getListHolonObjectType(){
 
-		//Editing holon Object type object and saving in database 
 		ArrayList<HolonObjectType> holonObjectTypes = getHolonObjectTypeService().getAllHolonObjectType();
 		StringBuffer holonObjectTypeNameList = new StringBuffer();
 		for(HolonObjectType holonObjectType:holonObjectTypes){
-			holonObjectTypeNameList.append(holonObjectType.getId()+" - "+holonObjectType.getName()+"*\n");
+			holonObjectTypeNameList.append(holonObjectType.getId()+"-"+holonObjectType.getName()+"*\n");
 		}
 		//Calling the response function and setting the content type of response.
 		getResponse().setContentType("text/html");
