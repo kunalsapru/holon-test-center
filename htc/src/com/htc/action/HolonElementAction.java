@@ -1,10 +1,11 @@
 package com.htc.action;
 
 import java.util.ArrayList;
+
 import org.apache.log4j.Logger;
-import com.htc.hibernate.pojo.HolonElementState;
-import com.htc.hibernate.pojo.HolonManager;
+
 import com.htc.hibernate.pojo.HolonElement;
+import com.htc.hibernate.pojo.HolonElementState;
 import com.htc.hibernate.pojo.HolonElementType;
 import com.htc.hibernate.pojo.HolonObject;
 import com.htc.utilities.CommonUtilities;
@@ -21,8 +22,6 @@ public class HolonElementAction extends CommonUtilities {
 			Integer holonElementTypeId = getRequest().getParameter("holonElementType")!=null?Integer.parseInt(getRequest().getParameter("holonElementType")):0;
 			Integer holonElementStateId = getRequest().getParameter("holonElementStateId")!=null?Integer.parseInt(getRequest().getParameter("holonElementStateId")):0;
 			String usage = getRequest().getParameter("usage")!=null?getRequest().getParameter("usage"):"";
-			Integer maxCapacity = getRequest().getParameter("maxCapacity")!=null?Integer.parseInt(getRequest().getParameter("maxCapacity")):0;
-			Integer minCapacity = getRequest().getParameter("minCapacity")!=null?Integer.parseInt(getRequest().getParameter("minCapacity")):0;
 			Integer currentCapacity = getRequest().getParameter("currentCapacity")!=null?Integer.parseInt(getRequest().getParameter("currentCapacity")):0;
 			//?? currentEnergyStatus ??
 			//		String history = getRequest().getParameter("String")!=null?getRequest().getParameter("String"):"";
@@ -30,8 +29,6 @@ public class HolonElementAction extends CommonUtilities {
 			HolonObject holonObject = getHolonObjectService().findById(holonObjectId);
 			HolonElementType holonElementType = getHolonElementTypeService().findById(holonElementTypeId);
 			HolonElementState holonElementState = getHolonElementStateService().findById(holonElementStateId);
-			HolonManager holonManager = holonObject.getHolonManager();
-
 			HolonElement holonElement = new HolonElement(); // Creating HolonElement Element to store values
 			holonElement.setCurrentCapacity(currentCapacity);
 			holonElement.setHolonElementState(holonElementState);
@@ -60,8 +57,6 @@ public class HolonElementAction extends CommonUtilities {
 			Integer holonElementTypeId = getRequest().getParameter("holonElementType")!=null?Integer.parseInt(getRequest().getParameter("holonElementType")):0;
 			Integer holonElementStateId = getRequest().getParameter("holonElementStateId")!=null?Integer.parseInt(getRequest().getParameter("holonElementStateId")):0;
 			String usage = getRequest().getParameter("usage")!=null?getRequest().getParameter("usage"):"";
-			Integer maxCapacity = getRequest().getParameter("maxCapacity")!=null?Integer.parseInt(getRequest().getParameter("maxCapacity")):0;
-			Integer minCapacity = getRequest().getParameter("minCapacity")!=null?Integer.parseInt(getRequest().getParameter("minCapacity")):0;
 			Integer currentCapacity = getRequest().getParameter("currentCapacity")!=null?Integer.parseInt(getRequest().getParameter("currentCapacity")):0;
 			//?? currentEnergyStatus ??
 			//		String history = getRequest().getParameter("String")!=null?getRequest().getParameter("String"):"";

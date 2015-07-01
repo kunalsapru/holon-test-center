@@ -17,13 +17,13 @@ public class HolonCoordinatorAction extends CommonUtilities{
 	
 	public void createHolonCoordinator(){
 		try{
-		Double latNE = getRequest().getParameter("latNE")!=null?Double.parseDouble(getRequest().getParameter("latNE")):0D;
+		/*Double latNE = getRequest().getParameter("latNE")!=null?Double.parseDouble(getRequest().getParameter("latNE")):0D;
 		Double lngNE = getRequest().getParameter("lngNE")!=null?Double.parseDouble(getRequest().getParameter("lngNE")):0D;
 		Double latSW = getRequest().getParameter("latSW")!=null?Double.parseDouble(getRequest().getParameter("latSW")):0D;
-		Double lngSW = getRequest().getParameter("lngSW")!=null?Double.parseDouble(getRequest().getParameter("lngSW")):0D;
+		Double lngSW = getRequest().getParameter("lngSW")!=null?Double.parseDouble(getRequest().getParameter("lngSW")):0D;*/
 		Integer coordinatorOfHolon = getRequest().getParameter("coordinatorHolon")!=null?Integer.parseInt(getRequest().getParameter("coordinatorHolon")):0;
 		String nameCoordinator= getRequest().getParameter("nameCoordinator")!=null?getRequest().getParameter("nameCoordinator"):"";
-		LatLng latLng = new LatLng(latNE, lngNE, latSW, lngSW);
+		LatLng latLng = new LatLng();
 		Integer locationId = getLatLngService().persist(latLng);
 		LatLng latLng2 = getLatLngService().findById(locationId);
 		Holon holon = new Holon(coordinatorOfHolon);
