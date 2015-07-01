@@ -93,9 +93,9 @@
 			
 			<!--POWER LINE LEVEL  -->
 			<action name="drawPowerLine" class="com.htc.action.PowerLineAction"
-			method="drawPowerLine" />			
+			method="drawPowerLine" /> <!-- Completed By Abhinav and Code Checked in. Enhancements could be done later  -->			
 			<action name="showPowerLines" class="com.htc.action.PowerLineAction"
-			method="showPowerLines" />
+			method="showPowerLines" /> <!-- Completed By Abhinav and Code Checked in. Enhancements could be done later  -->
 		<!-- 	<action name="editPowerLine" class="com.htc.action.PowerLineAction"
 			method="editPowerLine" />
 			 -->
