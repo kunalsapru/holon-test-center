@@ -55,6 +55,7 @@ $(document).ready(function() {
 		    			lngEnd : end.lng(),
 		    			isConnected :false,
 		    			resaonDown : "",
+		    			powerSourceId:1,
 		    				};
 		    	
 		    	if(powerLineType=="MAINLINE"){
@@ -110,10 +111,10 @@ function drawPoweLineCallBack(data, options) {
 	var currentCapacity= dataArray[3];
 	var powerLineType= dataArray[4];
 	var resaonDown= dataArray[5];
-	var latStart= dataArray[6];
-	var lngStart= dataArray[7];
-	var latEnd= dataArray[8];
-	var lngEnd= dataArray[9];
+	var latStart= dataArray[7];
+	var lngStart= dataArray[8];
+	var latEnd= dataArray[9];
+	var lngEnd= dataArray[10];
 	
 	contentString="<b>Power Line Type: </b>"+powerLineType+"<br>"+
 			"<b>Power Line Id: </b>"+powerLineId +"<br>"+
