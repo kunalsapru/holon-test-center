@@ -1,10 +1,13 @@
 package com.htc.action;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
 
+import com.htc.hibernate.config.HibernateSessionFactory;
 import com.htc.hibernate.pojo.LatLng;
 import com.htc.hibernate.pojo.PowerLine;
 import com.htc.hibernate.pojo.PowerSwitch;
@@ -31,7 +34,7 @@ public class PowerLineAction extends CommonUtilities {
 			Double latStart = getRequest().getParameter("latStart")!=null?Double.parseDouble(getRequest().getParameter("latStart")):0D;
 			Double lngStart = getRequest().getParameter("lngStart")!=null?Double.parseDouble(getRequest().getParameter("lngStart")):0D;
 			Double latEnd = getRequest().getParameter("latEnd")!=null?Double.parseDouble(getRequest().getParameter("latEnd")):0D;
-			Double lngEnd = getRequest().getParameter("latEnd")!=null?Double.parseDouble(getRequest().getParameter("latEnd")):0D;
+			Double lngEnd = getRequest().getParameter("lngEnd")!=null?Double.parseDouble(getRequest().getParameter("lngEnd")):0D;
 			Set<PowerSwitch> powerSwitches= new HashSet<PowerSwitch>(0);
 			
 			LatLng latLng = new LatLng(latStart, lngStart, latEnd, lngEnd);
@@ -69,7 +72,7 @@ public class PowerLineAction extends CommonUtilities {
 			
 		}catch(Exception e)
 		{
-			System.out.println("Exception "+e.getMessage()+" occurred in action createHolonObject()");
+			log.info("Exception "+e.getMessage()+" occurred in action drawPowerLine()");
 			e.printStackTrace();
 
 		}
@@ -78,7 +81,38 @@ public class PowerLineAction extends CommonUtilities {
 		
 	}
 	
-	
+	public void showPowerLines(){
+		try {
+			
+			ArrayList<PowerLine> powerLineList = getPowerLineService().getAllPowerLine();
+			ArrayList<String> powerLineListArray = new ArrayList<String>();
+			PowerLine powerLine = null;
+			String startLocation;
+			String endLocation;
+			log.error("No of PowerLines "+powerLineList.size());
+			for(int i=0; i<powerLineList.size();i++){
+				powerLine = powerLineList.get(i);
+				HibernateSessionFactory.getSession().update(powerLine);
+				startLocation = powerLine.getLatLngBySource().getLat_ne()+"~"+powerLine.getLatLngBySource().getLng_ne();
+				endLocation = powerLine.getLatLngByDestination().getLat_sw()+"~"+powerLine.getLatLngByDestination().getLng_sw();
+				powerLineListArray.add(startLocation+"^"+endLocation+"!<b>Connected: </b>"+powerLine.isIsConnected()+"<br>"+
+						"<b>PowerLine Id: </b>"+powerLine.getId() +"<br>"+
+						"<b>Maximum Capacity: </b>"+powerLine.getMaximumCapacity()+"<br>"+
+						"<b>Current Capacity: </b>"+powerLine.getCurrentCapacity()+"<br>"+
+						"<b>PowerLine Type: </b>"+powerLine.getType()+"<br>"+
+						"<b>Start Location: </b>"+powerLine.getLatLngBySource().getLat_ne()+"~"+powerLine.getLatLngBySource().getLng_ne()+"<br>"+
+						"<b>End Location: </b>"+powerLine.getLatLngByDestination().getLat_sw()+"~"+powerLine.getLatLngByDestination().getLng_sw()+"<br>*");
+
+			}
+			
+			//Calling the response function and setting the content type of response.
+			getResponse().setContentType("text/html");
+			getResponse().getWriter().write(powerLineListArray.toString());
+		} catch (Exception e) {
+			log.info("Exception "+e.getMessage()+" occurred in action showPowerLine()");
+			e.printStackTrace();
+		}
+	}
 	
 	public void connectToPowerSource(){
 		
