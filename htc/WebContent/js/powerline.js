@@ -72,6 +72,36 @@ $(document).ready(function() {
 
 })
 
+function showSavedPowerLines()
+{
+	ajaxRequest("showPowerLines", {}, showPowerLinesCallBack, {});
+}
+
+function showPowerLinesCallBack(data, options){
+	var powerLineList = data.split("*");
+	var powerLines=[];
+	for (var i=0; i<powerLineList.length-1; i++) {
+		var powerLine = powerLineList[i].split("!");
+		var location = powerLine[0];
+		var contentString = powerLine[1];
+		var startLat = location.split("^")[0].split("~")[0].replace("[","").replace(",","");
+		var startLng = location.split("^")[0].split("~")[1];
+		var endLat = location.split("^")[1].split("~")[0];
+		var endLng = location.split("^")[1].split("~")[1];
+	    var line = new google.maps.Polyline({
+	        path: [
+	            new google.maps.LatLng(startLat, startLng), 
+	            new google.maps.LatLng(endLat, endLng)
+	        ],
+	        strokeColor:"rgb(0, 0, 0)",
+	        strokeOpacity: 2.0,
+	        strokeWeight: 4,
+	        map: map
+	    });
+		 attachMessage(contentString, line, new google.maps.LatLng(startLat, startLng));
+	}	
+}
+
 function drawPoweLineCallBack(data, options) {
 	var dataArray = data.split("!");
 	var powerLineId = dataArray[0];
