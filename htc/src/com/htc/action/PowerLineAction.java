@@ -92,7 +92,6 @@ public class PowerLineAction extends CommonUtilities {
 			log.error("No of PowerLines "+powerLineList.size());
 			for(int i=0; i<powerLineList.size();i++){
 				powerLine = powerLineList.get(i);
-				HibernateSessionFactory.getSession().update(powerLine);
 				startLocation = powerLine.getLatLngBySource().getLat_ne()+"~"+powerLine.getLatLngBySource().getLng_ne();
 				endLocation = powerLine.getLatLngByDestination().getLat_sw()+"~"+powerLine.getLatLngByDestination().getLng_sw();
 				powerLineListArray.add(startLocation+"^"+endLocation+"!<b>Connected: </b>"+powerLine.isIsConnected()+"<br>"+

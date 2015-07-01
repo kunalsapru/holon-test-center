@@ -7,10 +7,10 @@
             <column name="id" />
             <generator class="increment" />
         </id>
-        <many-to-one name="latLngBySource" class="com.htc.hibernate.pojo.LatLng" fetch="select">
+        <many-to-one name="latLngBySource" class="com.htc.hibernate.pojo.LatLng" fetch="select" lazy="false">
             <column name="source" />
         </many-to-one>
-        <many-to-one name="latLngByDestination" class="com.htc.hibernate.pojo.LatLng" fetch="select">
+        <many-to-one name="latLngByDestination" class="com.htc.hibernate.pojo.LatLng" fetch="select" lazy="false">
             <column name="destination" />
         </many-to-one>
         <property name="type" type="string">
