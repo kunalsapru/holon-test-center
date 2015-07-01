@@ -64,18 +64,15 @@ function editHolonObjectCallBack(data, options){
 function createHolonObjectCallBack(data, options) {
 	var dataArray = data.split("!");
 	var holonObjectId = dataArray[0];
-	var holonName= dataArray[1];
-	var holonCoordinatorName_Holon= dataArray[2];	
-	var holonObjectTypeName= dataArray[3];
-	var ne_location= dataArray[4];
-	var sw_location= dataArray[5];
-	var lineConnectedState= dataArray[6];
-	var priority= dataArray[7];
-	var holonManagerName= dataArray[8];
+	var holonCoordinatorName_Holon= dataArray[1];	
+	var holonObjectTypeName= dataArray[2];
+	var ne_location= dataArray[3];
+	var sw_location= dataArray[4];
+	var lineConnectedState= dataArray[5];
+	var holonManagerName= dataArray[6];
 	var lat=ne_location.split("~");
-	contentString="<b>Priority: </b>"+priority+"<br>"+
-			"<b>Holon Object Id: </b>"+holonObjectId +"<br>"+
-			"<b>Holon Name: </b>"+holonName+"<br>"+
+	contentString="<b>Holon Object Id: </b>"+holonObjectId +"<br>"+
+			"<b>Holon Object Type: </b>"+holonObjectTypeName+"<br>"+
 			"<b>Holon Manager: </b>"+holonManagerName+"<br>"+
 			"<b>North East Location: </b>"+ne_location+"<br>"+
 			"<b>South West Location: </b>"+sw_location+"<br><br>"+
