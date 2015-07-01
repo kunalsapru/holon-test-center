@@ -2,6 +2,7 @@ package com.htc.action;
 
 
 import com.htc.hibernate.pojo.HolonObject;
+import com.htc.hibernate.pojo.LatLng;
 import com.htc.hibernate.pojo.PowerLine;
 import com.htc.hibernate.pojo.PowerSwitch;
 import com.htc.utilities.CommonUtilities;
@@ -28,9 +29,9 @@ public class PowerSwitchAction extends CommonUtilities {
 	
 	public void addPowerSwitchForHolonObject(HolonObject holonObject){
 		PowerSwitch powerSwitch=new PowerSwitch();
-		powerSwitch.setHolonObjectId((holonObject.getId()));
-		powerSwitch.setPowerLineId(0);
-		powerSwitch.setLatLng(holonObject.getLatLng());
+		powerSwitch.setHolonObject(holonObject);
+		powerSwitch.setPowerLine(null);
+		powerSwitch.setLatLng(holonObject.getLatLngByDoorLocation());
 		powerSwitch.setStatus(true);
 		
 		//Calling service method to save the object in database and saving the auto-incremented ID in an integer
@@ -39,12 +40,12 @@ public class PowerSwitchAction extends CommonUtilities {
 
 	}
 	
-	public void addPowerSwitchForPowerLine(PowerLine powerLine){
+	public void addPowerSwitchForPowerLine(PowerLine powerLine,LatLng position){
 		PowerSwitch powerSwitch=new PowerSwitch();
-		powerSwitch.setPowerLineId((powerLine.getId()));
-		powerSwitch.setHolonObjectId(0);
+		powerSwitch.setPowerLine(powerLine);
+		powerSwitch.setHolonObject(null);
 		powerSwitch.setStatus(true);
-		
+		powerSwitch.setLatLng(position);
 		Integer newPowerSwitchID = getPowerSwitchService().persist(powerSwitch);
 		System.out.println("NewLy Generated PowerSwitch  ID --> "+newPowerSwitchID);
 			
