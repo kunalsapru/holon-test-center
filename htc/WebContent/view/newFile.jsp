@@ -44,7 +44,8 @@
     </li>
     <li><a href="#"><i class="fa fa-toggle-on"></i>Switch<i class="fa fa-caret-down"></i></a>
     <ul>
-    	<li><a href="#"><i class=" fa fa-circle-o-notch"></i>Place Switch</a></li>
+    	<li><a href="#"><i class=" fa fa-circle-o-notch"></i>Switch on Holon Object</a></li>
+    	<li><a href="#"><i class=" fa fa-life-saver "></i>Switch on Power Line</a></li>
     </ul>
     </li>
   </ul>
