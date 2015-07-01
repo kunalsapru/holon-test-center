@@ -1,7 +1,6 @@
 package com.htc.hibernate.pojo;
 
-// default package
-// Generated 19 Jun, 2015 7:20:49 PM by Hibernate Tools 4.3.1
+// Generated 1 Jul, 2015 9:39:17 PM by Hibernate Tools 4.3.1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -11,108 +10,121 @@ import java.util.Set;
  */
 public class HolonObject implements java.io.Serializable {
 
+	private static final long serialVersionUID = 1L;
 	private int id;
-	private Holon holon;
 	private HolonCoordinator holonCoordinator;
-	private HolonObjectType holonObjectType;
 	private HolonManager holonManager;
-	private LatLng latLng;
+	private HolonObjectType holonObjectType;
+	private LatLng latLngByNeLocation;
+	private LatLng latLngByDoorLocation;
+	private LatLng latLngBySwLocation;
 	private Boolean lineConnectedState;
-	private Integer priority;
-	private Set holonElements = new HashSet(0);
+	private Set<?> holonElements = new HashSet<Object>(0);
+	private Set<?> powerSwitches = new HashSet<Object>(0);
 
 	public HolonObject() {
 	}
 
-	public HolonObject(int id) {
+	public HolonObject(int id, HolonCoordinator holonCoordinator) {
 		this.id = id;
-	}
-
-	public HolonObject(int id, Holon holon, HolonCoordinator holonCoordinator,
-			HolonObjectType holonObjectType, HolonManager holonManager, LatLng latLng,
-			Boolean lineConnectedState, Integer priority, Set holonElements,
-			Set holonManagers) {
-		this.id = id;
-		this.holon = holon;
 		this.holonCoordinator = holonCoordinator;
+	}
+
+	public HolonObject(int id, HolonCoordinator holonCoordinator,
+			HolonManager holonManager, HolonObjectType holonObjectType,
+			LatLng latLngByNeLocation, LatLng latLngByDoorLocation,
+			LatLng latLngBySwLocation, Boolean lineConnectedState,
+			Set<?> holonElements, Set<?> powerSwitches) {
+		this.id = id;
+		this.holonCoordinator = holonCoordinator;
+		this.holonManager = holonManager;
 		this.holonObjectType = holonObjectType;
-		this.latLng = latLng;
+		this.latLngByNeLocation = latLngByNeLocation;
+		this.latLngByDoorLocation = latLngByDoorLocation;
+		this.latLngBySwLocation = latLngBySwLocation;
 		this.lineConnectedState = lineConnectedState;
-		this.priority = priority;
 		this.holonElements = holonElements;
-		this.setHolonManager(holonManager);
-	}
-
-	public Holon getHolon() {
-		return this.holon;
-	}
-
-	public HolonCoordinator getHolonCoordinator() {
-		return this.holonCoordinator;
-	}
-
-	public Set getHolonElements() {
-		return this.holonElements;
-	}
-
-	public HolonObjectType getHolonObjectType() {
-		return this.holonObjectType;
+		this.powerSwitches = powerSwitches;
 	}
 
 	public int getId() {
 		return this.id;
 	}
 
-	public LatLng getLatLng() {
-		return this.latLng;
+	public void setId(int id) {
+		this.id = id;
 	}
 
-	public Boolean getLineConnectedState() {
-		return this.lineConnectedState;
-	}
-
-	public Integer getPriority() {
-		return this.priority;
-	}
-
-	public void setHolon(Holon holon) {
-		this.holon = holon;
+	public HolonCoordinator getHolonCoordinator() {
+		return this.holonCoordinator;
 	}
 
 	public void setHolonCoordinator(HolonCoordinator holonCoordinator) {
 		this.holonCoordinator = holonCoordinator;
 	}
 
-	public void setHolonElements(Set holonElements) {
-		this.holonElements = holonElements;
+	public HolonManager getHolonManager() {
+		return this.holonManager;
+	}
+
+	public void setHolonManager(HolonManager holonManager) {
+		this.holonManager = holonManager;
+	}
+
+	public HolonObjectType getHolonObjectType() {
+		return this.holonObjectType;
 	}
 
 	public void setHolonObjectType(HolonObjectType holonObjectType) {
 		this.holonObjectType = holonObjectType;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public LatLng getLatLngByNeLocation() {
+		return this.latLngByNeLocation;
 	}
 
-	public void setLatLng(LatLng latLng) {
-		this.latLng = latLng;
+	public void setLatLngByNeLocation(LatLng latLngByNeLocation) {
+		this.latLngByNeLocation = latLngByNeLocation;
+	}
+
+	public LatLng getLatLngByDoorLocation() {
+		return this.latLngByDoorLocation;
+	}
+
+	public void setLatLngByDoorLocation(LatLng latLngByDoorLocation) {
+		this.latLngByDoorLocation = latLngByDoorLocation;
+	}
+
+	public LatLng getLatLngBySwLocation() {
+		return this.latLngBySwLocation;
+	}
+
+	public void setLatLngBySwLocation(LatLng latLngBySwLocation) {
+		this.latLngBySwLocation = latLngBySwLocation;
+	}
+
+	public Boolean getLineConnectedState() {
+		return this.lineConnectedState;
 	}
 
 	public void setLineConnectedState(Boolean lineConnectedState) {
 		this.lineConnectedState = lineConnectedState;
 	}
 
-	public void setPriority(Integer priority) {
-		this.priority = priority;
+	public Set<?> getHolonElements() {
+		return this.holonElements;
 	}
 
-	public HolonManager getHolonManager() {
-		return holonManager;
+	public void setHolonElements(Set<?> holonElements) {
+		this.holonElements = holonElements;
 	}
 
-	public void setHolonManager(HolonManager holonManager) {
-		this.holonManager = holonManager;
+	public Set<?> getPowerSwitches() {
+		return this.powerSwitches;
+	}
+
+	public void setPowerSwitches(Set<?> powerSwitches) {
+		this.powerSwitches = powerSwitches;
 	}
 
 }

@@ -1,7 +1,5 @@
 package com.htc.hibernate.pojo;
-
-// default package
-// Generated 19 Jun, 2015 7:20:49 PM by Hibernate Tools 4.3.1
+// Generated 1 Jul, 2015 9:39:17 PM by Hibernate Tools 4.3.1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -11,30 +9,19 @@ import java.util.Set;
  */
 public class PowerLine implements java.io.Serializable {
 
+	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private LatLng latLngBySource;
 	private LatLng latLngByDestination;
+	private PowerSource powerSource;
 	private String type;
 	private int currentCapacity;
 	private int maximumCapacity;
 	private boolean isConnected;
 	private String reasonDown;
-	private Set powerSwitches = new HashSet(0);
+	private Set<?> powerSwitches = new HashSet<Object>(0);
 
 	public PowerLine() {
-	}
-
-	public PowerLine(LatLng latLngBySource, LatLng latLngByDestination,
-			String type, int currentCapacity, int maximumCapacity,
-			boolean isConnected, String reasonDown, Set powerSwitches) {
-		this.latLngBySource = latLngBySource;
-		this.latLngByDestination = latLngByDestination;
-		this.type = type;
-		this.currentCapacity = currentCapacity;
-		this.maximumCapacity = maximumCapacity;
-		this.isConnected = isConnected;
-		this.reasonDown = reasonDown;
-		this.powerSwitches = powerSwitches;
 	}
 
 	public PowerLine(String type, int currentCapacity, int maximumCapacity,
@@ -45,76 +32,99 @@ public class PowerLine implements java.io.Serializable {
 		this.isConnected = isConnected;
 	}
 
-	public int getCurrentCapacity() {
-		return this.currentCapacity;
+	public PowerLine(LatLng latLngBySource, LatLng latLngByDestination,
+			PowerSource powerSource, String type, int currentCapacity,
+			int maximumCapacity, boolean isConnected, String reasonDown,
+			Set<?> powerSwitches) {
+		this.latLngBySource = latLngBySource;
+		this.latLngByDestination = latLngByDestination;
+		this.powerSource = powerSource;
+		this.type = type;
+		this.currentCapacity = currentCapacity;
+		this.maximumCapacity = maximumCapacity;
+		this.isConnected = isConnected;
+		this.reasonDown = reasonDown;
+		this.powerSwitches = powerSwitches;
 	}
 
 	public Integer getId() {
 		return this.id;
 	}
 
-	public LatLng getLatLngByDestination() {
-		return this.latLngByDestination;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public LatLng getLatLngBySource() {
 		return this.latLngBySource;
 	}
 
-	public int getMaximumCapacity() {
-		return this.maximumCapacity;
+	public void setLatLngBySource(LatLng latLngBySource) {
+		this.latLngBySource = latLngBySource;
 	}
 
-	public Set getPowerSwitches() {
-		return this.powerSwitches;
-	}
-
-	public String getReasonDown() {
-		return this.reasonDown;
-	}
-
-	public String getType() {
-		return this.type;
-	}
-
-	public boolean isIsConnected() {
-		return this.isConnected;
-	}
-
-	public void setCurrentCapacity(int currentCapacity) {
-		this.currentCapacity = currentCapacity;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public void setIsConnected(boolean isConnected) {
-		this.isConnected = isConnected;
+	public LatLng getLatLngByDestination() {
+		return this.latLngByDestination;
 	}
 
 	public void setLatLngByDestination(LatLng latLngByDestination) {
 		this.latLngByDestination = latLngByDestination;
 	}
 
-	public void setLatLngBySource(LatLng latLngBySource) {
-		this.latLngBySource = latLngBySource;
+	public PowerSource getPowerSource() {
+		return this.powerSource;
+	}
+
+	public void setPowerSource(PowerSource powerSource) {
+		this.powerSource = powerSource;
+	}
+
+	public String getType() {
+		return this.type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public int getCurrentCapacity() {
+		return this.currentCapacity;
+	}
+
+	public void setCurrentCapacity(int currentCapacity) {
+		this.currentCapacity = currentCapacity;
+	}
+
+	public int getMaximumCapacity() {
+		return this.maximumCapacity;
 	}
 
 	public void setMaximumCapacity(int maximumCapacity) {
 		this.maximumCapacity = maximumCapacity;
 	}
 
-	public void setPowerSwitches(Set powerSwitches) {
-		this.powerSwitches = powerSwitches;
+	public boolean isIsConnected() {
+		return this.isConnected;
+	}
+
+	public void setIsConnected(boolean isConnected) {
+		this.isConnected = isConnected;
+	}
+
+	public String getReasonDown() {
+		return this.reasonDown;
 	}
 
 	public void setReasonDown(String reasonDown) {
 		this.reasonDown = reasonDown;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public Set<?> getPowerSwitches() {
+		return this.powerSwitches;
+	}
+
+	public void setPowerSwitches(Set<?> powerSwitches) {
+		this.powerSwitches = powerSwitches;
 	}
 
 }

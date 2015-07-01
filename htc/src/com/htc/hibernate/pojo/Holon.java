@@ -1,7 +1,6 @@
 package com.htc.hibernate.pojo;
 
-// default package
-// Generated 19 Jun, 2015 7:20:49 PM by Hibernate Tools 4.3.1
+// Generated 1 Jul, 2015 9:39:17 PM by Hibernate Tools 4.3.1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -11,12 +10,13 @@ import java.util.Set;
  */
 public class Holon implements java.io.Serializable {
 
+	private static final long serialVersionUID = 1L;
 	private int id;
 	private LatLng latLng;
 	private String name;
 	private Integer radius;
-	private Set holonObjects = new HashSet(0);
-	private Set holonCoordinators = new HashSet(0);
+	private String color;
+	private Set<?> holonCoordinators = new HashSet<Object>(0);
 
 	public Holon() {
 	}
@@ -26,61 +26,61 @@ public class Holon implements java.io.Serializable {
 	}
 
 	public Holon(int id, LatLng latLng, String name, Integer radius,
-			Set holonObjects, Set holonCoordinators) {
+			String color, Set<?> holonCoordinators) {
 		this.id = id;
 		this.latLng = latLng;
 		this.name = name;
 		this.radius = radius;
-		this.holonObjects = holonObjects;
+		this.color = color;
 		this.holonCoordinators = holonCoordinators;
-	}
-
-	public Set getHolonCoordinators() {
-		return this.holonCoordinators;
-	}
-
-	public Set getHolonObjects() {
-		return this.holonObjects;
 	}
 
 	public int getId() {
 		return this.id;
 	}
 
-	public LatLng getLatLng() {
-		return this.latLng;
-	}
-
-	public String getName() {
-		return this.name;
-	}
-
-	public Integer getRadius() {
-		return this.radius;
-	}
-
-	public void setHolonCoordinators(Set holonCoordinators) {
-		this.holonCoordinators = holonCoordinators;
-	}
-
-	public void setHolonObjects(Set holonObjects) {
-		this.holonObjects = holonObjects;
-	}
-
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public LatLng getLatLng() {
+		return this.latLng;
 	}
 
 	public void setLatLng(LatLng latLng) {
 		this.latLng = latLng;
 	}
 
+	public String getName() {
+		return this.name;
+	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	public Integer getRadius() {
+		return this.radius;
+	}
+
 	public void setRadius(Integer radius) {
 		this.radius = radius;
+	}
+
+	public String getColor() {
+		return this.color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
+	}
+
+	public Set<?> getHolonCoordinators() {
+		return this.holonCoordinators;
+	}
+
+	public void setHolonCoordinators(Set<?> holonCoordinators) {
+		this.holonCoordinators = holonCoordinators;
 	}
 
 }

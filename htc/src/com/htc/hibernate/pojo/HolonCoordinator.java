@@ -1,7 +1,6 @@
 package com.htc.hibernate.pojo;
 
-// default package
-// Generated 19 Jun, 2015 7:20:49 PM by Hibernate Tools 4.3.1
+// Generated 1 Jul, 2015 9:39:17 PM by Hibernate Tools 4.3.1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -11,11 +10,12 @@ import java.util.Set;
  */
 public class HolonCoordinator implements java.io.Serializable {
 
+	private static final long serialVersionUID = 1L;
 	private int id;
 	private Holon holon;
 	private LatLng latLng;
 	private String name;
-	private Set holonObjects = new HashSet(0);
+	private Set<?> holonObjects = new HashSet<Object>(0);
 
 	public HolonCoordinator() {
 	}
@@ -25,52 +25,52 @@ public class HolonCoordinator implements java.io.Serializable {
 	}
 
 	public HolonCoordinator(int id, Holon holon, LatLng latLng, String name,
-			Set holonObjects) {
+			Set<?> holonObjects) {
 		this.id = id;
 		this.holon = holon;
 		this.latLng = latLng;
 		this.name = name;
 		this.holonObjects = holonObjects;
-	}
-
-	public Holon getHolon() {
-		return this.holon;
-	}
-
-	public Set getHolonObjects() {
-		return this.holonObjects;
 	}
 
 	public int getId() {
 		return this.id;
 	}
 
-	public LatLng getLatLng() {
-		return this.latLng;
+	public void setId(int id) {
+		this.id = id;
 	}
 
-	public String getName() {
-		return this.name;
+	public Holon getHolon() {
+		return this.holon;
 	}
 
 	public void setHolon(Holon holon) {
 		this.holon = holon;
 	}
 
-	public void setHolonObjects(Set holonObjects) {
-		this.holonObjects = holonObjects;
-	}
-
-	public void setId(int id) {
-		this.id = id;
+	public LatLng getLatLng() {
+		return this.latLng;
 	}
 
 	public void setLatLng(LatLng latLng) {
 		this.latLng = latLng;
 	}
 
+	public String getName() {
+		return this.name;
+	}
+
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Set<?> getHolonObjects() {
+		return this.holonObjects;
+	}
+
+	public void setHolonObjects(Set<?> holonObjects) {
+		this.holonObjects = holonObjects;
 	}
 
 }

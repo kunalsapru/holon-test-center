@@ -1,8 +1,5 @@
 package com.htc.hibernate.pojo;
 
-// default package
-// Generated 19 Jun, 2015 7:20:49 PM by Hibernate Tools 4.3.1
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,9 +8,12 @@ import java.util.Set;
  */
 public class HolonElementType implements java.io.Serializable {
 
+	private static final long serialVersionUID = 1L;
 	private int id;
 	private String name;
-	private Set holonElements = new HashSet(0);
+	private Integer maxCapacity;
+	private Integer minCapacity;
+	private Set<?> holonElements = new HashSet<Object>(0);
 
 	public HolonElementType() {
 	}
@@ -22,34 +22,53 @@ public class HolonElementType implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public HolonElementType(int id, String name, Set holonElements) {
+	public HolonElementType(int id, String name, Integer maxCapacity,
+			Integer minCapacity, Set<?> holonElements) {
 		this.id = id;
 		this.name = name;
+		this.maxCapacity = maxCapacity;
+		this.minCapacity = minCapacity;
 		this.holonElements = holonElements;
-	}
-
-	public Set getHolonElements() {
-		return this.holonElements;
 	}
 
 	public int getId() {
 		return this.id;
 	}
 
-	public String getName() {
-		return this.name;
-	}
-
-	public void setHolonElements(Set holonElements) {
-		this.holonElements = holonElements;
-	}
-
 	public void setId(int id) {
 		this.id = id;
 	}
 
+	public String getName() {
+		return this.name;
+	}
+
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Integer getMaxCapacity() {
+		return this.maxCapacity;
+	}
+
+	public void setMaxCapacity(Integer maxCapacity) {
+		this.maxCapacity = maxCapacity;
+	}
+
+	public Integer getMinCapacity() {
+		return this.minCapacity;
+	}
+
+	public void setMinCapacity(Integer minCapacity) {
+		this.minCapacity = minCapacity;
+	}
+
+	public Set<?> getHolonElements() {
+		return this.holonElements;
+	}
+
+	public void setHolonElements(Set<?> holonElements) {
+		this.holonElements = holonElements;
 	}
 
 }

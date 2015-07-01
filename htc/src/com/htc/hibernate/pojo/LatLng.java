@@ -1,8 +1,5 @@
 package com.htc.hibernate.pojo;
 
-// default package
-// Generated 19 Jun, 2015 7:20:49 PM by Hibernate Tools 4.3.1
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,143 +8,154 @@ import java.util.Set;
  */
 public class LatLng implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Integer id;
-	private double lat_ne;
-	private double lng_ne;
-	private double lat_sw;
-	private double lng_sw;
-	private Set holons = new HashSet(0);
-	private Set holonCoordinators = new HashSet(0);
-	private Set holonObjects = new HashSet(0);
-	private Set powerLinesForSource = new HashSet(0);
-	private Set powerLineNodes = new HashSet(0);
-	private Set powerLinesForDestination = new HashSet(0);
-	private Set powerSwitches = new HashSet(0);
+	private double latitude;
+	private double longitude;
+	private Set<?> holonObjectsForNeLocation = new HashSet<Object>(0);
+	private Set<?> holonObjectsForDoorLocation = new HashSet<Object>(0);
+	private Set<?> holons = new HashSet<Object>(0);
+	private Set<?> holonCoordinators = new HashSet<Object>(0);
+	private Set<?> powerSources = new HashSet<Object>(0);
+	private Set<?> powerLinesForSource = new HashSet<Object>(0);
+	private Set<?> powerLineNodes = new HashSet<Object>(0);
+	private Set<?> holonObjectsForSwLocation = new HashSet<Object>(0);
+	private Set<?> powerLinesForDestination = new HashSet<Object>(0);
+	private Set<?> powerSwitches = new HashSet<Object>(0);
 
 	public LatLng() {
 	}
 
-	public LatLng(double lat_ne, double lng_ne, double lat_sw, double lng_sw) {
-		this.lat_ne = lat_ne;
-		this.lng_ne = lng_ne;
-		this.lat_sw = lat_sw;
-		this.lng_sw = lng_sw;
+	public LatLng(double latitude, double longitude) {
+		this.latitude = latitude;
+		this.longitude = longitude;
 	}
 
-	public LatLng(double lat_ne, double lng_ne,double lat_sw, double lng_sw, Set holons, Set holonCoordinators,
-			Set holonObjects, Set powerLinesForSource, Set powerLineNodes,
-			Set powerLinesForDestination, Set powerSwitches) {
-		this.lat_ne = lat_ne;
-		this.lng_ne = lng_ne;
-		this.lat_sw = lat_sw;
-		this.lng_sw = lng_sw;
+	public LatLng(double latitude, double longitude,
+			Set<?> holonObjectsForNeLocation, Set<?> holonObjectsForDoorLocation,
+			Set<?> holons, Set<?> holonCoordinators, Set<?> powerSources,
+			Set<?> powerLinesForSource, Set<?> powerLineNodes,
+			Set<?> holonObjectsForSwLocation, Set<?> powerLinesForDestination,
+			Set<?> powerSwitches) {
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.holonObjectsForNeLocation = holonObjectsForNeLocation;
+		this.holonObjectsForDoorLocation = holonObjectsForDoorLocation;
 		this.holons = holons;
 		this.holonCoordinators = holonCoordinators;
-		this.holonObjects = holonObjects;
+		this.powerSources = powerSources;
 		this.powerLinesForSource = powerLinesForSource;
 		this.powerLineNodes = powerLineNodes;
+		this.holonObjectsForSwLocation = holonObjectsForSwLocation;
 		this.powerLinesForDestination = powerLinesForDestination;
 		this.powerSwitches = powerSwitches;
-	}
-
-	public Set getHolonCoordinators() {
-		return this.holonCoordinators;
-	}
-
-	public Set getHolonObjects() {
-		return this.holonObjects;
-	}
-
-	public Set getHolons() {
-		return this.holons;
 	}
 
 	public Integer getId() {
 		return this.id;
 	}
 
-	public Set getPowerLineNodes() {
-		return this.powerLineNodes;
-	}
-
-	public Set getPowerLinesForDestination() {
-		return this.powerLinesForDestination;
-	}
-
-	public Set getPowerLinesForSource() {
-		return this.powerLinesForSource;
-	}
-
-	public Set getPowerSwitches() {
-		return this.powerSwitches;
-	}
-
-	public double getLat_ne() {
-		return lat_ne;
-	}
-
-	public double getLng_ne() {
-		return lng_ne;
-	}
-
-	public double getLat_sw() {
-		return lat_sw;
-	}
-
-	public double getLng_sw() {
-		return lng_sw;
-	}
-
-	public void setHolonCoordinators(Set holonCoordinators) {
-		this.holonCoordinators = holonCoordinators;
-	}
-
-	public void setHolonObjects(Set holonObjects) {
-		this.holonObjects = holonObjects;
-	}
-
-	public void setHolons(Set holons) {
-		this.holons = holons;
-	}
-
 	public void setId(Integer id) {
 		this.id = id;
 	}
 
-
-	public void setPowerLineNodes(Set powerLineNodes) {
-		this.powerLineNodes = powerLineNodes;
+	public double getLatitude() {
+		return this.latitude;
 	}
 
-	public void setPowerLinesForDestination(Set powerLinesForDestination) {
-		this.powerLinesForDestination = powerLinesForDestination;
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
 	}
 
-	public void setPowerLinesForSource(Set powerLinesForSource) {
+	public double getLongitude() {
+		return this.longitude;
+	}
+
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
+	}
+
+	public Set<?> getHolonObjectsForNeLocation() {
+		return this.holonObjectsForNeLocation;
+	}
+
+	public void setHolonObjectsForNeLocation(Set<?> holonObjectsForNeLocation) {
+		this.holonObjectsForNeLocation = holonObjectsForNeLocation;
+	}
+
+	public Set<?> getHolonObjectsForDoorLocation() {
+		return this.holonObjectsForDoorLocation;
+	}
+
+	public void setHolonObjectsForDoorLocation(Set<?> holonObjectsForDoorLocation) {
+		this.holonObjectsForDoorLocation = holonObjectsForDoorLocation;
+	}
+
+	public Set<?> getHolons() {
+		return this.holons;
+	}
+
+	public void setHolons(Set<?> holons) {
+		this.holons = holons;
+	}
+
+	public Set<?> getHolonCoordinators() {
+		return this.holonCoordinators;
+	}
+
+	public void setHolonCoordinators(Set<?> holonCoordinators) {
+		this.holonCoordinators = holonCoordinators;
+	}
+
+	public Set<?> getPowerSources() {
+		return this.powerSources;
+	}
+
+	public void setPowerSources(Set<?> powerSources) {
+		this.powerSources = powerSources;
+	}
+
+	public Set<?> getPowerLinesForSource() {
+		return this.powerLinesForSource;
+	}
+
+	public void setPowerLinesForSource(Set<?> powerLinesForSource) {
 		this.powerLinesForSource = powerLinesForSource;
 	}
 
-	public void setPowerSwitches(Set powerSwitches) {
+	public Set<?> getPowerLineNodes() {
+		return this.powerLineNodes;
+	}
+
+	public void setPowerLineNodes(Set<?> powerLineNodes) {
+		this.powerLineNodes = powerLineNodes;
+	}
+
+	public Set<?> getHolonObjectsForSwLocation() {
+		return this.holonObjectsForSwLocation;
+	}
+
+	public void setHolonObjectsForSwLocation(Set<?> holonObjectsForSwLocation) {
+		this.holonObjectsForSwLocation = holonObjectsForSwLocation;
+	}
+
+	public Set<?> getPowerLinesForDestination() {
+		return this.powerLinesForDestination;
+	}
+
+	public void setPowerLinesForDestination(Set<?> powerLinesForDestination) {
+		this.powerLinesForDestination = powerLinesForDestination;
+	}
+
+	public Set<?> getPowerSwitches() {
+		return this.powerSwitches;
+	}
+
+	public void setPowerSwitches(Set<?> powerSwitches) {
 		this.powerSwitches = powerSwitches;
 	}
-
-	public void setLat_ne(double lat_ne) {
-		this.lat_ne = lat_ne;
-	}
-
-	public void setLng_ne(double lng_ne) {
-		this.lng_ne = lng_ne;
-	}
-
-	public void setLat_sw(double lat_sw) {
-		this.lat_sw = lat_sw;
-	}
-
-	public void setLng_sw(double lng_sw) {
-		this.lng_sw = lng_sw;
-	}
-	
-
-
 
 }

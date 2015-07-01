@@ -1,7 +1,6 @@
 package com.htc.hibernate.pojo;
 
-// default package
-// Generated 19 Jun, 2015 7:20:49 PM by Hibernate Tools 4.3.1
+// Generated 1 Jul, 2015 9:39:17 PM by Hibernate Tools 4.3.1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -11,40 +10,51 @@ import java.util.Set;
  */
 public class HolonObjectType implements java.io.Serializable {
 
+	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private String name;
-	private Set holonObjects = new HashSet(0);
+	private Integer priority;
+	private Set<?> holonObjects = new HashSet<Object>(0);
 
 	public HolonObjectType() {
 	}
 
-	public HolonObjectType(String name, Set holonObjects) {
+	public HolonObjectType(String name, Integer priority, Set<?> holonObjects) {
 		this.name = name;
+		this.priority = priority;
 		this.holonObjects = holonObjects;
-	}
-
-	public Set getHolonObjects() {
-		return this.holonObjects;
 	}
 
 	public Integer getId() {
 		return this.id;
 	}
 
-	public String getName() {
-		return this.name;
-	}
-
-	public void setHolonObjects(Set holonObjects) {
-		this.holonObjects = holonObjects;
-	}
-
 	public void setId(Integer id) {
 		this.id = id;
 	}
 
+	public String getName() {
+		return this.name;
+	}
+
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Integer getPriority() {
+		return this.priority;
+	}
+
+	public void setPriority(Integer priority) {
+		this.priority = priority;
+	}
+
+	public Set<?> getHolonObjects() {
+		return this.holonObjects;
+	}
+
+	public void setHolonObjects(Set<?> holonObjects) {
+		this.holonObjects = holonObjects;
 	}
 
 }
