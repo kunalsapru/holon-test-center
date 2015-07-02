@@ -24,7 +24,7 @@ $(document)
 					var clickedToAddElements = "";
 					// Div to add details about the new elements inserted
 					$("#displayHolonDetails").hide();
-					$("#holonObjectDetail").hide();
+					/*$("#holonObjectDetail").hide();*/
 					$("#holonCoordinatorInformation").hide();
 					$("#elementInfo").hide();
 					$("#addMasterHolonElementTypeDetail").hide();
@@ -91,6 +91,11 @@ $(document)
 					$("#saveHolonObject").click(function(event){
 						saveHolonObject();
 					});
+					
+					$("#cancelHolonObject").click(function(event){
+						$( "#holonObjectDetail" ).slideUp(100);
+					});
+					
 					
 					$("#saveCoordinator").click(function(event){
 						saveCoordinator();
@@ -176,13 +181,10 @@ $(document)
 				    	  if(clickedValuePanel=="addHolonObject"){
 				    		  getHolonObjectTypeFromDatabase();
 				    		  getHolonCoordinatorFromDatabase();
-				    	  }
-				    	  else
-				    		  {
+				    	  } else {
 				    		  getHolonFromDatabase();
-				    		 
 				    		  }
-				      
+				    		
 				    	  //When Rectangle is clicked
 				    	  google.maps.event.addListener(newShape, 'click', function() {
 				    		  console.log("New Shape::"+newShape);
@@ -528,10 +530,8 @@ function getHolonCoordinatorFromDatabaseCallBack(data,options)
 	var options= "<option value="+listHolonCoordinator[i].split("-")[0]+" id= "+listHolonCoordinator[i].split("-")[0]+">"+listHolonCoordinator[i].split("-")[1]+"</option>";
 	$("#holonCoordinatorId").append(options);
 	}
-	$("#holonCoordinatorId").selectmenu('refresh', true);
-	$("#holonObjectDetail").show();
-	$("#holonObjectDetail").popup();
-	$("#holonObjectDetail").popup("open");
+//	$("#holonCoordinatorId").selectmenu('refresh', true);
+	$('#holonObjectDetail').slideDown(100);
 }
 
 function getHolonObjectTypeFromDatabase()
@@ -548,7 +548,7 @@ function getHolonObjectTypeFromDatabaseCallBack(data,options)
 	var options= "<option value="+listHolonObjectType[i].split("-")[0]+" id= "+listHolonObjectType[i].split("-")[0]+">"+listHolonObjectType[i].split("-")[1]+"</option>";
 	$("#holonObjectType").append(options);
 	}
-	$("#holonObjectType").selectmenu('refresh', true);
+//	$("#holonObjectType").selectmenu('refresh', true);
 }
 function getHolonElementState()
 {

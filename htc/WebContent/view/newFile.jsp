@@ -5,13 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Holon Test Center</title>
 <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
-<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script src="http://maps.googleapis.com/maps/api/js"></script> -->
-<!-- <script src="js/newFile.js"></script> -->
-<script
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-<script type="text/javascript"
-	src="https://maps.googleapis.com/maps/api/js?libraries=drawing"></script>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" type="text/css" href="css/sweetalert.css">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=drawing"></script>
 <script type="text/javascript" src="js/googleMaps.js"></script>
 <script type="text/javascript" src="js/gmaps.js"></script>
 <script type="text/javascript" src="js/toggle.js"></script>
@@ -19,12 +16,27 @@
 <script type="text/javascript" src="js/powerline.js"></script>
 <script type="text/javascript" src="js/distanceCalc.js"></script>
 <script type="text/javascript" src="js/holonObject.js"></script>
-<script type="text/javascript" src="js/jquery.flot.js"></script>
-<script type="text/javascript" src="js/jquery.flot.time.js"></script>
 <script src="js/sweetalert.min.js"></script>
-<link rel="stylesheet" type="text/css" href="css/sweetalert.css">
-<link href="css/contextMenu.css" rel="stylesheet" type="text/css" />
-<link href="css/style.css" rel="stylesheet" type="text/css" /> 
+<style type='text/css'>
+	#holonObjectDetail {
+	    display: none;
+	    position: absolute;
+	    top: 50%;
+	    left: 50%;
+	    width: 700px;
+	    height: 300px;
+	    margin: -100px 0 0 -250px;    
+	    background: darkkhaki;
+	    border: 5px solid rgb(128, 128, 128);
+	}
+#holonObjectTable tr{
+height: 50px;
+}
+.button{
+background-color: green;
+color: white;
+}
+</style>
 
 </head>
 
@@ -32,7 +44,7 @@
 <!-- menu vertical -->
 <nav id="menu" class="left">
   <ul>
-    <li><a href="#" class="create">Holon Test Center</a></li>
+    <li><a href="#" class="active">Holon Test Center</a></li>
     <li><a href="#"><i class="fa fa-header"></i>Holon<i class="fa fa-caret-down"></i></a>
     <ul>
         <li><a href="#" id="showHolonObjects"><i class="fa fa-info-circle"></i>Show Holons</a></li>
@@ -65,8 +77,8 @@
     	<li><a href="#"><i class=" fa fa-life-saver "></i>Switch on Power Line</a></li>
     </ul>
     </li>
-    <li><a href="#" id="clear"><i class="fa fa-eraser"></i>Clear Map</a></li>
-  </ul>
+		<li><a href="#" id="clear"><i class="fa fa-eraser"></i>Clear Map</a></li> 
+	</ul>
   <a href="#" id="showmenu"> <i class="fa fa-align-justify"></i> </a> </nav>
 <!-- /menu vertical --> 
 
@@ -129,50 +141,39 @@
 					</tr>
 				</table>
 			</div>
-			<div id="holonObjectDetail" class="ui-content" data-transition="flip"
-				data-overlay-theme="b" data-theme="a" data-content-theme="d">
-				<a href="#" data-rel="back" data-role="button" data-theme="a"
-					data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+			<div id="holonObjectDetail">
 				<input type="hidden" id="holonObjectActionState" value="Add" /> <input
 					type="hidden" id="hiddenHolonObjectId" value="" />
 				<table id="holonObjectTable">
 					<tr>
 						<td>Holon Object Type:</td>
-						<td><div data-role="fieldcontain">
-								<select name="holonObjectType" id="holonObjectType"></select>
-							</div></td>
-						<td>Holon Manager Name:</td>
+						<td><select name="holonObjectType" id="holonObjectType"></select></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;Holon Manager Name:</td>
 						<td><input id="holonManagerName" type="text"></td>
 					</tr>
 					<tr>
-						<td>Priority:</td>
-						<td><input id="holonObjectPriority" type="text"></td>
-
 						<td>Holon Coordinator:</td>
-						<td><div data-role="fieldcontain">
-								<select name="holonCoordinatorId" id="holonCoordinatorId"></select>
-							</div></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;<select name="holonCoordinatorId" id="holonCoordinatorId"></select></td>
 					</tr>
 					<tr>
 						<td>Latitude NE</td>
 						<td><label id="holonObjectLatitudeNE"></label></td>
-						<td>Longtitude NE</td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;Longtitude NE</td>
 						<td><label id="holonObjectLongitudeNE"></label></td>
 					</tr>
 					<tr>
 						<td>Latitude SW</td>
 						<td><label id="holonObjectLatitudeSW"></label></td>
-						<td>Longtitude SW</td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;Longtitude SW</td>
 						<td><label id="holonObjectLongitudeSW"></label></td>
 					</tr>
 					<tr>
-						<td></td>
-						<td><input id="saveHolonObject" type='button' class="button"
-							value='Save Holon Object' /></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="cancelHolonObject" type='button' class="button"  value='Cancel' /></td>
+						<td><input id="saveHolonObject" type='button' class="button"  value='Save Holon Object' /></td>
 					</tr>
 				</table>
-
 			</div>
+
 			<div id="chartContainer" style="height: 300px; width: 30%;"></div>
 			<div id="holonCoordinatorInformation" class="ui-content"
 				data-transition="flip" data-overlay-theme="b" data-theme="a"
@@ -236,8 +237,6 @@
 			</div>		
  
 </div>
-
- 
 <script type="text/javascript" src="js/trigger.js"></script>
 </body>
 </html>

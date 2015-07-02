@@ -14,7 +14,6 @@ $(document).ready(function() {
 	$('#addPowerLine').click(function() {
 		//alert("abhinav");
 		var bgColor=$(this).css("background-color");
-		alert("abhinav "+bgColor);
 		if (bgColor == "rgb(26, 26, 26)"){
 			$(this).css("background-color", "rgb(153,153,0)");
 
@@ -67,7 +66,6 @@ $(document).ready(function() {
 			});
 
 		} else {
-			alert("abhinav 2");
 			$(this).css("background-color", "rgb(26, 26, 26)");
 			lineDrawingManager.setMap(null);
 		}

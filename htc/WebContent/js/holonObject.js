@@ -14,7 +14,7 @@ function saveHolonObject(){
 	var holonObjectActionState = $("#holonObjectActionState").val();
 	var hiddenHolonObjectId = $("#hiddenHolonObjectId").val();
 	var hiddenHolonManagerId = $("#hiddenHolonManagerId").val();
-	$( "#holonObjectDetail" ).popup( "close" );
+	$( "#holonObjectDetail" ).slideUp(100);
 	var dataAttributes = {
 			holonObjectType : holonObjectType,
 			holonCoordinatorId : holonCoordinatorId,
