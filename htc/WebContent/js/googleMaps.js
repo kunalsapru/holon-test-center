@@ -141,27 +141,20 @@ $(document)
 								rectangleColor="black";
 							}
 						 drawingManager = new google.maps.drawing.DrawingManager({
-				    	    drawingMode: google.maps.drawing.OverlayType.POLYGON,
-				    	    drawingControl: true,
-				    	    drawingControlOptions: {
-				    	      position: google.maps.ControlPosition.TOP_CENTER,
-				    	      drawingModes: [
-				    	   		 google.maps.drawing.OverlayType.RECTANGLE,
-				    	   		google.maps.drawing.OverlayType.POLYLINE
-				   	   		 
-				    	      ]
-				    	    },
+				    	    drawingMode: google.maps.drawing.OverlayType.RECTANGLE,
+				    	    drawingControl: false,
+//				    	    drawingControlOptions: {
+//				    	      position: google.maps.ControlPosition.TOP_CENTER,
+//				    	      drawingModes: [
+//				    	   		 google.maps.drawing.OverlayType.RECTANGLE,
+//				    	   		google.maps.drawing.OverlayType.POLYLINE
+//				   	   		 
+//				    	      ]
+//				    	    },
 				            rectangleOptions: {
 				                geodesic:true,
 				                clickable: true,
 				                strokeColor:rectangleColor
-				            },
-				            polylineOptions: {
-				                geodesic:true,
-				                clickable: true,
-				                strokeColor:"yellow",
-				                strokeOpacity: 2.0,
-				                strokeWeight: 4.0
 				            }
 				    	    });}
 				     // Setting the layout on the map 
