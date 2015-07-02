@@ -12,9 +12,10 @@ $(document).ready(function() {
 	
 
 	$('#addPowerLine').click(function() {
-		alert("abhinav");
-		alert("abhinav"+$(this).css("background-color"));
-		if ($(this).css("background-color") == "rgb(26, 26, 26)"){
+		//alert("abhinav");
+		var bgColor=$(this).css("background-color");
+		alert("abhinav "+bgColor);
+		if (bgColor == "rgb(26, 26, 26)"){
 			$(this).css("background-color", "rgb(153,153,0)");
 
 			lineDrawingManager = new google.maps.drawing.DrawingManager({

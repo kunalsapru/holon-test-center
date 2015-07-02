@@ -124,8 +124,8 @@ $(document)
 					function overlayTool(clickedValue)
 					{
 						//alert($("#"+clickedValuePanel).css("background-color"));
-						if ($("#"+clickedValuePanel).css("background-color") == "rgb(233, 233, 233)") {
-							$("#"+clickedValuePanel).css("background-color", "rgb(153,255,255)");
+						if ($("#"+clickedValuePanel).css("background-color") == "rgb(26, 26, 26)") {
+							$("#"+clickedValuePanel).css("background-color", "rgb(153,153,0)");
 					
 						$("#displayHolonDetails").hide();
 
@@ -214,7 +214,7 @@ $(document)
 					}
 					else
 					{
-						$("#"+clickedValuePanel).css("background-color", "rgb(233,233,233)");
+						$("#"+clickedValuePanel).css("background-color", "rgb(26, 26, 26)");
 						drawingManager.setMap(null);
 						
 					}
