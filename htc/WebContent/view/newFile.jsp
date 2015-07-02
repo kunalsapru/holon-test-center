@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Holon Test Center</title>
 <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="css/newFile.css">
 <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="http://maps.googleapis.com/maps/api/js"></script> -->
 <!-- <script src="js/newFile.js"></script> -->
@@ -25,7 +24,7 @@
 <script src="js/sweetalert.min.js"></script>
 <link rel="stylesheet" type="text/css" href="css/sweetalert.css">
 <link href="css/contextMenu.css" rel="stylesheet" type="text/css" />
-<!-- <link href="css/style.css" rel="stylesheet" type="text/css" /> -->
+<link href="css/style.css" rel="stylesheet" type="text/css" /> 
 
 </head>
 
@@ -33,7 +32,7 @@
 <!-- menu vertical -->
 <nav id="menu" class="left">
   <ul>
-    <li><a href="#" class="active">Holon Test Center</a></li>
+    <li><a href="#" class="create">Holon Test Center</a></li>
     <li><a href="#"><i class="fa fa-header"></i>Holon<i class="fa fa-caret-down"></i></a>
     <ul>
         <li><a href="#" id="showHolonObjects"><i class="fa fa-info-circle"></i>Show Holons</a></li>
@@ -66,6 +65,7 @@
     	<li><a href="#"><i class=" fa fa-life-saver "></i>Switch on Power Line</a></li>
     </ul>
     </li>
+    <li><a href="#" id="clear"><i class="fa fa-eraser"></i>Clear Map</a></li>
   </ul>
   <a href="#" id="showmenu"> <i class="fa fa-align-justify"></i> </a> </nav>
 <!-- /menu vertical --> 
