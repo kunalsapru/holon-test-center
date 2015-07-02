@@ -323,7 +323,7 @@ $(document)
 						});
 						
 					});
-					// Map click event
+					/*// Abhinav Temporarily commented  Map click event
 					google.maps.event.addListener(map, 'click',
 							function(event) {
 								// $("#elementInfo").toggle("slide",{direction:"right"});
@@ -362,7 +362,7 @@ $(document)
 								
 								}
 						});
-					});				
+					});				*/
 
 					
 					function cursorCrossHair() {
