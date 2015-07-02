@@ -22,7 +22,10 @@ public class HolonObjectTypeAction extends CommonUtilities {
 		HolonObjectType holonObjectType = new HolonObjectType(); // Creating HolonObjectType object to store values
 		String holonObjectTypeName = getRequest().getParameter("holonObjectTypeName")!=null?
 				getRequest().getParameter("holonObjectTypeName"):"Default Value";//Getting HO name value from JSP
+		Integer holonObjectPriority = getRequest().getParameter("holonObjectPriority")!=null?Integer.parseInt(getRequest().getParameter("holonObjectPriority")):0;
+				
 		holonObjectType.setName(holonObjectTypeName); // Setting values in HE type object
+		holonObjectType.setPriority(holonObjectPriority);
 
 		//Calling service method to save the object in database and saving the auto-incremented ID in an integer
 		Integer newHolonObjectTypeID = getHolonObjectTypeService().persist(holonObjectType);

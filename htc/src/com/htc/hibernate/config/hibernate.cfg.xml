@@ -42,5 +42,6 @@
         <mapping resource="com/htc/hibernate/hbm/PowerLine.hbm.xml" />
         <mapping resource="com/htc/hibernate/hbm/PowerLineNode.hbm.xml" />
         <mapping resource="com/htc/hibernate/hbm/PowerSwitch.hbm.xml" />
+        <mapping resource="com/htc/hibernate/hbm/PowerSource.hbm.xml" />
     </session-factory>
 </hibernate-configuration>

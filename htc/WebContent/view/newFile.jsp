@@ -16,20 +16,16 @@
 <script type="text/javascript" src="js/googleMaps.js"></script>
 <script type="text/javascript" src="js/gmaps.js"></script>
 <script type="text/javascript" src="js/toggle.js"></script>
-<script type="text/javascript" src="js/rightPanel.js"></script>
 <script type="text/javascript" src="js/common.js"></script>
 <script type="text/javascript" src="js/powerline.js"></script>
 <script type="text/javascript" src="js/distanceCalc.js"></script>
 <script type="text/javascript" src="js/holonObject.js"></script>
 <script type="text/javascript" src="js/jquery.flot.js"></script>
 <script type="text/javascript" src="js/jquery.flot.time.js"></script>
-<script type="text/javascript" src="js/drawChart.js"></script>
 <script src="js/sweetalert.min.js"></script>
-<link rel="stylesheet" type="text/css" href="css/chart.css">
 <link rel="stylesheet" type="text/css" href="css/sweetalert.css">
 <link href="css/contextMenu.css" rel="stylesheet" type="text/css" />
 <!-- <link href="css/style.css" rel="stylesheet" type="text/css" /> -->
-<link href="css/rightPanel.css" rel="stylesheet" type="text/css" />
 
 </head>
 

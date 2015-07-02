@@ -1,18 +1,12 @@
 package com.htc.action;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-
 import org.apache.log4j.Logger;
-
-import com.htc.hibernate.pojo.Holon;
 import com.htc.hibernate.pojo.HolonCoordinator;
-import com.htc.hibernate.pojo.HolonElement;
 import com.htc.hibernate.pojo.HolonManager;
 import com.htc.hibernate.pojo.HolonObject;
 import com.htc.hibernate.pojo.HolonObjectType;
 import com.htc.hibernate.pojo.LatLng;
-import com.htc.hibernate.pojo.PowerSwitch;
 import com.htc.utilities.CommonUtilities;
 
 public class HolonObjectAction extends CommonUtilities {
@@ -30,7 +24,6 @@ public class HolonObjectAction extends CommonUtilities {
 		Double lngNE = getRequest().getParameter("lngNE")!=null?Double.parseDouble(getRequest().getParameter("lngNE")):0D;
 		Double latSW = getRequest().getParameter("latSW")!=null?Double.parseDouble(getRequest().getParameter("latSW")):0D;
 		Double lngSW = getRequest().getParameter("lngSW")!=null?Double.parseDouble(getRequest().getParameter("lngSW")):0D;
-		Integer holonObjectPriority = getRequest().getParameter("holonObjectPriority")!=null?Integer.parseInt(getRequest().getParameter("holonObjectPriority")):0;
 		
 		LatLng NorthlatLng = new LatLng(latNE, lngNE);
 		LatLng SouthlatLng = new LatLng(latSW, lngSW);
@@ -42,7 +35,6 @@ public class HolonObjectAction extends CommonUtilities {
 		HolonObject holonObject = new HolonObject(); // Creating HolonObject object to store values
 
 		HolonCoordinator holonCoordinator = getHolonCoordinatorService().findById(holonCoordinatorId);
-		Holon holon = holonCoordinator.getHolon();
 		HolonObjectType holonObjectType = getHolonObjectTypeService().findById(holonObjectTypeId);
 				
 		HolonManager holonManager = new HolonManager();
@@ -57,8 +49,6 @@ public class HolonObjectAction extends CommonUtilities {
 		holonObject.setHolonObjectType(holonObjectType);
 		holonObject.setLineConnectedState(false);
 		holonObject.setHolonManager(holonManager2);
-		holonObject.setHolonElements(new HashSet<HolonElement>());
-		holonObject.setPowerSwitches(new HashSet<PowerSwitch>());
 		//Calling service method to save the object in database and saving the auto-incremented ID in an integer
 		Integer newHolonObjectID = getHolonObjectService().persist(holonObject);
 		System.out.println("NewLy Generated Holon Object ID --> "+newHolonObjectID);
@@ -102,11 +92,9 @@ public class HolonObjectAction extends CommonUtilities {
 		Integer hiddenHolonObjectId = getRequest().getParameter("hiddenHolonObjectId")!=null?Integer.parseInt(getRequest().getParameter("hiddenHolonObjectId")):0;
 		Integer holonCoordinatorId = getRequest().getParameter("holonCoordinatorId")!=null?Integer.parseInt(getRequest().getParameter("holonCoordinatorId")):0;
 		String holonManagerName = getRequest().getParameter("holonManager")!=null?getRequest().getParameter("holonManager"):"";
-		Integer holonObjectPriority = getRequest().getParameter("holonObjectPriority")!=null?Integer.parseInt(getRequest().getParameter("holonObjectPriority")):0;
 		
 		HolonObject holonObject = getHolonObjectService().findById(hiddenHolonObjectId);
 		HolonCoordinator holonCoordinator = getHolonCoordinatorService().findById(holonCoordinatorId);
-		Holon holon = holonCoordinator.getHolon();
 		HolonObjectType holonObjectType = getHolonObjectTypeService().findById(holonObjectTypeId);
 				
 		

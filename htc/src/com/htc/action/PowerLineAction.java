@@ -1,17 +1,11 @@
 package com.htc.action;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
 import org.apache.log4j.Logger;
-import org.hibernate.Session;
-
-import com.htc.hibernate.config.HibernateSessionFactory;
 import com.htc.hibernate.pojo.LatLng;
 import com.htc.hibernate.pojo.PowerLine;
 import com.htc.hibernate.pojo.PowerSource;
-import com.htc.hibernate.pojo.PowerSwitch;
 import com.htc.utilities.CommonUtilities;
 import com.htc.utilities.ConstantValues;
 
@@ -31,16 +25,15 @@ public class PowerLineAction extends CommonUtilities {
 			Integer maxCapacity = getRequest().getParameter("maxCapacity")!=null?Integer.parseInt(getRequest().getParameter("maxCapacity")):0;
 			Integer currentCapacity = getRequest().getParameter("currentCapacity")!=null?Integer.parseInt(getRequest().getParameter("currentCapacity")):maxCapacity;
 			String powerLineType = getRequest().getParameter("powerLineType")!=null?getRequest().getParameter("powerLineType"):ConstantValues.MAINLINE;
-			String resaonDown = getRequest().getParameter("resaonDown")!=null?getRequest().getParameter("resaonDown"):"";
-			Integer powerSourceId= getRequest().getParameter("powerSourceId")!=null?Integer.parseInt(getRequest().getParameter("powerSourceId")):0;
+			String reasonDown = getRequest().getParameter("reasonDown")!=null?getRequest().getParameter("reasonDown"):"";
+			Integer powerSourceId= getRequest().getParameter("powerSourceId")!=null?Integer.parseInt(getRequest().getParameter("powerSourceId")):1;
 			Double latStart = getRequest().getParameter("latStart")!=null?Double.parseDouble(getRequest().getParameter("latStart")):0D;
 			Double lngStart = getRequest().getParameter("lngStart")!=null?Double.parseDouble(getRequest().getParameter("lngStart")):0D;
 			Double latEnd = getRequest().getParameter("latEnd")!=null?Double.parseDouble(getRequest().getParameter("latEnd")):0D;
 			Double lngEnd = getRequest().getParameter("lngEnd")!=null?Double.parseDouble(getRequest().getParameter("lngEnd")):0D;
-			Set<PowerSwitch> powerSwitches= new HashSet<PowerSwitch>(0);
 			
 			LatLng StartLatLng = new LatLng(latStart, lngStart);
-			LatLng EndLatLng = new LatLng(latStart, lngStart);
+			LatLng EndLatLng = new LatLng(latEnd, lngEnd);
 			
 			int newStartLatLngId = getLatLngService().persist(StartLatLng);
 			int newEndLatLngId = getLatLngService().persist(EndLatLng);
@@ -48,14 +41,24 @@ public class PowerLineAction extends CommonUtilities {
 			LatLng savedStartLatLng=getLatLngService().findById(newStartLatLngId);
 			LatLng savedEndLatLng=getLatLngService().findById(newEndLatLngId);
 			
-			PowerSource powerSrc = new PowerSource(1, StartLatLng, "PS01", new HashSet<PowerLine>());
-			String powerSrcName=powerSrc.getName();
-			PowerLine powerLine = new PowerLine(savedStartLatLng, savedEndLatLng, powerSrc, powerLineType, currentCapacity, maxCapacity, isConnected, resaonDown, powerSwitches);
+			//Temporarily cdreating hard coded power source
+			PowerSource powerSource = getPowerSourceService().findById(powerSourceId);
+			//End of temp code
+			
+			PowerLine powerLine = new PowerLine();
+			powerLine.setCurrentCapacity(currentCapacity);
+			powerLine.setIsConnected(isConnected);
+			powerLine.setLatLngByDestination(savedEndLatLng);
+			powerLine.setLatLngBySource(savedStartLatLng);
+			powerLine.setMaximumCapacity(maxCapacity);
+			powerLine.setPowerSource(null);
+			powerLine.setReasonDown(reasonDown);
+			powerLine.setType(powerLineType);
 			
 			Integer newPowerLineID = getPowerLineService().persist(powerLine);
 			
 			log.info("NewLy Generated powerLine  ID --> "+newPowerLineID);
-			
+			String powerSrcName = powerSource.getName();
 			
 			getResponse().setContentType("text/html");
 			StringBuffer plResponse = new StringBuffer();
@@ -64,7 +67,7 @@ public class PowerLineAction extends CommonUtilities {
 			plResponse.append(maxCapacity+"!");
 			plResponse.append(currentCapacity+"!");
 			plResponse.append(powerLineType+"!");
-			plResponse.append(resaonDown+"!");
+			plResponse.append(reasonDown+"!");
 			plResponse.append(powerSrcName+"!");
 			plResponse.append(latStart+"!");
 			plResponse.append(lngStart+"!");

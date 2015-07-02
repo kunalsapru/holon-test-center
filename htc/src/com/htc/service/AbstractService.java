@@ -10,6 +10,7 @@ import com.htc.dao.HolonObjectDao;
 import com.htc.dao.HolonObjectTypeDao;
 import com.htc.dao.LatLngDao;
 import com.htc.dao.PowerLineDao;
+import com.htc.dao.PowerSourceDao;
 import com.htc.dao.PowerSwitchDao;
 import com.htc.daoImpl.HolonCoordinatorDaoImpl;
 import com.htc.daoImpl.HolonDaoImpl;
@@ -21,6 +22,7 @@ import com.htc.daoImpl.HolonObjectDaoImpl;
 import com.htc.daoImpl.HolonObjectTypeDaoImpl;
 import com.htc.daoImpl.LatLngDaoImpl;
 import com.htc.daoImpl.PowerLineDaoImpl;
+import com.htc.daoImpl.PowerSourceDaoImpl;
 import com.htc.daoImpl.PowerSwitchDaoImpl;
 
 /**
@@ -40,6 +42,7 @@ public class AbstractService {
 	private LatLngDao latLngDao = new LatLngDaoImpl();
 	private PowerLineDao powerLineDao = new PowerLineDaoImpl();
 	private PowerSwitchDao powerSwitchDao = new PowerSwitchDaoImpl();
+	private PowerSourceDao powerSourceDao = new PowerSourceDaoImpl();
 
 	public HolonDao getHolonDao() {
 		return holonDao;
@@ -106,6 +109,12 @@ public class AbstractService {
 	}
 	public void setPowerSwitchDao(PowerSwitchDao powerSwitchDao) {
 		this.powerSwitchDao = powerSwitchDao;
+	}
+	public PowerSourceDao getPowerSourceDao() {
+		return powerSourceDao;
+	}
+	public void setPowerSourceDao(PowerSourceDao powerSourceDao) {
+		this.powerSourceDao = powerSourceDao;
 	}
 	
 }

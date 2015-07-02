@@ -57,12 +57,12 @@ $(document).ready(function() {
 		    			latEnd : end.lat(),
 		    			lngEnd : end.lng(),
 		    			isConnected :false,
-		    			resaonDown : "",
+		    			reasonDown : "",
 		    			powerSourceId:1,
 		    				};
 		    	
 		    	if(powerLineType=="MAINLINE"){
-		    	ajaxRequest("drawPowerLine", dataAttributes, drawPoweLineCallBack, {});	
+		    	ajaxRequest("drawPowerLine", dataAttributes, drawPoweLineCallBack, {});
 		    	}
 			});
 
@@ -113,7 +113,7 @@ function drawPoweLineCallBack(data, options) {
 	var maxCapacity= dataArray[2];	
 	var currentCapacity= dataArray[3];
 	var powerLineType= dataArray[4];
-	var resaonDown= dataArray[5];
+	var reasonDown= dataArray[5];
 	var latStart= dataArray[7];
 	var lngStart= dataArray[8];
 	var latEnd= dataArray[9];
