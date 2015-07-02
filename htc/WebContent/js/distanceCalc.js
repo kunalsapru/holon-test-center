@@ -24,8 +24,9 @@ $(document)
 
 					$("#calcDistance").on('click',function() {
 						
-						if ($(this).css("background-color") == "rgb(237, 237, 237)") {
-							$(this).css("background-color", "rgb(153,255,255)");
+						//alert($(this).css("background-color"));
+						if ($(this).css("background-color") == "rgb(26, 26, 26)") {
+							$(this).css("background-color", "rgb(153,153,0)");
 							swal({
 								title : "Select Points",
 								text : "Please select two points on the Map and click on the button again to calculate the distance.",
@@ -107,7 +108,7 @@ $(document)
 								dPointB = undefined;
 								deleteMarkers();
 								google.maps.event.removeListener(distListener);
-								$(this).css("background-color", "rgb(237,237,237)");
+								$(this).css("background-color", "rgb(26,26,26)");
 							}
 							
 							

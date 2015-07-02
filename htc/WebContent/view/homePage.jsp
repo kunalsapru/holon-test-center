@@ -23,9 +23,9 @@
 <script src="js/sweetalert.min.js"></script>
 <link rel="stylesheet" type="text/css" href="css/chart.css">
 <link rel="stylesheet" type="text/css" href="css/sweetalert.css">
-<LINK href="css/contextMenu.css" rel="stylesheet" type="text/css" />
-<LINK href="css/style.css" rel="stylesheet" type="text/css" />
-<LINK href="css/rightPanel.css" rel="stylesheet" type="text/css" />
+<link href="css/contextMenu.css" rel="stylesheet" type="text/css" />
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<link href="css/rightPanel.css" rel="stylesheet" type="text/css" />
 
 </head>
 <body>

@@ -12,8 +12,10 @@ $(document).ready(function() {
 	
 
 	$('#addPowerLine').click(function() {
-		if ($(this).css("background-color") == "rgb(237, 237, 237)") {
-			$(this).css("background-color", "rgb(153,255,255)");
+		alert("abhinav");
+		alert("abhinav"+$(this).css("background-color"));
+		if ($(this).css("background-color") == "rgb(26, 26, 26)"){
+			$(this).css("background-color", "rgb(153,153,0)");
 
 			lineDrawingManager = new google.maps.drawing.DrawingManager({
 				drawingMode :google.maps.drawing.OverlayType.POLYLINE ,
@@ -64,8 +66,8 @@ $(document).ready(function() {
 			});
 
 		} else {
-			//alert("abhinav 2");
-			$(this).css("background-color", "rgb(237,237,237)");
+			alert("abhinav 2");
+			$(this).css("background-color", "rgb(26, 26, 26)");
 			lineDrawingManager.setMap(null);
 		}
 
