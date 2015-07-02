@@ -36,10 +36,10 @@
     <li><a href="#" class="active">Holon Test Center</a></li>
     <li><a href="#"><i class="fa fa-header"></i>Holon<i class="fa fa-caret-down"></i></a>
     <ul>
-        <li><a href="#"><i class="fa fa-info-circle"></i>Show Holons</a></li>
+        <li><a href="#" id="showHolonObjects"><i class="fa fa-info-circle"></i>Show Holons</a></li>
     </ul>
     </li>
-    <li><a href="#"  id="showHolonObjects"><i class="fa fa-institution"></i>Holon Object<i class="fa fa-caret-down"></i></a>
+    <li><a href="#"><i class="fa fa-institution"></i>Holon Object<i class="fa fa-caret-down"></i></a>
     <ul>
         <li><a href="#" id="addHolonObject"><i class="fa fa-plus"></i>Add New Holon Object</a></li>
         <li><a href="#"><i class="fa fa-wrench"></i>Edit Holon Object<i class="fa fa-caret-down"></i></a>
