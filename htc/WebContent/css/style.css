@@ -11,6 +11,7 @@
   transition: all 0.3s ease;
   opacity: 1;
   font-family: 'Source Sans Pro', sans-serif;
+  overflow-y:auto;
 }
 
 #menu ul {
