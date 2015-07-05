@@ -1,7 +1,5 @@
 package com.htc.hibernate.pojo;
 
-// Generated 1 Jul, 2015 9:39:17 PM by Hibernate Tools 4.3.1
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,7 +16,9 @@ public class HolonObject implements java.io.Serializable {
 	private LatLng latLngByNeLocation;
 	private LatLng latLngByDoorLocation;
 	private LatLng latLngBySwLocation;
+	private PowerLine powerLine;
 	private Boolean lineConnectedState;
+	private Integer consumption;
 	private Set<?> holonElements = new HashSet<Object>(0);
 	private Set<?> powerSwitches = new HashSet<Object>(0);
 
@@ -33,8 +33,9 @@ public class HolonObject implements java.io.Serializable {
 	public HolonObject(int id, HolonCoordinator holonCoordinator,
 			HolonManager holonManager, HolonObjectType holonObjectType,
 			LatLng latLngByNeLocation, LatLng latLngByDoorLocation,
-			LatLng latLngBySwLocation, Boolean lineConnectedState,
-			Set<?> holonElements, Set<?> powerSwitches) {
+			LatLng latLngBySwLocation, PowerLine powerLine,
+			Boolean lineConnectedState, Integer consumption, Set<?> holonElements,
+			Set<?> powerSwitches) {
 		this.id = id;
 		this.holonCoordinator = holonCoordinator;
 		this.holonManager = holonManager;
@@ -42,7 +43,9 @@ public class HolonObject implements java.io.Serializable {
 		this.latLngByNeLocation = latLngByNeLocation;
 		this.latLngByDoorLocation = latLngByDoorLocation;
 		this.latLngBySwLocation = latLngBySwLocation;
+		this.powerLine = powerLine;
 		this.lineConnectedState = lineConnectedState;
+		this.consumption = consumption;
 		this.holonElements = holonElements;
 		this.powerSwitches = powerSwitches;
 	}
@@ -103,12 +106,28 @@ public class HolonObject implements java.io.Serializable {
 		this.latLngBySwLocation = latLngBySwLocation;
 	}
 
+	public PowerLine getPowerLine() {
+		return this.powerLine;
+	}
+
+	public void setPowerLine(PowerLine powerLine) {
+		this.powerLine = powerLine;
+	}
+
 	public Boolean getLineConnectedState() {
 		return this.lineConnectedState;
 	}
 
 	public void setLineConnectedState(Boolean lineConnectedState) {
 		this.lineConnectedState = lineConnectedState;
+	}
+
+	public Integer getConsumption() {
+		return this.consumption;
+	}
+
+	public void setConsumption(Integer consumption) {
+		this.consumption = consumption;
 	}
 
 	public Set<?> getHolonElements() {

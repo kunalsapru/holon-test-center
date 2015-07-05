@@ -12,6 +12,11 @@ public class PowerSource implements java.io.Serializable {
 	private int id;
 	private LatLng latLng;
 	private String name;
+	private Integer swLocation;
+	private String doorLocation;
+	private Integer minProduction;
+	private Integer maxProduction;
+	private Integer currentProduction;
 	private Set<?> powerLines = new HashSet<Object>(0);
 
 	public PowerSource() {
@@ -21,10 +26,17 @@ public class PowerSource implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public PowerSource(int id, LatLng latLng, String name, Set<?> powerLines) {
+	public PowerSource(int id, LatLng latLng, String name, Integer swLocation,
+			String doorLocation, Integer minProduction, Integer maxProduction,
+			Integer currentProduction, Set<?> powerLines) {
 		this.id = id;
 		this.latLng = latLng;
 		this.name = name;
+		this.swLocation = swLocation;
+		this.doorLocation = doorLocation;
+		this.minProduction = minProduction;
+		this.maxProduction = maxProduction;
+		this.currentProduction = currentProduction;
 		this.powerLines = powerLines;
 	}
 
@@ -50,6 +62,46 @@ public class PowerSource implements java.io.Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Integer getSwLocation() {
+		return this.swLocation;
+	}
+
+	public void setSwLocation(Integer swLocation) {
+		this.swLocation = swLocation;
+	}
+
+	public String getDoorLocation() {
+		return this.doorLocation;
+	}
+
+	public void setDoorLocation(String doorLocation) {
+		this.doorLocation = doorLocation;
+	}
+
+	public Integer getMinProduction() {
+		return this.minProduction;
+	}
+
+	public void setMinProduction(Integer minProduction) {
+		this.minProduction = minProduction;
+	}
+
+	public Integer getMaxProduction() {
+		return this.maxProduction;
+	}
+
+	public void setMaxProduction(Integer maxProduction) {
+		this.maxProduction = maxProduction;
+	}
+
+	public Integer getCurrentProduction() {
+		return this.currentProduction;
+	}
+
+	public void setCurrentProduction(Integer currentProduction) {
+		this.currentProduction = currentProduction;
 	}
 
 	public Set<?> getPowerLines() {

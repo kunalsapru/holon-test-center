@@ -1,5 +1,4 @@
 package com.htc.hibernate.pojo;
-// Generated 1 Jul, 2015 9:39:17 PM by Hibernate Tools 4.3.1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -13,12 +12,15 @@ public class PowerLine implements java.io.Serializable {
 	private Integer id;
 	private LatLng latLngBySource;
 	private LatLng latLngByDestination;
+	private PowerLine powerLine;
 	private PowerSource powerSource;
 	private String type;
 	private int currentCapacity;
 	private int maximumCapacity;
 	private boolean isConnected;
 	private String reasonDown;
+	private Set<?> powerLines = new HashSet<Object>(0);
+	private Set<?> holonObjects = new HashSet<Object>(0);
 	private Set<?> powerSwitches = new HashSet<Object>(0);
 
 	public PowerLine() {
@@ -33,17 +35,21 @@ public class PowerLine implements java.io.Serializable {
 	}
 
 	public PowerLine(LatLng latLngBySource, LatLng latLngByDestination,
-			PowerSource powerSource, String type, int currentCapacity,
-			int maximumCapacity, boolean isConnected, String reasonDown,
+			PowerLine powerLine, PowerSource powerSource, String type,
+			int currentCapacity, int maximumCapacity, boolean isConnected,
+			String reasonDown, Set<?> powerLines, Set<?> holonObjects,
 			Set<?> powerSwitches) {
 		this.latLngBySource = latLngBySource;
 		this.latLngByDestination = latLngByDestination;
+		this.powerLine = powerLine;
 		this.powerSource = powerSource;
 		this.type = type;
 		this.currentCapacity = currentCapacity;
 		this.maximumCapacity = maximumCapacity;
 		this.isConnected = isConnected;
 		this.reasonDown = reasonDown;
+		this.powerLines = powerLines;
+		this.holonObjects = holonObjects;
 		this.powerSwitches = powerSwitches;
 	}
 
@@ -69,6 +75,14 @@ public class PowerLine implements java.io.Serializable {
 
 	public void setLatLngByDestination(LatLng latLngByDestination) {
 		this.latLngByDestination = latLngByDestination;
+	}
+
+	public PowerLine getPowerLine() {
+		return this.powerLine;
+	}
+
+	public void setPowerLine(PowerLine powerLine) {
+		this.powerLine = powerLine;
 	}
 
 	public PowerSource getPowerSource() {
@@ -117,6 +131,22 @@ public class PowerLine implements java.io.Serializable {
 
 	public void setReasonDown(String reasonDown) {
 		this.reasonDown = reasonDown;
+	}
+
+	public Set<?> getPowerLines() {
+		return this.powerLines;
+	}
+
+	public void setPowerLines(Set<?> powerLines) {
+		this.powerLines = powerLines;
+	}
+
+	public Set<?> getHolonObjects() {
+		return this.holonObjects;
+	}
+
+	public void setHolonObjects(Set<?> holonObjects) {
+		this.holonObjects = holonObjects;
 	}
 
 	public Set<?> getPowerSwitches() {

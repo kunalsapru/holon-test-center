@@ -1,5 +1,4 @@
 package com.htc.hibernate.pojo;
-
 import java.util.HashSet;
 import java.util.Set;
 
