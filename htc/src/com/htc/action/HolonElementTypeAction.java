@@ -92,8 +92,10 @@ public class HolonElementTypeAction extends CommonUtilities {
 		//Editing holon element type object and saving in database 
 		ArrayList<HolonElementType> holonElementTypes = getHolonElementTypeService().getAllHolonElementType();
 		StringBuffer holonElementTypeNameList = new StringBuffer();
+		String holonElementTypeInfo;
 		for(HolonElementType holonElementType:holonElementTypes){
-			holonElementTypeNameList.append(holonElementType.getId()+" - "+holonElementType.getName()+"*\n");
+			holonElementTypeInfo = holonElementType.getName().concat(" (Max. Capacity:"+holonElementType.getMaxCapacity()).concat(", Min. Capacity:"+holonElementType.getMinCapacity()+")");
+			holonElementTypeNameList.append(holonElementType.getId()+" - "+holonElementTypeInfo+"*\n");
 		}
 		//Calling the response function and setting the content type of response.
 		getResponse().setContentType("text/html");

@@ -1,10 +1,14 @@
 package com.htc.hibernate.utilities;
 
 import java.util.ArrayList;
+
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
 import com.htc.hibernate.config.HibernateSessionFactory;
 import com.htc.hibernate.pojo.HolonElement;
+import com.htc.hibernate.pojo.HolonObject;
 
 /**
  * Home object for domain model class HolonElement.
@@ -91,4 +95,22 @@ public class HolonElementHome {
 		return listHolonElement;
 	}
 
+	@SuppressWarnings("unchecked")
+	public ArrayList<HolonElement> getHolonElements(HolonObject holonObject) {
+		Session session = null;
+		Transaction tx = null;
+		ArrayList<HolonElement> listHolonElement = null;
+		try {
+			session = HibernateSessionFactory.getSessionFactory().getCurrentSession();
+			tx = session.beginTransaction();
+			Query query = session.createQuery("from HolonElement h where h.holonObject=:holonObject");
+			query.setEntity("holonObject", holonObject);
+			listHolonElement = (ArrayList<HolonElement>) query.list();
+			tx.commit();
+			return listHolonElement;
+		} catch (RuntimeException re) {
+			System.out.println("get holon element list failed");
+		}
+		return listHolonElement;
+	}
 }

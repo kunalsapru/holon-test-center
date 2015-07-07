@@ -16,28 +16,8 @@
 <script type="text/javascript" src="js/powerline.js"></script>
 <script type="text/javascript" src="js/distanceCalc.js"></script>
 <script type="text/javascript" src="js/holonObject.js"></script>
+<script type="text/javascript" src="js/holonElement.js"></script>
 <script src="js/sweetalert.min.js"></script>
-<style type='text/css'>
-	#holonObjectDetail {
-	    display: none;
-	    position: absolute;
-	    top: 50%;
-	    left: 50%;
-	    width: 700px;
-	    height: 300px;
-	    margin: -100px 0 0 -250px;    
-	    background: darkkhaki;
-	    border: 5px solid rgb(128, 128, 128);
-	}
-#holonObjectTable tr{
-height: 50px;
-}
-.button{
-background-color: green;
-color: white;
-}
-</style>
-
 </head>
 
 <body>
@@ -85,65 +65,34 @@ color: white;
 <!-- contenido de pagina, realmente no importa -->
 <div id="container">
   <div id="googleMap"></div>
-  <div id="elementInfo" class="ui-content" data-transition="flip"
-				data-overlay-theme="b" data-theme="a" data-content-theme="d">
-				<a href="#" data-rel="back" data-role="button" data-theme="a"
-					data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+  <div id="elementInfo">
+  <input type="hidden" id="hiddenHolonElementId" value="" />
 				<table>
 					<tr>
-						<td>Holon Element Type:</td>
-						<td><div data-role="fieldcontain">
-								<select name="elementType" class="elementType"
-									id="selectForHolonElementType">
-								</select>
-							</div></td>
-						<td>Holon Element State:</td>
-						<td><div data-role="fieldcontain">
-								<select name="elementState" id="elementState">
-								</select>
-							</div></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;Holon Element Type:</td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;<select id="holonElementType"></select></td>
 					</tr>
 					<tr>
-						<td>Holon Manager:</td>
-						<td><div data-role="fieldcontain">
-								<select name="holonManager">
-									<option value="holonManager1">Holon Manager 1</option>
-									<option value="holonManager2">Holon Manager 2</option>
-									<option value="holonManager3">Holon Manager 3</option>
-									<option value="holonManager4">Holon Manager 4</option>
-								</select>
-							</div></td>
-
-						<td>Holon Coordinator:</td>
-						<td><input id="holonCoordinator" type="text"></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;Holon Element State:</td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;<select id="holonElementState"></select></td>
 					</tr>
 					<tr>
-						<td>Max Capacity:</td>
-						<td><input id="maxCapacity" type="text"></td>
-
-						<td>Min Capacity:</td>
-						<td><input id="minCapacity" type="text"></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;Current Capacity:</td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;<input id="currentCapacity" type="text"></td>
 					</tr>
 					<tr>
-						<td>Current Capacity:</td>
-						<td><input id="currentCapacity" type="text"></td>
-
-						<td>Current Energy Status:</td>
-						<td><input id="currentEnergyStatus" type="text"></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;Usage:</td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;<input id="usage" type="text"></td>
 					</tr>
 					<tr>
-						<td>Usage:</td>
-						<td><input id="usage" type="text"></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td><input id="saveElementInfo" type='button' value='Save' /></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;<input id="cancelElementInfo" onclick="closeDiv('elementInfo')" type='button' value='Cancel' class="button"/></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;<input id="saveElementInfo" type='button' value='Save' class="button"/></td>
 					</tr>
 				</table>
 			</div>
 			<div id="holonObjectDetail">
-				<input type="hidden" id="holonObjectActionState" value="Add" /> <input
-					type="hidden" id="hiddenHolonObjectId" value="" />
+				<input type="hidden" id="holonObjectActionState" value="Add" /> 
+				<input type="hidden" id="hiddenHolonObjectId" value="" />
 				<table id="holonObjectTable">
 					<tr>
 						<td>Holon Object Type:</td>
@@ -234,8 +183,29 @@ color: white;
 				<label>Holon Element State:</label><input type="text"
 					id="textHolonElementStateMaster"></input> <input type="button"
 					id="buttonHolonElementStateMaster" value="Save" />
-			</div>		
- 
+			</div>
+ 	<div id="divHolonElementsDetail">
+ 	<input type="hidden" id="holonElementActionState" value="Add" />
+ 	<span onclick="closeDiv('divHolonElementsDetail')"><i class="fa fa-remove"></i></span>
+ 	<fieldset>
+ 	<legend>Holon Element List</legend>
+ 	<table>
+ 	<thead>
+ 		<tr>
+	 		<th>&nbsp;ID&nbsp;</th>
+	 		<th>&nbsp;Type&nbsp;</th>
+	 		<th>&nbsp;Max. Capacity&nbsp;</th>
+	 		<th>&nbsp;Min. Capacity&nbsp;</th>
+	 		<th>&nbsp;State&nbsp;</th>
+	 		<th>&nbsp;Usage&nbsp;</th>
+	 		<th>&nbsp;Current Capacity&nbsp;</th>
+	 		<th colspan="3" id="addHolonElementTableHeader"><i class="fa fa-plus-circle"></i>Add Holon Element</th>
+ 		</tr>
+ 	</thead>
+ 	<tbody id="holonElementsListBody"></tbody>
+ 	</table>
+ 	</fieldset>
+ 	</div>
 </div>
 <script type="text/javascript" src="js/trigger.js"></script>
 </body>

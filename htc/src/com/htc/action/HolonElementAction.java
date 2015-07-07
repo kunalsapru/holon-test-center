@@ -1,9 +1,8 @@
 package com.htc.action;
 
+import java.io.IOException;
 import java.util.ArrayList;
-
 import org.apache.log4j.Logger;
-
 import com.htc.hibernate.pojo.HolonElement;
 import com.htc.hibernate.pojo.HolonElementState;
 import com.htc.hibernate.pojo.HolonElementType;
@@ -19,7 +18,7 @@ public class HolonElementAction extends CommonUtilities {
 
 		try {
 			Integer holonObjectId = getRequest().getParameter("holonObjectId")!=null?Integer.parseInt(getRequest().getParameter("holonObjectId")):0;
-			Integer holonElementTypeId = getRequest().getParameter("holonElementType")!=null?Integer.parseInt(getRequest().getParameter("holonElementType")):0;
+			Integer holonElementTypeId = getRequest().getParameter("holonElementTypeId")!=null?Integer.parseInt(getRequest().getParameter("holonElementTypeId")):0;
 			Integer holonElementStateId = getRequest().getParameter("holonElementStateId")!=null?Integer.parseInt(getRequest().getParameter("holonElementStateId")):0;
 			String usage = getRequest().getParameter("usage")!=null?getRequest().getParameter("usage"):"";
 			Integer currentCapacity = getRequest().getParameter("currentCapacity")!=null?Integer.parseInt(getRequest().getParameter("currentCapacity")):0;
@@ -35,15 +34,19 @@ public class HolonElementAction extends CommonUtilities {
 			holonElement.setHolonElementType(holonElementType);
 			holonElement.setHolonObject(holonObject);
 			holonElement.setUsage(usage);
-
+			holonElement.setCurrentEnergyStatus(false);
+			
 			//Calling service method to save the Element in database and saving the auto-incremented ID in an integer
 			Integer newHolonElementID = getHolonElementService().persist(holonElement);
 			System.out.println("NewLy Generated Holon Element ID --> "+newHolonElementID);
 
 			//Calling the response function and setting the content type of response.
 			getResponse().setContentType("text/html");
-			getResponse().getWriter().write("Auto-Increment ID --> "+newHolonElementID);
-
+			String dbResponse = "false";
+			if(newHolonElementID > 0 ) {
+				dbResponse = "true";
+			}
+			getResponse().getWriter().write(dbResponse);
 		} catch (Exception e) {
 			System.out.println("Exception "+e.getMessage()+" occurred in action createHolonElement()");
 			e.printStackTrace();
@@ -54,7 +57,7 @@ public class HolonElementAction extends CommonUtilities {
 
 		try {
 			Integer holonElementId = getRequest().getParameter("holonElementId")!=null?Integer.parseInt(getRequest().getParameter("holonElementId")):0;
-			Integer holonElementTypeId = getRequest().getParameter("holonElementType")!=null?Integer.parseInt(getRequest().getParameter("holonElementType")):0;
+			Integer holonElementTypeId = getRequest().getParameter("holonElementTypeId")!=null?Integer.parseInt(getRequest().getParameter("holonElementTypeId")):0;
 			Integer holonElementStateId = getRequest().getParameter("holonElementStateId")!=null?Integer.parseInt(getRequest().getParameter("holonElementStateId")):0;
 			String usage = getRequest().getParameter("usage")!=null?getRequest().getParameter("usage"):"";
 			Integer currentCapacity = getRequest().getParameter("currentCapacity")!=null?Integer.parseInt(getRequest().getParameter("currentCapacity")):0;
@@ -70,29 +73,57 @@ public class HolonElementAction extends CommonUtilities {
 			holonElement.setHolonElementType(holonElementType);
 			holonElement.setUsage(usage);
 
-			getHolonElementService().merge(holonElement);
-
+			HolonElement holonElement2 = getHolonElementService().merge(holonElement);
+			String dbResponse = "false";
+			if(holonElement2 != null) {
+				dbResponse = "true";
+			}
 			//Calling the response function and setting the content type of response.
 			getResponse().setContentType("text/html");
-			getResponse().getWriter().write("Edit successfull");
-
+			getResponse().getWriter().write(dbResponse);
 		} catch (Exception e) {
-			log.debug("Exception "+e.getMessage()+" occurred in action createHolonElement()");
+			log.debug("Exception "+e.getMessage()+" occurred in action editHolonElement()");
 			e.printStackTrace();
 		}
 	}
 
-	public void showHolonElements(){
+	public void showHolonElements() throws IOException{
 		try {
-
-			ArrayList<HolonElement> holonElementList = getHolonElementService().getAllHolonElement();
-			//Calling the response function and setting the content type of response.
+			Integer holonObjectId = getRequest().getParameter("holonObjectId")!=null?Integer.parseInt(getRequest().getParameter("holonObjectId")):13;
+			HolonObject holonObject = getHolonObjectService().findById(holonObjectId);		 
+			ArrayList<HolonElement> holonElementList = getHolonElementService().getHolonElements(holonObject);
 			getResponse().setContentType("text/html");
-			getResponse().getWriter().write(holonElementList.toString());
+			StringBuffer response = new StringBuffer();
+			response = listHolonElementsAsPerUI(holonElementList, holonObjectId);
+
+			getResponse().getWriter().write(response.toString());
 		} catch (Exception e) {
-			System.out.println("Exception "+e.getMessage()+" occurred in action createHolonElement()");
+			getResponse().getWriter().write("Error occurred in getting Holon Elements. Please check application Logs for more information.");
 			e.printStackTrace();
 		}
+	}
+	
+	private StringBuffer listHolonElementsAsPerUI(ArrayList<HolonElement> holonElementsList, int holonObjectId) {
+		StringBuffer listElements = new StringBuffer();
+		if(holonElementsList != null && holonElementsList.size() > 0) {
+			for(HolonElement holonElement : holonElementsList) {
+				listElements.append("<tr>");
+				listElements.append("<td>"+holonElement.getId()+"</td>");
+				listElements.append("<td>"+holonElement.getHolonElementType().getName()+"</td>");
+				listElements.append("<td>"+holonElement.getHolonElementType().getMaxCapacity()+"</td>");
+				listElements.append("<td>"+holonElement.getHolonElementType().getMinCapacity()+"</td>");
+				listElements.append("<td>"+holonElement.getHolonElementState().getName()+"</td>");
+				listElements.append("<td>"+holonElement.getUsage()+"</td>");
+				listElements.append("<td>"+holonElement.getCurrentCapacity()+"</td>");
+				listElements.append("<td><i class=\"fa fa-remove\" onclick=\"deleteHolonElement("+holonElement.getId()+","+holonObjectId+")\"></i></td>");
+				listElements.append("<td><i class=\"fa fa-edit\" onclick=\"editHolonElement("+holonElement.getId()+","+holonObjectId+")\"></i></td>");
+				listElements.append("<td><i class=\"fa fa-line-chart\"></i></td>");
+				listElements.append("</tr>");
+			}
+		} else {
+			listElements.append("<tr><td colspan=\"10\">No Elements found! Please click on Add Holon Element to add some.</td> ");
+		}
+		return listElements;
 	}
 
 	/**
@@ -107,9 +138,8 @@ public class HolonElementAction extends CommonUtilities {
 
 		//Calling the response function and setting the content type of response.
 		getResponse().setContentType("text/html");
-
 		try {
-			getResponse().getWriter().write("Delete Status --> "+deleteStatus);
+			getResponse().getWriter().write(deleteStatus+"");
 		} catch (Exception e) {
 			log.debug("Exception "+e.getMessage()+" occurred in action deleteHolonElement()");
 			e.printStackTrace();

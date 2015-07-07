@@ -139,7 +139,7 @@ public class HolonObjectAction extends CommonUtilities {
 								+ "value='Delete Holon Object'/>&nbsp;&nbsp;"+ "<input type='button' id='addHolonElement' name='addHolonElement' "
 										+ "value='Add Holon Element' onclick='addHolonElement(" +holonObject.getId()+")'/>&nbsp;&nbsp;"+
 						"<input type='button' id='showHolonElement' name='showHolonElement' value='Show Holon Elements' "
-						+ "onclick='showHolonElementsForHolon("+holonObject.getId()+")'/>*");
+						+ "onclick='showHolonElements("+holonObject.getId()+")'/>*");
 
 			}
 			

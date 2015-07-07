@@ -3,6 +3,7 @@ package com.htc.serviceImpl;
 import java.util.ArrayList;
 
 import com.htc.hibernate.pojo.HolonElement;
+import com.htc.hibernate.pojo.HolonObject;
 import com.htc.service.AbstractService;
 import com.htc.service.HolonElementService;
 
@@ -31,6 +32,11 @@ public class HolonElementServiceImpl extends AbstractService implements HolonEle
 	@Override
 	public ArrayList<HolonElement> getAllHolonElement() {
 		return getHolonElementDao().getAllHolonElement();
+	}
+
+	@Override
+	public ArrayList<HolonElement> getHolonElements(HolonObject holonObject) {
+		return getHolonElementDao().getHolonElements(holonObject);
 	}
 
 }

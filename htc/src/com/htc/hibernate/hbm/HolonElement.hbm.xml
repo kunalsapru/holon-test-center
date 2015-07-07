@@ -18,7 +18,7 @@
             <column name="holon_object" />
         </many-to-one>
         <property name="usage" type="string">
-            <column name="usage" />
+            <column name="[usage]" />
         </property>
         <property name="currentCapacity" type="java.lang.Integer">
             <column name="current_capacity" />

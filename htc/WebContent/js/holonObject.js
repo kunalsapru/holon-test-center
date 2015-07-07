@@ -78,8 +78,8 @@ function createHolonObjectCallBack(data, options) {
 			"<b>South West Location: </b>"+sw_location+"<br><br>"+
 			"<input type='button' id='editHolonObject' name='editHolonObject' value='Edit Holon Object' onclick='editHolonObject("+holonObjectId+")'/>&nbsp;&nbsp;"+
 			"<input type='button' id='deleteHolonObject' name='deleteHolonObject' value='Delete Holon Object'/>&nbsp;&nbsp;"+
-			"<input type='button' id='addHolonElement' name='addHolonElement' value='Add Holon Element' onclick='addHolonElement("+lat[0]+","+lat[1]+")'/>&nbsp;&nbsp;"+
-			"<input type='button' id='showHolonElement' name='showHolonElement' value='Show Holon Elements' onclick='showHolonElementsForHolon("+lat[0]+","+lat[1]+")'/>";
+			"<input type='button' id='addHolonElement' name='addHolonElement' value='Add Holon Element' onclick='addHolonElement("+holonObjectId+")'/>&nbsp;&nbsp;"+
+			"<input type='button' id='showHolonElements' name='showHolonElements' value='Show Holon Elements' onclick='showHolonElements("+holonObjectId+")'/>";
 	var infowindowHolonObject = new google.maps.InfoWindow({
 	      content: contentString,
 	      position:new google.maps.LatLng(lat[0],lat[1])
@@ -90,7 +90,6 @@ function createHolonObjectCallBack(data, options) {
 function showHolonObjects() {
 	ajaxRequest("showHolonObjects", {}, showHolonObjectsCallBack, {});
 	showSavedPowerLines();
-		
 }
 
 function showHolonObjectsCallBack(data, options){
@@ -123,4 +122,12 @@ function attachMessage(contentString, marker, position) {
 	  google.maps.event.addListener(marker, 'click', function() {
 	    infowindow.open(marker.get('map'), marker);
 	  });
+}
+
+function closeDiv(id) {
+	$("#"+id).slideUp(100);
+}
+
+function openDiv(id) {
+	$("#"+id).slideDown(100);
 }
