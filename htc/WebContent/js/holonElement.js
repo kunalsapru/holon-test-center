@@ -9,6 +9,7 @@ function showHolonElementsCallBack(data, options) {
 	var holonObjectId = options['holonObjectId'];
 	$("#addHolonElementTableHeader").click(function() {
 		$("#hiddenHolonObjectId").val(holonObjectId);
+		$("#holonElementActionState").val("Add");
 		getListHolonElementType();
 		getListHolonElementState();
 		openDiv('elementInfo');
@@ -104,6 +105,7 @@ function addHolonElementCallBack(data, options) {
 }
 
 function editHolonElementCallBack(data, options) {
+	$("#holonElementActionState").val("");
 	if(data == "true"){
 		var holonObjectId = options['holonObjectId'];
 		closeDiv('elementInfo');
