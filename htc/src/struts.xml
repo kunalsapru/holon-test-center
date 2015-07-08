@@ -96,15 +96,6 @@
 			method="drawPowerLine" /> <!-- Completed By Abhinav and Code Checked in. Enhancements could be done later  -->			
 			<action name="showPowerLines" class="com.htc.action.PowerLineAction"
 			method="showPowerLines" /> <!-- Completed By Abhinav and Code Checked in. Enhancements could be done later  -->
-		<!-- 	<action name="editPowerLine" class="com.htc.action.PowerLineAction"
-			method="editPowerLine" />
-			 -->
-
-		<!-- <action name="addHolon" class="com.htc.action.HolonAction" method="addHolon" 
-			/> <action name="editHolon" class="com.htc.action.HolonAction" method="editHolon" 
-			/> <action name="deleteHolon" class="com.htc.action.HolonAction" method="deleteHolon" 
-			/> <action name="getListHolon" class="com.htc.action.HolonAction" method="getListHolon" 
-			/> -->
 
 		<action name="dataGenerator" class="com.htc.action.DataGeneratorAction"
 			method="dataGenerator" />
