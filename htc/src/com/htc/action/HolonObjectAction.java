@@ -223,7 +223,8 @@ public class HolonObjectAction extends CommonUtilities {
 
 	public void updateConnectedPowerLine(HolonObject holonObject,
 			PowerLine powerLine) {
-		// TODO Auto-generated method stub
+		holonObject.setPowerLine(powerLine);
+		getHolonObjectService().merge(holonObject);
 		
 	}
 }
