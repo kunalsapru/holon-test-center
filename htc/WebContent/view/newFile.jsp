@@ -17,6 +17,7 @@
 <script type="text/javascript" src="js/distanceCalc.js"></script>
 <script type="text/javascript" src="js/holonObject.js"></script>
 <script type="text/javascript" src="js/holonElement.js"></script>
+<script type="text/javascript" src="js/switch.js"></script>
 <script src="js/sweetalert.min.js"></script>
 </head>
 
@@ -53,8 +54,7 @@
     </li>
     <li><a href="#"><i class="fa fa-toggle-on"></i>Switch<i class="fa fa-caret-down"></i></a>
     <ul>
-    	<li><a href="#"><i class=" fa fa-circle-o-notch"></i>Switch on Holon Object</a></li>
-    	<li><a href="#"><i class=" fa fa-life-saver "></i>Switch on Power Line</a></li>
+    	<li><a href="#" id="switchOnPowerLine"><i class=" fa fa-life-saver "></i>Switch on Power Line</a></li>
     </ul>
     </li>
 		<li><a href="#" id="clear"><i class="fa fa-eraser"></i>Clear Map</a></li> 

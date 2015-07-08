@@ -1,6 +1,8 @@
 package com.htc.action;
 
 
+import java.util.ArrayList;
+
 import com.htc.hibernate.pojo.HolonObject;
 import com.htc.hibernate.pojo.LatLng;
 import com.htc.hibernate.pojo.PowerLine;
@@ -40,14 +42,54 @@ public class PowerSwitchAction extends CommonUtilities {
 
 	}
 	
-	public void addPowerSwitchForPowerLine(PowerLine powerLine,LatLng position){
-		PowerSwitch powerSwitch=new PowerSwitch();
+	public void createPowerSwitch(){
+		
+	try{
+		
+		PowerSwitch powerSwitch= new PowerSwitch();
+		Integer powerLineId= getRequest().getParameter("powerLineId")!=null?Integer.parseInt(getRequest().getParameter("powerLineId")):0;
+		Double latSwitch = getRequest().getParameter("switchPositionLat")!=null?Double.parseDouble(getRequest().getParameter("switchPositionLat")):0D;
+		Double lngSwitch = getRequest().getParameter("switchPositionLng")!=null?Double.parseDouble(getRequest().getParameter("switchPositionLng")):0D;
+		LatLng switchLatLng = new LatLng(latSwitch, lngSwitch);
+		Integer switchlocationId = getLatLngService().persist(switchLatLng);
+		LatLng switchLatLng2 = getLatLngService().findById(switchlocationId);
+		PowerLine powerLine = new PowerLine(powerLineId);
+		powerSwitch.setLatLng(switchLatLng2);
 		powerSwitch.setPowerLine(powerLine);
-		powerSwitch.setHolonObject(null);
 		powerSwitch.setStatus(true);
-		powerSwitch.setLatLng(position);
-		Integer newPowerSwitchID = getPowerSwitchService().persist(powerSwitch);
-		System.out.println("NewLy Generated PowerSwitch  ID --> "+newPowerSwitchID);
+		Integer newPowerSwitchId= getPowerSwitchService().persist(powerSwitch);
+		System.out.println("---------------------->>>"+newPowerSwitchId);
+		getResponse().setContentType("text/html");
+		getResponse().getWriter().write(newPowerSwitchId.toString());
+		
+		
+	}
+	catch(Exception e){
+		System.out.println("Exception is::"+ e);
+	}
 			
+	}
+	
+	public void getListPowerSwitch(){
+		try{
+			ArrayList<PowerSwitch> powerSwitchList = getPowerSwitchService().getAllPowerSwitch();
+			ArrayList<String> swListArray = new ArrayList<String>();
+			PowerSwitch powerSwitch= null;
+			for(int i=0;i<powerSwitchList.size();i++)
+			{
+				powerSwitch=powerSwitchList.get(i);
+				Double switchLatitude= powerSwitch.getLatLng().getLatitude();
+				Double switchLongitude= powerSwitch.getLatLng().getLongitude();
+				Integer switchId = powerSwitch.getId();
+				Integer powerId = powerSwitch.getPowerLine().getId();
+				swListArray.add(switchLatitude+"^"+switchLongitude+"^"+switchId+"^"+powerId+"*");
+				
+			}
+			getResponse().setContentType("text/html");
+			getResponse().getWriter().write(swListArray.toString());
+		}
+		catch(Exception e){
+			System.out.println("Exception in getListPowerSwitch");
+		}
 	}
 }

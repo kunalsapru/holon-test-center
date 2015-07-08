@@ -3,6 +3,7 @@ $(document)
 				function() {
 					// call initialize function
 					initialize();
+					window.clickedToDrawSwitch="";
 					var drawingManager;
 					var switchMarker;
 					var switchMarkerImage = {
@@ -31,6 +32,10 @@ $(document)
 					$("#addMasterHolonDetail").hide();
 					$(document).on("click","#delete",function(){
 						alert("ready");
+					});
+					
+					$("#switchOnPowerLine").click(function(event){
+						drawSwitchOnPowerLine(this.id);
 					});
 					
 					$("#holonObjectTypeforMasterTables").click(function(){

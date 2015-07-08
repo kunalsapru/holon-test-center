@@ -90,6 +90,7 @@ function createHolonObjectCallBack(data, options) {
 function showHolonObjects() {
 	ajaxRequest("showHolonObjects", {}, showHolonObjectsCallBack, {});
 	showSavedPowerLines();
+	showSavedPowerSwitches();
 }
 
 function showHolonObjectsCallBack(data, options){
@@ -109,18 +110,59 @@ function showHolonObjectsCallBack(data, options){
 		    	      new google.maps.LatLng(sw_location_lat, sw_location_lng),
 		    	      new google.maps.LatLng(ne_location_lat, ne_location_lng))
 		    });
-		 attachMessage(contentString, rectangleFromFactory, new google.maps.LatLng(ne_location_lat, sw_location_lng));
+		 attachMessage(contentString, rectangleFromFactory, new google.maps.LatLng(ne_location_lat, sw_location_lng),"rectangle",1);
 	}	
 }
 
-function attachMessage(contentString, marker, position) {
+function attachMessage(contentString, marker, position,text,id) {
+	 
 	  var infowindow = new google.maps.InfoWindow({
 	    content: contentString,
 	    position:position
 	  });
 
-	  google.maps.event.addListener(marker, 'click', function() {
-	    infowindow.open(marker.get('map'), marker);
+	  google.maps.event.addListener(marker, 'click', function(event) {
+		  
+		if(text=="line" && clickedToDrawSwitch=="switchOnPowerLine") {
+			$("#switchOnPowerLine").css("background-color", "rgb(26, 26, 26)");
+			clickedToDrawSwitch="";
+			var switchMarker="";
+				switchMarker = new google.maps.Marker({
+			        position: event.latLng,
+			        draggable: false,
+			        icon:"css/images/on.png",
+			        map: map
+			    });	
+				var newId= id.replace(" ","");
+				createPowerSwitch(event.latLng.lat(),event.latLng.lng(),newId);
+		} else if(text=="switch"){
+
+			var currentImage=marker.icon.url;
+				switch (currentImage){
+				case "css/images/switch-on.png":
+					marker.setIcon("css/images/switch-off.png");
+					break;	
+				}
+				
+			if(currentImage==undefined)
+				{
+				currentImage=marker.icon;
+				switch (currentImage){
+				case "css/images/on.png":
+					marker.setIcon("css/images/off.png");
+					break;	
+				case "css/images/off.png" :
+					marker.setIcon("css/images/on.png");
+					break;	
+				}
+				
+				}
+		
+		}
+		 else {
+			infowindow.open(marker.get('map'), marker);
+			}
+	    
 	  });
 }
 

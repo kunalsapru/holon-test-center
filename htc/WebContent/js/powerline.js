@@ -86,6 +86,7 @@ function showPowerLinesCallBack(data, options){
 		var powerLine = powerLineList[i].split("!");
 		var location = powerLine[0];
 		var contentString = powerLine[1];
+		var powerLineId=powerLine[1].split(":")[2].split(".")[0].replace("</b>","");
 		var startLat = location.split("^")[0].split("~")[0].replace("[","").replace(",","");
 		var startLng = location.split("^")[0].split("~")[1];
 		var endLat = location.split("^")[1].split("~")[0];
@@ -100,7 +101,7 @@ function showPowerLinesCallBack(data, options){
 	        strokeWeight: 4,
 	        map: map
 	    });
-		 attachMessage(contentString, line, new google.maps.LatLng(startLat, startLng));
+		 attachMessage(contentString, line, new google.maps.LatLng(startLat, startLng),"line",powerLineId);
 	}	
 }
 
@@ -128,7 +129,7 @@ function drawPoweLineCallBack(data, options) {
 	      content: contentString,
 	      position:new google.maps.LatLng(latEnd,lngEnd)
 	  });
-	attachMessage(contentString, newShape, new google.maps.LatLng(latEnd,lngEnd));
+	attachMessage(contentString, newShape, new google.maps.LatLng(latEnd,lngEnd),"line",powerLineId);
 	infowindowHolonObject.open(map,map);
 }
 

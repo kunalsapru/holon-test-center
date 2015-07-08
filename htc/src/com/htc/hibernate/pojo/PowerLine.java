@@ -25,7 +25,11 @@ public class PowerLine implements java.io.Serializable {
 
 	public PowerLine() {
 	}
-
+	
+	public PowerLine(int id) {
+		this.id=id;
+	}
+	
 	public PowerLine(String type, int currentCapacity, int maximumCapacity,
 			boolean isConnected) {
 		this.type = type;

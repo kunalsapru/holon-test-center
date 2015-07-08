@@ -103,13 +103,13 @@ public class PowerLineAction extends CommonUtilities {
 				powerLine = powerLineList.get(i);
 				startLocation = powerLine.getLatLngBySource().getLatitude()+"~"+powerLine.getLatLngBySource().getLongitude();
 				endLocation = powerLine.getLatLngByDestination().getLatitude()+"~"+powerLine.getLatLngByDestination().getLongitude();
-				powerLineListArray.add(startLocation+"^"+endLocation+"!<b>Connected: </b>"+powerLine.isIsConnected()+"<br>"+
-						"<b>PowerLine Id: </b>"+powerLine.getId() +"<br>"+
-						"<b>Maximum Capacity: </b>"+powerLine.getMaximumCapacity()+"<br>"+
-						"<b>Current Capacity: </b>"+powerLine.getCurrentCapacity()+"<br>"+
-						"<b>PowerLine Type: </b>"+powerLine.getType()+"<br>"+
-						"<b>Start Location: </b>"+powerLine.getLatLngBySource().getLatitude()+"~"+powerLine.getLatLngBySource().getLongitude()+"<br>"+
-						"<b>End Location: </b>"+powerLine.getLatLngByDestination().getLatitude()+"~"+powerLine.getLatLngByDestination().getLongitude()+"<br>*");
+				powerLineListArray.add(startLocation+"^"+endLocation+"!<b>Connected: </b>"+powerLine.isIsConnected()+".<br>"+
+						"<b>PowerLine Id: </b>"+powerLine.getId() +".<br>"+
+						"<b>Maximum Capacity: </b>"+powerLine.getMaximumCapacity()+".<br>"+
+						"<b>Current Capacity: </b>"+powerLine.getCurrentCapacity()+".<br>"+
+						"<b>PowerLine Type: </b>"+powerLine.getType()+".<br>"+
+						"<b>Start Location: </b>"+powerLine.getLatLngBySource().getLatitude()+"~"+powerLine.getLatLngBySource().getLongitude()+".<br>"+
+						"<b>End Location: </b>"+powerLine.getLatLngByDestination().getLatitude()+"~"+powerLine.getLatLngByDestination().getLongitude()+".<br>*");
 
 			}
 			
