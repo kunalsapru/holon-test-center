@@ -161,7 +161,7 @@ public class HolonObjectAction extends CommonUtilities {
 		}
 	}
 
-	private LatLng getDoorLocation(LatLng northlatLng, LatLng southlatLng) {
+	public LatLng getDoorLocation(LatLng northlatLng, LatLng southlatLng) {
 		LatLng doorLocation = new LatLng();
 		LatLng midPoint = new LatLng();
 		double distance=0;
@@ -181,7 +181,7 @@ public class HolonObjectAction extends CommonUtilities {
 		return doorLocation;
 	}
 
-	private List<LatLng> getProbableDoorLocations(LatLng northlatLng,
+	public List<LatLng> getProbableDoorLocations(LatLng northlatLng,
 			LatLng southlatLng) {
 		List<LatLng> doorLocationsList = new ArrayList<LatLng>();
 		LatLng north = new LatLng();
@@ -199,13 +199,13 @@ public class HolonObjectAction extends CommonUtilities {
 		return doorLocationsList;
 	}
 
-	private double getDistanceFromPointToLine(PowerLine powerLine, LatLng loc) {
+	public double getDistanceFromPointToLine(PowerLine powerLine, LatLng loc) {
 		return 0;
 		// TODO Auto-generated method stub
 		
 	}
 
-	private PowerLine getNearestLine(LatLng midPoint) {
+	public PowerLine getNearestLine(LatLng midPoint) {
 		double distance;
 		List<Double> distanceList = new ArrayList<Double>();
 		HashMap<Double,PowerLine> distanceMap = new HashMap<Double,PowerLine>();
@@ -219,5 +219,11 @@ public class HolonObjectAction extends CommonUtilities {
 		Collections.sort(distanceList);
 		nearestPowerLine = distanceMap.get(distanceList.get(0));
 		return nearestPowerLine;
+	}
+
+	public void updateConnectedPowerLine(HolonObject holonObject,
+			PowerLine powerLine) {
+		// TODO Auto-generated method stub
+		
 	}
 }

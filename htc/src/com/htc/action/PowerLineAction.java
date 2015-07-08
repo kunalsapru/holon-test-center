@@ -3,6 +3,8 @@ package com.htc.action;
 import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
+
+import com.htc.hibernate.pojo.HolonObject;
 import com.htc.hibernate.pojo.LatLng;
 import com.htc.hibernate.pojo.PowerLine;
 import com.htc.hibernate.pojo.PowerSource;
@@ -122,8 +124,34 @@ public class PowerLineAction extends CommonUtilities {
 		}
 	}
 	
-	public void connectToPowerSource(){
+public void connectToPowerSource(HolonObject holonObject){
 		
+		try {
+			LatLng doorOfHolon = holonObject.getLatLngByDoorLocation();
+			LatLng intersection;
+			HolonObjectAction holonObjectAction = new HolonObjectAction();
+			PowerLine powerLine = holonObjectAction.getNearestLine(doorOfHolon);
+			intersection = getIntersectionPointOnTheLine(doorOfHolon,powerLine);
+			
+			holonObjectAction.updateConnectedPowerLine(holonObject,powerLine);
+			
+			StringBuffer connectToPowerSourceResponse = new StringBuffer();
+			
+			connectToPowerSourceResponse.append(doorOfHolon.toString() + "!");
+			connectToPowerSourceResponse.append(intersection.toString());
+			
+			getResponse().setContentType("text/html");
+			getResponse().getWriter().write(connectToPowerSourceResponse.toString());
+		} catch (Exception e) {
+			log.info("Exception "+e.getMessage()+" occurred in action connectToPowerSource()");
+			e.printStackTrace();
+		}
+	}
+
+	private LatLng getIntersectionPointOnTheLine(LatLng doorOfHolon,
+			PowerLine powerLine) {
+		LatLng intersectionPoint = null;
+		return intersectionPoint;
 	}
 	
 	
