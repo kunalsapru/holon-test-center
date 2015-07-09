@@ -38,7 +38,7 @@ $(document).ready(function() {
 			google.maps.event.addListener(lineDrawingManager, 'overlaycomplete', function(event) {
 			
 				newShape = event.overlay; // Object
-		    	newShape.type = event.type;	// Polygon
+		    	newShape.type = event.type;	
 		    	var start=newShape.getPath().getAt(0);
 		    	var end=newShape.getPath().getAt(1);
 		    	var latLangArr=[start,end];
@@ -60,8 +60,10 @@ $(document).ready(function() {
 		    			powerSourceId:1,
 		    				};
 		    	
+		    	
+		    	
 		    	if(powerLineType=="MAINLINE"){
-		    	ajaxRequest("drawPowerLine", dataAttributes, drawPoweLineCallBack, {});
+		    	ajaxRequest("drawPowerLine", dataAttributes, drawPoweLineCallBack, {newShape:newShape});
 		    	}
 			});
 
@@ -85,8 +87,11 @@ function showPowerLinesCallBack(data, options){
 	for (var i=0; i<powerLineList.length-1; i++) {
 		var powerLine = powerLineList[i].split("!");
 		var location = powerLine[0];
-		var contentString = powerLine[1];
-		var powerLineId=powerLine[1].split(":")[2].split(".")[0].replace("</b>","");
+		var color=powerLine[1];
+		//alert(color);
+		var contentString = powerLine[2];
+		//alert(contentString);
+		var powerLineId=powerLine[2].split(":")[2].split(".")[0].replace("</b>","");
 		var startLat = location.split("^")[0].split("~")[0].replace("[","").replace(",","");
 		var startLng = location.split("^")[0].split("~")[1];
 		var endLat = location.split("^")[1].split("~")[0];
@@ -96,7 +101,7 @@ function showPowerLinesCallBack(data, options){
 	            new google.maps.LatLng(startLat, startLng), 
 	            new google.maps.LatLng(endLat, endLng)
 	        ],
-	        strokeColor:"rgb(0, 0, 0)",
+	        strokeColor:color,
 	        strokeOpacity: 2.0,
 	        strokeWeight: 4,
 	        map: map
@@ -106,6 +111,7 @@ function showPowerLinesCallBack(data, options){
 }
 
 function drawPoweLineCallBack(data, options) {
+	var newShape = options["newShape"];
 	var dataArray = data.split("!");
 	var powerLineId = dataArray[0];
 	var isConnected= dataArray[1];
@@ -117,7 +123,10 @@ function drawPoweLineCallBack(data, options) {
 	var lngStart= dataArray[8];
 	var latEnd= dataArray[9];
 	var lngEnd= dataArray[10];
-	
+	var color = dataArray[11];
+	//alert(color);
+	newShape.setOptions({strokeColor:color});
+	//alert("Abhinav");
 	contentString="<b>Power Line Type: </b>"+powerLineType+"<br>"+
 			"<b>Power Line Id: </b>"+powerLineId +"<br>"+
 			"<b>Connected : </b>"+isConnected+"<br>"+

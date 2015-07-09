@@ -47,6 +47,8 @@ public class PowerLineAction extends CommonUtilities {
 			PowerSource powerSource = getPowerSourceService().findById(powerSourceId);
 			//End of temp code
 			
+			currentCapacity= (int) CommonUtilities.randomCapGenerator();
+			log.info("Current Capacity "+currentCapacity);
 			PowerLine powerLine = new PowerLine();
 			powerLine.setCurrentCapacity(currentCapacity);
 			powerLine.setIsConnected(isConnected);
@@ -58,6 +60,8 @@ public class PowerLineAction extends CommonUtilities {
 			powerLine.setType(powerLineType);
 			
 			Integer newPowerLineID = getPowerLineService().persist(powerLine);
+			
+			String color = CommonUtilities.getLineColor(CommonUtilities.getPercent(currentCapacity,maxCapacity));
 			
 			log.info("NewLy Generated powerLine  ID --> "+newPowerLineID);
 			String powerSrcName = powerSource.getName();
@@ -74,7 +78,8 @@ public class PowerLineAction extends CommonUtilities {
 			plResponse.append(latStart+"!");
 			plResponse.append(lngStart+"!");
 			plResponse.append(latEnd+"!");
-			plResponse.append(lngEnd);		
+			plResponse.append(lngEnd+"!");
+			plResponse.append(color);		
 			
 			getResponse().getWriter().write(plResponse.toString());	
 			
@@ -100,12 +105,14 @@ public class PowerLineAction extends CommonUtilities {
 			PowerLine powerLine = null;
 			String startLocation;
 			String endLocation;
+			String color;
 			log.error("No of PowerLines "+powerLineList.size());
 			for(int i=0; i<powerLineList.size();i++){
 				powerLine = powerLineList.get(i);
 				startLocation = powerLine.getLatLngBySource().getLatitude()+"~"+powerLine.getLatLngBySource().getLongitude();
 				endLocation = powerLine.getLatLngByDestination().getLatitude()+"~"+powerLine.getLatLngByDestination().getLongitude();
-				powerLineListArray.add(startLocation+"^"+endLocation+"!<b>Connected: </b>"+powerLine.isIsConnected()+".<br>"+
+				color= CommonUtilities.getLineColor(CommonUtilities.getPercent(powerLine.getCurrentCapacity(),powerLine.getMaximumCapacity())); 				
+				powerLineListArray.add(startLocation+"^"+endLocation+"!"+color+"!<b>Connected: </b>"+powerLine.isIsConnected()+".<br>"+
 						"<b>PowerLine Id: </b>"+powerLine.getId() +".<br>"+
 						"<b>Maximum Capacity: </b>"+powerLine.getMaximumCapacity()+".<br>"+
 						"<b>Current Capacity: </b>"+powerLine.getCurrentCapacity()+".<br>"+
