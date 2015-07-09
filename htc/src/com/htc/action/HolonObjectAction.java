@@ -138,7 +138,7 @@ public class HolonObjectAction extends CommonUtilities {
 				holonObject = holonObjectList.get(i);
 				ne_location = holonObject.getLatLngByNeLocation().getLatitude()+"~"+holonObject.getLatLngByNeLocation().getLongitude();
 				sw_location = holonObject.getLatLngBySwLocation().getLatitude()+"~"+holonObject.getLatLngBySwLocation().getLongitude();
-				hoListArray.add(ne_location+"^"+sw_location+"!<b>Priority: </b>"+
+				hoListArray.add(holonObject.getHolonCoordinator().getHolon().getColor()+"#"+ne_location+"^"+sw_location+"!<b>Priority: </b>"+
 						"<b>Holon Object Id: </b>"+holonObject.getId() +"<br>"+
 						"<b>Holon Manager: </b>"+holonObject.getHolonManager().getName()+"<br>"+
 						"<b>North East Location: </b>"+ne_location+"<br>"+
