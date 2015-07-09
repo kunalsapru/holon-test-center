@@ -45,7 +45,8 @@ function getListPowerSwitchCallBack(data,options){
 	        icon:"css/images/on.png",
 	        map: map
 	    });	
-		 attachMessage(switchId, marker, new google.maps.LatLng(switchLat, switchLong),"switch",powerLineId);
+		var contentString="Power Line Id : "+powerLineId+"</br>"+"Switch Id: "+switchId+"</br></br></br>"+" <input type='button' value='Toggle Switch' id='togglePowerSwitch' onclick='toggleSwitch("+marker+")' />";
+		 attachMessage(contentString, marker, new google.maps.LatLng(switchLat, switchLong),"switch",switchId);
 		
 		}
 	console.log("Done"+data);

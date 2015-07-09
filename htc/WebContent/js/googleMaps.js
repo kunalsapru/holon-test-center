@@ -4,6 +4,7 @@ $(document)
 					// call initialize function
 					initialize();
 					window.clickedToDrawSwitch="";
+					window.clickedMarkerChangeImage="";
 					var drawingManager;
 					var switchMarker;
 					var switchMarkerImage = {
@@ -33,7 +34,29 @@ $(document)
 					$(document).on("click","#delete",function(){
 						alert("ready");
 					});
-					
+					$(document).on("click","#togglePowerSwitch",function(){
+                        var marker=clickedMarkerChangeImage;
+                        var currentImage=marker.icon.url;
+                        switch (currentImage){
+                        case "css/images/switch-on.png":
+                                marker.setIcon("css/images/switch-off.png");
+                                break;        
+                        }
+                        
+                if(currentImage==undefined)
+                        {
+                        currentImage=marker.icon;
+                        switch (currentImage){
+                        case "css/images/on.png":
+                                marker.setIcon("css/images/off.png");
+                                break;        
+                        case "css/images/off.png" :
+                                marker.setIcon("css/images/on.png");
+                                break;        
+                        }
+                        
+                        }
+                });
 					$("#switchOnPowerLine").click(function(event){
 						drawSwitchOnPowerLine(this.id);
 					});

@@ -116,7 +116,6 @@ function showHolonObjectsCallBack(data, options){
 }
 
 function attachMessage(contentString, marker, position,text,id) {
-	 
 	  var infowindow = new google.maps.InfoWindow({
 	    content: contentString,
 	    position:position
@@ -137,8 +136,10 @@ function attachMessage(contentString, marker, position,text,id) {
 				var newId= id.replace(" ","");
 				createPowerSwitch(event.latLng.lat(),event.latLng.lng(),newId);
 		} else if(text=="switch"){
-
-			var currentImage=marker.icon.url;
+			
+			infowindow.open(marker.get('map'), marker);
+			clickedMarkerChangeImage=marker;
+		/*	var currentImage=marker.icon.url;
 				switch (currentImage){
 				case "css/images/switch-on.png":
 					marker.setIcon("css/images/switch-off.png");
@@ -157,7 +158,7 @@ function attachMessage(contentString, marker, position,text,id) {
 					break;	
 				}
 				
-				}
+				}*/
 		
 		}
 		 else {
