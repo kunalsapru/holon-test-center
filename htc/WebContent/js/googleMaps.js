@@ -172,10 +172,8 @@ $(document)
 				      google.maps.event.addListener(drawingManager, 'overlaycomplete', function(event) {
 				    	  var newShape = event.overlay; // Object
 				    	  newShape.type = event.type;	// Rectangle
-				    	 // alert(newShape.getBounds());
 				    	  var latNorthEast = newShape.getBounds().getNorthEast().lat(); //get lat of northeast
 				    	  var lngNorthEast = newShape.getBounds().getNorthEast().lng();	//get longitude of north east
-						//START KUNAL CODE>>>DONT EDIT/REMOVE IT
 				    	  var latSouthWest = newShape.getBounds().getSouthWest().lat();
 				    	  var lngSouthWest = newShape.getBounds().getSouthWest().lng();
 				    	  $("#holonObjectLatitudeNE").text(latNorthEast);
@@ -389,19 +387,6 @@ function initialize() {
 	directionsDisplay = new google.maps.DirectionsRenderer();
 	directionsDisplay.setMap(map);
 
-}
-
-function editHolonObject(holonObjectId)
-{
-/*	if(infowindowHolonObject == ""){} 
-	else {
-		infowindowHolonObject.close();
-	}
-*/	$("#holonObjectActionState").val("Edit");
-	$("#hiddenHolonObjectId").val(holonObjectId);
-	$("#holonObjectDetail").show();	
-	$("#holonObjectDetail").popup();
-	$("#holonObjectDetail").popup("open");
 }
 
 function showHolonElementsForHolon (holonObjectId){

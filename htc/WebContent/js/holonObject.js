@@ -76,10 +76,9 @@ function createHolonObjectCallBack(data, options) {
 			"<b>Holon Manager: </b>"+holonManagerName+"<br>"+
 			"<b>North East Location: </b>"+ne_location+"<br>"+
 			"<b>South West Location: </b>"+sw_location+"<br><br>"+
-			"<input type='button' id='editHolonObject' name='editHolonObject' value='Edit Holon Object' onclick='editHolonObject("+holonObjectId+")'/>&nbsp;&nbsp;"+
-			"<input type='button' id='deleteHolonObject' name='deleteHolonObject' value='Delete Holon Object'/>&nbsp;&nbsp;"+
-			"<input type='button' id='addHolonElement' name='addHolonElement' value='Add Holon Element' onclick='addHolonElement("+holonObjectId+")'/>&nbsp;&nbsp;"+
-			"<input type='button' id='showHolonElements' name='showHolonElements' value='Show Holon Elements' onclick='showHolonElements("+holonObjectId+")'/>";
+			"<span class='button'><i class='fa fa-plug'></i>&nbsp;&nbsp;Connect to Power Source</span>&nbsp;&nbsp;&nbsp;&nbsp;"+
+			"<span class='button' id='consumptionGraph'><i class='fa fa-line-chart'></i>&nbsp;&nbsp;Show Consumption</span>&nbsp;&nbsp;&nbsp;&nbsp;"+
+			"<span class='button' id='showHolonElement' onclick='showHolonElements("+holonObjectId+")'><i class='fa fa-info'></i>&nbsp;&nbsp;Show Holon Elements</span>";
 	var infowindowHolonObject = new google.maps.InfoWindow({
 	      content: contentString,
 	      position:new google.maps.LatLng(lat[0],lat[1])
@@ -172,4 +171,20 @@ function closeDiv(id) {
 
 function openDiv(id) {
 	$("#"+id).slideDown(100);
+}
+
+function connectToPowerSource(holonObjectId) {
+	alert("Holon Object ID = "+holonObjectId);
+}
+
+function deleteHolonObject(holonObjectId) {
+	alert("Holon Object ID = "+holonObjectId);
+	
+}
+
+function editHolonObject(holonObjectId) {
+	$("#holonObjectActionState").val("Edit");
+	$("#hiddenHolonObjectId").val(holonObjectId);
+	getHolonObjectTypeFromDatabase();
+	getHolonCoordinatorFromDatabase();
 }

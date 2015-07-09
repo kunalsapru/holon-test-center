@@ -33,8 +33,8 @@ public class HolonObjectAction extends CommonUtilities {
 		
 		LatLng NorthlatLng = new LatLng(latNE, lngNE);
 		LatLng SouthlatLng = new LatLng(latSW, lngSW);
-		LatLng DoorlatLng = getDoorLocation(NorthlatLng,SouthlatLng);
-		
+		//LatLng DoorlatLng = getDoorLocation(NorthlatLng,SouthlatLng);
+		LatLng DoorlatLng = new LatLng(latSW, lngSW);
 		Integer NorthlocationId = getLatLngService().persist(NorthlatLng);
 		Integer SouthlocationId = getLatLngService().persist(SouthlatLng);
 		Integer DoorlocationId = getLatLngService().persist(DoorlatLng);
@@ -85,7 +85,7 @@ public class HolonObjectAction extends CommonUtilities {
 		hoResponse.append(lineConnectedState+"!");
 		hoResponse.append(holonObject2.getHolonManager().getName());
 		
-		
+		System.out.println(hoResponse.toString());
 		getResponse().getWriter().write(hoResponse.toString());
 		
 		} catch (Exception e) {
@@ -143,13 +143,10 @@ public class HolonObjectAction extends CommonUtilities {
 						"<b>Holon Manager: </b>"+holonObject.getHolonManager().getName()+"<br>"+
 						"<b>North East Location: </b>"+ne_location+"<br>"+
 						"<b>South West Location: </b>"+sw_location+"<br><br>"+
-						"<input type='button' id='editHolonObject' name='editHolonObject' value='Edit Holon Object' onclick='editHolonObject("+
-						holonObject.getId()+")'/>&nbsp;&nbsp;"+ "<input type='button' id='deleteHolonObject' name='deleteHolonObject' "
-								+ "value='Delete Holon Object'/>&nbsp;&nbsp;"+ "<input type='button' id='addHolonElement' name='addHolonElement' "
-										+ "value='Add Holon Element' onclick='addHolonElement(" +holonObject.getId()+")'/>&nbsp;&nbsp;"+
-						"<input type='button' id='showHolonElement' name='showHolonElement' value='Show Holon Elements' "
-						+ "onclick='showHolonElements("+holonObject.getId()+")'/>*");
-
+						"<span class='button'><i class='fa fa-plug'></i>&nbsp;&nbsp;Connect to Power Source</span>&nbsp;&nbsp;&nbsp;&nbsp;"+
+						"<span class='button' id='consumptionGraph'><i class='fa fa-line-chart'></i>&nbsp;&nbsp;Show Consumption</span>&nbsp;&nbsp;&nbsp;&nbsp;"+
+						"<span class='button' id='showHolonElement' onclick='showHolonElements("+holonObject.getId()+")'>"
+								+ "<i class='fa fa-info'></i>&nbsp;&nbsp;Show Holon Elements</span>*");
 			}
 			
 			//Calling the response function and setting the content type of response.
