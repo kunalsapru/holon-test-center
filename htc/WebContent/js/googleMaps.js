@@ -6,13 +6,6 @@ $(document)
 					window.clickedToDrawSwitch="";
 					window.clickedMarkerChangeImage="";
 					var drawingManager;
-					var switchMarker;
-					var switchMarkerImage = {
-						url : 'css/images/on.png',
-						size : new google.maps.Size(300, 300),
-						origin : new google.maps.Point(0, 0),
-						anchor : new google.maps.Point(0, 32)
-					};
 					var clickedValuePanel;
 					var startPowerLine;
 					var next = 0;
@@ -34,29 +27,7 @@ $(document)
 					$(document).on("click","#delete",function(){
 						alert("ready");
 					});
-					$(document).on("click","#togglePowerSwitch",function(){
-                        var marker=clickedMarkerChangeImage;
-                        var currentImage=marker.icon.url;
-                        switch (currentImage){
-                        case "css/images/switch-on.png":
-                                marker.setIcon("css/images/switch-off.png");
-                                break;        
-                        }
-                        
-                if(currentImage==undefined)
-                        {
-                        currentImage=marker.icon;
-                        switch (currentImage){
-                        case "css/images/on.png":
-                                marker.setIcon("css/images/off.png");
-                                break;        
-                        case "css/images/off.png" :
-                                marker.setIcon("css/images/on.png");
-                                break;        
-                        }
-                        
-                        }
-                });
+								
 					$("#switchOnPowerLine").click(function(event){
 						drawSwitchOnPowerLine(this.id);
 					});
@@ -263,16 +234,6 @@ $(document)
 					}
 					
 					
-					function addSwitchMarker(pos) {
-						var marker = new google.maps.Marker({
-							position : pos,
-							draggable : false,
-							icon : switchMarkerImage,
-							map : map,
-							id : 'switchOn'
-						});
-						map.setCenter(marker.getPosition())
-					}
 
 					$(document)
 							.on(
@@ -334,47 +295,7 @@ $(document)
 						});
 						
 					});
-					/*// Abhinav Temporarily commented  Map click event
-					google.maps.event.addListener(map, 'click',
-							function(event) {
-								// $("#elementInfo").toggle("slide",{direction:"right"});
-						var switchMarker="";
-						if(addNewSwitch==true){
-							switchMarker = new google.maps.Marker({
-						        position: event.latLng,
-						        draggable: false,
-						        icon:switchMarkerImage,
-						        map: map,
-						        id:"switchon"
-						    });	
-						}
-						addNewSwitch=false;
-						
-						google.maps.event.addListener(switchMarker, 'click', function(event) {
-							console.log(switchMarker);
-							var currentImage=switchMarker.icon.url;
-								switch (currentImage){
-								case "css/images/on.png":
-									switchMarker.setIcon("css/images/off.png");
-									break;	
-								}
-								
-							if(currentImage==undefined)
-								{
-								currentImage=switchMarker.icon;
-								switch (currentImage){
-								case "css/images/on.png":
-									switchMarker.setIcon("css/images/off.png");
-									break;	
-								case "css/images/off.png" :
-									switchMarker.setIcon("css/images/on.png");
-									break;	
-								}
-								
-								}
-						});
-					});				*/
-
+					
 					
 					function cursorCrossHair() {
 						$("#googleMap").css('cursor', 'pointer');
@@ -401,8 +322,8 @@ function drawPowerLine(start, end, infowindow) {
 
 function initialize() {
 	mapProp = {
-		center : new google.maps.LatLng(49.863772, 8.552666),
-		zoom : 19,
+		center : new google.maps.LatLng(49.865888, 8.658592),
+		zoom : 18,
 		mapTypeId : google.maps.MapTypeId.ROADMAP
 	};
 	map = new google.maps.Map(document.getElementById("googleMap"), mapProp);

@@ -3,6 +3,8 @@ package com.htc.action;
 
 import java.util.ArrayList;
 
+import org.apache.log4j.Logger;
+
 import com.htc.hibernate.pojo.HolonObject;
 import com.htc.hibernate.pojo.LatLng;
 import com.htc.hibernate.pojo.PowerLine;
@@ -16,6 +18,7 @@ public class PowerSwitchAction extends CommonUtilities {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	static Logger log = Logger.getLogger(PowerSwitchAction.class);
 
 //	public void SwitchOn(HolonObject holonObject, PowerSwitch powerSwitch){
 //		if(powerSwitch.getBelongsTo() == holonObject.getId()){
@@ -47,6 +50,7 @@ public class PowerSwitchAction extends CommonUtilities {
 	try{
 		
 		PowerSwitch powerSwitch= new PowerSwitch();
+		log.info("Power Line Id "+getRequest().getParameter("powerLineId"));
 		Integer powerLineId= getRequest().getParameter("powerLineId")!=null?Integer.parseInt(getRequest().getParameter("powerLineId")):0;
 		Double latSwitch = getRequest().getParameter("switchPositionLat")!=null?Double.parseDouble(getRequest().getParameter("switchPositionLat")):0D;
 		Double lngSwitch = getRequest().getParameter("switchPositionLng")!=null?Double.parseDouble(getRequest().getParameter("switchPositionLng")):0D;

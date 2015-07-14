@@ -106,15 +106,8 @@ function showPowerLinesCallBack(data, options){
 	        strokeWeight: 4,
 	        map: map
 	    });
-	    
-	    google.maps.event.addListener(line, 'click', function(event) {
-			var infowindowHolonObject = new google.maps.InfoWindow({
-			      content: contentString,
-			      position:event.latLng
-			  });
-			infowindowHolonObject.open(map,map);
-				  });
-	    
+	 
+	    addMessageWindow(contentString, line,powerLineId)
 	}	
 }
 
@@ -141,13 +134,27 @@ function drawPoweLineCallBack(data, options) {
 			"<b>Start Location: </b>"+"("+latStart+")"+",("+lngStart+")"+"<br>"+
 			"<b>End Location: </b>"+"("+latEnd+")"+",("+lngEnd+")"+"<br>";
 		
-	google.maps.event.addListener(newLineShape, 'click', function(event) {
-		var infowindowHolonObject = new google.maps.InfoWindow({
-		      content: contentString,
-		      position:event.latLng
-		  });
-		infowindowHolonObject.open(map,map);
-			  });
+	addMessageWindow(contentString, newLineShape,powerLineId)
 		
 }
 
+
+function addMessageWindow(contentString, marker,id)
+{
+	  var infowindowHolonObject = new google.maps.InfoWindow({
+	      content: contentString		    
+	  });
+    google.maps.event.addListener(marker, 'click', function(event) {
+    	if(clickedToDrawSwitch=="switchOnPowerLine")
+		{
+		var newId= id.replace(" ","");
+		createPowerSwitch(event.latLng,newId);
+		}
+	else{
+		infowindowHolonObject.setOptions({position:event.latLng});
+		infowindowHolonObject.open(map,map);
+	}
+    });
+    
+
+}

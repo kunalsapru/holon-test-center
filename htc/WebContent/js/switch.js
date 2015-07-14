@@ -9,12 +9,24 @@ function drawSwitchOnPowerLine(clickedValue){
 	}
 }
 
-function createPowerSwitch(switchPositionLat,switchPositionLng,powerLineId){
+
+
+function createPowerSwitch(latLng,powerLineId){
+	var circleSwitch = new google.maps.Circle({
+		 strokeColor: '#FF0000',
+	     strokeOpacity: 0.8,
+	     strokeWeight: 2,
+	     fillColor: '#FF0000',
+	     fillOpacity: 0.35,
+	     map: map,
+	     center: latLng,
+	     radius: 2
+	    });	
 	var dataAttributes= {
-			switchPositionLat : switchPositionLat,
-			switchPositionLng : switchPositionLng,
+			switchPositionLat : latLng.lat(),
+			switchPositionLng : latLng.lng(),
 			powerLineId : powerLineId
-	}
+	};
 	ajaxRequest("createPowerSwitch", dataAttributes, createPowerSwitchCallBack, {});
 }
 
@@ -39,15 +51,39 @@ function getListPowerSwitchCallBack(data,options){
 		var switchLong=individualData[1];
 		var switchId=individualData[2];
 		var powerLineId=individualData[3];
-		var marker = new google.maps.Marker({
-	        position: new google.maps.LatLng(switchLat, switchLong),
-	        draggable: false,
-	        icon:"css/images/on.png",
-	        map: map
-	    });	
-		var contentString="Power Line Id : "+powerLineId+"</br>"+"Switch Id: "+switchId+"</br></br></br>"+" <input type='button' value='Toggle Switch' id='togglePowerSwitch' onclick='toggleSwitch("+marker+")' />";
-		 attachMessage(contentString, marker, new google.maps.LatLng(switchLat, switchLong),"switch",switchId);
+		var circleSwitch = new google.maps.Circle({
+			 strokeColor: '#FF0000',
+		     strokeOpacity: 1,
+		     strokeWeight: 8,
+		     fillColor: '#FF0000',
+		     fillOpacity: 0.35,
+		     map: map,
+		     center: new google.maps.LatLng(switchLat, switchLong),
+		     radius: 2
+		    });	
+		var contentString="Power Line Id : "+powerLineId+"</br>"+"Switch Id: "+switchId+"</br></br></br>"+" <input type='button' value='Toggle Switch' id='togglePowerSwitch' onclick='SwitchOnOff()' />";
+		addSwitchInfo(contentString, circleSwitch, switchId);
 		
 		}
 	console.log("Done"+data);
 }
+
+function addSwitchInfo(contentString, marker, id)
+{
+	 var infowindowHolonObject = new google.maps.InfoWindow({
+	      content: contentString		    
+	  });
+   google.maps.event.addListener(marker, 'click', function(event) {   	
+		infowindowHolonObject.setOptions({position:event.latLng});
+		infowindowHolonObject.open(map,map);	
+   });
+}
+
+function SwitchOnOff()
+{
+	 
+	alert ("circleSwitch.get('fillColor')");
+	
+	
+}
+

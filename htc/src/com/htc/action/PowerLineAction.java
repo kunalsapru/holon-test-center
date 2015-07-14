@@ -102,13 +102,13 @@ public class PowerLineAction extends CommonUtilities {
 			
 			ArrayList<PowerLine> powerLineList = getPowerLineService().getAllPowerLine();
 			ArrayList<String> powerLineListArray = new ArrayList<String>();
-			PowerLine powerLine = null;
 			String startLocation;
 			String endLocation;
 			String color;
-			log.error("No of PowerLines "+powerLineList.size());
+			log.info("No of PowerLines "+powerLineList.size());
 			for(int i=0; i<powerLineList.size();i++){
-				powerLine = powerLineList.get(i);
+				PowerLine  powerLine = powerLineList.get(i);
+				log.info("PowerLine Id: "+powerLine.getId());
 				startLocation = powerLine.getLatLngBySource().getLatitude()+"~"+powerLine.getLatLngBySource().getLongitude();
 				endLocation = powerLine.getLatLngByDestination().getLatitude()+"~"+powerLine.getLatLngByDestination().getLongitude();
 				color= CommonUtilities.getLineColor(CommonUtilities.getPercent(powerLine.getCurrentCapacity(),powerLine.getMaximumCapacity())); 				
