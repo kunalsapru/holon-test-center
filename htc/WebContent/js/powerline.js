@@ -106,12 +106,20 @@ function showPowerLinesCallBack(data, options){
 	        strokeWeight: 4,
 	        map: map
 	    });
-		 attachMessage(contentString, line, new google.maps.LatLng(startLat, startLng),"line",powerLineId);
+	    
+	    google.maps.event.addListener(line, 'click', function(event) {
+			var infowindowHolonObject = new google.maps.InfoWindow({
+			      content: contentString,
+			      position:event.latLng
+			  });
+			infowindowHolonObject.open(map,map);
+				  });
+	    
 	}	
 }
 
 function drawPoweLineCallBack(data, options) {
-	var newShape = options["newShape"];
+	var newLineShape = options["newShape"];
 	var dataArray = data.split("!");
 	var powerLineId = dataArray[0];
 	var isConnected= dataArray[1];
@@ -124,9 +132,7 @@ function drawPoweLineCallBack(data, options) {
 	var latEnd= dataArray[9];
 	var lngEnd= dataArray[10];
 	var color = dataArray[11];
-	//alert(color);
-	newShape.setOptions({strokeColor:color});
-	//alert("Abhinav");
+	newLineShape.setOptions({strokeColor:color});
 	contentString="<b>Power Line Type: </b>"+powerLineType+"<br>"+
 			"<b>Power Line Id: </b>"+powerLineId +"<br>"+
 			"<b>Connected : </b>"+isConnected+"<br>"+
@@ -134,11 +140,14 @@ function drawPoweLineCallBack(data, options) {
 			"<b>Current Capacity: </b>"+currentCapacity+"<br>"+
 			"<b>Start Location: </b>"+"("+latStart+")"+",("+lngStart+")"+"<br>"+
 			"<b>End Location: </b>"+"("+latEnd+")"+",("+lngEnd+")"+"<br>";
+		
+	google.maps.event.addListener(newLineShape, 'click', function(event) {
 		var infowindowHolonObject = new google.maps.InfoWindow({
-	      content: contentString,
-	      position:new google.maps.LatLng(latEnd,lngEnd)
-	  });
-	attachMessage(contentString, newShape, new google.maps.LatLng(latEnd,lngEnd),"line",powerLineId);
-	infowindowHolonObject.open(map,map);
+		      content: contentString,
+		      position:event.latLng
+		  });
+		infowindowHolonObject.open(map,map);
+			  });
+		
 }
 
