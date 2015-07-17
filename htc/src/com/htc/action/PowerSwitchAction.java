@@ -41,7 +41,7 @@ public class PowerSwitchAction extends CommonUtilities {
 		
 		//Calling service method to save the object in database and saving the auto-incremented ID in an integer
 		Integer newPowerSwitchID = getPowerSwitchService().persist(powerSwitch);
-		System.out.println("NewLy Generated PowerSwitch  ID --> "+newPowerSwitchID);
+		log.info("NewLy Generated PowerSwitch  ID --> "+newPowerSwitchID);
 
 	}
 	
@@ -69,7 +69,7 @@ public class PowerSwitchAction extends CommonUtilities {
 		
 	}
 	catch(Exception e){
-		System.out.println("Exception is::"+ e);
+		log.info("Exception is::"+ e);
 	}
 			
 	}
@@ -86,14 +86,38 @@ public class PowerSwitchAction extends CommonUtilities {
 				Double switchLongitude= powerSwitch.getLatLng().getLongitude();
 				Integer switchId = powerSwitch.getId();
 				Integer powerId = powerSwitch.getPowerLine().getId();
-				swListArray.add(switchLatitude+"^"+switchLongitude+"^"+switchId+"^"+powerId+"*");
+				boolean statusBool=powerSwitch.getStatus();
+				int status=0;
+				if(statusBool){
+				status=1;
+				}
+				swListArray.add(switchLatitude+"^"+switchLongitude+"^"+switchId+"^"+powerId+"^"+status+"*");
 				
 			}
 			getResponse().setContentType("text/html");
 			getResponse().getWriter().write(swListArray.toString());
 		}
 		catch(Exception e){
-			System.out.println("Exception in getListPowerSwitch");
+			log.info("Exception in getListPowerSwitch");
 		}
 	}
+
+
+public void powerSwitchOnOff(){
+	try{
+		log.info("powerSwitchOnOff start ");
+		Integer newSwitchStatus= getRequest().getParameter("newSwitchStatus")!=null?Integer.parseInt(getRequest().getParameter("newSwitchStatus")):0;
+		Integer powerSwitchId= getRequest().getParameter("switchId")!=null?Integer.parseInt(getRequest().getParameter("switchId")):0;
+		log.info("powerSwitchOnOff Data Base Call start ");
+		int result=getPowerSwitchService().changeSwitchStatus(powerSwitchId, newSwitchStatus);
+		//PowerSwitch pwSwitch = getPowerSwitchService().findById(powerSwitchId);
+		log.info("No of rows updated "+result);
+		getResponse().setContentType("text/html");
+		getResponse().getWriter().write(newSwitchStatus.toString());
+	}
+	catch(Exception e){
+		log.info("Exception in powerSwitchOnOff ");
+	}
 }
+}
+

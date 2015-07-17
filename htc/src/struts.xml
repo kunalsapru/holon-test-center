@@ -89,7 +89,8 @@
 			method="powerSwitchOn" />
 		<action name="getListPowerSwitch" class="com.htc.action.PowerSwitchAction"
 			method="getListPowerSwitch" />
-			
+		<action name="powerSwitchOnOff" class="com.htc.action.PowerSwitchAction"
+			method="powerSwitchOnOff" />
 			
 			<!--POWER LINE LEVEL  -->
 			<action name="drawPowerLine" class="com.htc.action.PowerLineAction"

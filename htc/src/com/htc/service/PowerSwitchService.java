@@ -11,5 +11,6 @@ import com.htc.hibernate.pojo.PowerSwitch;
 		public PowerSwitch findById(int powerSwitchId);
 		public boolean delete(PowerSwitch persistentInstance);
 		public ArrayList<PowerSwitch> getAllPowerSwitch();
+		public int changeSwitchStatus(int powerSwitchId, int status );
 	
 }

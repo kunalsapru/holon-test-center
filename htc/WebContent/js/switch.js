@@ -47,18 +47,22 @@ function showSavedPowerSwitches(){
 function getListPowerSwitchCallBack(data,options){
 	var powerSwitchList= data.split("*");
 	for(var i=0;i<powerSwitchList.length-1;i++)
-		{
-		
+		{		
 		var individualData= powerSwitchList[i].split("^");
 		var switchLat=individualData[0].replace("[","").replace(",","");
 		var switchLong=individualData[1];
 		var switchId=individualData[2];
 		var powerLineId=individualData[3];
+		var status=individualData[4];
+		var switchStatus="#0B6121";		
+		if(status==1){
+			switchStatus="#FF0000";
+		}
 		var circleSwitch = new google.maps.Circle({
-			 strokeColor: '#FF0000',
+			 strokeColor: switchStatus,
 		     strokeOpacity: 1,
 		     strokeWeight: 8,
-		     fillColor: '#FF0000',
+		     fillColor: switchStatus,
 		     fillOpacity: 0.35,
 		     map: map,
 		     center: new google.maps.LatLng(switchLat, switchLong),
@@ -71,7 +75,7 @@ function getListPowerSwitchCallBack(data,options){
 	console.log("Done"+data);
 }
 
-function addSwitchInfo(contentString, marker, id)
+function addSwitchInfo(contentString, marker, switchId)
 {
 	 var infowindowHolonObject = new google.maps.InfoWindow({
 	      content: contentString		    
@@ -80,29 +84,45 @@ function addSwitchInfo(contentString, marker, id)
 		infowindowHolonObject.setOptions({position:event.latLng});
 		infowindowHolonObject.open(map,marker);	
 		$('#togglePowerSwitch').click(function() {
-			SwitchOnOff(marker);			
+			SwitchOnOff(marker,switchId);			
 		})
 		
    });
 }
 
-function SwitchOnOff(marker)
+function SwitchOnOff(marker,switchId)
 {	 
 
 	var switchStatusColor = marker.get('fillColor');
+	var dataAttributes;
 	if(switchStatusColor=="#FF0000")
 		{
-		//alert("Color Red");
-		marker.setOptions({strokeColor:'#0B6121', fillColor: '#0B6121'});
-		
+		dataAttributes = {
+    			newSwitchStatus :0,
+    			switchId:switchId,
+    			};			
 		}else
 		{
-			//alert("Color Green");
-			marker.setOptions({strokeColor:'#FF0000',fillColor: '#FF0000'});
+			dataAttributes = {
+					newSwitchStatus :1,
+					switchId:switchId,
+	    			};
 		}
-	
-
-	
+		ajaxRequest("powerSwitchOnOff", dataAttributes, powerSwitchOnOffCallBack,{marker:marker});	
 	
 }
+
+function powerSwitchOnOffCallBack(data,options){	
+	var marker = options["marker"];
+	var newSwitchStatus = data;
+	
+	if(newSwitchStatus== 1)
+		{
+		marker.setOptions({strokeColor:'#FF0000',fillColor: '#FF0000'});
+		}
+	else{
+		marker.setOptions({strokeColor:'#0B6121', fillColor: '#0B6121'});
+			}
+}
+
 

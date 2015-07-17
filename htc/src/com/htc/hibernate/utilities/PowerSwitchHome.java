@@ -1,8 +1,13 @@
 package com.htc.hibernate.utilities;
 
 import java.util.ArrayList;
+
+import org.apache.log4j.Logger;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
+import com.htc.action.PowerSwitchAction;
 import com.htc.hibernate.config.HibernateSessionFactory;
 import com.htc.hibernate.pojo.PowerSwitch;
 
@@ -11,6 +16,8 @@ import com.htc.hibernate.pojo.PowerSwitch;
  * @see .PowerSwitch
  */
 public class PowerSwitchHome {
+	
+	static Logger log = Logger.getLogger(PowerSwitchHome.class);
 	
 	public Integer persist(PowerSwitch transientInstance) {
 		Integer powerSwitch_id=null;
@@ -89,6 +96,36 @@ public class PowerSwitchHome {
 			System.out.println("get Power Switch list failed");
 		}
 		return listPowerSwitch;
+	}
+
+	public int changeSwitchStatus(int powerSwitchId, int statusVal) {
+		log.info("changeSwitchStatus start ");
+		Session session = null;
+		Transaction tx = null;
+		int result=0;
+		boolean status=false;
+		if(statusVal==1)
+			status=true;
+			try {
+			session = HibernateSessionFactory.getSessionFactory().getCurrentSession();
+			log.info("changeSwitchStatus createQuery ");
+			tx = session.beginTransaction();
+			String hql = "UPDATE PowerSwitch set status = :status "  + 
+		             "WHERE id = :id";
+			Query query = session.createQuery(hql);
+			log.info("changeSwitchStatus createQuery ");
+			query.setParameter("status", status);
+			query.setParameter("id", powerSwitchId);
+			log.info("changeSwitchStatus setParameter ");
+			result = query.executeUpdate();
+			log.info("changeSwitchStatus executeUpdate ");
+			tx.commit();
+			log.info("changeSwitchStatus commit ");
+		} catch (RuntimeException re) {
+			re.printStackTrace();
+			System.out.println("switch status change Failed...");
+		}
+			return result;
 	}
 
 }
