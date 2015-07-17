@@ -87,9 +87,21 @@ function createHolonObjectCallBack(data, options) {
 }
 
 function showHolonObjects() {
+	if(loadHolon){
 	ajaxRequest("showHolonObjects", {}, showHolonObjectsCallBack, {});
 	showSavedPowerLines();
 	showSavedPowerSwitches();
+	loadHolon=false;
+	}else{
+		
+		swal({
+			title : "Holon already loaded.",
+			text : "The Holon has already been loaded. Please clear the map first to reload it.",
+			type : "info",
+			confirmButtonText : "Sure!"
+		});
+		
+	}
 }
 
 function showHolonObjectsCallBack(data, options){

@@ -4,6 +4,7 @@ $(document)
 					// call initialize function
 					initialize();
 					window.clickedToDrawSwitch="";
+					window.loadHolon=true;
 					window.clickedMarkerChangeImage="";
 					var drawingManager;
 					var clickedValuePanel;
@@ -288,6 +289,7 @@ $(document)
 					    if (isConfirm){
 					    	$("#displayHolonDetails").hide();
 							initialize();
+							loadHolon=true;
 							swal("Cleared", "Map has been cleared", "info");
 					    } else {
 					      swal("Cancelled", "Map has not been cleared", "info");
