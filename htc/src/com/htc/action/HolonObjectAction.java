@@ -133,12 +133,14 @@ public class HolonObjectAction extends CommonUtilities {
 			HolonObject holonObject = null;
 			String ne_location;
 			String sw_location;
-			
+			String holonColor;
 			for(int i=0; i<holonObjectList.size();i++){
 				holonObject = holonObjectList.get(i);
 				ne_location = holonObject.getLatLngByNeLocation().getLatitude()+"~"+holonObject.getLatLngByNeLocation().getLongitude();
 				sw_location = holonObject.getLatLngBySwLocation().getLatitude()+"~"+holonObject.getLatLngBySwLocation().getLongitude();
-				hoListArray.add(holonObject.getHolonCoordinator().getHolon().getColor()+"#"+ne_location+"^"+sw_location+"!<b>Priority: </b>"+
+				holonColor =holonObject.getHolonCoordinator().getHolon().getColor();
+				log.info("The Color of the Holon is "+holonColor);
+				hoListArray.add(holonColor+"#"+ne_location+"^"+sw_location+"!<b>Priority: </b>"+
 						"<b>Holon Object Id: </b>"+holonObject.getId() +"<br>"+
 						"<b>Holon Manager: </b>"+holonObject.getHolonManager().getName()+"<br>"+
 						"<b>North East Location: </b>"+ne_location+"<br>"+
@@ -153,7 +155,7 @@ public class HolonObjectAction extends CommonUtilities {
 			getResponse().setContentType("text/html");
 			getResponse().getWriter().write(hoListArray.toString());
 		} catch (Exception e) {
-			System.out.println("Exception "+e.getMessage()+" occurred in action createHolonObject()");
+			log.info("Exception "+e.getMessage()+" occurred in action createHolonObject()");
 			e.printStackTrace();
 		}
 	}
