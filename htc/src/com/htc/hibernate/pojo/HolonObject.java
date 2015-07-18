@@ -21,6 +21,7 @@ public class HolonObject implements java.io.Serializable {
 	private Integer consumption;
 	private Set<?> holonElements = new HashSet<Object>(0);
 	private Set<?> powerSwitches = new HashSet<Object>(0);
+	private Set<?> holonCoordinators = new HashSet<Object>(0);
 
 	public HolonObject() {
 	}
@@ -35,7 +36,7 @@ public class HolonObject implements java.io.Serializable {
 			LatLng latLngByNeLocation, LatLng latLngByDoorLocation,
 			LatLng latLngBySwLocation, PowerLine powerLine,
 			Boolean lineConnectedState, Integer consumption, Set<?> holonElements,
-			Set<?> powerSwitches) {
+			Set<?> powerSwitches,Set<?> holonCoordinators) {
 		this.id = id;
 		this.holonCoordinator = holonCoordinator;
 		this.holonManager = holonManager;
@@ -48,6 +49,7 @@ public class HolonObject implements java.io.Serializable {
 		this.consumption = consumption;
 		this.holonElements = holonElements;
 		this.powerSwitches = powerSwitches;
+		this.holonCoordinators=holonCoordinators;
 	}
 
 	public int getId() {
@@ -144,6 +146,14 @@ public class HolonObject implements java.io.Serializable {
 
 	public void setPowerSwitches(Set<?> powerSwitches) {
 		this.powerSwitches = powerSwitches;
+	}
+
+	public Set<?> getHolonCoordinators() {
+		return holonCoordinators;
+	}
+
+	public void setHolonCoordinators(Set<?> holonCoordinators) {
+		this.holonCoordinators = holonCoordinators;
 	}
 
 }

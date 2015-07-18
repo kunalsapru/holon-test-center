@@ -13,6 +13,7 @@ public class HolonCoordinator implements java.io.Serializable {
 	private Holon holon;
 	private LatLng latLng;
 	private String name;
+	private HolonObject holonObject;
 	private Set<?> holonObjects = new HashSet<Object>(0);
 
 	public HolonCoordinator() {
@@ -22,11 +23,12 @@ public class HolonCoordinator implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public HolonCoordinator(int id, Holon holon, LatLng latLng, String name,
+	public HolonCoordinator(int id, Holon holon, LatLng latLng,HolonObject holonObject, String name,
 			Set<?> holonObjects) {
 		this.id = id;
 		this.holon = holon;
 		this.latLng = latLng;
+		this.holonObject=holonObject;
 		this.name = name;
 		this.holonObjects = holonObjects;
 	}
@@ -69,6 +71,14 @@ public class HolonCoordinator implements java.io.Serializable {
 
 	public void setHolonObjects(Set<?> holonObjects) {
 		this.holonObjects = holonObjects;
+	}
+
+	public HolonObject getHolonObject() {
+		return holonObject;
+	}
+
+	public void setHolonObject(HolonObject holonObject) {
+		this.holonObject = holonObject;
 	}
 
 }

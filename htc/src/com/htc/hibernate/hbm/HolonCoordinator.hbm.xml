@@ -17,6 +17,9 @@
         <property name="name" type="string">
             <column name="name" />
         </property>
+         <many-to-one name="holonObject" class="com.htc.hibernate.pojo.HolonObject" fetch="select" lazy="false">
+            <column name="holon_object" />
+        </many-to-one>
         <set name="holonObjects" table="holon_object" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="holon_coordinator" not-null="true" />
