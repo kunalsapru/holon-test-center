@@ -134,7 +134,7 @@ function showHolonObjectsCallBack(data, options){
 		var ne_location_lng = location.split("^")[0].split("~")[1];
 		var sw_location_lat = location.split("^")[1].split("~")[0];
 		var sw_location_lng = location.split("^")[1].split("~")[1];
-		alert("a+"+color+"+b")
+		//alert("a+"+color+"+b")
 	    var rectangleFromFactory = new google.maps.Rectangle({
 		      map: map,
 		      strokeColor :color,
