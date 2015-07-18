@@ -127,17 +127,18 @@ function showHolonObjectsCallBack(data, options){
 	for (var i=0; i<hoObjectsList.length-1; i++) {
 		var holonObject = hoObjectsList[i].split("!");
 		var location = holonObject[0].split("#")[1];
-		var color = holonObject[0].split("#")[0];		
+		var color = holonObject[0].split("#")[0].replace(" ","");		
 		//alert(color);
 		var contentString = holonObject[1];
 		var ne_location_lat = location.split("^")[0].split("~")[0].replace("[","").replace(",","");
 		var ne_location_lng = location.split("^")[0].split("~")[1];
 		var sw_location_lat = location.split("^")[1].split("~")[0];
 		var sw_location_lng = location.split("^")[1].split("~")[1];
+		alert("a+"+color+"+b")
 	    var rectangleFromFactory = new google.maps.Rectangle({
 		      map: map,
-		      strokeColor : color,
-		      fillColor: color,
+		      strokeColor :color,
+		      fillColor:color,
 		      bounds: new google.maps.LatLngBounds(
 		    	      new google.maps.LatLng(sw_location_lat, sw_location_lng),
 		    	      new google.maps.LatLng(ne_location_lat, ne_location_lng))
