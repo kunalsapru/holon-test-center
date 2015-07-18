@@ -93,6 +93,7 @@ $(document)
 					});
 					
 					$("#cancelHolonObject").click(function(event){
+						createdHolonObject.setMap(null);
 						closeDiv("holonObjectDetail");
 					});
 					
