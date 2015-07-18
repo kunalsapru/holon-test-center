@@ -63,16 +63,17 @@ public class HolonObjectAction extends CommonUtilities {
 		System.out.println("NewLy Generated Holon Object ID --> "+newHolonObjectID);
 		HolonObject holonObject2 = getHolonObjectService().findById(newHolonObjectID);
 		String holonCoordinatorName_Holon = holonObject2.getHolonCoordinator().getName().concat("_"+holonObject2.getHolonCoordinator().getHolon().getName());
+		String holonColor= holonObject2.getHolonCoordinator().getHolon().getColor();
 		String holonObjectTypeName = holonObject2.getHolonObjectType().getName();
 		String ne_location = holonObject2.getLatLngByNeLocation().getLatitude()+"~"+holonObject2.getLatLngByNeLocation().getLongitude();
 		String sw_location = holonObject2.getLatLngBySwLocation().getLatitude()+"~"+holonObject2.getLatLngBySwLocation().getLongitude();
 		
 		Boolean lineConnectedState = holonObject2.getLineConnectedState();
-		System.out.println("Newly Created HO Information -->");
-		System.out.println("holonCoordinatorName_Holon --> "+holonCoordinatorName_Holon);
-		System.out.println("holonObjectTypeName --> "+holonObjectTypeName);
-		System.out.println("ne_location --> "+ne_location);
-		System.out.println("lineConnectedState --> "+lineConnectedState);
+		log.info("Newly Created HO Information -->");
+		log.info("holonCoordinatorName_Holon --> "+holonCoordinatorName_Holon);
+		log.info("holonObjectTypeName --> "+holonObjectTypeName);
+		log.info("ne_location --> "+ne_location);
+		log.info("lineConnectedState --> "+lineConnectedState);
 					
 		//Calling the response function and setting the content type of response.
 		getResponse().setContentType("text/html");
@@ -83,6 +84,7 @@ public class HolonObjectAction extends CommonUtilities {
 		hoResponse.append(ne_location+"!");
 		hoResponse.append(sw_location+"!");
 		hoResponse.append(lineConnectedState+"!");
+		hoResponse.append(holonColor+"!");
 		hoResponse.append(holonObject2.getHolonManager().getName());
 		
 		System.out.println(hoResponse.toString());
@@ -113,11 +115,14 @@ public class HolonObjectAction extends CommonUtilities {
 		holonObject.getHolonManager().setName(holonManagerName);
 		//Calling service method to save the object in database and saving the auto-incremented ID in an integer
 		getHolonObjectService().merge(holonObject);
-
-		//Calling the response function and setting the content type of response.
-		getResponse().setContentType("text/html");
 		
-		getResponse().getWriter().write("Edit successfull");
+		String holonColor=holonObject.getHolonCoordinator().getHolon().getColor();
+		
+		StringBuffer hoResponse = new StringBuffer();
+		hoResponse.append(holonColor);
+		//Calling the response function and setting the content type of response.
+		getResponse().setContentType("text/html");		
+		getResponse().getWriter().write(hoResponse.toString());
 		
 		} catch (Exception e) {
 			log.debug("Exception "+e.getMessage()+" occurred in action createHolonObject()");

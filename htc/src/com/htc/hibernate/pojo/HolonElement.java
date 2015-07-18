@@ -34,6 +34,7 @@ public class HolonElement implements java.io.Serializable {
 		this.currentCapacity = currentCapacity;
 		this.currentEnergyStatus = currentEnergyStatus;
 		this.history = history;
+				
 	}
 
 	public int getId() {
@@ -99,5 +100,6 @@ public class HolonElement implements java.io.Serializable {
 	public void setHistory(byte[] history) {
 		this.history = history;
 	}
+
 
 }

@@ -12,6 +12,7 @@ public class HolonElementType implements java.io.Serializable {
 	private String name;
 	private Integer maxCapacity;
 	private Integer minCapacity;
+	private Boolean producer;
 	private Set<?> holonElements = new HashSet<Object>(0);
 
 	public HolonElementType() {
@@ -22,12 +23,13 @@ public class HolonElementType implements java.io.Serializable {
 	}
 
 	public HolonElementType(int id, String name, Integer maxCapacity,
-			Integer minCapacity, Set<?> holonElements) {
+			Integer minCapacity, Set<?> holonElements,Boolean producer) {
 		this.id = id;
 		this.name = name;
 		this.maxCapacity = maxCapacity;
 		this.minCapacity = minCapacity;
 		this.holonElements = holonElements;
+		this.setProducer(producer);
 	}
 
 	public int getId() {
@@ -68,6 +70,14 @@ public class HolonElementType implements java.io.Serializable {
 
 	public void setHolonElements(Set<?> holonElements) {
 		this.holonElements = holonElements;
+	}
+
+	public Boolean getProducer() {
+		return producer;
+	}
+
+	public void setProducer(Boolean producer) {
+		this.producer = producer;
 	}
 
 }

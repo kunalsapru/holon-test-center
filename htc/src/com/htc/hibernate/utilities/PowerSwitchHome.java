@@ -7,7 +7,6 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.htc.action.PowerSwitchAction;
 import com.htc.hibernate.config.HibernateSessionFactory;
 import com.htc.hibernate.pojo.PowerSwitch;
 

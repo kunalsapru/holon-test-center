@@ -17,6 +17,9 @@
         <property name="minCapacity" type="java.lang.Integer">
             <column name="min_capacity" />
         </property>
+         <property name="producer" type="java.lang.Boolean">
+            <column name="producer" not-null="true" />
+         </property>
         <set name="holonElements" table="holon_element" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="holon_element_type" />

@@ -3,6 +3,7 @@
  */
 
 function saveHolonObject(){
+	//alert("saveHolonObject");
 	var holonObjectPriority=$("#holonObjectPriority").val();
 	var holonObjectType=$("#holonObjectType option:selected").val();
 	var holonCoordinatorId=$("#holonCoordinatorId option:selected").val();
@@ -54,14 +55,22 @@ function saveCoordinator(){
 }
 
 function createHolonCoordinatorCallBack(data,options){
+	
+	
+	
 	$("#holonCoordinatorInformation").popup("close");
 	alert("Coordinator added Sucessfully");
 }
 
 function editHolonObjectCallBack(data, options){
-	alert(data);
+	var holonColor= data;
+	alert(createdHolonObject);
+	createdHolonObject.setOptions({strokeColor:holonColor,fillColor: holonColor});
+	createdHolonObject=null;
+	//alert(data);
 }
 function createHolonObjectCallBack(data, options) {
+	//alert("callback");
 	var dataArray = data.split("!");
 	var holonObjectId = dataArray[0];
 	var holonCoordinatorName_Holon= dataArray[1];	
@@ -69,8 +78,10 @@ function createHolonObjectCallBack(data, options) {
 	var ne_location= dataArray[3];
 	var sw_location= dataArray[4];
 	var lineConnectedState= dataArray[5];
-	var holonManagerName= dataArray[6];
+	var holonColor= dataArray[6];
+	var holonManagerName= dataArray[7];
 	var lat=ne_location.split("~");
+	//alert(holonColor);
 	contentString="<b>Holon Object Id: </b>"+holonObjectId +"<br>"+
 			"<b>Holon Object Type: </b>"+holonObjectTypeName+"<br>"+
 			"<b>Holon Manager: </b>"+holonManagerName+"<br>"+
@@ -84,6 +95,9 @@ function createHolonObjectCallBack(data, options) {
 	      position:new google.maps.LatLng(lat[0],lat[1])
 	  });
 	infowindowHolonObject.open(map,map);
+	//alert(createdHolonObject);
+	createdHolonObject.setOptions({strokeColor:holonColor,fillColor: holonColor});
+	createdHolonObject=null;
 }
 
 function showHolonObjects() {

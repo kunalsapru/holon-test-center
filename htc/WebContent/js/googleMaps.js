@@ -6,6 +6,7 @@ $(document)
 					window.clickedToDrawSwitch="";
 					window.loadHolon=true;
 					window.clickedMarkerChangeImage="";
+					window.createdHolonObject=null; //Save object on overlaycomplete Action to use it later to set its holon color
 					var drawingManager;
 					var clickedValuePanel;
 					var startPowerLine;
@@ -88,7 +89,7 @@ $(document)
 					
 					
 					$("#saveHolonObject").click(function(event){
-						saveHolonObject();
+						saveHolonObject();						
 					});
 					
 					$("#cancelHolonObject").click(function(event){
@@ -167,6 +168,7 @@ $(document)
 				      google.maps.event.addListener(drawingManager, 'overlaycomplete', function(event) {
 				    	  var newShape = event.overlay; // Object
 				    	  newShape.type = event.type;	// Rectangle
+				    	  createdHolonObject=newShape;
 				    	  var latNorthEast = newShape.getBounds().getNorthEast().lat(); //get lat of northeast
 				    	  var lngNorthEast = newShape.getBounds().getNorthEast().lng();	//get longitude of north east
 				    	  var latSouthWest = newShape.getBounds().getSouthWest().lat();
@@ -184,7 +186,8 @@ $(document)
 				    		
 				    	  //When Rectangle is clicked
 				    	  google.maps.event.addListener(newShape, 'click', function() {
-				    		  console.log("New Shape::"+newShape);
+				    		console.log("New Shape::"+newShape);
+				    		createdHolonObject=newShape;
 				    		  for(var key in newShape) {
 				    			    var value = newShape[key];
 				    			    console.log(value);
@@ -305,7 +308,7 @@ $(document)
 					
 				});
 
-function drawPowerLine(start, end, infowindow) {
+/*function drawPowerLine(start, end, infowindow) {
 
 	var request = {
 		origin : start,
@@ -320,7 +323,7 @@ function drawPowerLine(start, end, infowindow) {
 
 	});
 
-}
+}*/
 
 function initialize() {
 	mapProp = {
