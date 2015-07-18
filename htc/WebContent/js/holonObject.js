@@ -64,9 +64,9 @@ function createHolonCoordinatorCallBack(data,options){
 
 function editHolonObjectCallBack(data, options){
 	var holonColor= data;
-	alert(createdHolonObject);
+	//alert(createdHolonObject);
 	createdHolonObject.setOptions({strokeColor:holonColor,fillColor: holonColor});
-	createdHolonObject=null;
+	//createdHolonObject=null;
 	//alert(data);
 }
 function createHolonObjectCallBack(data, options) {
@@ -97,7 +97,11 @@ function createHolonObjectCallBack(data, options) {
 	infowindowHolonObject.open(map,map);
 	//alert(createdHolonObject);
 	createdHolonObject.setOptions({strokeColor:holonColor,fillColor: holonColor});
-	createdHolonObject=null;
+	 //When Rectangle is clicked
+	  google.maps.event.addListener(createdHolonObject, 'click', function() {
+		  infowindowHolonObject.open(map,map);
+	  });
+	//createdHolonObject=null;
 }
 
 function showHolonObjects() {

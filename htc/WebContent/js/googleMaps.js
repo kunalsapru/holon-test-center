@@ -183,19 +183,7 @@ $(document)
 				    		  getHolonCoordinatorFromDatabase();
 				    	  } else {
 				    		  getHolonFromDatabase();
-				    		  }
-				    		
-				    	  //When Rectangle is clicked
-				    	  google.maps.event.addListener(newShape, 'click', function() {
-				    		console.log("New Shape::"+newShape);
-				    		createdHolonObject=newShape;
-				    		  for(var key in newShape) {
-				    			    var value = newShape[key];
-				    			    console.log(value);
-				    			}
-				    		  //ajaxRequest("showHolonObjects", {}, showHolonObjectsCallBack, {});
-				    	  });
-				    	 
+				    		  }	
 				  	});
 				     //END of overlay Complete 
 					}
