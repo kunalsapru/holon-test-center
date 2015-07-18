@@ -21,7 +21,7 @@ public class HolonElementAction extends CommonUtilities {
 			Integer holonElementTypeId = getRequest().getParameter("holonElementTypeId")!=null?Integer.parseInt(getRequest().getParameter("holonElementTypeId")):0;
 			Integer holonElementStateId = getRequest().getParameter("holonElementStateId")!=null?Integer.parseInt(getRequest().getParameter("holonElementStateId")):0;
 			String usage = getRequest().getParameter("usage")!=null?getRequest().getParameter("usage"):"";
-			Integer currentCapacity = getRequest().getParameter("currentCapacity")!=null?Integer.parseInt(getRequest().getParameter("currentCapacity")):0;
+			Integer currentCapacity = getRequest().getParameter("currentCapacity")!=null && getRequest().getParameter("currentCapacity")!=""?Integer.parseInt(getRequest().getParameter("currentCapacity")):0;
 			//?? currentEnergyStatus ??
 			//		String history = getRequest().getParameter("String")!=null?getRequest().getParameter("String"):"";
 
@@ -108,8 +108,10 @@ public class HolonElementAction extends CommonUtilities {
 		if(holonElementsList != null && holonElementsList.size() > 0) {
 			for(HolonElement holonElement : holonElementsList) {
 				listElements.append("<tr>");
-				listElements.append("<td>"+holonElement.getId()+"</td>");
+				//listElements.append("<td>"+holonElement.getId()+"</td>");
 				listElements.append("<td>"+holonElement.getHolonElementType().getName()+"</td>");
+				String producer=holonElement.getHolonElementType().getProducer()==true?"Yes":"No";
+				listElements.append("<td>"+producer+"</td>");
 				listElements.append("<td>"+holonElement.getHolonElementType().getMaxCapacity()+"</td>");
 				listElements.append("<td>"+holonElement.getHolonElementType().getMinCapacity()+"</td>");
 				listElements.append("<td>"+holonElement.getHolonElementState().getName()+"</td>");

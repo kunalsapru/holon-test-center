@@ -136,7 +136,7 @@
 	    width: 700px;
 	    height: 300px;
 	    margin: -100px 0 0 -250px;    
-	    background: darkkhaki;
+	    background: #E2E4DD;
 	    border: 5px solid rgb(128, 128, 128);
 }
 #holonObjectTable tr {
@@ -154,7 +154,7 @@
 	    width: 700px;
 	    height: 300px;
 	    margin: -100px 0 0 -250px;    
-	    background: darkkhaki;
+	    background: #E2E4DD;
 	    border: 5px solid rgb(128, 128, 128);
 	    z-index: 1;
 }
@@ -169,23 +169,31 @@
 	    top: 32%;
 	    left: 42%;
 	    width: auto;
-	    height: 60%;
+	    height: auto;
 	    margin: -90px 0 0 -230px;    
-	    background: darkkhaki;
+	    background: #E2E4DD;
 	    border: 3px solid rgb(128, 128, 128);
 	    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
 	    border-collapse: collapse;
 	    overflow: scroll;
 }
 
+#closeElementList{
+	
+		position:absolute;
+    	top: 0%;
+    	right: 0%;
+}
+
 #divHolonElementsDetail legend {
-	color: white;
+	color: #000000;
 	font: bold;
 }
 #divHolonElementsDetail span {
 	float: right;
 }
 #divHolonElementsDetail td, #divHolonElementsDetail th {
+	text-align: center;
     font-size: 0.9em;
     border: 1px solid #98bf21;
     padding: 3px 7px 2px 7px;
@@ -193,10 +201,10 @@
 
 #divHolonElementsDetail th {
     font-size: 0.95em;
-    text-align: left;
+    text-align: center;
     padding-top: 3px;
     padding-bottom: 2px;
-    background-color: #A7C942;
+    background-color: #BBBDB5;
     color: #ffffff;
 }
 

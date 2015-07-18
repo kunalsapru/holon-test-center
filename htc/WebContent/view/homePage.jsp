@@ -186,14 +186,13 @@
 			</div>
  	<div id="divHolonElementsDetail">
  	<input type="hidden" id="holonElementActionState" value="Add" />
- 	<span onclick="closeDiv('divHolonElementsDetail')"><i class="fa fa-remove"></i></span>
  	<fieldset>
- 	<legend>Holon Element List</legend>
+ 	<legend >Holon Element List</legend>
  	<table>
  	<thead>
  		<tr>
-	 		<th>&nbsp;ID&nbsp;</th>
 	 		<th>&nbsp;Type&nbsp;</th>
+	 		<th>&nbsp;Producer&nbsp;</th>
 	 		<th>&nbsp;Max. Capacity&nbsp;</th>
 	 		<th>&nbsp;Min. Capacity&nbsp;</th>
 	 		<th>&nbsp;State&nbsp;</th>
@@ -202,9 +201,10 @@
 	 		<th colspan="3" id="addHolonElementTableHeader"><i class="fa fa-plus-circle"></i>Add Holon Element</th>
  		</tr>
  	</thead>
- 	<tbody id="holonElementsListBody"></tbody>
- 	</table>
+ 	<tbody id="holonElementsListBody" ></tbody>
+ 	</table> 	 	
  	</fieldset>
+ 	<input type="button" id="closeElementList" onclick="closeDiv('divHolonElementsDetail')" value="X"  />
  	</div>
 </div>
 <script type="text/javascript" src="js/trigger.js"></script>
