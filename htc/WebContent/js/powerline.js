@@ -128,7 +128,7 @@ function addMessageWindow(line,powerLineId)
     google.maps.event.addListener(line, 'click', function(event) {
     	if(clickedToDrawSwitch=="switchOnPowerLine")
 		{
-		var newId= id.replace(" ","");
+		var newId= powerLineId.trim();
 		createPowerSwitch(event.latLng,newId);
 		}
 	else{		
