@@ -68,11 +68,11 @@ public class PowerSwitchAction extends CommonUtilities {
 		powerSwitch.setPowerLineB(powerLineB);
 		powerSwitch.setStatus(true);
 		Integer newPowerSwitchId= getPowerSwitchService().persist(powerSwitch);
-		
+		String resp= newPowerSwitchId.toString()+"*"+powerLineA.getId().toString()+"*"+powerLineB.getId();
 		
 		System.out.println("---------------------->>>"+newPowerSwitchId);
 		getResponse().setContentType("text/html");
-		getResponse().getWriter().write(newPowerSwitchId.toString());
+		getResponse().getWriter().write(resp);
 		
 		
 	}

@@ -28,14 +28,23 @@ function createPowerSwitch(latLng,powerLineId){
 			switchPositionLng : latLng.lng(),
 			powerLineId : powerLineId
 	};
-	ajaxRequest("createPowerSwitch", dataAttributes, createPowerSwitchCallBack, {circleSwitch:circleSwitch});
+	var options= {
+			circleSwitch:circleSwitch,			
+	};
+	ajaxRequest("createPowerSwitch", dataAttributes, createPowerSwitchCallBack, options);
 }
 
 function createPowerSwitchCallBack(data,options)
 {
-	var powerSwitchId=data.trim();	
+	var respData=data.split("*");
+	var powerSwitchId=respData[0].trim();	
+	var powerLineAId=respData[1].trim();
+	var powerLineBId=respData[2].trim();
+	updateGlobalPowerLineList(powerLineAId);
+	updateGlobalPowerLineList(powerLineBId);
 	var circleSwitch = options["circleSwitch"]; 
 	addSwitchInfo(circleSwitch, powerSwitchId);
+	globalPsList[powerSwitchId]=circleSwitch;
 }
 
 function showSavedPowerSwitches(){
@@ -67,6 +76,7 @@ function getListPowerSwitchCallBack(data,options){
 		     radius: 2
 		    });	
 		addSwitchInfo(circleSwitch, powerSwitchId);
+		globalPsList[powerSwitchId]=circleSwitch;
 		
 		}
 	
@@ -150,7 +160,8 @@ function SwitchOnOff(circleSwitch,powerSwitchId,infowindowHolonObject)
 					powerSwitchId:powerSwitchId,
 	    			};
 		}
-		ajaxRequest("powerSwitchOnOff", dataAttributes, powerSwitchOnOffCallBack,options);	
+		ajaxRequest("powerSwitchOnOff", dataAttributes, powerSwitchOnOffCallBack,options);
+		globalPsList[powerSwitchId]=circleSwitch;
 	
 }
 

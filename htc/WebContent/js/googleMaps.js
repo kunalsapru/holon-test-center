@@ -7,6 +7,9 @@ $(document)
 					window.loadHolon=true;
 					window.clickedMarkerChangeImage="";
 					window.createdHolonObject=null; //Save object on overlaycomplete Action to use it later to set its holon color
+					window.globalHoList={};
+					window.globalPlList={};
+					window.globalPsList={};
 					var drawingManager;
 					var clickedValuePanel;
 					var startPowerLine;

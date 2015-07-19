@@ -58,12 +58,12 @@ $(document).ready(function() {
 		    			isConnected :false,
 		    			reasonDown : "",
 		    			powerSourceId:1,
-		    				};
-		    	
-		    	
-		    	
+		    				};		    	
+		    	var options = {
+		    			newShape:newShape,
+		    			};	
 		    	if(powerLineType=="MAINLINE"){
-		    	ajaxRequest("drawPowerLine", dataAttributes, drawPoweLineCallBack, {newShape:newShape});
+		    	ajaxRequest("drawPowerLine", dataAttributes, drawPoweLineCallBack,options);
 		    	}
 			});
 
@@ -103,8 +103,8 @@ function showPowerLinesCallBack(data, options){
 	        strokeWeight: 4,
 	        map: map
 	    });
-	 
-	    addMessageWindow(line,powerLineId)
+	     addMessageWindow(line,powerLineId)
+	     globalPlList[powerLineId]=line;
 	}	
 }
 
@@ -118,7 +118,7 @@ function drawPoweLineCallBack(data, options) {
 	var color = dataArray[1];
 	newLineShape.setOptions({strokeColor:color});
 	addMessageWindow(newLineShape,powerLineId)
-		
+	globalPlList[powerLineId]=newLineShape;	
 }
 
 
@@ -152,3 +152,40 @@ function getPowerLineInfoCallBack(data,options)
 	infowindowHolonObject.setOptions({position:position});
 	infowindowHolonObject.open(map,map);	
 	}
+
+
+function updateGlobalPowerLineList(powerLineId)
+{
+	var dataAttributes= {
+			powerLineId : powerLineId,
+			}	
+	ajaxRequest("updatePowerLine", dataAttributes, updatePowerLineCallBack, {});
+
+}
+
+function updatePowerLineCallBack(data, options)
+{
+	alert(data);
+	var powerLine = data.split("!");
+	var location = powerLine[0];
+	var color=powerLine[1];
+	var powerLineId=powerLine[2].trim();
+	var startLat = location.split("^")[0].split("~")[0].replace("[","").replace(",","");
+	var startLng = location.split("^")[0].split("~")[1];
+	var endLat = location.split("^")[1].split("~")[0];
+	var endLng = location.split("^")[1].split("~")[1];
+    var line = new google.maps.Polyline({
+        path: [
+            new google.maps.LatLng(startLat, startLng), 
+            new google.maps.LatLng(endLat, endLng)
+        ],
+        strokeColor:color,
+        strokeOpacity: 2.0,
+        strokeWeight: 4,
+        map: map
+    });
+     addMessageWindow(line,powerLineId)
+     globalPlList[powerLineId].setMap(null);
+     globalPlList[powerLineId]=line;
+     globalPlList[powerLineId].setMap(map);
+}

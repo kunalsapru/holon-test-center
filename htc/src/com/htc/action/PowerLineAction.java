@@ -139,7 +139,7 @@ public class PowerLineAction extends CommonUtilities {
 		
 	}
 	
-public void connectToPowerSource(HolonObject holonObject){
+	public void connectToPowerSource(HolonObject holonObject){
 		
 		try {
 			LatLng doorOfHolon = holonObject.getLatLngByDoorLocation();
@@ -198,4 +198,26 @@ public void connectToPowerSource(HolonObject holonObject){
 		return powerLineMap;
 	}
 	
+	
+	public void updatePowerLine()
+	{
+		try {
+			String startLocation;
+			String endLocation;
+			String color;
+			Integer powerLineId = getRequest().getParameter("powerLineId")!=null?Integer.parseInt(getRequest().getParameter("powerLineId")):0;
+			PowerLine  powerLine =  getPowerLineService().findById(powerLineId);
+			log.info("PowerLine Id: "+powerLine.getId());
+			startLocation = powerLine.getLatLngBySource().getLatitude()+"~"+powerLine.getLatLngBySource().getLongitude();
+			endLocation = powerLine.getLatLngByDestination().getLatitude()+"~"+powerLine.getLatLngByDestination().getLongitude();
+			color= CommonUtilities.getLineColor(CommonUtilities.getPercent(powerLine.getCurrentCapacity(),powerLine.getMaximumCapacity())); 				
+			String resp=startLocation+"^"+endLocation+"!"+color+"!"+powerLine.getId();			
+			//Calling the response function and setting the content type of response.
+			getResponse().setContentType("text/html");
+			getResponse().getWriter().write(resp);
+		} catch (Exception e) {
+			log.info("Exception "+e.getMessage()+" occurred in action showPowerLine()");
+			e.printStackTrace();
+		}
+	}
 }

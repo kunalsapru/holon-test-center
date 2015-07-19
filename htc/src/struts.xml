@@ -101,7 +101,8 @@
 			method="showPowerLines" /> <!-- Completed By Abhinav and Code Checked in. Enhancements could be done later  -->
 			<action name="getPowerLineInfo" class="com.htc.action.PowerLineAction"
 			method="getPowerLineInfo" />
-			
+			<action name="updatePowerLine" class="com.htc.action.PowerLineAction"
+			method="updatePowerLine" />
 			
 		<action name="dataGenerator" class="com.htc.action.DataGeneratorAction"
 			method="dataGenerator" />
