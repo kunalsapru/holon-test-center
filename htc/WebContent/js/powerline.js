@@ -154,18 +154,19 @@ function getPowerLineInfoCallBack(data,options)
 	}
 
 
-function updateGlobalPowerLineList(powerLineId)
+function updateGlobalPowerLineList(powerLineId,toDelete)
 {
 	var dataAttributes= {
 			powerLineId : powerLineId,
 			}	
-	ajaxRequest("updatePowerLine", dataAttributes, updatePowerLineCallBack, {});
+	ajaxRequest("updatePowerLine", dataAttributes, updatePowerLineCallBack, {toDelete:toDelete});
 
 }
 
 function updatePowerLineCallBack(data, options)
 {
-	alert(data);
+	//alert(data);
+	var toDelete=options["toDelete"];
 	var powerLine = data.split("!");
 	var location = powerLine[0];
 	var color=powerLine[1];
@@ -174,7 +175,11 @@ function updatePowerLineCallBack(data, options)
 	var startLng = location.split("^")[0].split("~")[1];
 	var endLat = location.split("^")[1].split("~")[0];
 	var endLng = location.split("^")[1].split("~")[1];
-    var line = new google.maps.Polyline({
+	if(toDelete)
+		{
+		globalPlList[powerLineId].setMap(null);
+		}
+	var line = new google.maps.Polyline({
         path: [
             new google.maps.LatLng(startLat, startLng), 
             new google.maps.LatLng(endLat, endLng)
@@ -185,7 +190,6 @@ function updatePowerLineCallBack(data, options)
         map: map
     });
      addMessageWindow(line,powerLineId)
-     globalPlList[powerLineId].setMap(null);
      globalPlList[powerLineId]=line;
-     globalPlList[powerLineId].setMap(map);
+     
 }

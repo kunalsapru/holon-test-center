@@ -40,8 +40,8 @@ function createPowerSwitchCallBack(data,options)
 	var powerSwitchId=respData[0].trim();	
 	var powerLineAId=respData[1].trim();
 	var powerLineBId=respData[2].trim();
-	updateGlobalPowerLineList(powerLineAId);
-	updateGlobalPowerLineList(powerLineBId);
+	updateGlobalPowerLineList(powerLineAId,true);
+	updateGlobalPowerLineList(powerLineBId,false);
 	var circleSwitch = options["circleSwitch"]; 
 	addSwitchInfo(circleSwitch, powerSwitchId);
 	globalPsList[powerSwitchId]=circleSwitch;
