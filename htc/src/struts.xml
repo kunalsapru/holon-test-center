@@ -99,7 +99,10 @@
 			method="drawPowerLine" /> <!-- Completed By Abhinav and Code Checked in. Enhancements could be done later  -->			
 			<action name="showPowerLines" class="com.htc.action.PowerLineAction"
 			method="showPowerLines" /> <!-- Completed By Abhinav and Code Checked in. Enhancements could be done later  -->
-
+			<action name="getPowerLineInfo" class="com.htc.action.PowerLineAction"
+			method="getPowerLineInfo" />
+			
+			
 		<action name="dataGenerator" class="com.htc.action.DataGeneratorAction"
 			method="dataGenerator" />
 

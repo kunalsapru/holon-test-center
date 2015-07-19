@@ -88,10 +88,7 @@ function showPowerLinesCallBack(data, options){
 		var powerLine = powerLineList[i].split("!");
 		var location = powerLine[0];
 		var color=powerLine[1];
-		//alert(color);
-		var contentString = powerLine[2];
-		//alert(contentString);
-		var powerLineId=powerLine[2].split(":")[2].split(".")[0].replace("</b>","");
+		var powerLineId=powerLine[2].trim();
 		var startLat = location.split("^")[0].split("~")[0].replace("[","").replace(",","");
 		var startLng = location.split("^")[0].split("~")[1];
 		var endLat = location.split("^")[1].split("~")[0];
@@ -107,54 +104,52 @@ function showPowerLinesCallBack(data, options){
 	        map: map
 	    });
 	 
-	    addMessageWindow(contentString, line,powerLineId)
+	    addMessageWindow(line,powerLineId)
 	}	
 }
+
+
+
 
 function drawPoweLineCallBack(data, options) {
 	var newLineShape = options["newShape"];
 	var dataArray = data.split("!");
 	var powerLineId = dataArray[0];
-	var isConnected= dataArray[1];
-	var maxCapacity= dataArray[2];	
-	var currentCapacity= dataArray[3];
-	var powerLineType= dataArray[4];
-	var reasonDown= dataArray[5];
-	var latStart= dataArray[7];
-	var lngStart= dataArray[8];
-	var latEnd= dataArray[9];
-	var lngEnd= dataArray[10];
-	var color = dataArray[11];
+	var color = dataArray[1];
 	newLineShape.setOptions({strokeColor:color});
-	contentString="<b>Power Line Type: </b>"+powerLineType+"<br>"+
-			"<b>Power Line Id: </b>"+powerLineId +"<br>"+
-			"<b>Connected : </b>"+isConnected+"<br>"+
-			"<b>Max Capacity: </b>"+maxCapacity+"<br>"+
-			"<b>Current Capacity: </b>"+currentCapacity+"<br>"+
-			"<b>Start Location: </b>"+"("+latStart+")"+",("+lngStart+")"+"<br>"+
-			"<b>End Location: </b>"+"("+latEnd+")"+",("+lngEnd+")"+"<br>";
-		
-	addMessageWindow(contentString, newLineShape,powerLineId)
+	addMessageWindow(newLineShape,powerLineId)
 		
 }
 
 
-function addMessageWindow(contentString, marker,id)
-{
-	  var infowindowHolonObject = new google.maps.InfoWindow({
-	      content: contentString		    
-	  });
-    google.maps.event.addListener(marker, 'click', function(event) {
+function addMessageWindow(line,powerLineId)
+{		
+	 
+    google.maps.event.addListener(line, 'click', function(event) {
     	if(clickedToDrawSwitch=="switchOnPowerLine")
 		{
 		var newId= id.replace(" ","");
 		createPowerSwitch(event.latLng,newId);
 		}
-	else{
-		infowindowHolonObject.setOptions({position:event.latLng});
-		infowindowHolonObject.open(map,map);
+	else{		
+		var dataAttributes= {
+				powerLineId : powerLineId,
+				}
+		
+		ajaxRequest("getPowerLineInfo", dataAttributes, getPowerLineInfoCallBack, {position:event.latLng});		
 	}
     });
     
 
 }
+
+function getPowerLineInfoCallBack(data,options)
+{
+	var content= data;
+	var position=options["position"];
+	var infowindowHolonObject = new google.maps.InfoWindow({
+    content: content,		    
+	});
+	infowindowHolonObject.setOptions({position:position});
+	infowindowHolonObject.open(map,map);	
+	}

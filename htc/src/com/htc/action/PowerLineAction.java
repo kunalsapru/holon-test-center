@@ -42,11 +42,7 @@ public class PowerLineAction extends CommonUtilities {
 			
 			LatLng savedStartLatLng=getLatLngService().findById(newStartLatLngId);
 			LatLng savedEndLatLng=getLatLngService().findById(newEndLatLngId);
-			
-			//Temporarily cdreating hard coded power source
 			PowerSource powerSource = getPowerSourceService().findById(powerSourceId);
-			//End of temp code
-			
 			currentCapacity= (int) CommonUtilities.randomCapGenerator();
 			log.info("Current Capacity "+currentCapacity);
 			PowerLine powerLine = new PowerLine();
@@ -58,29 +54,18 @@ public class PowerLineAction extends CommonUtilities {
 			powerLine.setPowerSource(null);
 			powerLine.setReasonDown(reasonDown);
 			powerLine.setType(powerLineType);
+			powerLine.setPowerSource(powerSource);
 			
 			Integer newPowerLineID = getPowerLineService().persist(powerLine);
 			
 			String color = CommonUtilities.getLineColor(CommonUtilities.getPercent(currentCapacity,maxCapacity));
 			
 			log.info("NewLy Generated powerLine  ID --> "+newPowerLineID);
-			String powerSrcName = powerSource.getName();
-			
+				
 			getResponse().setContentType("text/html");
 			StringBuffer plResponse = new StringBuffer();
 			plResponse.append(newPowerLineID+"!");
-			plResponse.append(isConnected+"!");
-			plResponse.append(maxCapacity+"!");
-			plResponse.append(currentCapacity+"!");
-			plResponse.append(powerLineType+"!");
-			plResponse.append(reasonDown+"!");
-			plResponse.append(powerSrcName+"!");
-			plResponse.append(latStart+"!");
-			plResponse.append(lngStart+"!");
-			plResponse.append(latEnd+"!");
-			plResponse.append(lngEnd+"!");
-			plResponse.append(color);		
-			
+			plResponse.append(color);				
 			getResponse().getWriter().write(plResponse.toString());	
 			
 			
@@ -112,14 +97,7 @@ public class PowerLineAction extends CommonUtilities {
 				startLocation = powerLine.getLatLngBySource().getLatitude()+"~"+powerLine.getLatLngBySource().getLongitude();
 				endLocation = powerLine.getLatLngByDestination().getLatitude()+"~"+powerLine.getLatLngByDestination().getLongitude();
 				color= CommonUtilities.getLineColor(CommonUtilities.getPercent(powerLine.getCurrentCapacity(),powerLine.getMaximumCapacity())); 				
-				powerLineListArray.add(startLocation+"^"+endLocation+"!"+color+"!<b>Connected: </b>"+powerLine.isIsConnected()+".<br>"+
-						"<b>PowerLine Id: </b>"+powerLine.getId() +".<br>"+
-						"<b>Maximum Capacity: </b>"+powerLine.getMaximumCapacity()+".<br>"+
-						"<b>Current Capacity: </b>"+powerLine.getCurrentCapacity()+".<br>"+
-						"<b>PowerLine Type: </b>"+powerLine.getType()+".<br>"+
-						"<b>Start Location: </b>"+powerLine.getLatLngBySource().getLatitude()+"~"+powerLine.getLatLngBySource().getLongitude()+".<br>"+
-						"<b>End Location: </b>"+powerLine.getLatLngByDestination().getLatitude()+"~"+powerLine.getLatLngByDestination().getLongitude()+".<br>*");
-
+				powerLineListArray.add(startLocation+"^"+endLocation+"!"+color+"!"+powerLine.getId()+"*");
 			}
 			
 			//Calling the response function and setting the content type of response.
@@ -129,6 +107,34 @@ public class PowerLineAction extends CommonUtilities {
 			log.info("Exception "+e.getMessage()+" occurred in action showPowerLine()");
 			e.printStackTrace();
 		}
+	}
+	
+	
+	
+	public void getPowerLineInfo ()
+	
+	{		
+		try {
+
+			Integer powerLineId = getRequest().getParameter("powerLineId")!=null?Integer.parseInt(getRequest().getParameter("powerLineId")):0;
+			PowerLine  powerLine = getPowerLineService().findById(powerLineId);
+			log.info("PowerLine Id: "+powerLine.getId());
+			String infoString="<b>Connected: </b>"+powerLine.isIsConnected()+".<br>"+
+						"<b>PowerLine Id: </b>"+powerLine.getId() +".<br>"+
+						"<b>Maximum Capacity: </b>"+powerLine.getMaximumCapacity()+".<br>"+
+						"<b>Current Capacity: </b>"+powerLine.getCurrentCapacity()+".<br>"+
+						"<b>PowerLine Type: </b>"+powerLine.getType()+".<br>"+
+						"<b>Start Location: </b>"+powerLine.getLatLngBySource().getLatitude()+"~"+powerLine.getLatLngBySource().getLongitude()+".<br>"+
+						"<b>End Location: </b>"+powerLine.getLatLngByDestination().getLatitude()+"~"+powerLine.getLatLngByDestination().getLongitude()+".<br>";			
+			
+			//Calling the response function and setting the content type of response.
+			getResponse().setContentType("text/html");
+			getResponse().getWriter().write(infoString);
+		} catch (Exception e) {
+			log.info("Exception "+e.getMessage()+" occurred in action showPowerLine()");
+			e.printStackTrace();
+		}
+		
 	}
 	
 public void connectToPowerSource(HolonObject holonObject){
