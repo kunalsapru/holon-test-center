@@ -36,7 +36,7 @@ public class PowerSwitchAction extends CommonUtilities {
 	public void addPowerSwitchForHolonObject(HolonObject holonObject){
 		PowerSwitch powerSwitch=new PowerSwitch();
 		powerSwitch.setHolonObject(holonObject);
-		powerSwitch.setPowerLine(null);
+		powerSwitch.setPowerLineA(null);
 		powerSwitch.setLatLng(holonObject.getLatLngByDoorLocation());
 		powerSwitch.setStatus(true);
 		
@@ -60,7 +60,7 @@ public class PowerSwitchAction extends CommonUtilities {
 		LatLng switchLatLng2 = getLatLngService().findById(switchlocationId);
 		PowerLine powerLine = new PowerLine(powerLineId);
 		powerSwitch.setLatLng(switchLatLng2);
-		powerSwitch.setPowerLine(powerLine);
+		powerSwitch.setPowerLineA(powerLine);
 		powerSwitch.setStatus(true);
 		Integer newPowerSwitchId= getPowerSwitchService().persist(powerSwitch);
 		System.out.println("---------------------->>>"+newPowerSwitchId);
@@ -86,7 +86,7 @@ public class PowerSwitchAction extends CommonUtilities {
 				Double switchLatitude= powerSwitch.getLatLng().getLatitude();
 				Double switchLongitude= powerSwitch.getLatLng().getLongitude();
 				Integer switchId = powerSwitch.getId();
-				Integer powerId = powerSwitch.getPowerLine().getId();
+				Integer powerId = powerSwitch.getPowerLineA().getId();
 				boolean statusBool=powerSwitch.getStatus();
 				int status=0;
 				if(statusBool){
@@ -113,7 +113,7 @@ public class PowerSwitchAction extends CommonUtilities {
 		Double switchLatitude= powerSwitch.getLatLng().getLatitude();
 		Double switchLongitude= powerSwitch.getLatLng().getLongitude();
 		Integer switchId = powerSwitch.getId();
-		Integer powerLineId = powerSwitch.getPowerLine().getId();
+		Integer powerLineId = powerSwitch.getPowerLineA().getId();
 		boolean statusBool=powerSwitch.getStatus();
 		int status=0;
 		if(statusBool){

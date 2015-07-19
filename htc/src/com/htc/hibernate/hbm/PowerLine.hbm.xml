@@ -47,9 +47,15 @@
             </key>
             <one-to-many class="com.htc.hibernate.pojo.HolonObject" />
         </set>
-        <set name="powerSwitches" table="power_switch" inverse="true" lazy="true" fetch="select">
+        <set name="powerSwitchesA" table="power_switch" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="power_line" />
+                <column name="power_line_a" />
+            </key>
+            <one-to-many class="com.htc.hibernate.pojo.PowerSwitch" />
+        </set>
+        <set name="powerSwitchesB" table="power_switch" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="power_line_b" />
             </key>
             <one-to-many class="com.htc.hibernate.pojo.PowerSwitch" />
         </set>

@@ -21,7 +21,8 @@ public class PowerLine implements java.io.Serializable {
 	private String reasonDown;
 	private Set<?> powerLines = new HashSet<Object>(0);
 	private Set<?> holonObjects = new HashSet<Object>(0);
-	private Set<?> powerSwitches = new HashSet<Object>(0);
+	private Set<?> powerSwitchesA = new HashSet<Object>(0);
+	private Set<?> powerSwitchesB = new HashSet<Object>(0);
 
 	public PowerLine() {
 	}
@@ -42,7 +43,7 @@ public class PowerLine implements java.io.Serializable {
 			PowerLine powerLine, PowerSource powerSource, String type,
 			int currentCapacity, int maximumCapacity, boolean isConnected,
 			String reasonDown, Set<?> powerLines, Set<?> holonObjects,
-			Set<?> powerSwitches) {
+			Set<?> powerSwitchesA,Set<?> powerSwitchesB) {
 		this.latLngBySource = latLngBySource;
 		this.latLngByDestination = latLngByDestination;
 		this.powerLine = powerLine;
@@ -54,7 +55,8 @@ public class PowerLine implements java.io.Serializable {
 		this.reasonDown = reasonDown;
 		this.powerLines = powerLines;
 		this.holonObjects = holonObjects;
-		this.powerSwitches = powerSwitches;
+		this.powerSwitchesA = powerSwitchesA;
+		this.setPowerSwitchesB(powerSwitchesB);
 	}
 
 	public Integer getId() {
@@ -153,12 +155,20 @@ public class PowerLine implements java.io.Serializable {
 		this.holonObjects = holonObjects;
 	}
 
-	public Set<?> getPowerSwitches() {
-		return this.powerSwitches;
+	public Set<?> getPowerSwitchesA() {
+		return this.powerSwitchesA;
 	}
 
-	public void setPowerSwitches(Set<?> powerSwitches) {
-		this.powerSwitches = powerSwitches;
+	public void setPowerSwitchesA(Set<?> powerSwitchesA) {
+		this.powerSwitchesA = powerSwitchesA;
+	}
+
+	public Set<?> getPowerSwitchesB() {
+		return powerSwitchesB;
+	}
+
+	public void setPowerSwitchesB(Set<?> powerSwitchesB) {
+		this.powerSwitchesB = powerSwitchesB;
 	}
 
 }

@@ -9,7 +9,8 @@ public class PowerSwitch implements java.io.Serializable {
 	private int id;
 	private HolonObject holonObject;
 	private LatLng latLng;
-	private PowerLine powerLine;
+	private PowerLine powerLineA;
+	private PowerLine powerLineB;
 	private Boolean status;
 
 	public PowerSwitch() {
@@ -21,11 +22,12 @@ public class PowerSwitch implements java.io.Serializable {
 	}
 
 	public PowerSwitch(int id, HolonObject holonObject, LatLng latLng,
-			PowerLine powerLine, Boolean status) {
+			PowerLine powerLineA,PowerLine powerLineB, Boolean status) {
 		this.id = id;
 		this.holonObject = holonObject;
 		this.latLng = latLng;
-		this.powerLine = powerLine;
+		this.powerLineA = powerLineA;
+		this.powerLineB = powerLineB;
 		this.status = status;
 	}
 
@@ -53,12 +55,12 @@ public class PowerSwitch implements java.io.Serializable {
 		this.latLng = latLng;
 	}
 
-	public PowerLine getPowerLine() {
-		return this.powerLine;
+	public PowerLine getPowerLineA() {
+		return this.powerLineA;
 	}
 
-	public void setPowerLine(PowerLine powerLine) {
-		this.powerLine = powerLine;
+	public void setPowerLineA(PowerLine powerLineA) {
+		this.powerLineA = powerLineA;
 	}
 
 	public Boolean getStatus() {
@@ -67,6 +69,14 @@ public class PowerSwitch implements java.io.Serializable {
 
 	public void setStatus(Boolean status) {
 		this.status = status;
+	}
+
+	public PowerLine getPowerLineB() {
+		return powerLineB;
+	}
+
+	public void setPowerLineB(PowerLine powerLineB) {
+		this.powerLineB = powerLineB;
 	}
 
 }

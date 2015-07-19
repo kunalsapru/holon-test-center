@@ -14,8 +14,11 @@
         <many-to-one name="latLng" class="com.htc.hibernate.pojo.LatLng" fetch="select" lazy="false">
             <column name="location" not-null="true" />
         </many-to-one>
-        <many-to-one name="powerLine" class="com.htc.hibernate.pojo.PowerLine" fetch="select" lazy="false">
-            <column name="power_line" />
+        <many-to-one name="powerLineA" class="com.htc.hibernate.pojo.PowerLine" fetch="select" lazy="false">
+            <column name="power_line_a" />
+        </many-to-one>
+        <many-to-one name="powerLineB" class="com.htc.hibernate.pojo.PowerLine" fetch="select" lazy="false">
+            <column name="power_line_b" />
         </many-to-one>
         <property name="status" type="java.lang.Boolean">
             <column name="status" />
