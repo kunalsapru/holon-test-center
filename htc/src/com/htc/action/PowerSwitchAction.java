@@ -2,6 +2,7 @@ package com.htc.action;
 
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 
@@ -9,7 +10,6 @@ import com.htc.hibernate.pojo.HolonObject;
 import com.htc.hibernate.pojo.LatLng;
 import com.htc.hibernate.pojo.PowerLine;
 import com.htc.hibernate.pojo.PowerSwitch;
-import com.htc.service.PowerSwitchService;
 import com.htc.utilities.CommonUtilities;
 
 
@@ -58,11 +58,18 @@ public class PowerSwitchAction extends CommonUtilities {
 		LatLng switchLatLng = new LatLng(latSwitch, lngSwitch);
 		Integer switchlocationId = getLatLngService().persist(switchLatLng);
 		LatLng switchLatLng2 = getLatLngService().findById(switchlocationId);
-		PowerLine powerLine = new PowerLine(powerLineId);
+		
+		Map<String, PowerLine> powerLineMap = new PowerLineAction().createPowerLinesUponSwitchAdd(powerLineId,switchLatLng2);
+		PowerLine powerLineA = powerLineMap.get("powerLineA");
+		PowerLine powerLineB = powerLineMap.get("powerLineB");
+		
 		powerSwitch.setLatLng(switchLatLng2);
-		powerSwitch.setPowerLineA(powerLine);
+		powerSwitch.setPowerLineA(powerLineA);
+		powerSwitch.setPowerLineB(powerLineB);
 		powerSwitch.setStatus(true);
 		Integer newPowerSwitchId= getPowerSwitchService().persist(powerSwitch);
+		
+		
 		System.out.println("---------------------->>>"+newPowerSwitchId);
 		getResponse().setContentType("text/html");
 		getResponse().getWriter().write(newPowerSwitchId.toString());
@@ -86,13 +93,12 @@ public class PowerSwitchAction extends CommonUtilities {
 				Double switchLatitude= powerSwitch.getLatLng().getLatitude();
 				Double switchLongitude= powerSwitch.getLatLng().getLongitude();
 				Integer switchId = powerSwitch.getId();
-				Integer powerId = powerSwitch.getPowerLineA().getId();
 				boolean statusBool=powerSwitch.getStatus();
 				int status=0;
 				if(statusBool){
 				status=1;
 				}
-				swListArray.add(switchLatitude+"^"+switchLongitude+"^"+switchId+"^"+powerId+"^"+status+"*");
+				swListArray.add(switchLatitude+"^"+switchLongitude+"^"+switchId+"^"+status+"*");
 				
 			}
 			getResponse().setContentType("text/html");
@@ -113,13 +119,14 @@ public class PowerSwitchAction extends CommonUtilities {
 		Double switchLatitude= powerSwitch.getLatLng().getLatitude();
 		Double switchLongitude= powerSwitch.getLatLng().getLongitude();
 		Integer switchId = powerSwitch.getId();
-		Integer powerLineId = powerSwitch.getPowerLineA().getId();
+		Integer powerLineAId = powerSwitch.getPowerLineA().getId();
+		Integer powerLineBId = powerSwitch.getPowerLineB().getId();
 		boolean statusBool=powerSwitch.getStatus();
 		int status=0;
 		if(statusBool){
 			status=1;
 			}
-		String contentString=switchLatitude+"^"+switchLongitude+"^"+switchId+"^"+powerLineId+"^"+status;		
+		String contentString=switchLatitude+"^"+switchLongitude+"^"+switchId+"^"+powerLineAId+"^"+powerLineBId+"^"+status;		
 		getResponse().setContentType("text/html");
 		getResponse().getWriter().write(contentString);
 	}
@@ -134,7 +141,7 @@ public class PowerSwitchAction extends CommonUtilities {
 		try{
 		log.info("powerSwitchOnOff start ");
 		Integer newSwitchStatus= getRequest().getParameter("newSwitchStatus")!=null?Integer.parseInt(getRequest().getParameter("newSwitchStatus")):0;
-		Integer powerSwitchId= getRequest().getParameter("switchId")!=null?Integer.parseInt(getRequest().getParameter("switchId")):0;
+		Integer powerSwitchId= getRequest().getParameter("powerSwitchId")!=null?Integer.parseInt(getRequest().getParameter("powerSwitchId")):0;
 		log.info("powerSwitchOnOff Data Base Call start ");
 		int result=getPowerSwitchService().changeSwitchStatus(powerSwitchId, newSwitchStatus);
 		//PowerSwitch pwSwitch = getPowerSwitchService().findById(powerSwitchId);

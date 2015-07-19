@@ -51,8 +51,7 @@ function getListPowerSwitchCallBack(data,options){
 		var switchLat=individualData[0].replace("[","").replace(",","");
 		var switchLong=individualData[1];
 		var powerSwitchId=individualData[2].trim();
-		var powerLineId=individualData[3];
-		var status=individualData[4];
+		var status=individualData[3];
 		var switchStatus="#0B6121";		
 		if(status==1){
 			switchStatus="#FF0000";
@@ -96,10 +95,18 @@ function getSwitchInfoCallBack(data, options)
 	var switchLat=individualData[0].replace("[","").replace(",","");
 	var switchLong=individualData[1];
 	var powerSwitchId=individualData[2].trim();
-	var powerLineId=individualData[3];
-	var status=individualData[4];
-	var contentString="Power Line Id : "+powerLineId+"</br>"+"Switch Id: "+powerSwitchId+"</br></br></br>"+
-						" <input type='button' value='Toggle Switch' id='togglePowerSwitch' />";;
+	var powerLineAId=individualData[3];
+	var powerLineBId=individualData[4];
+	var status=individualData[5].trim();
+	var switchStatus="Off";
+	var contentString="<div id='contentId'>Switch Id: "+powerSwitchId+"</br>"+"Switch Status : "+switchStatus+"</br>"+"Connected Power Line A : "+powerLineAId+"</br>"+"Connected Power Line B : "+powerLineBId+"</br>"+"</br></br></br>"+
+	" <input type='button' value='Switch On' id='togglePowerSwitch' /> </div>";
+	if(status=="1")
+		{
+		switchStatus="On";
+		contentString="<div id='contentId'>Switch Id: "+powerSwitchId+"</br>"+"Switch Status : "+switchStatus+"</br>"+"Connected Power Line A : "+powerLineAId+"</br>"+"Connected Power Line B : "+powerLineBId+"</br>"+"</br></br></br>"+
+		" <input type='button' value='Switch Off' id='togglePowerSwitch' /></div>";
+		}
 	var position=options["position"];
 	var circleSwitch=options["circleSwitch"];
 	var infowindowHolonObject = new google.maps.InfoWindow({
@@ -108,46 +115,73 @@ function getSwitchInfoCallBack(data, options)
 	 	infowindowHolonObject.setOptions({position:position});
 		infowindowHolonObject.open(map,circleSwitch);	
 		$('#togglePowerSwitch').click(function() {
-			SwitchOnOff(circleSwitch,powerSwitchId);			
+			SwitchOnOff(circleSwitch,powerSwitchId,infowindowHolonObject);			
 		})
 		
 	
 }
 
 
-function SwitchOnOff(marker,switchId)
+function SwitchOnOff(circleSwitch,powerSwitchId,infowindowHolonObject)
 {	 
 
-	var switchStatusColor = marker.get('fillColor');
+	var switchStatusColor = circleSwitch.get('fillColor');
 	var dataAttributes;
 	if(switchStatusColor=="#FF0000")
 		{
 		dataAttributes = {
     			newSwitchStatus :0,
-    			switchId:switchId,
-    			};			
+    			powerSwitchId:powerSwitchId,
+    			};	
+		options = {
+				circleSwitch:circleSwitch,
+				infowindowHolonObject:infowindowHolonObject,
+				powerSwitchId:powerSwitchId,
+    			};
 		}else
 		{
 			dataAttributes = {
 					newSwitchStatus :1,
-					switchId:switchId,
+					powerSwitchId:powerSwitchId,
+	    			};
+			options = {
+					circleSwitch:circleSwitch,
+					infowindowHolonObject:infowindowHolonObject,
+					powerSwitchId:powerSwitchId,
 	    			};
 		}
-		ajaxRequest("powerSwitchOnOff", dataAttributes, powerSwitchOnOffCallBack,{marker:marker});	
+		ajaxRequest("powerSwitchOnOff", dataAttributes, powerSwitchOnOffCallBack,options);	
 	
 }
 
 function powerSwitchOnOffCallBack(data,options){	
-	var marker = options["marker"];
+	var circleSwitch = options["circleSwitch"];
+	var infowindowHolonObject = options["infowindowHolonObject"];
+	var powerSwitchId = options["powerSwitchId"];
+	var content = infowindowHolonObject.getContent();
 	var newSwitchStatus = data;
 	
 	if(newSwitchStatus== 1)
 		{
-		marker.setOptions({strokeColor:'#FF0000',fillColor: '#FF0000'});
+		//alert("Abhinav");
+		circleSwitch.setOptions({strokeColor:'#FF0000',fillColor: '#FF0000'});
+		var newContent=content.replace("Switch Status : Off","Switch Status : On").replace("Switch On","Switch Off");
+		//alert("newSwitchStatus "+newSwitchStatus+" "+newContent);
+		infowindowHolonObject.setContent(newContent);
+		infowindowHolonObject.close();	
+	
 		}
 	else{
-		marker.setOptions({strokeColor:'#0B6121', fillColor: '#0B6121'});
-			}
+		//alert("Abhinava");
+		circleSwitch.setOptions({strokeColor:'#0B6121', fillColor: '#0B6121'});
+		var newContent=content.replace("Switch Status : On","Switch Status : Off").replace("Switch Off","Switch On");
+		infowindowHolonObject.setContent(newContent);
+		infowindowHolonObject.close();		
+		}
+	infowindowHolonObject.open(map,circleSwitch);
+	$('#togglePowerSwitch').click(function() {
+		SwitchOnOff(circleSwitch,powerSwitchId,infowindowHolonObject);			
+	})
 }
 
 

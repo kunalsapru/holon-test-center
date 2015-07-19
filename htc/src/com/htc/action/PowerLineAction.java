@@ -1,6 +1,8 @@
 package com.htc.action;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 
@@ -167,5 +169,33 @@ public void connectToPowerSource(HolonObject holonObject){
 		return intersectionPoint;
 	}
 	
+	
+	public Map<String, PowerLine> createPowerLinesUponSwitchAdd(Integer powerLineId, LatLng switchLatLng2)
+	{
+		
+		PowerLine powerLineA = getPowerLineService().findById(powerLineId);
+		LatLng powerLineAEnd=switchLatLng2;
+		LatLng powerLineBStart=switchLatLng2;
+		LatLng powerLineBEnd=powerLineA.getLatLngByDestination();		
+		powerLineA.setLatLngByDestination(powerLineAEnd);
+		getPowerLineService().merge(powerLineA);
+		
+		PowerLine powerLineB = new PowerLine();
+		powerLineB.setCurrentCapacity(powerLineA.getCurrentCapacity());
+		powerLineB.setIsConnected(powerLineA.isIsConnected());
+		powerLineB.setLatLngByDestination(powerLineBEnd);
+		powerLineB.setLatLngBySource(powerLineBStart);
+		powerLineB.setMaximumCapacity(powerLineA.getMaximumCapacity());
+		powerLineB.setReasonDown(powerLineA.getReasonDown());
+		powerLineB.setType(powerLineA.getType());
+		powerLineB.setPowerSource(powerLineA.getPowerSource());		
+		getPowerLineService().persist(powerLineB);
+		
+		Map<String, PowerLine> powerLineMap = new HashMap<String, PowerLine>();
+		powerLineMap.put("powerLineA", powerLineA);
+		powerLineMap.put("powerLineB", powerLineB);
+		
+		return powerLineMap;
+	}
 	
 }
