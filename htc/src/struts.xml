@@ -87,8 +87,8 @@
 		<!--SWITCH LEVEL -->
 		<action name="createPowerSwitch" class="com.htc.action.PowerSwitchAction"
 			method="createPowerSwitch" />
-		<action name="powerSwitchOn" class="com.htc.action.PowerSwitchAction"
-			method="powerSwitchOn" />
+		<action name="getSwitchInfo" class="com.htc.action.PowerSwitchAction"
+			method="getSwitchInfo" />
 		<action name="getListPowerSwitch" class="com.htc.action.PowerSwitchAction"
 			method="getListPowerSwitch" />
 		<action name="powerSwitchOnOff" class="com.htc.action.PowerSwitchAction"

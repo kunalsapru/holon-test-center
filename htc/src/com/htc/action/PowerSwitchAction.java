@@ -9,6 +9,7 @@ import com.htc.hibernate.pojo.HolonObject;
 import com.htc.hibernate.pojo.LatLng;
 import com.htc.hibernate.pojo.PowerLine;
 import com.htc.hibernate.pojo.PowerSwitch;
+import com.htc.service.PowerSwitchService;
 import com.htc.utilities.CommonUtilities;
 
 
@@ -103,8 +104,34 @@ public class PowerSwitchAction extends CommonUtilities {
 	}
 
 
-public void powerSwitchOnOff(){
+	public void getSwitchInfo()
+	{
+	
 	try{
+		Integer powerSwitchId= getRequest().getParameter("powerSwitchId")!=null?Integer.parseInt(getRequest().getParameter("powerSwitchId")):0;
+		PowerSwitch powerSwitch = getPowerSwitchService().findById(powerSwitchId);
+		Double switchLatitude= powerSwitch.getLatLng().getLatitude();
+		Double switchLongitude= powerSwitch.getLatLng().getLongitude();
+		Integer switchId = powerSwitch.getId();
+		Integer powerLineId = powerSwitch.getPowerLine().getId();
+		boolean statusBool=powerSwitch.getStatus();
+		int status=0;
+		if(statusBool){
+			status=1;
+			}
+		String contentString=switchLatitude+"^"+switchLongitude+"^"+switchId+"^"+powerLineId+"^"+status;		
+		getResponse().setContentType("text/html");
+		getResponse().getWriter().write(contentString);
+	}
+	catch(Exception e){
+		log.info("Exception in getListPowerSwitch");
+	}
+	
+	}
+	
+	
+	public void powerSwitchOnOff(){
+		try{
 		log.info("powerSwitchOnOff start ");
 		Integer newSwitchStatus= getRequest().getParameter("newSwitchStatus")!=null?Integer.parseInt(getRequest().getParameter("newSwitchStatus")):0;
 		Integer powerSwitchId= getRequest().getParameter("switchId")!=null?Integer.parseInt(getRequest().getParameter("switchId")):0;
@@ -114,10 +141,10 @@ public void powerSwitchOnOff(){
 		log.info("No of rows updated "+result);
 		getResponse().setContentType("text/html");
 		getResponse().getWriter().write(newSwitchStatus.toString());
-	}
-	catch(Exception e){
+		}
+		catch(Exception e){
 		log.info("Exception in powerSwitchOnOff ");
+		}
 	}
-}
 }
 

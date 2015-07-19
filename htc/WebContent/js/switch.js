@@ -28,16 +28,14 @@ function createPowerSwitch(latLng,powerLineId){
 			switchPositionLng : latLng.lng(),
 			powerLineId : powerLineId
 	};
-	ajaxRequest("createPowerSwitch", dataAttributes, createPowerSwitchCallBack, {powerLineId : powerLineId,circleSwitch:circleSwitch});
+	ajaxRequest("createPowerSwitch", dataAttributes, createPowerSwitchCallBack, {circleSwitch:circleSwitch});
 }
 
 function createPowerSwitchCallBack(data,options)
 {
-	var powerSwitchId=data;	
-	var powerLineId = options["powerLineId"];
+	var powerSwitchId=data.trim();	
 	var circleSwitch = options["circleSwitch"]; 
-	var contentString="Power Line Id : "+powerLineId+"</br>"+"Switch Id: "+powerSwitchId+"</br></br></br>"+" <input type='button' value='Toggle Switch' id='togglePowerSwitch' />";
-	addSwitchInfo(contentString, circleSwitch, powerSwitchId);
+	addSwitchInfo(circleSwitch, powerSwitchId);
 }
 
 function showSavedPowerSwitches(){
@@ -52,7 +50,7 @@ function getListPowerSwitchCallBack(data,options){
 		var individualData= powerSwitchList[i].split("^");
 		var switchLat=individualData[0].replace("[","").replace(",","");
 		var switchLong=individualData[1];
-		var switchId=individualData[2];
+		var powerSwitchId=individualData[2].trim();
 		var powerLineId=individualData[3];
 		var status=individualData[4];
 		var switchStatus="#0B6121";		
@@ -69,27 +67,53 @@ function getListPowerSwitchCallBack(data,options){
 		     center: new google.maps.LatLng(switchLat, switchLong),
 		     radius: 2
 		    });	
-		var contentString="Power Line Id : "+powerLineId+"</br>"+"Switch Id: "+switchId+"</br></br></br>"+" <input type='button' value='Toggle Switch' id='togglePowerSwitch' />";
-		addSwitchInfo(contentString, circleSwitch, switchId);
+		addSwitchInfo(circleSwitch, powerSwitchId);
 		
 		}
-	console.log("Done"+data);
+	
 }
 
-function addSwitchInfo(contentString, marker, switchId)
+function addSwitchInfo(circleSwitch, powerSwitchId)
 {
-	 var infowindowHolonObject = new google.maps.InfoWindow({
-	      content: contentString		    
-	  });
-   google.maps.event.addListener(marker, 'click', function(event) {   	
-		infowindowHolonObject.setOptions({position:event.latLng});
-		infowindowHolonObject.open(map,marker);	
-		$('#togglePowerSwitch').click(function() {
-			SwitchOnOff(marker,switchId);			
-		})
-		
+	
+   google.maps.event.addListener(circleSwitch, 'click', function(event) { 
+	   
+		var dataAttributes= {
+				powerSwitchId : powerSwitchId,
+				}
+		var options= {
+				position:event.latLng,
+				circleSwitch:circleSwitch,
+				}
+		ajaxRequest("getSwitchInfo", dataAttributes, getSwitchInfoCallBack, options);		   
+	   
    });
 }
+
+function getSwitchInfoCallBack(data, options)
+{
+	var individualData= data.split("^");
+	var switchLat=individualData[0].replace("[","").replace(",","");
+	var switchLong=individualData[1];
+	var powerSwitchId=individualData[2].trim();
+	var powerLineId=individualData[3];
+	var status=individualData[4];
+	var contentString="Power Line Id : "+powerLineId+"</br>"+"Switch Id: "+powerSwitchId+"</br></br></br>"+
+						" <input type='button' value='Toggle Switch' id='togglePowerSwitch' />";;
+	var position=options["position"];
+	var circleSwitch=options["circleSwitch"];
+	var infowindowHolonObject = new google.maps.InfoWindow({
+	      content: contentString		    
+	  });
+	 	infowindowHolonObject.setOptions({position:position});
+		infowindowHolonObject.open(map,circleSwitch);	
+		$('#togglePowerSwitch').click(function() {
+			SwitchOnOff(circleSwitch,powerSwitchId);			
+		})
+		
+	
+}
+
 
 function SwitchOnOff(marker,switchId)
 {	 
