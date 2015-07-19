@@ -60,34 +60,16 @@ public class HolonObjectAction extends CommonUtilities {
 		holonObject.setHolonManager(holonManager2);
 		//Calling service method to save the object in database and saving the auto-incremented ID in an integer
 		Integer newHolonObjectID = getHolonObjectService().persist(holonObject);
-		System.out.println("NewLy Generated Holon Object ID --> "+newHolonObjectID);
+		log.info("NewLy Generated Holon Object ID --> "+newHolonObjectID);
 		HolonObject holonObject2 = getHolonObjectService().findById(newHolonObjectID);
-		String holonCoordinatorName_Holon = holonObject2.getHolonCoordinator().getName().concat("_"+holonObject2.getHolonCoordinator().getHolon().getName());
 		String holonColor= holonObject2.getHolonCoordinator().getHolon().getColor();
-		String holonObjectTypeName = holonObject2.getHolonObjectType().getName();
-		String ne_location = holonObject2.getLatLngByNeLocation().getLatitude()+"~"+holonObject2.getLatLngByNeLocation().getLongitude();
-		String sw_location = holonObject2.getLatLngBySwLocation().getLatitude()+"~"+holonObject2.getLatLngBySwLocation().getLongitude();
-		
-		Boolean lineConnectedState = holonObject2.getLineConnectedState();
-		log.info("Newly Created HO Information -->");
-		log.info("holonCoordinatorName_Holon --> "+holonCoordinatorName_Holon);
-		log.info("holonObjectTypeName --> "+holonObjectTypeName);
-		log.info("ne_location --> "+ne_location);
-		log.info("lineConnectedState --> "+lineConnectedState);
-					
 		//Calling the response function and setting the content type of response.
 		getResponse().setContentType("text/html");
 		StringBuffer hoResponse = new StringBuffer();
 		hoResponse.append(holonObject2.getId()+"!");
-		hoResponse.append(holonCoordinatorName_Holon+"!");
-		hoResponse.append(holonObjectTypeName+"!");
-		hoResponse.append(ne_location+"!");
-		hoResponse.append(sw_location+"!");
-		hoResponse.append(lineConnectedState+"!");
-		hoResponse.append(holonColor+"!");
-		hoResponse.append(holonObject2.getHolonManager().getName());
+		hoResponse.append(holonColor);	
 		
-		System.out.println(hoResponse.toString());
+		log.info(hoResponse.toString());
 		getResponse().getWriter().write(hoResponse.toString());
 		
 		} catch (Exception e) {
@@ -95,6 +77,44 @@ public class HolonObjectAction extends CommonUtilities {
 			e.printStackTrace();
 		}
 	}
+	
+	public void getHolonObjectInfoWindow()
+	{
+		try {
+			log.error("Holon Object Id is # "+getRequest().getParameter("holonObjectId"));
+			Integer holonObjectId = getRequest().getParameter("holonObjectId")!=null?Integer.parseInt(getRequest().getParameter("holonObjectId")):0;			
+			HolonObject holonObject2 = getHolonObjectService().findById(holonObjectId);
+			String holonCoordinatorName_Holon = holonObject2.getHolonCoordinator().getName().concat("_"+holonObject2.getHolonCoordinator().getHolon().getName());
+			String holonColor= holonObject2.getHolonCoordinator().getHolon().getColor();
+			String holonObjectTypeName = holonObject2.getHolonObjectType().getName();
+			String ne_location = holonObject2.getLatLngByNeLocation().getLatitude()+"~"+holonObject2.getLatLngByNeLocation().getLongitude();
+			String sw_location = holonObject2.getLatLngBySwLocation().getLatitude()+"~"+holonObject2.getLatLngBySwLocation().getLongitude();
+			Boolean lineConnectedState = holonObject2.getLineConnectedState();		
+						
+			//Calling the response function and setting the content type of response.
+			getResponse().setContentType("text/html");
+			StringBuffer hoResponse = new StringBuffer();
+			hoResponse.append(holonObject2.getId()+"!");
+			hoResponse.append(holonCoordinatorName_Holon+"!");
+			hoResponse.append(holonObjectTypeName+"!");
+			hoResponse.append(ne_location+"!");
+			hoResponse.append(sw_location+"!");
+			hoResponse.append(lineConnectedState+"!");
+			hoResponse.append(holonColor+"!");
+			hoResponse.append(holonObject2.getHolonManager().getName());
+			
+			System.out.println(hoResponse.toString());
+			getResponse().getWriter().write(hoResponse.toString());
+			
+			} catch (Exception e) {
+				System.out.println("Exception "+e.getMessage()+" occurred in action createHolonObject()");
+				e.printStackTrace();
+			}
+	}
+	
+	
+	
+	
 
 	public void editHolonObject(){
 
@@ -139,21 +159,15 @@ public class HolonObjectAction extends CommonUtilities {
 			String ne_location;
 			String sw_location;
 			String holonColor;
+			Integer holonObjectId;
 			for(int i=0; i<holonObjectList.size();i++){
 				holonObject = holonObjectList.get(i);
 				ne_location = holonObject.getLatLngByNeLocation().getLatitude()+"~"+holonObject.getLatLngByNeLocation().getLongitude();
 				sw_location = holonObject.getLatLngBySwLocation().getLatitude()+"~"+holonObject.getLatLngBySwLocation().getLongitude();
 				holonColor =holonObject.getHolonCoordinator().getHolon().getColor();
+				holonObjectId=holonObject.getId();
 				log.info("The Color of the Holon is "+holonColor);
-				hoListArray.add(holonColor+"#"+ne_location+"^"+sw_location+"!<b>Priority: </b>"+
-						"<b>Holon Object Id: </b>"+holonObject.getId() +"<br>"+
-						"<b>Holon Manager: </b>"+holonObject.getHolonManager().getName()+"<br>"+
-						"<b>North East Location: </b>"+ne_location+"<br>"+
-						"<b>South West Location: </b>"+sw_location+"<br><br>"+
-						"<span class='button'><i class='fa fa-plug'></i>&nbsp;&nbsp;Connect to Power Source</span>&nbsp;&nbsp;&nbsp;&nbsp;"+
-						"<span class='button' id='consumptionGraph'><i class='fa fa-line-chart'></i>&nbsp;&nbsp;Show Consumption</span>&nbsp;&nbsp;&nbsp;&nbsp;"+
-						"<span class='button' id='showHolonElement' onclick='showHolonElements("+holonObject.getId()+")'>"
-								+ "<i class='fa fa-info'></i>&nbsp;&nbsp;Show Holon Elements</span>*");
+				hoListArray.add(holonObjectId+"#"+holonColor+"#"+ne_location+"^"+sw_location+"*");
 			}
 			
 			//Calling the response function and setting the content type of response.

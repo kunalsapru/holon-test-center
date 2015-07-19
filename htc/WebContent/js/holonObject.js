@@ -56,8 +56,6 @@ function saveCoordinator(){
 
 function createHolonCoordinatorCallBack(data,options){
 	
-	
-	
 	$("#holonCoordinatorInformation").popup("close");
 	alert("Coordinator added Sucessfully");
 }
@@ -70,7 +68,23 @@ function editHolonObjectCallBack(data, options){
 	//alert(data);
 }
 function createHolonObjectCallBack(data, options) {
-	//alert("callback");
+	var dataArray = data.split("!");
+	var holonObjectId = dataArray[0];
+	var holonColor= dataArray[1];
+	createdHolonObject.setOptions({strokeColor:holonColor,fillColor: holonColor});
+	 //When Rectangle is clicked
+	  google.maps.event.addListener(createdHolonObject, 'click', function() {
+		  var dataAttributes= {
+				  holonObjectId : holonObjectId,
+				}
+		 ajaxRequest("getHolonObjectInfoWindow", dataAttributes, getHolonInfoWindowCallBack, {});		  
+		
+	  });
+	//createdHolonObject=null;
+}
+
+function getHolonInfoWindowCallBack(data,options)
+{
 	var dataArray = data.split("!");
 	var holonObjectId = dataArray[0];
 	var holonCoordinatorName_Holon= dataArray[1];	
@@ -94,14 +108,7 @@ function createHolonObjectCallBack(data, options) {
 	      content: contentString,
 	      position:new google.maps.LatLng(lat[0],lat[1])
 	  });
-	infowindowHolonObject.open(map,map);
-	//alert(createdHolonObject);
-	createdHolonObject.setOptions({strokeColor:holonColor,fillColor: holonColor});
-	 //When Rectangle is clicked
-	  google.maps.event.addListener(createdHolonObject, 'click', function() {
-		  infowindowHolonObject.open(map,map);
-	  });
-	//createdHolonObject=null;
+	infowindowHolonObject.open(map,map);	
 }
 
 function showHolonObjects() {
@@ -127,13 +134,12 @@ function showHolonObjectsCallBack(data, options){
 	var res = data.replace("[", "").replace("]", "").split(',').join("");
 	//alert(res);
 	var hoObjectsList = res.split("*");
-	var rectangles=[];
 	for (var i=0; i<hoObjectsList.length-1; i++) {
-		var holonObject = hoObjectsList[i].split("!");
-		var location = holonObject[0].split("#")[1];
-		var color = holonObject[0].split("#")[0].replace(" ","");		
+		var holonObject = hoObjectsList[i];
+		var holonObjectId =  holonObject.split("#")[0].trim();
+		var color = holonObject.split("#")[1].trim();	
+		var location = holonObject.split("#")[2];
 		//alert(color);
-		var contentString = holonObject[1];
 		var ne_location_lat = location.split("^")[0].split("~")[0].replace("[","").replace(",","");
 		var ne_location_lng = location.split("^")[0].split("~")[1];
 		var sw_location_lat = location.split("^")[1].split("~")[0];
@@ -147,19 +153,16 @@ function showHolonObjectsCallBack(data, options){
 		    	      new google.maps.LatLng(sw_location_lat, sw_location_lng),
 		    	      new google.maps.LatLng(ne_location_lat, ne_location_lng))
 		    });
-		 attachMessage(contentString, rectangleFromFactory, new google.maps.LatLng(ne_location_lat, sw_location_lng),"rectangle",1);
+	    var dataAttributes= {
+				  holonObjectId : holonObjectId
+				};
+	    attachMessage(dataAttributes, rectangleFromFactory);
 	}	
 }
 
-function attachMessage(contentString, marker, position,text,id) {
-	  var infowindow = new google.maps.InfoWindow({
-	    content: contentString,
-	    position:position
-	  });
-
-	  google.maps.event.addListener(marker, 'click', function(event) {
-		
-			infowindow.open(marker.get('map'), marker);
+function attachMessage(dataAttributes, rectangleFromFactory) {
+	google.maps.event.addListener(rectangleFromFactory, 'click', function(event) {		
+		  ajaxRequest("getHolonObjectInfoWindow", dataAttributes, getHolonInfoWindowCallBack, {});		
 		
 	  });
 }

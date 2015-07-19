@@ -55,6 +55,8 @@
 		<!--To create New Holon Object -->
 		<action name="createHolonObject" class="com.htc.action.HolonObjectAction"
 			method="createHolonObject" />
+			<action name="getHolonObjectInfoWindow" class="com.htc.action.HolonObjectAction"
+			method="getHolonObjectInfoWindow" />
 
 		<!--To Edit Existing Holon Object -->
 		<!-- <action name="editHolonObject" class="com.htc.action.HolonObjectAction" 
