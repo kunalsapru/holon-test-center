@@ -298,24 +298,11 @@ $(document)
 						$("#googleMap").css('cursor', 'pointer');
 					}
 					
+					//function to check if a point falls in a circle overlay
+					google.maps.Circle.prototype.contains = function(latLng,theCircle) {
+						  return theCircle.getBounds().contains(latLng) && google.maps.geometry.spherical.computeDistanceBetween(theCircle.getCenter(), latLng) <= theCircle.getRadius();
+						}
 				});
-
-/*function drawPowerLine(start, end, infowindow) {
-
-	var request = {
-		origin : start,
-		destination : end,
-		travelMode : google.maps.TravelMode.DRIVING,
-	};
-	directionsService.route(request, function(response, status) {
-		if (status == google.maps.DirectionsStatus.OK) {
-			directionsDisplay.setDirections(response);
-
-		}
-
-	});
-
-}*/
 
 function initialize() {
 	mapProp = {

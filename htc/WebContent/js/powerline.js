@@ -48,21 +48,22 @@ $(document).ready(function() {
 		    	var powerLineType="MAINLINE";
 		    	
 		    	var snappedStart= findSnappedLocation(start);		    	
-		    	
+		    	var snappedEnd= findSnappedLocation(end);
 		    	var dataAttributes = {
 		    			powerLineType : "MAINLINE",
 		    			currentCapacity : 300,
 		    			maxCapacity : 300,
-		    			latStart : start.lat(),
-		    			lngStart : start.lng(),
-		    			latEnd : end.lat(),
-		    			lngEnd : end.lng(),
+		    			latStart : snappedStart.lat(),
+		    			lngStart : snappedStart.lng(),
+		    			latEnd : snappedEnd.lat(),
+		    			lngEnd : snappedEnd.lng(),
 		    			isConnected :false,
 		    			reasonDown : "",
 		    			powerSourceId:1,
 		    				};		    	
 		    	var options = {
 		    			newShape:newShape,
+		    			path:[new google.maps.LatLng(snappedStart.lat(), snappedStart.lng()),new google.maps.LatLng(snappedEnd.lat(),snappedEnd.lng())],
 		    			};	
 		    	if(powerLineType=="MAINLINE"){
 		    	ajaxRequest("drawPowerLine", dataAttributes, drawPoweLineCallBack,options);
@@ -80,25 +81,60 @@ $(document).ready(function() {
 
 function drawPoweLineCallBack(data, options) {
 	var newLineShape = options["newShape"];
+	var path = options["path"];
 	var dataArray = data.split("!");
 	var powerLineId = dataArray[0];
 	var color = dataArray[1];
-	newLineShape.setOptions({strokeColor:color});
+	newLineShape.setOptions({strokeColor:color,path: path});
 	addMessageWindow(newLineShape,powerLineId)
 	globalPlList.set(powerLineId, newLineShape);
 }
 
-function findSnappedLocation(location)
+function findSnappedLocation(lineLocation)
 {
-	//alert(globalPlList.get("1").get('strokeColor'));
-	//alert(globalPlList.size);
-	for(var i=0;i< globalPlList.size;i++)
+	var finalLocation=lineLocation;
+	var listSize=globalPlList.size;
+	for(var i=1;i<=listSize;i++)
 		{
-		
+			var line = globalPlList.get(i.toString());
+			if(line!=undefined)
+				{
+				var startPath=line.getPath().getAt(0);
+				var endPath=line.getPath().getAt(1);
+				var tempCircleStart=new google.maps.Circle({
+					 center: startPath,
+				     radius: 10
+				    });	
+				var tempCircleEnd=new google.maps.Circle({
+					 center: endPath,
+				     radius: 10,
+				    });	
+				//alert("Abhiav");
+				var isStartPath = google.maps.Circle.prototype.contains(lineLocation, tempCircleStart);
+				//alert("Abhiav1");
+				var isEndPath = google.maps.Circle.prototype.contains(lineLocation, tempCircleEnd);
+				//alert("Abhiav2");
+				if(isStartPath)
+					{
+					finalLocation=startPath;
+					return finalLocation;
+					}
+				else if(isEndPath)
+					{
+					finalLocation=endPath;
+					return finalLocation;
+					}
+				//alert("isEndPath"+isEndPath);
+				}
+			else
+				{
+				//alert("line does not have value"+line);
+				listSize++; //To increase the size if a number is missing from id seq like 1,2,4,5,7 . Here Ids 3 and 6 are missing
+				}
 		
 		}
 
-
+	return finalLocation;
 
 
 }
