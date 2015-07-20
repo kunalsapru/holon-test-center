@@ -139,7 +139,8 @@ public class HolonObjectAction extends CommonUtilities {
 		String holonColor=holonObject.getHolonCoordinator().getHolon().getColor();
 		
 		StringBuffer hoResponse = new StringBuffer();
-		hoResponse.append(holonColor);
+		hoResponse.append(holonColor+"!");
+		hoResponse.append(holonObject.getId());
 		//Calling the response function and setting the content type of response.
 		getResponse().setContentType("text/html");		
 		getResponse().getWriter().write(hoResponse.toString());
