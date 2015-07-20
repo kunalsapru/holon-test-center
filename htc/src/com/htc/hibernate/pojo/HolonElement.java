@@ -10,9 +10,7 @@ public class HolonElement implements java.io.Serializable {
 	private HolonElementState holonElementState;
 	private HolonElementType holonElementType;
 	private HolonObject holonObject;
-	private String usage;
 	private Integer currentCapacity;
-	private Boolean currentEnergyStatus;
 	private byte[] history;
 
 	public HolonElement() {
@@ -24,15 +22,12 @@ public class HolonElement implements java.io.Serializable {
 
 	public HolonElement(int id, HolonElementState holonElementState,
 			HolonElementType holonElementType, HolonObject holonObject,
-			String usage, Integer currentCapacity, Boolean currentEnergyStatus,
-			byte[] history) {
+			Integer currentCapacity,byte[] history) {
 		this.id = id;
 		this.holonElementState = holonElementState;
 		this.holonElementType = holonElementType;
 		this.holonObject = holonObject;
-		this.usage = usage;
 		this.currentCapacity = currentCapacity;
-		this.currentEnergyStatus = currentEnergyStatus;
 		this.history = history;
 				
 	}
@@ -69,28 +64,12 @@ public class HolonElement implements java.io.Serializable {
 		this.holonObject = holonObject;
 	}
 
-	public String getUsage() {
-		return this.usage;
-	}
-
-	public void setUsage(String usage) {
-		this.usage = usage;
-	}
-
 	public Integer getCurrentCapacity() {
 		return this.currentCapacity;
 	}
 
 	public void setCurrentCapacity(Integer currentCapacity) {
 		this.currentCapacity = currentCapacity;
-	}
-
-	public Boolean getCurrentEnergyStatus() {
-		return this.currentEnergyStatus;
-	}
-
-	public void setCurrentEnergyStatus(Boolean currentEnergyStatus) {
-		this.currentEnergyStatus = currentEnergyStatus;
 	}
 
 	public byte[] getHistory() {

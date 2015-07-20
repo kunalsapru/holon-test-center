@@ -2,7 +2,9 @@ package com.htc.action;
 
 import java.io.IOException;
 import java.util.ArrayList;
+
 import org.apache.log4j.Logger;
+
 import com.htc.hibernate.pojo.HolonElement;
 import com.htc.hibernate.pojo.HolonElementState;
 import com.htc.hibernate.pojo.HolonElementType;
@@ -20,7 +22,6 @@ public class HolonElementAction extends CommonUtilities {
 			Integer holonObjectId = getRequest().getParameter("holonObjectId")!=null?Integer.parseInt(getRequest().getParameter("holonObjectId")):0;
 			Integer holonElementTypeId = getRequest().getParameter("holonElementTypeId")!=null?Integer.parseInt(getRequest().getParameter("holonElementTypeId")):0;
 			Integer holonElementStateId = getRequest().getParameter("holonElementStateId")!=null?Integer.parseInt(getRequest().getParameter("holonElementStateId")):0;
-			String usage = getRequest().getParameter("usage")!=null?getRequest().getParameter("usage"):"";
 			Integer currentCapacity = getRequest().getParameter("currentCapacity")!=null && getRequest().getParameter("currentCapacity")!=""?Integer.parseInt(getRequest().getParameter("currentCapacity")):0;
 			//?? currentEnergyStatus ??
 			//		String history = getRequest().getParameter("String")!=null?getRequest().getParameter("String"):"";
@@ -33,8 +34,7 @@ public class HolonElementAction extends CommonUtilities {
 			holonElement.setHolonElementState(holonElementState);
 			holonElement.setHolonElementType(holonElementType);
 			holonElement.setHolonObject(holonObject);
-			holonElement.setUsage(usage);
-			holonElement.setCurrentEnergyStatus(false);
+			
 			
 			//Calling service method to save the Element in database and saving the auto-incremented ID in an integer
 			Integer newHolonElementID = getHolonElementService().persist(holonElement);
@@ -59,7 +59,6 @@ public class HolonElementAction extends CommonUtilities {
 			Integer holonElementId = getRequest().getParameter("holonElementId")!=null?Integer.parseInt(getRequest().getParameter("holonElementId")):0;
 			Integer holonElementTypeId = getRequest().getParameter("holonElementTypeId")!=null?Integer.parseInt(getRequest().getParameter("holonElementTypeId")):0;
 			Integer holonElementStateId = getRequest().getParameter("holonElementStateId")!=null?Integer.parseInt(getRequest().getParameter("holonElementStateId")):0;
-			String usage = getRequest().getParameter("usage")!=null?getRequest().getParameter("usage"):"";
 			Integer currentCapacity = getRequest().getParameter("currentCapacity")!=null?Integer.parseInt(getRequest().getParameter("currentCapacity")):0;
 			//?? currentEnergyStatus ??
 			//		String history = getRequest().getParameter("String")!=null?getRequest().getParameter("String"):"";
@@ -71,8 +70,7 @@ public class HolonElementAction extends CommonUtilities {
 			holonElement.setCurrentCapacity(currentCapacity);
 			holonElement.setHolonElementState(holonElementState);
 			holonElement.setHolonElementType(holonElementType);
-			holonElement.setUsage(usage);
-
+			
 			HolonElement holonElement2 = getHolonElementService().merge(holonElement);
 			String dbResponse = "false";
 			if(holonElement2 != null) {
@@ -115,7 +113,6 @@ public class HolonElementAction extends CommonUtilities {
 				listElements.append("<td>"+holonElement.getHolonElementType().getMaxCapacity()+"</td>");
 				listElements.append("<td>"+holonElement.getHolonElementType().getMinCapacity()+"</td>");
 				listElements.append("<td>"+holonElement.getHolonElementState().getName()+"</td>");
-				listElements.append("<td>"+holonElement.getUsage()+"</td>");
 				listElements.append("<td>"+holonElement.getCurrentCapacity()+"</td>");
 				listElements.append("<td><i class=\"fa fa-remove\" onclick=\"deleteHolonElement("+holonElement.getId()+","+holonObjectId+")\"></i></td>");
 				listElements.append("<td><i class=\"fa fa-edit\" onclick=\"editHolonElement("+holonElement.getId()+","+holonObjectId+")\"></i></td>");

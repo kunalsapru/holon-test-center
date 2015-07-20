@@ -17,14 +17,8 @@
         <many-to-one name="holonObject" class="com.htc.hibernate.pojo.HolonObject" fetch="select" lazy="false">
             <column name="holon_object" />
         </many-to-one>
-        <property name="usage" type="string">
-            <column name="[usage]" />
-        </property>
         <property name="currentCapacity" type="java.lang.Integer">
             <column name="current_capacity" />
-        </property>
-        <property name="currentEnergyStatus" type="java.lang.Boolean">
-            <column name="current_energy_status" />
         </property>
         <property name="history" type="binary">
             <column name="history" />

@@ -28,9 +28,27 @@ function deleteHolonElement(holonElementId, holonObjectId) {
 	var options = {
 			holonObjectId : holonObjectId
 	}
-	if(confirm("Are you sure?")) {
-		ajaxRequest("deleteHolonElement", dataAttributes, deleteHolonElementCallBack, options);			
-	}
+	swal({
+		title: "Are you sure?",
+		text: "Do you really want to remove the Holon Element?",
+		type: "warning",
+		showCancelButton: true,
+		confirmButtonColor: '#DD6B55',
+		confirmButtonText: 'Yes, remove!',
+		cancelButtonText: "No, Don't remove!",
+		closeOnConfirm: false,
+		closeOnCancel: false
+	},
+	function(isConfirm){
+    if (isConfirm){
+    	ajaxRequest("deleteHolonElement", dataAttributes, deleteHolonElementCallBack, options);	
+    	 swal("Removed", "Holon Element has been removed", "info");
+    	} else
+    	{
+      swal("Cancelled", "Map has not been cleared", "info");
+    }
+	});
+	
 }
 
 function deleteHolonElementCallBack(data, options) {
@@ -83,7 +101,6 @@ function addHolonElement(){
 			holonElementTypeId : holonElementTypeId,
 			holonElementStateId : holonElementStateId,
 			currentCapacity : currentCapacity,
-			usage : usage,
 			holonObjectId : holonObjectId,
 			holonElementId : holonElementId
 		};

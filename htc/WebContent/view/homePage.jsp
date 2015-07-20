@@ -76,12 +76,8 @@
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;<select id="holonElementState"></select></td>
 					</tr>
 					<tr>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;Current Capacity:</td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;Current Usage/Production:</td>
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;<input id="currentCapacity" type="text"></td>
-					</tr>
-					<tr>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;Usage:</td>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;<input id="usage" type="text"></td>
 					</tr>
 					<tr>
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;<input id="cancelElementInfo" onclick="closeDiv('elementInfo')" type='button' value='Cancel' class="button"/></td>
@@ -195,8 +191,7 @@
 	 		<th>&nbsp;Max. Capacity&nbsp;</th>
 	 		<th>&nbsp;Min. Capacity&nbsp;</th>
 	 		<th>&nbsp;State&nbsp;</th>
-	 		<th>&nbsp;Usage&nbsp;</th>
-	 		<th>&nbsp;Current Capacity&nbsp;</th>
+	 		<th>&nbsp;Current Usage/Production&nbsp;</th>
 	 		<th colspan="3" id="addHolonElementTableHeader"><i class="fa fa-plus-circle"></i>Add Holon Element</th>
  		</tr>
  	</thead>
