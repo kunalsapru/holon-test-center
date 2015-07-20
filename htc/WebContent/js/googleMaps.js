@@ -182,6 +182,7 @@ $(document)
 				    	  $("#holonObjectLatitudeSW").text(latSouthWest);
 				    	  $("#holonObjectLongitudeSW").text(lngSouthWest);
 				    	  if(clickedValuePanel=="addHolonObject"){
+				    		  $("#holonObjectActionState").val("Add");
 				    		  getHolonObjectTypeFromDatabase();
 				    		  getHolonCoordinatorFromDatabase();
 				    	  } else {
@@ -229,45 +230,6 @@ $(document)
 						alert("Holon Element State added succesfully");
 					}
 					
-					
-
-					$(document)
-							.on(
-									"click",
-									"#moreInfo",
-									function() {
-										var clicked = $("#moreInfo").attr(
-												"value");
-										var holonDetail = infowindowArray[clicked]
-												.split("@");
-										if (infowindow) {
-											infowindow.close();
-										}
-										var data = "";
-										var dataForInfoWindow = "";
-										for (var k = 0; k < holonDetail.length - 1; k++) {
-											var individualElementDetail = holonDetail[k]
-													.split("#");
-											for (var l = 0; l < individualElementDetail.length; l++) {
-												data = data
-														+ "</br>"
-														+ individualElementDetail[l]
-											}
-											var content = "<div data-role='collapsible' id='displayHolonDetails"
-													+ k
-													+ "'><h3>Holon Element "
-													+ (k + 1)
-													+ "</h3><p>"
-													+ data + "</p></div>";
-											$("#displayHolonDetails").show();
-											$("#displayHolonDetails").append(
-													content).collapsibleset(
-													'refresh');
-											data = "";
-										}
-
-									});
-
 					$("#clear").click(function() {
 						swal({
 							title: "Are you sure?",

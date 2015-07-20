@@ -137,10 +137,22 @@ public class HolonObjectAction extends CommonUtilities {
 		getHolonObjectService().merge(holonObject);
 		
 		String holonColor=holonObject.getHolonCoordinator().getHolon().getColor();
+		String ne_location = holonObject.getLatLngByNeLocation().getLatitude()+"~"+holonObject.getLatLngByNeLocation().getLongitude();
+		String sw_location = holonObject.getLatLngBySwLocation().getLatitude()+"~"+holonObject.getLatLngBySwLocation().getLongitude();
+		Boolean lineConnectedState = holonObject.getLineConnectedState();		
+		String holonObjectTypeName = holonObject.getHolonObjectType().getName();
+		
+		
 		
 		StringBuffer hoResponse = new StringBuffer();
 		hoResponse.append(holonColor+"!");
-		hoResponse.append(holonObject.getId());
+		hoResponse.append(holonObject.getId()+"!");
+		hoResponse.append(holonCoordinator+"!");
+		hoResponse.append(holonObjectTypeName+"!");
+		hoResponse.append(ne_location+"!");
+		hoResponse.append(sw_location+"!");
+		hoResponse.append(lineConnectedState+"!");
+		hoResponse.append(holonManagerName);
 		//Calling the response function and setting the content type of response.
 		getResponse().setContentType("text/html");		
 		getResponse().getWriter().write(hoResponse.toString());

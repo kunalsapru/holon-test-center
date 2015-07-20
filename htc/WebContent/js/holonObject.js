@@ -2,6 +2,7 @@
  * Java Script file for functions related to holon objects
  */
 
+var editOptions = {};
 function saveHolonObject(){
 	//alert("saveHolonObject");
 	var holonObjectPriority=$("#holonObjectPriority").val();
@@ -29,7 +30,7 @@ function saveHolonObject(){
 			hiddenHolonManagerId : hiddenHolonManagerId
 		};
 	if(holonObjectActionState == "Edit"){
-		ajaxRequest("editHolonObject", dataAttributes, editHolonObjectCallBack, {});
+		ajaxRequest("editHolonObject", dataAttributes, editHolonObjectCallBack, editOptions);
 	} else {
 		ajaxRequest("createHolonObject", dataAttributes, createHolonObjectCallBack, {});							
 	}
@@ -60,16 +61,79 @@ function createHolonCoordinatorCallBack(data,options){
 	alert("Coordinator added Sucessfully");
 }
 
+function editHolonObject(holonObjectId,infowindowHolonObject) {
+	//alert("editHolonObject");
+	var dataAttributes= {
+			holonObjectId : holonObjectId
+	}
+	var options= {
+			infowindowHolonObject : infowindowHolonObject
+	}
+	ajaxRequest("getHolonObjectInfoWindow", dataAttributes, getHolonDetailCallBack, options);
+}
+
+function getHolonDetailCallBack(data, options) {
+	editOptions = options;
+	var dataArray = data.split("!");
+	var holonObjectId = dataArray[0];
+	var holonCoordinatorName_Holon= dataArray[1];	
+	var holonObjectTypeName= dataArray[2];
+	var ne_location= dataArray[3];
+	var sw_location= dataArray[4];
+	var lineConnectedState= dataArray[5];
+	var holonColor= dataArray[6];
+	var holonManagerName= dataArray[7];
+	var ne_latlng=ne_location.split("~");
+	var sw_latlng=sw_location.split("~");
+	 $("#holonObjectLatitudeNE").text(ne_latlng[0]);
+	 $("#holonObjectLongitudeNE").text(ne_latlng[1]);
+	 $("#holonObjectLatitudeSW").text(sw_latlng[0]);
+	 $("#holonObjectLongitudeSW").text(sw_latlng[1]);
+	 $("#holonObjectActionState").val("Edit");
+	 $("#hiddenHolonObjectId").val(holonObjectId);
+	 getHolonObjectTypeFromDatabase();
+	 getHolonCoordinatorFromDatabase();	
+}
+
 function editHolonObjectCallBack(data, options){
-	var resp=data.trim("!");
+	var resp=data.split("!");
 	var holonColor= resp[0];
 	var holonObjectId=resp[1];
-	//alert(createdHolonObject);
-	createdHolonObject.setOptions({strokeColor:holonColor,fillColor: holonColor});
-	//globalHoList[holonObjectId]=createdHolonObject;
-	globalHoList.set(holonObjectId,createdHolonObject);
-	//createdHolonObject=null;
-	//alert(data);
+	var holonCoordinatorName_Holon= resp[2];	
+	var holonObjectTypeName= resp[3];
+	var ne_location= resp[4];
+	var sw_location= resp[5];
+	var lineConnectedState= resp[6];
+	var holonManagerName= resp[7];
+	var lat=ne_location.split("~");
+	//alert(holonColor);
+	contentString="<b>Holon Object Id: </b>"+holonObjectId +"<br>"+
+			"<b>Holon Object Type: </b>"+holonObjectTypeName+"<br>"+
+			"<b>Holon Manager: </b>"+holonManagerName+"<br>"+
+			"<b>North East Location: </b>"+ne_location+"<br>"+
+			"<b>South West Location: </b>"+sw_location+"<br><br>"+
+			"<span class='button'><i class='fa fa-plug'></i>&nbsp;&nbsp;Connect to Power Source</span>&nbsp;&nbsp;&nbsp;&nbsp;"+
+			"<span class='button' id='consumptionGraph'><i class='fa fa-line-chart'></i>&nbsp;&nbsp;Show Consumption</span>&nbsp;&nbsp;&nbsp;&nbsp;"+
+			"<span class='button' id='editHolonObject'><i class='fa fa-pencil-square-o'></i>&nbsp;&nbsp;Edit Holon Object</span>&nbsp;&nbsp;&nbsp;&nbsp;"+
+			"<span class='button' id='showHolonElement' onclick='showHolonElements("+holonObjectId+")'><i class='fa fa-info'></i>&nbsp;&nbsp;Show Holon Elements</span>";
+	
+	var infowindowHolonObject=options["infowindowHolonObject"];
+	infowindowHolonObject.setContent(contentString);
+	$('#editHolonObject').click(function() {
+		editHolonObject(holonObjectId,infowindowHolonObject);			
+	})
+	//infowindowHolonObject.close();	
+	var editedHolonObject=globalHoList.get(holonObjectId);
+	editedHolonObject.setOptions({strokeColor:holonColor,fillColor: holonColor});
+	google.maps.event.addListener(editedHolonObject, 'click', function() {
+		  var dataAttributes= {
+				  holonObjectId : holonObjectId,
+				}
+		 ajaxRequest("getHolonObjectInfoWindow", dataAttributes, getHolonInfoWindowCallBack, {});		  
+		
+	  });
+	globalHoList.set(holonObjectId,editedHolonObject);
+
 }
 function createHolonObjectCallBack(data, options) {
 	var dataArray = data.split("!");
@@ -109,12 +173,16 @@ function getHolonInfoWindowCallBack(data,options)
 			"<b>South West Location: </b>"+sw_location+"<br><br>"+
 			"<span class='button'><i class='fa fa-plug'></i>&nbsp;&nbsp;Connect to Power Source</span>&nbsp;&nbsp;&nbsp;&nbsp;"+
 			"<span class='button' id='consumptionGraph'><i class='fa fa-line-chart'></i>&nbsp;&nbsp;Show Consumption</span>&nbsp;&nbsp;&nbsp;&nbsp;"+
+			"<span class='button' id='editHolonObject'><i class='fa fa-pencil-square-o'></i>&nbsp;&nbsp;Edit Holon Object</span>&nbsp;&nbsp;&nbsp;&nbsp;"+
 			"<span class='button' id='showHolonElement' onclick='showHolonElements("+holonObjectId+")'><i class='fa fa-info'></i>&nbsp;&nbsp;Show Holon Elements</span>";
 	var infowindowHolonObject = new google.maps.InfoWindow({
 	      content: contentString,
 	      position:new google.maps.LatLng(lat[0],lat[1])
 	  });
-	infowindowHolonObject.open(map,map);	
+	infowindowHolonObject.open(map,map);
+	$('#editHolonObject').click(function() {
+		editHolonObject(holonObjectId,infowindowHolonObject);			
+	})
 }
 
 function showHolonObjects() {
@@ -190,11 +258,4 @@ function connectToPowerSource(holonObjectId) {
 function deleteHolonObject(holonObjectId) {
 	alert("Holon Object ID = "+holonObjectId);
 	
-}
-
-function editHolonObject(holonObjectId) {
-	$("#holonObjectActionState").val("Edit");
-	$("#hiddenHolonObjectId").val(holonObjectId);
-	getHolonObjectTypeFromDatabase();
-	getHolonCoordinatorFromDatabase();
 }

@@ -86,7 +86,7 @@
 				</table>
 			</div>
 			<div id="holonObjectDetail">
-				<input type="hidden" id="holonObjectActionState" value="Add" /> 
+				<input type="hidden" id="holonObjectActionState" value="" /> 
 				<input type="hidden" id="hiddenHolonObjectId" value="" />
 				<table id="holonObjectTable">
 					<tr>
