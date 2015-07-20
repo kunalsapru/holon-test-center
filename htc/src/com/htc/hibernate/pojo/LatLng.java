@@ -15,7 +15,6 @@ public class LatLng implements java.io.Serializable {
 	private Set<?> holonObjectsForNeLocation = new HashSet<Object>(0);
 	private Set<?> holonObjectsForDoorLocation = new HashSet<Object>(0);
 	private Set<?> holons = new HashSet<Object>(0);
-	private Set<?> holonCoordinators = new HashSet<Object>(0);
 	private Set<?> powerSources = new HashSet<Object>(0);
 	private Set<?> powerLinesForSource = new HashSet<Object>(0);
 	private Set<?> powerLineNodes = new HashSet<Object>(0);
@@ -33,7 +32,7 @@ public class LatLng implements java.io.Serializable {
 
 	public LatLng(double latitude, double longitude,
 			Set<?> holonObjectsForNeLocation, Set<?> holonObjectsForDoorLocation,
-			Set<?> holons, Set<?> holonCoordinators, Set<?> powerSources,
+			Set<?> holons, Set<?> powerSources,
 			Set<?> powerLinesForSource, Set<?> powerLineNodes,
 			Set<?> holonObjectsForSwLocation, Set<?> powerLinesForDestination,
 			Set<?> powerSwitches) {
@@ -42,7 +41,6 @@ public class LatLng implements java.io.Serializable {
 		this.holonObjectsForNeLocation = holonObjectsForNeLocation;
 		this.holonObjectsForDoorLocation = holonObjectsForDoorLocation;
 		this.holons = holons;
-		this.holonCoordinators = holonCoordinators;
 		this.powerSources = powerSources;
 		this.powerLinesForSource = powerLinesForSource;
 		this.powerLineNodes = powerLineNodes;
@@ -97,14 +95,6 @@ public class LatLng implements java.io.Serializable {
 
 	public void setHolons(Set<?> holons) {
 		this.holons = holons;
-	}
-
-	public Set<?> getHolonCoordinators() {
-		return this.holonCoordinators;
-	}
-
-	public void setHolonCoordinators(Set<?> holonCoordinators) {
-		this.holonCoordinators = holonCoordinators;
 	}
 
 	public Set<?> getPowerSources() {

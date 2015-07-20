@@ -31,7 +31,6 @@ public class HolonCoordinatorAction extends CommonUtilities{
 		//LatLng SeLatLng2 = getLatLngService().findById(SeLocationId);
 		Holon holon = new Holon(coordinatorOfHolon);
 		HolonCoordinator holonCoordinator = new HolonCoordinator();
-		holonCoordinator.setLatLng(NeLatLng2);
 		holonCoordinator.setName(nameCoordinator);
 		holonCoordinator.setHolon(holon);
 		Integer newHolonCoordinatortID = getHolonCoordinatorService().persist(holonCoordinator);

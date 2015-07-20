@@ -11,9 +11,6 @@
         <many-to-one name="holon" class="com.htc.hibernate.pojo.Holon" fetch="select" lazy="false">
             <column name="holon" />
         </many-to-one>
-        <many-to-one name="latLng" class="com.htc.hibernate.pojo.LatLng" fetch="select" lazy="false">
-            <column name="location" />
-        </many-to-one>
         <property name="name" type="string">
             <column name="name" />
         </property>

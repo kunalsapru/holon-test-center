@@ -11,7 +11,6 @@ public class HolonCoordinator implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 	private int id;
 	private Holon holon;
-	private LatLng latLng;
 	private String name;
 	private HolonObject holonObject;
 	private Set<?> holonObjects = new HashSet<Object>(0);
@@ -23,11 +22,10 @@ public class HolonCoordinator implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public HolonCoordinator(int id, Holon holon, LatLng latLng,HolonObject holonObject, String name,
+	public HolonCoordinator(int id, Holon holon, HolonObject holonObject, String name,
 			Set<?> holonObjects) {
 		this.id = id;
 		this.holon = holon;
-		this.latLng = latLng;
 		this.holonObject=holonObject;
 		this.name = name;
 		this.holonObjects = holonObjects;
@@ -47,14 +45,6 @@ public class HolonCoordinator implements java.io.Serializable {
 
 	public void setHolon(Holon holon) {
 		this.holon = holon;
-	}
-
-	public LatLng getLatLng() {
-		return this.latLng;
-	}
-
-	public void setLatLng(LatLng latLng) {
-		this.latLng = latLng;
 	}
 
 	public String getName() {
