@@ -44,7 +44,8 @@ function createPowerSwitchCallBack(data,options)
 	updateGlobalPowerLineList(powerLineBId,false);
 	var circleSwitch = options["circleSwitch"]; 
 	addSwitchInfo(circleSwitch, powerSwitchId);
-	globalPsList[powerSwitchId]=circleSwitch;
+	//globalPsList[powerSwitchId]=circleSwitch;
+	globalPsList.set(powerSwitchId,circleSwitch);
 }
 
 function showSavedPowerSwitches(){
@@ -76,7 +77,8 @@ function getListPowerSwitchCallBack(data,options){
 		     radius: 2
 		    });	
 		addSwitchInfo(circleSwitch, powerSwitchId);
-		globalPsList[powerSwitchId]=circleSwitch;
+		//globalPsList[powerSwitchId]=circleSwitch;
+		globalPsList.set(powerSwitchId,circleSwitch);
 		
 		}
 	
@@ -161,7 +163,8 @@ function SwitchOnOff(circleSwitch,powerSwitchId,infowindowHolonObject)
 	    			};
 		}
 		ajaxRequest("powerSwitchOnOff", dataAttributes, powerSwitchOnOffCallBack,options);
-		globalPsList[powerSwitchId]=circleSwitch;
+		//globalPsList[powerSwitchId]=circleSwitch;
+		globalPsList.set(powerSwitchId,circleSwitch);
 	
 }
 

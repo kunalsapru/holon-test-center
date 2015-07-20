@@ -47,6 +47,8 @@ $(document).ready(function() {
 		    	//alert("line "+lineArray);
 		    	var powerLineType="MAINLINE";
 		    	
+		    	var snappedStart= findSnappedLocation(start);		    	
+		    	
 		    	var dataAttributes = {
 		    			powerLineType : "MAINLINE",
 		    			currentCapacity : 300,
@@ -76,6 +78,32 @@ $(document).ready(function() {
 
 })
 
+function drawPoweLineCallBack(data, options) {
+	var newLineShape = options["newShape"];
+	var dataArray = data.split("!");
+	var powerLineId = dataArray[0];
+	var color = dataArray[1];
+	newLineShape.setOptions({strokeColor:color});
+	addMessageWindow(newLineShape,powerLineId)
+	globalPlList.set(powerLineId, newLineShape);
+}
+
+function findSnappedLocation(location)
+{
+	//alert(globalPlList.get("1").get('strokeColor'));
+	//alert(globalPlList.size);
+	for(var i=0;i< globalPlList.size;i++)
+		{
+		
+		
+		}
+
+
+
+
+}
+
+
 function showSavedPowerLines()
 {
 	ajaxRequest("showPowerLines", {}, showPowerLinesCallBack, {});
@@ -103,23 +131,11 @@ function showPowerLinesCallBack(data, options){
 	        strokeWeight: 4,
 	        map: map
 	    });
-	     addMessageWindow(line,powerLineId)
-	     globalPlList[powerLineId]=line;
+	     addMessageWindow(line,powerLineId);
+	     globalPlList.set(powerLineId, line);
 	}	
 }
 
-
-
-
-function drawPoweLineCallBack(data, options) {
-	var newLineShape = options["newShape"];
-	var dataArray = data.split("!");
-	var powerLineId = dataArray[0];
-	var color = dataArray[1];
-	newLineShape.setOptions({strokeColor:color});
-	addMessageWindow(newLineShape,powerLineId)
-	globalPlList[powerLineId]=newLineShape;	
-}
 
 
 function addMessageWindow(line,powerLineId)
@@ -177,7 +193,8 @@ function updatePowerLineCallBack(data, options)
 	var endLng = location.split("^")[1].split("~")[1];
 	if(toDelete)
 		{
-		globalPlList[powerLineId].setMap(null);
+		//globalPlList[powerLineId].setMap(null);
+		globalPlList.get(powerLineId).setMap(null);
 		}
 	var line = new google.maps.Polyline({
         path: [
@@ -189,7 +206,8 @@ function updatePowerLineCallBack(data, options)
         strokeWeight: 4,
         map: map
     });
-     addMessageWindow(line,powerLineId)
-     globalPlList[powerLineId]=line;
+     addMessageWindow(line,powerLineId);
+    // globalPlList[powerLineId]=line;
+     globalPlList.set(powerLineId,line);
      
 }

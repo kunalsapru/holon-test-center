@@ -66,7 +66,8 @@ function editHolonObjectCallBack(data, options){
 	var holonObjectId=resp[1];
 	//alert(createdHolonObject);
 	createdHolonObject.setOptions({strokeColor:holonColor,fillColor: holonColor});
-	globalHoList[holonObjectId]=createdHolonObject;
+	//globalHoList[holonObjectId]=createdHolonObject;
+	globalHoList.set(holonObjectId,createdHolonObject);
 	//createdHolonObject=null;
 	//alert(data);
 }
@@ -83,7 +84,8 @@ function createHolonObjectCallBack(data, options) {
 		 ajaxRequest("getHolonObjectInfoWindow", dataAttributes, getHolonInfoWindowCallBack, {});		  
 		
 	  });
-	  globalHoList[holonObjectId]=createdHolonObject;
+	  //globalHoList[holonObjectId]=createdHolonObject;
+	  globalHoList.set(holonObjectId,createdHolonObject);
 	//createdHolonObject=null;
 }
 
@@ -161,7 +163,8 @@ function showHolonObjectsCallBack(data, options){
 				  holonObjectId : holonObjectId
 				};
 	    attachMessage(dataAttributes, rectangleFromFactory);
-	    globalHoList[holonObjectId]=rectangleFromFactory;
+	   // globalHoList[holonObjectId]=rectangleFromFactory;
+	    globalHoList.set(holonObjectId,rectangleFromFactory);
 	}	
 }
 
