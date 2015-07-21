@@ -62,7 +62,7 @@ function deleteHolonElementCallBack(data, options) {
 
 function getListHolonElementType(holonElementTypeId) {
 	var options={};
-	if(typeof holonElementTypeId != undefined)
+	if(typeof holonElementTypeId != "undefined")
 		{
 		options={holonElementTypeId:holonElementTypeId};
 		}
@@ -77,8 +77,8 @@ function getListHolonElementTypeCallBack(data,options) {
 	$("#holonElementType").empty();
 	for(var i=0;i<listHolonElementTypeMaster.length-1;i++)
 		{
-		if((typeof holonElementTypeId != undefined)&&(holonElementTypeId==listHolonElementTypeMaster[i].split("-")[0])){
-		var options= "<option value="+listHolonElementTypeMaster[i].split("-")[0]+"id="+listHolonElementTypeMaster[i].split("-")[0]+"selected>"+listHolonElementTypeMaster[i].split("-")[1]+"</option>";
+		if((typeof holonElementTypeId != "undefined")&&(holonElementTypeId==listHolonElementTypeMaster[i].split("-")[0])){
+		var options= "<option value="+listHolonElementTypeMaster[i].split("-")[0]+"id="+listHolonElementTypeMaster[i].split("-")[0]+" selected>"+listHolonElementTypeMaster[i].split("-")[1]+"</option>";
 		$("#holonElementType").append(options);
 		}
 		else
@@ -92,7 +92,7 @@ function getListHolonElementTypeCallBack(data,options) {
 function getListHolonElementState(state)
 {
 	var options={};
-	if(typeof state != undefined)
+	if(typeof state != "undefined")
 		{
 		options={state:state};
 		}
@@ -105,8 +105,8 @@ function getListHolonElementStateCallBack(data,options) {
 	var listHolonElementState= data.split("*");
 	$("#holonElementState").empty();
 	for(var i=0;i<listHolonElementState.length-1;i++) {
-		if((typeof state != undefined)&&(state==listHolonElementState[i].split("-")[0])){
-			var options= "<option value="+listHolonElementState[i].split("-")[0]+" id= "+listHolonElementState[i].split("-")[0]+"selected>"+listHolonElementState[i].split("-")[1]+"</option>";
+		if((typeof state != "undefined")&&(state==listHolonElementState[i].split("-")[0])){
+			var options= "<option value="+listHolonElementState[i].split("-")[0]+" id= "+listHolonElementState[i].split("-")[0]+" selected>"+listHolonElementState[i].split("-")[1]+"</option>";
 			$("#holonElementState").append(options);
 			}
 			else
@@ -163,7 +163,6 @@ function editHolonElementCallBack(data, options) {
 }
 
 function editHolonElement(holonElementId,holonElementTypeId,state,currentCapacity, holonObjectId) {
-	alert("holonElementId "+holonElementId);
 	$("#hiddenHolonObjectId").val(holonObjectId);
 	$("#hiddenHolonElementId").val(holonElementId);
 	$("#holonElementActionState").val("Edit");	

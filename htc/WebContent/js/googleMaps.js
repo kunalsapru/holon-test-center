@@ -363,38 +363,74 @@ $("#holonCoordinatorInformation").popup("open");
 		
 }
 
-function getHolonCoordinatorFromDatabase()
+function getHolonCoordinatorFromDatabase(holonCoordinatorName)
 {
-	ajaxRequest("getListHolonCoordinator", {}, getHolonCoordinatorFromDatabaseCallBack,{});
+	var options={};
+	if(typeof holonCoordinatorName != "undefined")
+		{
+		options={holonCoordinatorName:holonCoordinatorName};
+		}
+	ajaxRequest("getListHolonCoordinator", {}, getHolonCoordinatorFromDatabaseCallBack,options);
 }
 
-function getHolonCoordinatorFromDatabaseCallBack(data,options)
+function getHolonCoordinatorFromDatabaseCallBack(data,option)
 {
+	var holonCoordinatorName="undefined";
+	var holonCoordinatorNameFromOption =option['holonCoordinatorName'];
+	if(typeof holonCoordinatorNameFromOption !="undefined")
+	{
+		holonCoordinatorName=holonCoordinatorNameFromOption.split("_")[0].trim();
+	}
+	//alert(holonCoordinatorName);
 	var listHolonCoordinator= data.split("*");
 	$("#holonCoordinatorId").empty();
 	for(var i=0;i<listHolonCoordinator.length-1;i++)
 	{
-	var options= "<option value="+listHolonCoordinator[i].split("-")[0]+" id= "+listHolonCoordinator[i].split("-")[0]+">"+listHolonCoordinator[i].split("-")[1]+"</option>";
-	$("#holonCoordinatorId").append(options);
+		//alert(listHolonCoordinator[i].split("-")[1].split(" ")[0].trim());
+		if((typeof holonCoordinatorName != "undefined")&&(holonCoordinatorName==listHolonCoordinator[i].split("-")[1].split(" ")[0].trim())){			
+			var options= "<option value="+listHolonCoordinator[i].split("-")[0]+" id= "+listHolonCoordinator[i].split("-")[0]+" selected>"+listHolonCoordinator[i].split("-")[1]+"</option>";
+			$("#holonCoordinatorId").append(options);
+			}
+			else
+			{				
+				var options= "<option value="+listHolonCoordinator[i].split("-")[0]+" id= "+listHolonCoordinator[i].split("-")[0]+">"+listHolonCoordinator[i].split("-")[1]+"</option>";
+				$("#holonCoordinatorId").append(options);
+				}
+		
 	}
 //	$("#holonCoordinatorId").selectmenu('refresh', true);
 
 	openDiv('holonObjectDetail');
 }
 
-function getHolonObjectTypeFromDatabase()
+function getHolonObjectTypeFromDatabase(holonObjectTypeName)
 {
-	ajaxRequest("getListHolonObjectType", {}, getHolonObjectTypeFromDatabaseCallBack, {});
+	var options={};
+	if(typeof holonObjectTypeName != "undefined")
+		{
+		options={holonObjectTypeName:holonObjectTypeName};
+		}
+	
+	ajaxRequest("getListHolonObjectType", {}, getHolonObjectTypeFromDatabaseCallBack, options);
 }
 
-function getHolonObjectTypeFromDatabaseCallBack(data,options)
+function getHolonObjectTypeFromDatabaseCallBack(data,option)
 {
+	var holonObjectTypeName =option['holonObjectTypeName'];
 	var listHolonObjectType= data.split("*");
 	$("#holonObjectType").empty();
 	for(var i=0;i<listHolonObjectType.length-1;i++)
 	{
-	var options= "<option value="+listHolonObjectType[i].split("-")[0]+" id= "+listHolonObjectType[i].split("-")[0]+">"+listHolonObjectType[i].split("-")[1]+"</option>";
-	$("#holonObjectType").append(options);
+		if((typeof holonObjectTypeName != "undefined")&&(holonObjectTypeName==listHolonObjectType[i].split("-")[1].trim())){
+			var options= "<option value="+listHolonObjectType[i].split("-")[0]+" id= "+listHolonObjectType[i].split("-")[0]+" selected>"+listHolonObjectType[i].split("-")[1]+"</option>";
+			$("#holonObjectType").append(options);
+			}
+			else
+			{
+				var options= "<option value="+listHolonObjectType[i].split("-")[0]+" id= "+listHolonObjectType[i].split("-")[0]+">"+listHolonObjectType[i].split("-")[1]+"</option>";
+				$("#holonObjectType").append(options);
+				}
+		
 	}
 //	$("#holonObjectType").selectmenu('refresh', true);
 }

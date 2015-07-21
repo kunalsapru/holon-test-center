@@ -91,8 +91,9 @@ function getHolonDetailCallBack(data, options) {
 	 $("#holonObjectLongitudeSW").text(sw_latlng[1]);
 	 $("#holonObjectActionState").val("Edit");
 	 $("#hiddenHolonObjectId").val(holonObjectId);
-	 getHolonObjectTypeFromDatabase();
-	 getHolonCoordinatorFromDatabase();	
+	 $("#holonManagerName").val(holonManagerName);
+	 getHolonObjectTypeFromDatabase(holonObjectTypeName);
+	 getHolonCoordinatorFromDatabase(holonCoordinatorName_Holon.trim());	
 }
 
 function editHolonObjectCallBack(data, options){
