@@ -1,6 +1,5 @@
 package com.htc.pojo;
 
-import java.util.ArrayList;
 
 
 /**

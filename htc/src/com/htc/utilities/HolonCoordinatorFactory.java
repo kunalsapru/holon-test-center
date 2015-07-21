@@ -28,6 +28,7 @@ public class HolonCoordinatorFactory {
 	 * @param numberOfHolonCoordinators
 	 * @return
 	 */
+	@SuppressWarnings("unused")
 	private static  List<HolonCoordinator> buildHolonCoordinators(int numberOfHolonCoordinators) {//Has to be static because we do not need object of class to call this method
 		List<HolonCoordinator> localHkList=new LinkedList<HolonCoordinator>();
 		log.info("HolonObjectFactory generating Random HolonObjects....");

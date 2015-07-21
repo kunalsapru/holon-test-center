@@ -53,5 +53,11 @@ public class HolonCoordinator {
 	public void contactNeighBourHolonCoordinator(HolonCoordinator Hk){
 		
 	}
+	public LatLng getLatLng() {
+		return latLng;
+	}
+	public void setLatLng(LatLng latLng) {
+		this.latLng = latLng;
+	}
 	
 }

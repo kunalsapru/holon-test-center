@@ -105,4 +105,12 @@ public class PowerLine {
 		this.isConnected = isConnected;
 	}
 
+	public Double getLength() {
+		return length;
+	}
+
+	public void setLength(Double length) {
+		this.length = length;
+	}
+
 }

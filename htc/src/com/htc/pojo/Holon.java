@@ -44,4 +44,16 @@ public class Holon {
 	public void setListOfHo(List<HolonObject> listOfHo) {
 		this.listOfHo = listOfHo;
 	}
+	public LatLng getLatLng() {
+		return latLng;
+	}
+	public void setLatLng(LatLng latLng) {
+		this.latLng = latLng;
+	}
+	public Integer getRadius() {
+		return radius;
+	}
+	public void setRadius(Integer radius) {
+		this.radius = radius;
+	}
 }

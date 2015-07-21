@@ -29,6 +29,9 @@
         <many-to-one name="powerLine" class="com.htc.hibernate.pojo.PowerLine" fetch="select" lazy="false">
             <column name="power_line" />
         </many-to-one>
+        <many-to-one name="energyState" class="com.htc.hibernate.pojo.EnergyState" fetch="select" lazy="false">
+            <column name="supply_state" />
+        </many-to-one>
         <property name="lineConnectedState" type="java.lang.Boolean">
             <column name="line_connected_state" />
         </property>

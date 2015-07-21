@@ -66,6 +66,7 @@ public class HolonObjectFactory {
 	 * @param ho
 	 * @param freq
 	 */
+	@SuppressWarnings("unused")
 	private static void generateRandomValuesForHolonObject(HolonObject ho,int freq[]){
 		
 		ho.setHolonManager(HolonManagerFactory.buildSingleHolonManager());

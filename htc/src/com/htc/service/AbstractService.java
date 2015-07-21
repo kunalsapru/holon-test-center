@@ -1,5 +1,6 @@
 package com.htc.service;
 
+import com.htc.dao.EnergyStateDao;
 import com.htc.dao.HolonCoordinatorDao;
 import com.htc.dao.HolonDao;
 import com.htc.dao.HolonElementDao;
@@ -12,6 +13,7 @@ import com.htc.dao.LatLngDao;
 import com.htc.dao.PowerLineDao;
 import com.htc.dao.PowerSourceDao;
 import com.htc.dao.PowerSwitchDao;
+import com.htc.daoImpl.EnergyStateDaoImpl;
 import com.htc.daoImpl.HolonCoordinatorDaoImpl;
 import com.htc.daoImpl.HolonDaoImpl;
 import com.htc.daoImpl.HolonElementDaoImpl;
@@ -43,6 +45,7 @@ public class AbstractService {
 	private PowerLineDao powerLineDao = new PowerLineDaoImpl();
 	private PowerSwitchDao powerSwitchDao = new PowerSwitchDaoImpl();
 	private PowerSourceDao powerSourceDao = new PowerSourceDaoImpl();
+	private EnergyStateDao energyStateDao =new EnergyStateDaoImpl();
 
 	public HolonDao getHolonDao() {
 		return holonDao;
@@ -115,6 +118,12 @@ public class AbstractService {
 	}
 	public void setPowerSourceDao(PowerSourceDao powerSourceDao) {
 		this.powerSourceDao = powerSourceDao;
+	}
+	public EnergyStateDao getEnergyStateDao() {
+		return energyStateDao;
+	}
+	public void setEnergyStateDao(EnergyStateDao energyStateDao) {
+		this.energyStateDao = energyStateDao;
 	}
 	
 }

@@ -17,6 +17,7 @@ public class DataGeneratorAction extends CommonUtilities {
 	/**
 	 * This action creates data(Holon Objects) and saves them in the database.
 	 */
+	@SuppressWarnings("unused")
 	public void dataGenerator(){
 
 		Integer attr1 = getRequest().getParameter("attr1")!=null?
