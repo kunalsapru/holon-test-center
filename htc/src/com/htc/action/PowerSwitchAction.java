@@ -153,5 +153,28 @@ public class PowerSwitchAction extends CommonUtilities {
 		log.info("Exception in powerSwitchOnOff ");
 		}
 	}
+
+	public void setNewPowerLineForExistingSwitch(PowerLine powerLineB) {
+		ArrayList<PowerSwitch> powerSwitchList = getPowerSwitchService().getAllPowerSwitch();
+		PowerSwitch powerSwitch= null;
+		
+		for(int i=0;i<powerSwitchList.size();i++)
+		{
+			PowerSwitch pSwitch=powerSwitchList.get(i);
+			LatLng switchLocation= pSwitch.getLatLng();
+			if(switchLocation.equals(powerLineB.getLatLngByDestination()))
+			{
+				powerSwitch =pSwitch;
+				break;
+			}				
+		}
+		
+		if(powerSwitch!=null)
+		{
+			powerSwitch.setPowerLineA(powerLineB);
+			getPowerSwitchService().merge(powerSwitch);
+		}
+		
+	}
 }
 

@@ -179,7 +179,6 @@ public class PowerLineAction extends CommonUtilities {
 		LatLng powerLineBEnd=powerLineA.getLatLngByDestination();		
 		powerLineA.setLatLngByDestination(powerLineAEnd);
 		getPowerLineService().merge(powerLineA);
-		
 		PowerLine powerLineB = new PowerLine();
 		powerLineB.setCurrentCapacity(powerLineA.getCurrentCapacity());
 		powerLineB.setIsConnected(powerLineA.isIsConnected());
@@ -190,7 +189,8 @@ public class PowerLineAction extends CommonUtilities {
 		powerLineB.setType(powerLineA.getType());
 		powerLineB.setPowerSource(powerLineA.getPowerSource());		
 		getPowerLineService().persist(powerLineB);
-		
+		//Update any switch connected to new Powerline
+		new PowerSwitchAction().setNewPowerLineForExistingSwitch(powerLineB);		
 		Map<String, PowerLine> powerLineMap = new HashMap<String, PowerLine>();
 		powerLineMap.put("powerLineA", powerLineA);
 		powerLineMap.put("powerLineB", powerLineB);
