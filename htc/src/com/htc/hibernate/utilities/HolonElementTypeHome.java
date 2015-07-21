@@ -1,8 +1,11 @@
 package com.htc.hibernate.utilities;
 
 import java.util.ArrayList;
+
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
 import com.htc.hibernate.config.HibernateSessionFactory;
 import com.htc.hibernate.pojo.HolonElementType;
 
@@ -12,6 +15,7 @@ import com.htc.hibernate.pojo.HolonElementType;
  */
 public class HolonElementTypeHome {
 	
+	static Logger log = Logger.getLogger(HolonElementTypeHome.class);
 	public Integer persist(HolonElementType transientInstance) {
 		Integer holonElementType_id=null;
 		Session session = null;
@@ -37,7 +41,7 @@ public class HolonElementTypeHome {
 			tx.commit();
 			return result;
 		} catch (RuntimeException re) {
-			System.out.println("Merge Failed...");
+			log.info("Merge Failed...");
 			throw re;
 		}
 	}
@@ -45,7 +49,7 @@ public class HolonElementTypeHome {
 	public HolonElementType findById(int id) {
 		Session session = null;
 		Transaction tx = null;
-		System.out.println("Holon Element Type ID = "+id);
+		log.info("Holon Element Type ID = "+id);
 		try {
 			session = HibernateSessionFactory.getSessionFactory().getCurrentSession();
 			tx = session.beginTransaction();
@@ -53,7 +57,7 @@ public class HolonElementTypeHome {
 			tx.commit();
 			return instance;
 		} catch (RuntimeException re) {
-			System.out.println("Exception --> "+re.getMessage());
+			log.info("Exception --> "+re.getMessage());
 			throw re;
 		}
 	}
@@ -70,7 +74,7 @@ public class HolonElementTypeHome {
 			deleteStatus = true;
 			return deleteStatus;
 		} catch (RuntimeException re) {
-			System.out.println("Delete Failed...");
+			log.info("Delete Failed...");
 		}
 		return deleteStatus;
 	}
@@ -83,11 +87,11 @@ public class HolonElementTypeHome {
 		try {
 			session = HibernateSessionFactory.getSessionFactory().getCurrentSession();
 			tx = session.beginTransaction();
-			listHolonElementType = (ArrayList<HolonElementType>) session.createQuery("from HolonElementType h").list();
+			listHolonElementType = (ArrayList<HolonElementType>) session.createQuery("from HolonElementType h order by h.name asc").list();
 			tx.commit();
 			return listHolonElementType;
 		} catch (RuntimeException re) {
-			System.out.println("get holon element type list failed");
+			log.info("get holon element type list failed");
 		}
 		return listHolonElementType;
 	}

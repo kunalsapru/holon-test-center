@@ -60,31 +60,61 @@ function deleteHolonElementCallBack(data, options) {
 	}
 }
 
-function getListHolonElementType() {
-	ajaxRequest("getListHolonElementType", {}, getListHolonElementTypeCallBack, {});
+function getListHolonElementType(holonElementTypeId) {
+	var options={};
+	if(typeof holonElementTypeId != undefined)
+		{
+		options={holonElementTypeId:holonElementTypeId};
+		}
+	
+	
+	ajaxRequest("getListHolonElementType", {}, getListHolonElementTypeCallBack, options);
 }
 
 function getListHolonElementTypeCallBack(data,options) {
+	var holonElementTypeId =options['holonElementTypeId'];
 	var listHolonElementTypeMaster= data.split("*");
 	$("#holonElementType").empty();
 	for(var i=0;i<listHolonElementTypeMaster.length-1;i++)
 		{
-		var options= "<option value="+listHolonElementTypeMaster[i].split("-")[0]+"id="+listHolonElementTypeMaster[i].split("-")[0]+">"+listHolonElementTypeMaster[i].split("-")[1]+"</option>";
+		if((typeof holonElementTypeId != undefined)&&(holonElementTypeId==listHolonElementTypeMaster[i].split("-")[0])){
+		var options= "<option value="+listHolonElementTypeMaster[i].split("-")[0]+"id="+listHolonElementTypeMaster[i].split("-")[0]+"selected>"+listHolonElementTypeMaster[i].split("-")[1]+"</option>";
 		$("#holonElementType").append(options);
 		}
+		else
+		{
+			var options= "<option value="+listHolonElementTypeMaster[i].split("-")[0]+"id="+listHolonElementTypeMaster[i].split("-")[0]+">"+listHolonElementTypeMaster[i].split("-")[1]+"</option>";
+			$("#holonElementType").append(options);
+			}
+}
 }
 
-function getListHolonElementState()
+function getListHolonElementState(state)
 {
-	ajaxRequest("getListHolonElementState", {}, getListHolonElementStateCallBack, {});
+	var options={};
+	if(typeof state != undefined)
+		{
+		options={state:state};
+		}
+	
+	ajaxRequest("getListHolonElementState", {}, getListHolonElementStateCallBack,options);
 }
 
 function getListHolonElementStateCallBack(data,options) {
+	var state =options['state'];
 	var listHolonElementState= data.split("*");
 	$("#holonElementState").empty();
 	for(var i=0;i<listHolonElementState.length-1;i++) {
-		var options= "<option value="+listHolonElementState[i].split("-")[0]+" id= "+listHolonElementState[i].split("-")[0]+">"+listHolonElementState[i].split("-")[1]+"</option>";
-		$("#holonElementState").append(options);
+		if((typeof state != undefined)&&(state==listHolonElementState[i].split("-")[0])){
+			var options= "<option value="+listHolonElementState[i].split("-")[0]+" id= "+listHolonElementState[i].split("-")[0]+"selected>"+listHolonElementState[i].split("-")[1]+"</option>";
+			$("#holonElementState").append(options);
+			}
+			else
+			{
+				var options= "<option value="+listHolonElementState[i].split("-")[0]+" id= "+listHolonElementState[i].split("-")[0]+">"+listHolonElementState[i].split("-")[1]+"</option>";
+				$("#holonElementState").append(options);
+				}
+	
 	}
 }
 
@@ -132,11 +162,13 @@ function editHolonElementCallBack(data, options) {
 	}
 }
 
-function editHolonElement(holonElementId, holonObjectId) {
+function editHolonElement(holonElementId,holonElementTypeId,state,currentCapacity, holonObjectId) {
+	alert("holonElementId "+holonElementId);
 	$("#hiddenHolonObjectId").val(holonObjectId);
 	$("#hiddenHolonElementId").val(holonElementId);
-	$("#holonElementActionState").val("Edit");
-	getListHolonElementType();
-	getListHolonElementState();
+	$("#holonElementActionState").val("Edit");	
+	$("#currentCapacity").val(currentCapacity);
+	getListHolonElementType(holonElementTypeId);
+	getListHolonElementState(state);
 	openDiv('elementInfo');
 }

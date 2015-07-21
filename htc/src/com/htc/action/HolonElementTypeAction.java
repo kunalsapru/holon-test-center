@@ -91,11 +91,21 @@ public class HolonElementTypeAction extends CommonUtilities {
 
 		//Editing holon element type object and saving in database 
 		ArrayList<HolonElementType> holonElementTypes = getHolonElementTypeService().getAllHolonElementType();
+		
 		StringBuffer holonElementTypeNameList = new StringBuffer();
 		String holonElementTypeInfo;
 		for(HolonElementType holonElementType:holonElementTypes){
-			holonElementTypeInfo = holonElementType.getName().concat(" (Max. Capacity:"+holonElementType.getMaxCapacity()).concat(", Min. Capacity:"+holonElementType.getMinCapacity()+")");
+			if(holonElementType.getProducer())
+			{
+			holonElementTypeInfo = holonElementType.getName().
+					concat(" : (Max. Capacity:"+holonElementType.getMaxCapacity()).concat(", Min. Capacity:"+holonElementType.getMinCapacity()+")").concat(" : [Producer]");
+			}else
+			{
+				holonElementTypeInfo = holonElementType.getName().
+						concat(" : (Max. Capacity:"+holonElementType.getMaxCapacity()).concat(", Min. Capacity:"+holonElementType.getMinCapacity()+")").concat(" : [Consumer]");
+			}
 			holonElementTypeNameList.append(holonElementType.getId()+" - "+holonElementTypeInfo+"*\n");
+			log.info(holonElementTypeInfo);
 		}
 		//Calling the response function and setting the content type of response.
 		getResponse().setContentType("text/html");

@@ -96,7 +96,10 @@ $(document)
 					});
 					
 					$("#cancelHolonObject").click(function(event){
-						createdHolonObject.setMap(null);
+						if(createdHolonObject!=null && typeof createdHolonObject != undefined)
+							{
+							createdHolonObject.setMap(null);
+							}
 						closeDiv("holonObjectDetail");
 					});
 					
