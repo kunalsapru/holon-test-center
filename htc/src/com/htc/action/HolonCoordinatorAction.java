@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 
 import com.htc.hibernate.pojo.Holon;
 import com.htc.hibernate.pojo.HolonCoordinator;
+import com.htc.hibernate.pojo.HolonObject;
 import com.htc.hibernate.pojo.LatLng;
 import com.htc.utilities.CommonUtilities;
 
@@ -70,6 +71,42 @@ public class HolonCoordinatorAction extends CommonUtilities{
 			System.out.println("Exception");
 			log.debug("Exception "+e.getMessage()+" occurred in action getListHolonCoordinator()");
 			e.printStackTrace();
+		}
+	}
+
+
+	public synchronized void chooseCoordinator(Integer holonCoordinatorId) {
+		log.info("Abhinav is fool "+holonCoordinatorId);
+		HolonCoordinator hCoordinator= getHolonCoordinatorService().findById(holonCoordinatorId);
+		
+		ArrayList<HolonObject> hoList= getHolonObjectService().findByHCoordinator(hCoordinator);
+		if(hoList != null){
+		log.info("The length of Holon List for this co ordinator is "+hoList.size());
+		}
+		HolonObject fHoObj =null;
+		if(hoList!=null && hoList.size()==1)
+		{
+			log.info("There is only one holon Object for this coordinator");	
+			fHoObj = hoList.get(0);
+			
+		}else if(hoList!=null && hoList.size()>1)
+		{
+			fHoObj=hoList.get(0);
+			log.info("There are more than one holon Object for this coordinator");			
+			for (int i=1;i<hoList.size();i++) {			   
+			    	int compareResult= hoList.get(i).compareTo(fHoObj);
+			    	if(compareResult==1)
+			    	{
+			    		log.info("setting id as coordinator "+hCoordinator.getHolonObject().getId());
+			    		fHoObj=hoList.get(i);			    		
+			    	}
+			 	}
+			log.info("Id of Holon Set as coordinator is "+hCoordinator.getHolonObject().getId());				
+		}
+		if(fHoObj != null)
+		{
+		hCoordinator.setHolonObject(fHoObj);
+		getHolonCoordinatorService().merge(hCoordinator);		
 		}
 	}
 	

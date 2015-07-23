@@ -3,6 +3,7 @@ package com.htc.daoImpl;
 import java.util.ArrayList;
 
 import com.htc.dao.HolonObjectDao;
+import com.htc.hibernate.pojo.HolonCoordinator;
 import com.htc.hibernate.pojo.HolonObject;
 import com.htc.hibernate.utilities.HolonObjectHome;
 
@@ -41,6 +42,12 @@ public class HolonObjectDaoImpl implements HolonObjectDao {
 	@Override
 	public ArrayList<HolonObject> getAllHolonObject() {
 		return getHolonObjectHome().getAllHolonObject();
+	}
+
+	@Override
+	public ArrayList<HolonObject> findByHCoordinator(HolonCoordinator holonCoordinator) {
+		
+		return getHolonObjectHome().findByHCoordinator(holonCoordinator);
 	}
 
 }

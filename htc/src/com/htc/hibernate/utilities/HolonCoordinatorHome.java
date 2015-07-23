@@ -42,7 +42,7 @@ public class HolonCoordinatorHome {
 		}
 	}
 
-	public HolonCoordinator findById(int id) {
+	public synchronized HolonCoordinator findById(int id) {
 		Session session = null;
 		Transaction tx = null;
 		try {

@@ -41,7 +41,7 @@
         <property name="consumption" type="java.lang.Integer">
             <column name="consumption" />
         </property>
-        <set name="holonElements" table="holon_element" inverse="true" lazy="true" fetch="select">
+        <set name="holonElements" table="holon_element" inverse="true" lazy="false" fetch="select">
             <key>
                 <column name="holon_object" />
             </key>

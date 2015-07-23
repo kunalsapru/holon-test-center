@@ -1,9 +1,14 @@
 package com.htc.hibernate.utilities;
 
 import java.util.ArrayList;
+
+import org.apache.log4j.Logger;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
 import com.htc.hibernate.config.HibernateSessionFactory;
+import com.htc.hibernate.pojo.HolonCoordinator;
 import com.htc.hibernate.pojo.HolonObject;
 
 /**
@@ -11,6 +16,7 @@ import com.htc.hibernate.pojo.HolonObject;
  * @see .HolonObject
  */
 public class HolonObjectHome {
+	static Logger log = Logger.getLogger(HolonObjectHome.class);
 	
 	public Integer persist(HolonObject transientInstance) {
 		Integer holonObject_id=null;
@@ -37,7 +43,7 @@ public class HolonObjectHome {
 			tx.commit();
 			return result;
 		} catch (RuntimeException re) {
-			System.out.println("Merge Failed...");
+			log.info("Merge Failed...");
 			throw re;
 		}
 	}
@@ -52,9 +58,31 @@ public class HolonObjectHome {
 			tx.commit();
 			return instance;
 		} catch (RuntimeException re) {
-			System.out.println("Exception --> "+re.getMessage());
+			log.info("Exception --> "+re.getMessage());
 			throw re;
 		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public ArrayList<HolonObject> findByHCoordinator(HolonCoordinator holonCoordinator) {
+		log.info("Abhinav holonCoordinator value --> "+holonCoordinator);
+		Session session = null;
+		Transaction tx = null;
+		ArrayList<HolonObject> listHolonObject = null;
+		try {
+			session = HibernateSessionFactory.getSessionFactory().getCurrentSession();
+			tx = session.beginTransaction();
+			Query qr= session.createQuery("from HolonObject h where h.holonCoordinator=:holonCoordinator");
+			qr.setEntity("holonCoordinator", holonCoordinator);
+			listHolonObject =  (ArrayList<HolonObject>) qr.list();
+			tx.commit();
+			return listHolonObject;
+		} catch (RuntimeException re) {
+			log.info("Exception --> "+re.getMessage());
+			re.printStackTrace();
+		
+		}
+		return listHolonObject;
 	}
 
 	public boolean delete(HolonObject persistentInstance) {
@@ -69,7 +97,7 @@ public class HolonObjectHome {
 			deleteStatus = true;
 			return deleteStatus;
 		} catch (RuntimeException re) {
-			System.out.println("Delete Failed...");
+			log.info("Delete Failed...");
 		}
 		return deleteStatus;
 	}
@@ -86,7 +114,7 @@ public class HolonObjectHome {
 			tx.commit();
 			return listHolonObject;
 		} catch (RuntimeException re) {
-			System.out.println("get holon Object list failed");
+			log.info("get holon Object list failed");
 		}
 		return listHolonObject;
 	}

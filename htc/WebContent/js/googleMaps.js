@@ -10,6 +10,8 @@ $(document)
 					window.globalHoList=new Map();
 					window.globalPlList=new Map();
 					window.globalPsList=new Map();
+					window.globalHKList=new Map();
+					window.globalHPList=new Map();
 					var drawingManager;
 					var clickedValuePanel;
 					var startPowerLine;

@@ -2,6 +2,7 @@ package com.htc.serviceImpl;
 
 import java.util.ArrayList;
 
+import com.htc.hibernate.pojo.HolonCoordinator;
 import com.htc.hibernate.pojo.HolonObject;
 import com.htc.service.AbstractService;
 import com.htc.service.HolonObjectService;
@@ -31,6 +32,11 @@ public class HolonObjectServiceImpl extends AbstractService implements HolonObje
 	@Override
 	public ArrayList<HolonObject> getAllHolonObject() {
 		return getHolonObjectDao().getAllHolonObject();
+	}
+
+	@Override
+	public ArrayList<HolonObject> findByHCoordinator(HolonCoordinator holonCoordinator) {
+		return getHolonObjectDao().findByHCoordinator(holonCoordinator);
 	}
 
 }
