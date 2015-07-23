@@ -36,31 +36,6 @@ function saveHolonObject(){
 	}
 }
 
-function saveCoordinator(){
-	
-	var nameCoordinator =$("#nameCoordinator").val();
-	var latNE=$("#holonObjectLatitudeNE").text();
-	var lngNE=$("#holonObjectLongitudeNE").text();
-	var latSW=$("#holonObjectLatitudeSW").text();
-	var lngSW=$("#holonObjectLongitudeSW").text();
-	var coordinatorHolon=$("#holon").val();
-	var dataAttributes= {
-			latNE : latNE,
-			lngNE : lngNE,
-			latSW : latSW,
-			lngSW : lngSW,
-			coordinatorHolon : coordinatorHolon,
-			nameCoordinator : nameCoordinator
-	}
-	ajaxRequest("createHolonCoordinator", dataAttributes, createHolonCoordinatorCallBack, {});
-}
-
-function createHolonCoordinatorCallBack(data,options){
-	
-	$("#holonCoordinatorInformation").popup("close");
-	alert("Coordinator added Sucessfully");
-}
-
 function editHolonObject(holonObjectId,infowindowHolonObject) {
 	//alert("editHolonObject");
 	var dataAttributes= {
