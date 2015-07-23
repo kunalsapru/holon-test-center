@@ -55,6 +55,7 @@ function deleteHolonElementCallBack(data, options) {
 	if(data == "true"){
 		var holonObjectId = options['holonObjectId'];
 		showHolonElements(holonObjectId);
+		updateCoordinator();
 	} else {
 		alert("Error in deleting Holon Element. Please check application logs.")
 	}
@@ -145,7 +146,9 @@ function addHolonElementCallBack(data, options) {
 	if(data == "true"){
 		var holonObjectId = options['holonObjectId'];
 		closeDiv('elementInfo');
+		updateCoordinator();
 		showHolonElements(holonObjectId);
+		
 	} else {
 		alert("Error in adding Holon Element. Please check application logs.")
 	}
@@ -156,7 +159,9 @@ function editHolonElementCallBack(data, options) {
 	if(data == "true"){
 		var holonObjectId = options['holonObjectId'];
 		closeDiv('elementInfo');
+		updateCoordinator();
 		showHolonElements(holonObjectId);
+		
 	} else {
 		alert("Error in editing Holon Element. Please check application logs.")
 	}
@@ -170,4 +175,67 @@ function editHolonElement(holonElementId,holonElementTypeId,state,currentCapacit
 	getListHolonElementType(holonElementTypeId);
 	getListHolonElementState(state);
 	openDiv('elementInfo');
+}
+
+function updateCoordinator()
+{
+	ajaxRequest("updateCoordinator", {}, updateCoordinatorCallBack, {});
+
+}
+
+function updateCoordinatorCallBack(data,options)
+{
+	var coObjIdBlue=data.split("*")[0];
+	var coObjIdGreen=data.split("*")[1];
+	var coObjIdYellow=data.split("*")[2];
+	var coObjIdRed=data.split("*")[3];
+	
+	var blueObj=globalHoList.get(coObjIdBlue.toString());
+	if(typeof blueObj != "undefined")
+	{		
+		var cLocation=blueObj.getBounds().getNorthEast();
+		var blueCObject=globalHKList.get("blue");
+		if(typeof blueCObject != "undefined")
+		{		
+			blueCObject.setOptions({center:cLocation});
+			globalHKList.set("blue",blueCObject);
+		}
+	}
+	
+	var greenObj=globalHoList.get(coObjIdGreen.toString());
+	if(typeof greenObj != "undefined")
+	{		
+		var cLocation=greenObj.getBounds().getNorthEast();
+		var greenCObject=globalHKList.get("green");
+		if(typeof greenCObject != "undefined")
+		{		
+			greenCObject.setOptions({center:cLocation});
+			globalHKList.set("green",greenCObject);
+		}
+	}
+
+	var yellowObj=globalHoList.get(coObjIdYellow.toString());
+	if(typeof yellowObj != "undefined")
+	{		
+		var cLocation=yellowObj.getBounds().getNorthEast();
+		var yellowCObject=globalHKList.get("yellow");
+		if(typeof yellowCObject != "undefined")
+		{		
+			yellowCObject.setOptions({center:cLocation});
+			globalHKList.set("yellow",yellowCObject);
+		}
+	}
+	
+	var redObj=globalHoList.get(coObjIdRed.toString());
+	if(typeof redObj != "undefined")
+	{		
+		var cLocation=redObj.getBounds().getNorthEast();
+		var redCObject=globalHKList.get("red");
+		if(typeof redCObject != "undefined")
+		{		
+			redCObject.setOptions({center:cLocation});
+			globalHKList.set("red",redCObject);
+		}
+	}
+	
 }

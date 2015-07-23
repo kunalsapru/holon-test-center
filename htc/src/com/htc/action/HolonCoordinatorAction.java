@@ -1,5 +1,6 @@
 package com.htc.action;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
@@ -9,6 +10,7 @@ import com.htc.hibernate.pojo.HolonCoordinator;
 import com.htc.hibernate.pojo.HolonObject;
 import com.htc.hibernate.pojo.LatLng;
 import com.htc.utilities.CommonUtilities;
+import com.htc.utilities.ConstantValues;
 
 public class HolonCoordinatorAction extends CommonUtilities{
 
@@ -107,6 +109,49 @@ public class HolonCoordinatorAction extends CommonUtilities{
 		{
 		hCoordinator.setHolonObject(fHoObj);
 		getHolonCoordinatorService().merge(hCoordinator);		
+		}
+	}
+	
+	
+	public void updateCoordinator()
+	{
+		try {
+			chooseCoordinator(ConstantValues.HOLON_CO_BLUE);
+			chooseCoordinator(ConstantValues.HOLON_CO_GREEN);
+			chooseCoordinator(ConstantValues.HOLON_CO_YELLOW);
+			chooseCoordinator(ConstantValues.HOLON_CO_RED);
+			Integer hoCoObIdBlue=0;
+			Integer hoCoObIdGreen=0;
+			Integer hoCoObIdYellow=0;
+			Integer hoCoObIdRed=0;
+			HolonObject hoCoBlue=getHolonCoordinatorService().findById(ConstantValues.HOLON_CO_BLUE).getHolonObject();
+			HolonObject hoCoGreen=getHolonCoordinatorService().findById(ConstantValues.HOLON_CO_GREEN).getHolonObject();
+			HolonObject hoCoYellow=getHolonCoordinatorService().findById(ConstantValues.HOLON_CO_YELLOW).getHolonObject();
+			HolonObject hoCoRed=getHolonCoordinatorService().findById(ConstantValues.HOLON_CO_RED).getHolonObject();
+			if(hoCoBlue!=null)
+			{
+				hoCoObIdBlue= hoCoBlue.getId();
+			}
+			if(hoCoGreen!=null)
+			{
+				hoCoObIdGreen= hoCoBlue.getId();
+			}
+			if(hoCoYellow!=null)
+			{
+				hoCoObIdYellow= hoCoBlue.getId();
+			}
+			if(hoCoRed!=null)
+			{
+				hoCoObIdRed= hoCoBlue.getId();
+			}
+			
+			String response = hoCoObIdBlue+"*"+hoCoObIdGreen+"*"+hoCoObIdYellow+"*"+hoCoObIdRed;
+			
+			getResponse().setContentType("text/html");
+			getResponse().getWriter().write(response);
+		} catch (IOException e) {
+			
+			e.printStackTrace();
 		}
 	}
 	

@@ -123,6 +123,7 @@ function editHolonObjectCallBack(data, options){
 	$('#editHolonObject').click(function() {
 		editHolonObject(holonObjectId,infowindowHolonObject);			
 	})
+	currentInfoWindowObject=infowindowHolonObject;
 	//infowindowHolonObject.close();	
 	var editedHolonObject=globalHoList.get(holonObjectId);
 	editedHolonObject.setOptions({strokeColor:holonColor,fillColor: holonColor});
@@ -213,6 +214,7 @@ function getHolonInfoWindowCallBack(data,options)
 	$('#editHolonObject').click(function() {
 		editHolonObject(holonObjectId,infowindowHolonObject);			
 	})
+	currentInfoWindowObject=infowindowHolonObject;
 }
 
 function showHolonObjects() {

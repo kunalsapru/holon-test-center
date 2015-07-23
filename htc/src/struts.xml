@@ -83,6 +83,9 @@
 			method="showConsumptionGraph" />
 
 
+		<action name="updateCoordinator" class="com.htc.action.HolonCoordinatorAction"
+			method="updateCoordinator" />
+
 
 		<!--SWITCH LEVEL -->
 		<action name="createPowerSwitch" class="com.htc.action.PowerSwitchAction"

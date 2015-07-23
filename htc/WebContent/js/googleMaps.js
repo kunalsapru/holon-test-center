@@ -12,6 +12,7 @@ $(document)
 					window.globalPsList=new Map();
 					window.globalHKList=new Map();
 					window.globalHPList=new Map();
+					window.currentInfoWindowObject=null;
 					var drawingManager;
 					var clickedValuePanel;
 					var startPowerLine;
