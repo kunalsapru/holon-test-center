@@ -54,10 +54,12 @@ function deleteHolonElement(holonElementId, holonObjectId) {
 }
 
 function deleteHolonElementCallBack(data, options) {
-	if(data == "true"){
+	var resp =data.split("*");
+	if(resp[0] == "true"){
 		var holonObjectId = options['holonObjectId'];
 		showHolonElements(holonObjectId);
-		updateCoordinator();
+		updateCoordinator(resp[1],resp[2]);		
+		
 	} else {
 		alert("Error in deleting Holon Element. Please check application logs.")
 	}
@@ -145,10 +147,11 @@ function addHolonElement(){
 }
 
 function addHolonElementCallBack(data, options) {
-	if(data == "true"){
+	var resp =data.split("*");
+	if(resp[0] == "true"){
 		var holonObjectId = options['holonObjectId'];
 		closeDiv('elementInfo');
-		updateCoordinator();
+		updateCoordinator(resp[1],resp[2]);
 		showHolonElements(holonObjectId);
 		
 	} else {
@@ -158,10 +161,11 @@ function addHolonElementCallBack(data, options) {
 
 function editHolonElementCallBack(data, options) {
 	$("#holonElementActionState").val("");
-	if(data == "true"){
+	var resp =data.split("*");
+	if(resp[0]  == "true"){
 		var holonObjectId = options['holonObjectId'];
 		closeDiv('elementInfo');
-		updateCoordinator();
+		updateCoordinator(resp[1],resp[2]);
 		showHolonElements(holonObjectId);
 		
 	} else {
@@ -179,9 +183,15 @@ function editHolonElement(holonElementId,holonElementTypeId,state,currentCapacit
 	openDiv('elementInfo');
 }
 
-function updateCoordinator()
+function updateCoordinator(holonObjectId,hoCoObjIdOld)
 {
-	ajaxRequest("updateCoordinator", {}, updateCoordinatorCallBack, {});
+	
+	var dataAttributes = {
+			holonObjectId : holonObjectId,
+			hoCoObjIdOld : hoCoObjIdOld,
+			
+		};
+	ajaxRequest("updateCoordinator", dataAttributes, updateCoordinatorCallBack, {});
 
 }
 
@@ -191,7 +201,9 @@ function updateCoordinatorCallBack(data,options)
 	var coObjIdGreen=data.split("*")[1];
 	var coObjIdYellow=data.split("*")[2];
 	var coObjIdRed=data.split("*")[3];
-	
+	var itsOwnCoStatusChanged=data.split("*")[4];
+	var changedToCoord=data.split("*")[5];
+	 updateInfoWindow(itsOwnCoStatusChanged,changedToCoord);
 	//alert(coObjIdBlue+coObjIdGreen+coObjIdYellow+coObjIdRed);
 	var blueObj=globalHoList.get(coObjIdBlue.toString());
 	if(typeof blueObj != "undefined")
@@ -248,5 +260,28 @@ function updateCoordinatorCallBack(data,options)
 			globalHKList.set("red",redCObject);
 		}
 	}
+
+	
+}
+
+function updateInfoWindow(itsOwnCoStatusChanged,changedToCoord)
+{
+	
+	var infoWindow = currentInfoWindowObject;	
+	var content = infoWindow.getContent();
+	var finalCont="";
+	if(itsOwnCoStatusChanged=="true")
+		{
+			if(changedToCoord)
+				{
+				finalCont=content.concat("<h3 align=\"center\">Holon Details</h3>");			
+				}
+			else
+				{
+				finalCont=content.replace("<h3 align=\"center\">Holon Details</h3>","");	
+				}
+			infoWindow.setContent(finalCont);
+		
+		}
 	
 }

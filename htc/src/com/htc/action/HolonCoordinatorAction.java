@@ -123,6 +123,8 @@ public class HolonCoordinatorAction extends CommonUtilities{
 	public void updateCoordinator()
 	{
 		try {
+			Integer holonObjectId = getRequest().getParameter("holonObjectId")!=null?Integer.parseInt(getRequest().getParameter("holonObjectId")):0;
+			Integer hoCoObjIdOld = getRequest().getParameter("hoCoObjIdOld")!=null?Integer.parseInt(getRequest().getParameter("hoCoObjIdOld")):0;
 			chooseCoordinator(ConstantValues.HOLON_CO_BLUE);
 			chooseCoordinator(ConstantValues.HOLON_CO_GREEN);
 			chooseCoordinator(ConstantValues.HOLON_CO_YELLOW);
@@ -152,7 +154,14 @@ public class HolonCoordinatorAction extends CommonUtilities{
 				hoCoObIdRed= hoCoRed.getId();
 			}
 			
-			String response = hoCoObIdBlue+"*"+hoCoObIdGreen+"*"+hoCoObIdYellow+"*"+hoCoObIdRed;
+			Integer neCoHoObjId= getHolonObjectService().findById(holonObjectId).getHolonCoordinator().getHolonObject().getId();
+			
+			ArrayList <Boolean> coChangeStatusList = checkForCoordinatorChange(holonObjectId, neCoHoObjId, hoCoObjIdOld);
+			
+			boolean itsOwnCoStatusChanged=coChangeStatusList.get(0);
+			boolean changedToCoord = coChangeStatusList.get(1);
+			
+			String response = hoCoObIdBlue+"*"+hoCoObIdGreen+"*"+hoCoObIdYellow+"*"+hoCoObIdRed+"*"+itsOwnCoStatusChanged+"*"+changedToCoord;
 			
 			getResponse().setContentType("text/html");
 			getResponse().getWriter().write(response);
@@ -161,6 +170,26 @@ public class HolonCoordinatorAction extends CommonUtilities{
 			e.printStackTrace();
 		}
 	}
-	
+	private ArrayList<Boolean> checkForCoordinatorChange(Integer holonObjectId,Integer hoCoObjId,Integer hoCoObjIdOld)
+	{
+		ArrayList <Boolean>resultList =new ArrayList<Boolean>();
+		boolean itsOwnCoStatusChanged=true;
+		boolean changedToCoord=false;
+		if(((hoCoObjIdOld==holonObjectId)&&(hoCoObjId==holonObjectId))||((hoCoObjIdOld!=holonObjectId)&&(hoCoObjId!=holonObjectId)))
+		{
+			itsOwnCoStatusChanged=false;
+		}
+		if(itsOwnCoStatusChanged)
+		{
+			if(((hoCoObjIdOld!=holonObjectId)&&(hoCoObjId==holonObjectId)))
+			{
+				changedToCoord=true;
+			}
+			
+		}
+		resultList.add(itsOwnCoStatusChanged);
+		resultList.add(changedToCoord);
+		return resultList;
+	}
 
 }
