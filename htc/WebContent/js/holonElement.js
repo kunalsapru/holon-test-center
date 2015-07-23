@@ -15,7 +15,9 @@ function showHolonElementsCallBack(data, options) {
 		openDiv('elementInfo');
 	});
 	$("#saveElementInfo").click(function(){
-		  addHolonElement();
+		
+			addHolonElement();
+			
 	  });
 	$("#holonElementsListBody").html(data);
 	openDiv("divHolonElementsDetail");
@@ -190,13 +192,16 @@ function updateCoordinatorCallBack(data,options)
 	var coObjIdYellow=data.split("*")[2];
 	var coObjIdRed=data.split("*")[3];
 	
+	//alert(coObjIdBlue+coObjIdGreen+coObjIdYellow+coObjIdRed);
 	var blueObj=globalHoList.get(coObjIdBlue.toString());
 	if(typeof blueObj != "undefined")
 	{		
+		//alert("1");
 		var cLocation=blueObj.getBounds().getNorthEast();
 		var blueCObject=globalHKList.get("blue");
 		if(typeof blueCObject != "undefined")
 		{		
+			//alert("11");
 			blueCObject.setOptions({center:cLocation});
 			globalHKList.set("blue",blueCObject);
 		}
@@ -205,10 +210,12 @@ function updateCoordinatorCallBack(data,options)
 	var greenObj=globalHoList.get(coObjIdGreen.toString());
 	if(typeof greenObj != "undefined")
 	{		
+		//alert("2");
 		var cLocation=greenObj.getBounds().getNorthEast();
 		var greenCObject=globalHKList.get("green");
 		if(typeof greenCObject != "undefined")
 		{		
+			//alert("22");
 			greenCObject.setOptions({center:cLocation});
 			globalHKList.set("green",greenCObject);
 		}
@@ -217,10 +224,12 @@ function updateCoordinatorCallBack(data,options)
 	var yellowObj=globalHoList.get(coObjIdYellow.toString());
 	if(typeof yellowObj != "undefined")
 	{		
+		//alert("3");
 		var cLocation=yellowObj.getBounds().getNorthEast();
 		var yellowCObject=globalHKList.get("yellow");
 		if(typeof yellowCObject != "undefined")
 		{		
+			//alert("33");
 			yellowCObject.setOptions({center:cLocation});
 			globalHKList.set("yellow",yellowCObject);
 		}
@@ -229,10 +238,12 @@ function updateCoordinatorCallBack(data,options)
 	var redObj=globalHoList.get(coObjIdRed.toString());
 	if(typeof redObj != "undefined")
 	{		
+		//alert("4");
 		var cLocation=redObj.getBounds().getNorthEast();
 		var redCObject=globalHKList.get("red");
 		if(typeof redCObject != "undefined")
 		{		
+			//alert("44");
 			redCObject.setOptions({center:cLocation});
 			globalHKList.set("red",redCObject);
 		}

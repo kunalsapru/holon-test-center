@@ -32,4 +32,6 @@ public class HolonCoordinatorServiceImpl extends AbstractService implements Holo
 		return getHolonCoordinatorDao().getAllHolonCoordinator();
 	}
 
+
+
 }

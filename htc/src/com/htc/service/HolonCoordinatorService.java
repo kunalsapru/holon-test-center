@@ -10,5 +10,4 @@ public interface HolonCoordinatorService {
 	public HolonCoordinator findById(int holonCoordinatorId);
 	public boolean delete(HolonCoordinator persistentInstance);
 	public ArrayList<HolonCoordinator> getAllHolonCoordinator();
-	
 }

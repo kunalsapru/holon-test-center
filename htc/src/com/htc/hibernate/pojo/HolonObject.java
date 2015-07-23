@@ -32,6 +32,10 @@ public class HolonObject implements java.io.Serializable, Comparable{
 	public HolonObject() {
 	}
 
+	public HolonObject(HolonCoordinator holonCoordinator) {
+		this.holonCoordinator = holonCoordinator;
+	}
+	
 	public HolonObject(int id, HolonCoordinator holonCoordinator) {
 		this.id = id;
 		this.holonCoordinator = holonCoordinator;

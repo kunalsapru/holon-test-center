@@ -1,8 +1,10 @@
 package com.htc.hibernate.utilities;
 
 import java.util.ArrayList;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
 import com.htc.hibernate.config.HibernateSessionFactory;
 import com.htc.hibernate.pojo.HolonCoordinator;
 
@@ -90,5 +92,4 @@ public class HolonCoordinatorHome {
 		}
 		return listHolonCoordinator;
 	}
-
 }

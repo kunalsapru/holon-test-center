@@ -86,13 +86,19 @@ public class HolonCoordinatorAction extends CommonUtilities{
 		log.info("The length of Holon List for this co ordinator is "+hoList.size());
 		}
 		HolonObject fHoObj =null;
-		if(hoList!=null && hoList.size()==1)
-		{
+		if(hoList!=null){
+			if(hoList.size()==0)
+			{
+				//To do write code to handle this case.
+				//fHoObj= new HolonObject(hCoordinator); 
+			}
+			else if(hoList.size()==1)
+			{
 			log.info("There is only one holon Object for this coordinator");	
 			fHoObj = hoList.get(0);
 			
-		}else if(hoList!=null && hoList.size()>1)
-		{
+			}else if(hoList.size()>1)
+			{
 			fHoObj=hoList.get(0);
 			log.info("There are more than one holon Object for this coordinator");			
 			for (int i=1;i<hoList.size();i++) {			   
@@ -104,7 +110,8 @@ public class HolonCoordinatorAction extends CommonUtilities{
 			    	}
 			 	}
 			log.info("Id of Holon Set as coordinator is "+hCoordinator.getHolonObject().getId());				
-		}
+			}
+	}
 		if(fHoObj != null)
 		{
 		hCoordinator.setHolonObject(fHoObj);
@@ -134,15 +141,15 @@ public class HolonCoordinatorAction extends CommonUtilities{
 			}
 			if(hoCoGreen!=null)
 			{
-				hoCoObIdGreen= hoCoBlue.getId();
+				hoCoObIdGreen= hoCoGreen.getId();
 			}
 			if(hoCoYellow!=null)
 			{
-				hoCoObIdYellow= hoCoBlue.getId();
+				hoCoObIdYellow= hoCoYellow.getId();
 			}
 			if(hoCoRed!=null)
 			{
-				hoCoObIdRed= hoCoBlue.getId();
+				hoCoObIdRed= hoCoRed.getId();
 			}
 			
 			String response = hoCoObIdBlue+"*"+hoCoObIdGreen+"*"+hoCoObIdYellow+"*"+hoCoObIdRed;
