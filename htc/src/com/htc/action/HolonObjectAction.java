@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 
 import com.htc.hibernate.pojo.HolonCoordinator;
+import com.htc.hibernate.pojo.HolonElement;
 import com.htc.hibernate.pojo.HolonManager;
 import com.htc.hibernate.pojo.HolonObject;
 import com.htc.hibernate.pojo.HolonObjectType;
@@ -206,12 +208,6 @@ public class HolonObjectAction extends CommonUtilities {
 		try {			
 			ArrayList<String> hoListArray = new ArrayList<String>();
 			HolonObject holonObject = null;
-			String ne_location;
-			String sw_location;
-			String holonColor;
-			Integer holonObjectId;
-			Integer coordHolonObjectId;		
-			HolonCoordinator hc;
 			new HolonCoordinatorAction().chooseCoordinator(ConstantValues.HOLON_CO_BLUE);
 			new HolonCoordinatorAction().chooseCoordinator(ConstantValues.HOLON_CO_GREEN);
 			new HolonCoordinatorAction().chooseCoordinator(ConstantValues.HOLON_CO_YELLOW);
@@ -220,12 +216,22 @@ public class HolonObjectAction extends CommonUtilities {
 			ArrayList<HolonObject> holonObjectList = getHolonObjectService().getAllHolonObject();
 			for(int i=0; i<holonObjectList.size();i++){
 				boolean isCoord=false;
+				String ne_location;
+				String sw_location;
+				String holonColor;
+				Integer holonObjectId;
+				Integer coordHolonObjectId;		
+				HolonCoordinator hc;
+				boolean hasPower;
+				boolean hasPowerOn;
 				holonObject = holonObjectList.get(i);
 				ne_location = holonObject.getLatLngByNeLocation().getLatitude()+"~"+holonObject.getLatLngByNeLocation().getLongitude();
 				sw_location = holonObject.getLatLngBySwLocation().getLatitude()+"~"+holonObject.getLatLngBySwLocation().getLongitude();
 				holonColor =holonObject.getHolonCoordinator().getHolon().getColor();
 				holonObjectId=holonObject.getId();
 				hc = holonObject.getHolonCoordinator();
+				hasPower= getHolonPowerProductionDetails(holonObjectId).get(0);
+				hasPowerOn= getHolonPowerProductionDetails(holonObjectId).get(1);
 				if(hc.getHolonObject()==null)
 				{
 					coordHolonObjectId=holonObjectId;
@@ -240,7 +246,7 @@ public class HolonObjectAction extends CommonUtilities {
 					isCoord=true;
 				}
 				log.info("The Color of the Holon is "+holonColor);
-				hoListArray.add(holonObjectId+"#"+holonColor+"#"+ne_location+"^"+sw_location+"#"+isCoord+"*");
+				hoListArray.add(holonObjectId+"#"+holonColor+"#"+ne_location+"^"+sw_location+"#"+isCoord+"#"+hasPower+"#"+hasPowerOn+"*");
 			}
 			
 			//Calling the response function and setting the content type of response.
@@ -250,6 +256,27 @@ public class HolonObjectAction extends CommonUtilities {
 			log.info("Exception "+e.getMessage()+" occurred in action showHolonObjects()");
 			e.printStackTrace();
 		}
+	}
+
+	private List<Boolean> getHolonPowerProductionDetails(Integer holonObjectId) {
+		List<Boolean> productionDetails = new ArrayList<Boolean>();
+		List<HolonElement> holonElementList = getHolonElementService().getHolonElements(getHolonObjectService().findById(holonObjectId));
+		boolean hasPower=false;
+		boolean hasPowerOn=false;
+		for(int i=0;i<holonElementList.size();i++)
+		{
+			if(holonElementList.get(i).getHolonElementType().getProducer())
+			{
+				hasPower=true;
+				if(hasPower)
+				{
+					hasPowerOn=holonElementList.get(i).getHolonElementState().getId()==1?true:false;
+				}
+			}
+		}
+		productionDetails.add(hasPower);
+		productionDetails.add(hasPowerOn);
+		return productionDetails;
 	}
 
 	public LatLng getDoorLocation(LatLng northlatLng, LatLng southlatLng) {

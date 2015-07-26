@@ -102,21 +102,14 @@ function editHolonObjectCallBack(data, options){
 	var newCoordCircle = globalHKList.get(holonColor);
 	if(typeof newCoordCircle == "undefined")
 		{		
-		 newCoordCircle=new google.maps.Circle({
-			 strokeColor: '#FF0000',
-		     strokeOpacity: 1,
-		     strokeWeight: 1,
-		     fillColor: '#B40AF2',
-		     fillOpacity: 0.35,
-		     map: map,
-		     center: new google.maps.LatLng(kc_lat[0],kc_lat[1]),
-		     radius: 1
-		    });
+			showCoordCircles(holonColor,true,kc_lat[0],kc_lat[1]);
+		 
 		}else
 			{
 			newCoordCircle.setOptions({center:new google.maps.LatLng(kc_lat[0],kc_lat[1])});
+			globalHKList.set(holonColor,newCoordCircle);
 			}	
-	globalHKList.set(holonColor,newCoordCircle);
+
 	 
 	var infowindowHolonObject=options["infowindowHolonObject"];
 	infowindowHolonObject.setContent(contentString);
@@ -155,18 +148,8 @@ function createHolonObjectCallBack(data, options) {
 	  });
 	  if(noOfHolons=="1")
 		 {
-		   var coOrdCircle=new google.maps.Circle({
-				 strokeColor: '#FF0000',
-			     strokeOpacity: 1,
-			     strokeWeight: 1,
-			     fillColor: '#B40AF2',
-			     fillOpacity: 0.35,
-			     map: map,
-			     center: createdHolonObject.getBounds().getNorthEast(),
-			     radius: 1
-			    });
-		   globalHKList.set(holonColor,coOrdCircle);
-		 }else
+		  showCoordCircles(holonColor,true,createdHolonObject.getBounds().getNorthEast().lat(),createdHolonObject.getBounds().getNorthEast().lng());
+		  }else
 			 {
 			 var newCoordCircle = globalHKList.get(holonColor);
 			 newCoordCircle.setOptions({center:new google.maps.LatLng(hc_ne_location.split("~")[0],hc_ne_location.split("~")[1])});
@@ -246,6 +229,8 @@ function showHolonObjectsCallBack(data, options){
 		var color = holonObject.split("#")[1].trim();	
 		var location = holonObject.split("#")[2];
 		var isCoord=holonObject.split("#")[3];
+		var hasPower =holonObject.split("#")[4];
+		var hasPowerOn=holonObject.split("#")[5];
 		var ne_location_lat = location.split("^")[0].split("~")[0].replace("[","").replace(",","");
 		var ne_location_lng = location.split("^")[0].split("~")[1];
 		var sw_location_lat = location.split("^")[1].split("~")[0];
@@ -259,21 +244,9 @@ function showHolonObjectsCallBack(data, options){
 		    	      new google.maps.LatLng(sw_location_lat, sw_location_lng),
 		    	      new google.maps.LatLng(ne_location_lat, ne_location_lng))
 		    });
-	 if(isCoord=="true")
-		 {
-		   var coOrdCircle=new google.maps.Circle({
-				 strokeColor: '#FF0000',
-			     strokeOpacity: 1,
-			     strokeWeight: 1,
-			     fillColor: '#B40AF2',
-			     fillOpacity: 0.35,
-			     map: map,
-			     center: new google.maps.LatLng(ne_location_lat, ne_location_lng),
-			     radius: 1
-			    });
-		   globalHKList.set(color,coOrdCircle);
-		 }
-	    var dataAttributes= {
+	 showCoordCircles(color,isCoord,ne_location_lat,ne_location_lng);
+	 showPowerCircles(hasPower,hasPowerOn,ne_location_lat,sw_location_lng);
+		    var dataAttributes= {
 				  holonObjectId : holonObjectId
 				};
 	    attachMessage(dataAttributes, rectangleFromFactory);
@@ -281,6 +254,75 @@ function showHolonObjectsCallBack(data, options){
 	    globalHoList.set(holonObjectId,rectangleFromFactory);
 	}	
 }
+
+function showPowerCircles(hasPower,hasPowerOn,ne_location_lat,sw_location_lng){
+	
+	 if(hasPower=="true")
+	 {
+	   var powerColor = '#FF0000';
+	   if(hasPowerOn=="true")
+		   {
+		   powerColor = '#115818';
+		   }
+	   var powerCircle=new google.maps.Circle({
+			 strokeColor: powerColor,
+		     strokeOpacity: 1,
+		     strokeWeight: 1,
+		     fillColor: powerColor,
+		     fillOpacity: 0.35,
+		     map: map,
+		     center: new google.maps.LatLng(ne_location_lat, sw_location_lng),
+		     radius: 3
+		    });	  
+	 }
+	
+}
+
+function showCoordCircles(color,isCoord,ne_location_lat,ne_location_lng){
+	
+	 if(isCoord=="true")
+	 {
+	   var coOrdCircle=new google.maps.Circle({
+			 strokeColor: '#FF0000',
+		     strokeOpacity: 1,
+		     strokeWeight: 1,
+		     fillColor: '#B40AF2',
+		     fillOpacity: 0.35,
+		     map: map,
+		     center: new google.maps.LatLng(ne_location_lat, ne_location_lng),
+		     radius: 3
+		    });
+	   globalHKList.set(color,coOrdCircle);
+	 }
+}
+
+/*function midPoint(lat1, lon1,lat2,lon2){
+
+	var R = 6371000; // metres
+	var lat1 = toRad(lat1);
+	var lat2 = toRad(lat2);
+	var latDiff = toRad((lat2-lat1));
+	var longDiff = toRad((lon2-lon1));
+
+	var a = Math.sin(latDiff/2) * Math.sin(latDiff/2) +
+	        Math.cos(lat1) * Math.cos(lat2) *
+	        Math.sin(longDiff/2) * Math.sin(longDiff/2);
+	var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+	var d = R * c;
+	alert(a);
+	alert(c);
+	return d;
+	
+}
+
+function toRad(Value) {
+	if (typeof(Number.prototype.toRad) === "undefined") {
+		  Number.prototype.toRad = function() {
+		    return this * Math.PI / 180;
+		  }
+		}
+}*/
 
 function attachMessage(dataAttributes, rectangleFromFactory) {
 	google.maps.event.addListener(rectangleFromFactory, 'click', function(event) {		
