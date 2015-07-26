@@ -58,6 +58,7 @@ function deleteHolonElementCallBack(data, options) {
 	if(resp[0] == "true"){
 		var holonObjectId = options['holonObjectId'];
 		showHolonElements(holonObjectId);
+		showPowerCircles(holonObjectId);
 		updateCoordinator(resp[1],resp[2]);		
 		
 	} else {
@@ -153,6 +154,7 @@ function addHolonElementCallBack(data, options) {
 		closeDiv('elementInfo');
 		updateCoordinator(resp[1],resp[2]);
 		showHolonElements(holonObjectId);
+		showPowerCircles(holonObjectId);
 		
 	} else {
 		alert("Error in adding Holon Element. Please check application logs.")
@@ -167,6 +169,7 @@ function editHolonElementCallBack(data, options) {
 		closeDiv('elementInfo');
 		updateCoordinator(resp[1],resp[2]);
 		showHolonElements(holonObjectId);
+		showPowerCircles(holonObjectId);
 		
 	} else {
 		alert("Error in editing Holon Element. Please check application logs.")

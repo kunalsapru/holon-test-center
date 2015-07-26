@@ -230,8 +230,6 @@ public class HolonObjectAction extends CommonUtilities {
 				holonColor =holonObject.getHolonCoordinator().getHolon().getColor();
 				holonObjectId=holonObject.getId();
 				hc = holonObject.getHolonCoordinator();
-				hasPower= getHolonPowerProductionDetails(holonObjectId).get(0);
-				hasPowerOn= getHolonPowerProductionDetails(holonObjectId).get(1);
 				if(hc.getHolonObject()==null)
 				{
 					coordHolonObjectId=holonObjectId;
@@ -246,7 +244,7 @@ public class HolonObjectAction extends CommonUtilities {
 					isCoord=true;
 				}
 				log.info("The Color of the Holon is "+holonColor);
-				hoListArray.add(holonObjectId+"#"+holonColor+"#"+ne_location+"^"+sw_location+"#"+isCoord+"#"+hasPower+"#"+hasPowerOn+"*");
+				hoListArray.add(holonObjectId+"#"+holonColor+"#"+ne_location+"^"+sw_location+"#"+isCoord+"*");
 			}
 			
 			//Calling the response function and setting the content type of response.
@@ -345,4 +343,27 @@ public class HolonObjectAction extends CommonUtilities {
 		getHolonObjectService().merge(holonObject);
 		
 	}
+	
+	public void getDetailForPowerSourceIcon()
+	{
+		try{
+			Integer holonObjectId = getRequest().getParameter("holonObjectId")!=null?Integer.parseInt(getRequest().getParameter("holonObjectId")):0;
+			HolonObject hObject = getHolonObjectService().findById(holonObjectId);
+			Double neLocationLat= hObject.getLatLngByNeLocation().getLatitude();
+			Double swLocationLng=hObject.getLatLngBySwLocation().getLongitude();
+			boolean hasPower= getHolonPowerProductionDetails(holonObjectId).get(0);
+			boolean hasPowerOn= getHolonPowerProductionDetails(holonObjectId).get(1);
+			String responseVal =hasPower+"*"+hasPowerOn+"*"+neLocationLat+"*"+swLocationLng;
+			getResponse().setContentType("text/html");
+			getResponse().getWriter().write(responseVal.toString());
+			
+		} catch(Exception e)
+		{
+			log.info("Exception "+e.getMessage()+" occurred in getDetailForPowerSourceIcon()");
+			e.printStackTrace();
+		}
+	}
 }
+
+
+	

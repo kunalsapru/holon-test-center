@@ -118,7 +118,7 @@ function editHolonObjectCallBack(data, options){
 	})
 	currentInfoWindowObject=infowindowHolonObject;
 	//infowindowHolonObject.close();	
-	var editedHolonObject=globalHoList.get(holonObjectId);
+	var editedHolonObject=globalHoList.get(holonObjectId.toString());
 	editedHolonObject.setOptions({strokeColor:holonColor,fillColor: holonColor});
 	google.maps.event.addListener(editedHolonObject, 'click', function() {
 		  var dataAttributes= {
@@ -245,7 +245,7 @@ function showHolonObjectsCallBack(data, options){
 		    	      new google.maps.LatLng(ne_location_lat, ne_location_lng))
 		    });
 	 showCoordCircles(color,isCoord,ne_location_lat,ne_location_lng);
-	 showPowerCircles(hasPower,hasPowerOn,ne_location_lat,sw_location_lng);
+	 showPowerCircles(holonObjectId);
 		    var dataAttributes= {
 				  holonObjectId : holonObjectId
 				};
@@ -255,28 +255,61 @@ function showHolonObjectsCallBack(data, options){
 	}	
 }
 
-function showPowerCircles(hasPower,hasPowerOn,ne_location_lat,sw_location_lng){
+
+function showPowerCircles(holonObjectId)
+{
+	var dataAttributes= {
+			  holonObjectId : holonObjectId
+			};
+	var options=dataAttributes;
+	ajaxRequest("getDetailForPowerSourceIcon", dataAttributes, getDetailForPowerSourceIconCallBack, options);
+}
+
+function getDetailForPowerSourceIconCallBack(data,options)
+{
 	
-	 if(hasPower=="true")
-	 {
-	   var powerColor = '#FF0000';
+	var resp = data.split("*");
+	var hasPower = resp[0];
+	var hasPowerOn=[1];
+	var ne_location_lat=resp[2];
+	var sw_location_lng=resp[3];
+	var holonObjectId = options["holonObjectId"];	
+	var powerColor = '#FF0000';
 	   if(hasPowerOn=="true")
 		   {
 		   powerColor = '#115818';
 		   }
-	   var powerCircle=new google.maps.Circle({
-			 strokeColor: powerColor,
-		     strokeOpacity: 1,
-		     strokeWeight: 1,
-		     fillColor: powerColor,
-		     fillOpacity: 0.35,
-		     map: map,
-		     center: new google.maps.LatLng(ne_location_lat, sw_location_lng),
-		     radius: 3
-		    });	  
-	 }
-	
+	var currecntPC=globalPCList.get(holonObjectId.toString());
+	if(typeof(currecntPC) === "undefined")
+		{
+		if(hasPower=="true")
+		 {
+			//alert("has power");
+		  
+		    currecntPC=new google.maps.Circle({
+				 strokeColor: powerColor,
+			     strokeOpacity: 1,
+			     strokeWeight: 1,
+			     fillColor: powerColor,
+			     fillOpacity: 0.35,
+			     map: map,
+			     center: new google.maps.LatLng(ne_location_lat, sw_location_lng),
+			     radius: 3
+			    });	  
+		    }
+		
+		}else
+			{
+				//alert("not null"+holonObjectId);
+				currecntPC.setOptions({map:null});
+				if(hasPower=="true"){
+				currecntPC.setOptions({map:map,fillColor: powerColor,strokeColor: powerColor});
+				}
+				
+			}
+	  globalPCList.set(holonObjectId,currecntPC);	
 }
+
 
 function showCoordCircles(color,isCoord,ne_location_lat,ne_location_lng){
 	
