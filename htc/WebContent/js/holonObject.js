@@ -267,17 +267,18 @@ function showPowerCircles(holonObjectId)
 
 function getDetailForPowerSourceIconCallBack(data,options)
 {
-	
+	console.log("Abhinav Prakash "+data);
 	var resp = data.split("*");
 	var hasPower = resp[0];
-	var hasPowerOn=[1];
+	var hasPowerOn=resp[1];
 	var ne_location_lat=resp[2];
 	var sw_location_lng=resp[3];
 	var holonObjectId = options["holonObjectId"];	
 	var powerColor = '#FF0000';
-	   if(hasPowerOn=="true")
+	//alert(hasPowerOn);
+	   if(hasPowerOn=='true')
 		   {
-		   powerColor = '#115818';
+		   powerColor = '#336600';
 		   }
 	var currecntPC=globalPCList.get(holonObjectId.toString());
 	if(typeof(currecntPC) === "undefined")
@@ -316,14 +317,14 @@ function showCoordCircles(color,isCoord,ne_location_lat,ne_location_lng){
 	 if(isCoord=="true")
 	 {
 	   var coOrdCircle=new google.maps.Circle({
-			 strokeColor: '#FF0000',
+			 strokeColor: '#000000',
 		     strokeOpacity: 1,
 		     strokeWeight: 1,
-		     fillColor: '#B40AF2',
-		     fillOpacity: 0.35,
+		     fillColor: '#000000',
+		     fillOpacity: 1,
 		     map: map,
 		     center: new google.maps.LatLng(ne_location_lat, ne_location_lng),
-		     radius: 3
+		     radius: 2
 		    });
 	   globalHKList.set(color,coOrdCircle);
 	 }

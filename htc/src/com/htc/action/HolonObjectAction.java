@@ -353,6 +353,8 @@ public class HolonObjectAction extends CommonUtilities {
 			Double swLocationLng=hObject.getLatLngBySwLocation().getLongitude();
 			boolean hasPower= getHolonPowerProductionDetails(holonObjectId).get(0);
 			boolean hasPowerOn= getHolonPowerProductionDetails(holonObjectId).get(1);
+			log.info("The Value of hasPower is "+ hasPower+" for "+holonObjectId);
+			log.info("The Value of hasPowerOn is "+ hasPowerOn+" for "+holonObjectId);
 			String responseVal =hasPower+"*"+hasPowerOn+"*"+neLocationLat+"*"+swLocationLng;
 			getResponse().setContentType("text/html");
 			getResponse().getWriter().write(responseVal.toString());
