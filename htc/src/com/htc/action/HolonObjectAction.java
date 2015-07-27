@@ -3,6 +3,7 @@ package com.htc.action;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -115,7 +116,87 @@ public class HolonObjectAction extends CommonUtilities {
 			String sw_location = holonObject2.getLatLngBySwLocation().getLatitude()+"~"+holonObject2.getLatLngBySwLocation().getLongitude();			
 			Integer coordinatorHolonId=holonObject2.getHolonCoordinator().getHolonObject().getId();
 			Boolean lineConnectedState = holonObject2.getLineConnectedState();		
+			Integer noOfElem=0;
+			Integer minEnergReq=0;
+			Integer maxEnergyReq=0;
+			Integer cuEnergyRequired=0;
+			Integer minProdCap=0;
+			Integer maxProdCap=0;
+			Integer cuProd=0;
+			//Variables to capture Holon Details
+			Integer noOfHolonObjects=0;
+			ArrayList<String> hoObjectIdList = new ArrayList<String>();
+			Integer minProdCapHolon=0;
+			Integer maxProdCapHolon=0;
+			Integer cuProdHolon=0;
+			Integer minEnergReqHolon=0;
+			Integer maxEnergyReqHolon=0;
+			Integer cuEnergyRequiredHolon=0;
+			
+			
+			ArrayList<HolonElement> elmList= getHolonElementService().getHolonElements(getHolonObjectService().findById(holonObjectId));
+			noOfElem=elmList.size();
+			for(int i=0;i<noOfElem;i++)
+			{
+				
+				if(elmList.get(i).getHolonElementType().getProducer())
+				{
+					minProdCap =minProdCap + elmList.get(i).getHolonElementType().getMinCapacity();
+					maxProdCap =maxProdCap + elmList.get(i).getHolonElementType().getMaxCapacity();
+					if(elmList.get(i).getHolonElementState().getName()=="ON")
+					{
+					cuProd = cuProd + elmList.get(i).getCurrentCapacity();
+					}
+				}
+				else
+				{
+					minEnergReq=minEnergReq+elmList.get(i).getHolonElementType().getMinCapacity();
+					maxEnergyReq=maxEnergyReq+elmList.get(i).getHolonElementType().getMaxCapacity();
+					if(elmList.get(i).getHolonElementState().getName()=="ON")
+					{
+					cuEnergyRequired=cuEnergyRequired+elmList.get(i).getCurrentCapacity();
+					}
+				}
+			}
+			
+			HolonObject hObject = getHolonObjectService().findById(holonObjectId);
+			if(holonObjectId==hObject.getHolonCoordinator().getHolonObject().getId())
+			{
+				HolonCoordinator hCoordinator =  hObject.getHolonCoordinator();
+				Set holonObjectSet=hCoordinator.getHolonObjects();
+				noOfHolonObjects = holonObjectSet.size();
+				Iterator<HolonObject> iterator = holonObjectSet.iterator(); 
+				while(iterator.hasNext())
+				{
+					HolonObject ho=(HolonObject) iterator.next();
+					hoObjectIdList.add(new Integer(ho.getId()).toString());
+					ArrayList<HolonElement> elemList= getHolonElementService().getHolonElements(ho);
+					for(int i=0;i<elemList.size();i++)
+					{
 						
+						if(elemList.get(i).getHolonElementType().getProducer())
+						{
+							minProdCapHolon = minProdCapHolon + elemList.get(i).getHolonElementType().getMinCapacity();
+							maxProdCapHolon = maxProdCapHolon + elemList.get(i).getHolonElementType().getMaxCapacity();
+							if(elemList.get(i).getHolonElementState().getName()=="ON")
+							{
+							cuProdHolon =  cuProdHolon + elemList.get(i).getCurrentCapacity();
+							}
+						}
+						else
+						{
+							minEnergReqHolon=minEnergReq+elemList.get(i).getHolonElementType().getMinCapacity();
+							maxEnergyReqHolon=maxEnergyReq+elemList.get(i).getHolonElementType().getMaxCapacity();
+							if(elemList.get(i).getHolonElementState().getName()=="ON")
+							{
+							cuEnergyRequiredHolon=cuEnergyRequired+elemList.get(i).getCurrentCapacity();
+							}
+						}
+					}
+					
+				}
+			}
+			
 			//Calling the response function and setting the content type of response.
 			getResponse().setContentType("text/html");
 			StringBuffer hoResponse = new StringBuffer();
@@ -127,8 +208,22 @@ public class HolonObjectAction extends CommonUtilities {
 			hoResponse.append(lineConnectedState+"!");
 			hoResponse.append(holonColor+"!");
 			hoResponse.append(coordinatorHolonId+"!");
-			hoResponse.append(holonObject2.getHolonManager().getName());
-			
+			hoResponse.append(holonObject2.getHolonManager().getName()+"!");
+			hoResponse.append(noOfElem+"!");
+			hoResponse.append(minEnergReq+"!");
+			hoResponse.append(maxEnergyReq+"!");
+			hoResponse.append(cuEnergyRequired+"!");
+			hoResponse.append(minProdCap+"!");
+			hoResponse.append(maxProdCap+"!");
+			hoResponse.append(cuProd+"!");
+			hoResponse.append(noOfHolonObjects+"!");
+			hoResponse.append(minEnergReqHolon+"!");
+			hoResponse.append(maxEnergyReqHolon+"!");
+			hoResponse.append(cuEnergyRequiredHolon+"!");
+			hoResponse.append(minProdCapHolon+"!");
+			hoResponse.append(maxProdCapHolon+"!");
+			hoResponse.append(cuProdHolon);
+				
 			System.out.println(hoResponse.toString());
 			getResponse().getWriter().write(hoResponse.toString());
 			
@@ -222,9 +317,7 @@ public class HolonObjectAction extends CommonUtilities {
 				Integer holonObjectId;
 				Integer coordHolonObjectId;		
 				HolonCoordinator hc;
-				boolean hasPower;
-				boolean hasPowerOn;
-				holonObject = holonObjectList.get(i);
+			    holonObject = holonObjectList.get(i);
 				ne_location = holonObject.getLatLngByNeLocation().getLatitude()+"~"+holonObject.getLatLngByNeLocation().getLongitude();
 				sw_location = holonObject.getLatLngBySwLocation().getLatitude()+"~"+holonObject.getLatLngBySwLocation().getLongitude();
 				holonColor =holonObject.getHolonCoordinator().getHolon().getColor();
@@ -237,8 +330,6 @@ public class HolonObjectAction extends CommonUtilities {
 				{
 					coordHolonObjectId=holonObject.getHolonCoordinator().getHolonObject().getId();
 				}
-				log.info("The HolonObject Id is  "+holonObjectId);
-				log.info("The HolonObject coordinator  Id is  "+coordHolonObjectId+(coordHolonObjectId==holonObjectId));
 				if(coordHolonObjectId==holonObjectId)
 				{
 					isCoord=true;

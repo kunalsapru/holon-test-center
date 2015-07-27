@@ -44,7 +44,7 @@ public class HolonCoordinatorHome {
 		}
 	}
 
-	public synchronized HolonCoordinator findById(int id) {
+	public  HolonCoordinator findById(int id) {
 		Session session = null;
 		Transaction tx = null;
 		try {

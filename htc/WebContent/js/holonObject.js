@@ -173,6 +173,22 @@ function getHolonInfoWindowCallBack(data,options)
 	var holonColor= dataArray[6];
 	var coordHolonId= dataArray[7];
 	var holonManagerName= dataArray[8];
+	var nOfElmInHolon=dataArray[9];
+	var minEnergeyHoObj=dataArray[10];
+	var maxEnergeyHoObj=dataArray[11];
+	var cuEnergeyHoObj=dataArray[12];
+	var minEnergeyProdObj=dataArray[13];
+	var maxEnergeyProdObj=dataArray[14];
+	var cuEnergeyProdObj=dataArray[15];	
+	var nOfHolonObj=dataArray[16];
+	var minEnergeyHo=dataArray[17];
+	var maxEnergeyHo=dataArray[18];
+	var cuEnergeyHo=dataArray[19];
+	var minEnergeyProd=dataArray[20];
+	var maxEnergeyProd=dataArray[21];
+	var cuEnergeyProd=dataArray[22];
+	
+	
 	var lat=ne_location.split("~");
 	//alert(holonColor);
 	var contentString="<h3 align=\"center\">Holon Object Details</h3>" +
@@ -180,13 +196,28 @@ function getHolonInfoWindowCallBack(data,options)
 			"<b>Holon Object Type: </b>"+holonObjectTypeName+"<br>"+
 			"<b>Holon Manager: </b>"+holonManagerName+"<br>"+
 			"<b>Line Connected State: </b>"+lineConnectedState+"<br>"+
+			"<b>Coordinator Id: </b>"+coordHolonId+"<br>"+
+			"<b>Minimum Energey Req: </b>"+minEnergeyHoObj+"<br>"+
+			"<b>Maximum Energey Req: </b>"+maxEnergeyHoObj+"<br>"+
+			"<b>Current Energey Req: </b>"+cuEnergeyHoObj+"<br>"+
+			"<b>Minimum Production capacity: </b>"+minEnergeyProdObj+"<br>"+
+			"<b>Maximum Production Capacity: </b>"+maxEnergeyProdObj+"<br>"+
+			"<b>Current Production: </b>"+cuEnergeyProdObj+"<br>"+
 			"<span class='button'><i class='fa fa-plug'></i>&nbsp;&nbsp;Connect to Power Source</span>&nbsp;&nbsp;&nbsp;&nbsp;"+
 			"<span class='button' id='consumptionGraph'><i class='fa fa-line-chart'></i>&nbsp;&nbsp;Show Consumption</span>&nbsp;&nbsp;&nbsp;&nbsp;"+
 			"<span class='button' id='editHolonObject'><i class='fa fa-pencil-square-o'></i>&nbsp;&nbsp;Edit Holon Object</span>&nbsp;&nbsp;&nbsp;&nbsp;"+
 			"<span class='button' id='showHolonElement' onclick='showHolonElements("+holonObjectId+")'><i class='fa fa-info'></i>&nbsp;&nbsp;Show Holon Elements</span><hr>";
 	if(coordHolonId===holonObjectId)
 	{
-		contentString = contentString.concat("<h3 align=\"center\">Holon Details</h3>");
+		contentString = contentString.concat(
+				"<h3 align=\"center\">Holon Details</h3>" +
+				"<b>Number of Holon Objects: </b>"+nOfHolonObj +"<br>"+
+				"<b>Minimum Energey Req:</b>"+minEnergeyHo +"<br>"+
+				"<b>Maximum Energey Req: </b>"+maxEnergeyHo +"<br>"+
+				"<b>Current Energey Req: </b>"+cuEnergeyHo +"<br>"+
+				"<b>Minimum Production capacity: </b>"+minEnergeyProd +"<br>"+
+				"<b>Maximum Production Capacity: </b>"+maxEnergeyProd +"<br>"+
+				"<b>Current Production: </b>"+cuEnergeyProd +"<br>");
 	}
 
 	var infowindowHolonObject = new google.maps.InfoWindow({

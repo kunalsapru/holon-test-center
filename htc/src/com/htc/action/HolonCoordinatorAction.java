@@ -77,7 +77,7 @@ public class HolonCoordinatorAction extends CommonUtilities{
 	}
 
 
-	public synchronized void chooseCoordinator(Integer holonCoordinatorId) {
+	public  void chooseCoordinator(Integer holonCoordinatorId) {
 		log.info("Abhinav is fool "+holonCoordinatorId);
 		HolonCoordinator hCoordinator= getHolonCoordinatorService().findById(holonCoordinatorId);
 		
