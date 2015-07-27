@@ -197,6 +197,8 @@ public class HolonObjectAction extends CommonUtilities {
 					}
 					
 				}
+				log.error("The coordinator Is is "+coordinatorHolonId);
+				hoObjectIdList.remove(coordinatorHolonId.toString());
 				Iterator<String> itr = hoObjectIdList.iterator(); 
 				hoListString.append("<option value=\"Select Holon\" id= \"infoWinOpt\" selected>Select Holon</option>");
 				while(itr.hasNext())

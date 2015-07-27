@@ -214,13 +214,13 @@ function getHolonInfoWindowCallBack(data,options)
 		contentString = contentString.concat(
 				"<h3 align=\"center\">Holon Details</h3>" +
 				"<table>"+
-				"<tr><td><b>Number of Holon Objects: </b>"+nOfHolonObj +"<br></td>"+
+				"<tr><td><b>Number of Holon Objects: </b>"+nOfHolonObj +"<br></td><td></td>"+
 				"<td><b>Minimum Energey Req:</b>"+minEnergeyHo +"<br></td></tr>"+
-				"<tr><td><b>Maximum Energey Req: </b>"+maxEnergeyHo +"<br></td>"+
+				"<tr><td><b>Maximum Energey Req: </b>"+maxEnergeyHo +"<br></td><td></td>"+
 				"<td><b>Current Energey Req: </b>"+cuEnergeyHo +"<br></td></tr>"+
-				"<tr><td><b>Minimum Production capacity: </b>"+minEnergeyProd +"<br></td>"+
+				"<tr><td><b>Minimum Production capacity: </b>"+minEnergeyProd +"<br></td><td></td>"+
 				"<td><b>Maximum Production Capacity: </b>"+maxEnergeyProd +"<br></td></tr>"+
-				"<tr><td><b>Current Production: </b>"+cuEnergeyProd +"<br></td><td></td></tr>"+
+				"<tr><td><b>Current Production: </b>"+cuEnergeyProd +"<br></td><td></td><td></td></tr>"+
 				"</table>"+
 				"<select name=\"infoWindowHolonList\" id=\"infoWindowHolonList\">" +
 				hoList+
@@ -249,8 +249,26 @@ function getHolonInfoWindowCallBack(data,options)
 	$('#editHolonObject').click(function() {
 		editHolonObject(holonObjectId,infowindowHolonObject);			
 	})
+	$('#infoWindowHolonList').change(function(){
+      if(jQuery("#infoWindowHolonList option:selected").val()!='Select Holon')
+    	  {
+    	  	zoomToHolon(jQuery("#infoWindowHolonList option:selected").val(),ne_location);
+    	  }
+    });
 	
 	currentInfoWindowObject=infowindowHolonObject;
+}
+
+function zoomToHolon(holonObjectId,neLoc)
+{
+	var location = new google.maps.LatLng(neLoc.split("~")[0], neLoc.split("~")[1])
+	var dataAttributes= {
+			  holonObjectId : holonObjectId,
+			}
+	 ajaxRequest("getHolonObjectInfoWindow", dataAttributes, getHolonInfoWindowCallBack, {});
+	map.setCenter(location);
+	map.setZoom(19);
+	
 }
 
 function showHolonObjects() {
