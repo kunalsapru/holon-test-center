@@ -143,8 +143,10 @@ public class HolonObjectAction extends CommonUtilities {
 				{
 					minProdCap =minProdCap + elmList.get(i).getHolonElementType().getMinCapacity();
 					maxProdCap =maxProdCap + elmList.get(i).getHolonElementType().getMaxCapacity();
-					if(elmList.get(i).getHolonElementState().getName()=="ON")
+					log.info("Abhinav is fool "+elmList.get(i).getHolonElementState().getName()+elmList.get(i).getCurrentCapacity()+"ram");
+					if(elmList.get(i).getHolonElementState().getId()==1)
 					{
+						
 					cuProd = cuProd + elmList.get(i).getCurrentCapacity();
 					}
 				}
@@ -152,7 +154,7 @@ public class HolonObjectAction extends CommonUtilities {
 				{
 					minEnergReq=minEnergReq+elmList.get(i).getHolonElementType().getMinCapacity();
 					maxEnergyReq=maxEnergyReq+elmList.get(i).getHolonElementType().getMaxCapacity();
-					if(elmList.get(i).getHolonElementState().getName()=="ON")
+					if(elmList.get(i).getHolonElementState().getId()==1)
 					{
 					cuEnergyRequired=cuEnergyRequired+elmList.get(i).getCurrentCapacity();
 					}
@@ -178,7 +180,7 @@ public class HolonObjectAction extends CommonUtilities {
 						{
 							minProdCapHolon = minProdCapHolon + elemList.get(i).getHolonElementType().getMinCapacity();
 							maxProdCapHolon = maxProdCapHolon + elemList.get(i).getHolonElementType().getMaxCapacity();
-							if(elemList.get(i).getHolonElementState().getName()=="ON")
+							if(elemList.get(i).getHolonElementState().getId()==1)
 							{
 							cuProdHolon =  cuProdHolon + elemList.get(i).getCurrentCapacity();
 							}
@@ -187,7 +189,7 @@ public class HolonObjectAction extends CommonUtilities {
 						{
 							minEnergReqHolon=minEnergReq+elemList.get(i).getHolonElementType().getMinCapacity();
 							maxEnergyReqHolon=maxEnergyReq+elemList.get(i).getHolonElementType().getMaxCapacity();
-							if(elemList.get(i).getHolonElementState().getName()=="ON")
+							if(elemList.get(i).getHolonElementState().getId()==1)
 							{
 							cuEnergyRequiredHolon=cuEnergyRequired+elemList.get(i).getCurrentCapacity();
 							}
