@@ -194,7 +194,10 @@ function updateCoordinator(holonObjectId,hoCoObjIdOld)
 			hoCoObjIdOld : hoCoObjIdOld,
 			
 		};
-	ajaxRequest("updateCoordinator", dataAttributes, updateCoordinatorCallBack, {});
+	var options = {
+			holonObjectId : holonObjectId,
+			};
+	ajaxRequest("updateCoordinator", dataAttributes, updateCoordinatorCallBack, options);
 
 }
 
@@ -206,8 +209,11 @@ function updateCoordinatorCallBack(data,options)
 	var coObjIdRed=data.split("*")[3];
 	var itsOwnCoStatusChanged=data.split("*")[4];
 	var changedToCoord=data.split("*")[5];
-	 updateInfoWindow(itsOwnCoStatusChanged,changedToCoord);
-	//alert(coObjIdBlue+coObjIdGreen+coObjIdYellow+coObjIdRed);
+	var holonObjectId=options["holonObjectId"];
+	 var dataAttributes= {
+			  holonObjectId : holonObjectId,
+			}
+	 ajaxRequest("getHolonObjectInfoWindow", dataAttributes, getHolonInfoWindowCallBack, {});	
 	var blueObj=globalHoList.get(coObjIdBlue.toString());
 	if(typeof blueObj != "undefined")
 	{		

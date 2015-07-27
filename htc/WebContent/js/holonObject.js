@@ -72,6 +72,7 @@ function getHolonDetailCallBack(data, options) {
 }
 
 function editHolonObjectCallBack(data, options){
+	
 	var resp=data.split("!");
 	var holonColor= resp[0];
 	var holonObjectId=resp[1];
@@ -86,18 +87,11 @@ function editHolonObjectCallBack(data, options){
 	var holonManagerName= resp[10];
 	var lat=ne_location.split("~");
 	var kc_lat=hc_ne.split("~");
-	var contentString="<h3 align=\"center\">Holon Object Details<hr></h3><b>Holon Object Id: </b>"+holonObjectId +"<br>"+
-			"<b>Holon Object Type: </b>"+holonObjectTypeName+"<br>"+
-			"<b>Holon Manager: </b>"+holonManagerName+"<br>"+
-			"<b>Line Connected State </b>"+lineConnectedState+"<br>"+
-			"<span class='button'><i class='fa fa-plug'></i>&nbsp;&nbsp;Connect to Power Source</span>&nbsp;&nbsp;&nbsp;&nbsp;"+
-			"<span class='button' id='consumptionGraph'><i class='fa fa-line-chart'></i>&nbsp;&nbsp;Show Consumption</span>&nbsp;&nbsp;&nbsp;&nbsp;"+
-			"<span class='button' id='editHolonObject'><i class='fa fa-pencil-square-o'></i>&nbsp;&nbsp;Edit Holon Object</span>&nbsp;&nbsp;&nbsp;&nbsp;"+
-			"<span class='button' id='showHolonElement' onclick='showHolonElements("+holonObjectId+")'><i class='fa fa-info'></i>&nbsp;&nbsp;Show Holon Elements</span>";
-	if(coordHolonId==holonObjectId)
-	{
-	contentString = contentString.concat("<h3 align=\"center\">Holon Details</h3>");
-	}
+	
+	var dataAttributes= {
+			  holonObjectId : holonObjectId,
+			}
+	 ajaxRequest("getHolonObjectInfoWindow", dataAttributes, getHolonInfoWindowCallBack, {});
 	
 	var newCoordCircle = globalHKList.get(holonColor);
 	if(typeof newCoordCircle == "undefined")
@@ -110,14 +104,6 @@ function editHolonObjectCallBack(data, options){
 			globalHKList.set(holonColor,newCoordCircle);
 			}	
 
-	 
-	var infowindowHolonObject=options["infowindowHolonObject"];
-	infowindowHolonObject.setContent(contentString);
-	$('#editHolonObject').click(function() {
-		editHolonObject(holonObjectId,infowindowHolonObject);			
-	})
-	currentInfoWindowObject=infowindowHolonObject;
-	//infowindowHolonObject.close();	
 	var editedHolonObject=globalHoList.get(holonObjectId.toString());
 	editedHolonObject.setOptions({strokeColor:holonColor,fillColor: holonColor});
 	google.maps.event.addListener(editedHolonObject, 'click', function() {
@@ -267,7 +253,7 @@ function zoomToHolon(holonObjectId,neLoc)
 			}
 	 ajaxRequest("getHolonObjectInfoWindow", dataAttributes, getHolonInfoWindowCallBack, {});
 	map.setCenter(location);
-	map.setZoom(19);
+	map.setZoom(18);
 	
 }
 
@@ -400,34 +386,6 @@ function showCoordCircles(color,isCoord,ne_location_lat,ne_location_lng){
 	   globalHKList.set(color,coOrdCircle);
 	 }
 }
-
-/*function midPoint(lat1, lon1,lat2,lon2){
-
-	var R = 6371000; // metres
-	var lat1 = toRad(lat1);
-	var lat2 = toRad(lat2);
-	var latDiff = toRad((lat2-lat1));
-	var longDiff = toRad((lon2-lon1));
-
-	var a = Math.sin(latDiff/2) * Math.sin(latDiff/2) +
-	        Math.cos(lat1) * Math.cos(lat2) *
-	        Math.sin(longDiff/2) * Math.sin(longDiff/2);
-	var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-
-	var d = R * c;
-	alert(a);
-	alert(c);
-	return d;
-	
-}
-
-function toRad(Value) {
-	if (typeof(Number.prototype.toRad) === "undefined") {
-		  Number.prototype.toRad = function() {
-		    return this * Math.PI / 180;
-		  }
-		}
-}*/
 
 function attachMessage(dataAttributes, rectangleFromFactory) {
 	google.maps.event.addListener(rectangleFromFactory, 'click', function(event) {		
