@@ -14,6 +14,8 @@ $(document)
 					window.globalHPList=new Map();
 					window.globalPCList=new Map();
 					window.currentInfoWindowObject=null;
+					window.currentLineInfoWindowObject=null;
+					window.currentSwitchInfoWindow=null;
 					window.ajaxReqStatus=false;
 					var drawingManager;
 					var clickedValuePanel;

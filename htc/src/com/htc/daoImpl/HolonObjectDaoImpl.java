@@ -50,4 +50,6 @@ public class HolonObjectDaoImpl implements HolonObjectDao {
 		return getHolonObjectHome().findByHCoordinator(holonCoordinator);
 	}
 
+	
+
 }

@@ -39,4 +39,5 @@ public class HolonObjectServiceImpl extends AbstractService implements HolonObje
 		return getHolonObjectDao().findByHCoordinator(holonCoordinator);
 	}
 
+
 }

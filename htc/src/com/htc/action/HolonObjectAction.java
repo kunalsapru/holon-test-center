@@ -132,7 +132,7 @@ public class HolonObjectAction extends CommonUtilities {
 			Integer minEnergReqHolon=0;
 			Integer maxEnergyReqHolon=0;
 			Integer cuEnergyRequiredHolon=0;
-			
+			StringBuffer hoListString=new StringBuffer("");
 			
 			ArrayList<HolonElement> elmList= getHolonElementService().getHolonElements(getHolonObjectService().findById(holonObjectId));
 			noOfElem=elmList.size();
@@ -165,9 +165,9 @@ public class HolonObjectAction extends CommonUtilities {
 			if(holonObjectId==hObject.getHolonCoordinator().getHolonObject().getId())
 			{
 				HolonCoordinator hCoordinator =  hObject.getHolonCoordinator();
-				Set holonObjectSet=hCoordinator.getHolonObjects();
-				noOfHolonObjects = holonObjectSet.size();
-				Iterator<HolonObject> iterator = holonObjectSet.iterator(); 
+				ArrayList<HolonObject> hoList=getHolonObjectService().findByHCoordinator(hCoordinator);				
+				noOfHolonObjects = hoList.size();
+				Iterator<HolonObject> iterator = hoList.iterator(); 
 				while(iterator.hasNext())
 				{
 					HolonObject ho=(HolonObject) iterator.next();
@@ -197,6 +197,17 @@ public class HolonObjectAction extends CommonUtilities {
 					}
 					
 				}
+				Iterator<String> itr = hoObjectIdList.iterator(); 
+				hoListString.append("<option value=\"Select Holon\" id= \"infoWinOpt\" selected>Select Holon</option>");
+				while(itr.hasNext())
+				{
+					String hoId=itr.next();
+					
+					hoListString.append(
+							"<option value="+hoId+" id= \"infoWinOpt\">"+hoId+"</option>"
+							);
+					
+				}
 			}
 			
 			//Calling the response function and setting the content type of response.
@@ -224,7 +235,8 @@ public class HolonObjectAction extends CommonUtilities {
 			hoResponse.append(cuEnergyRequiredHolon+"!");
 			hoResponse.append(minProdCapHolon+"!");
 			hoResponse.append(maxProdCapHolon+"!");
-			hoResponse.append(cuProdHolon);
+			hoResponse.append(cuProdHolon+"!");
+			hoResponse.append(hoListString);
 				
 			System.out.println(hoResponse.toString());
 			getResponse().getWriter().write(hoResponse.toString());

@@ -187,22 +187,24 @@ function getHolonInfoWindowCallBack(data,options)
 	var minEnergeyProd=dataArray[20];
 	var maxEnergeyProd=dataArray[21];
 	var cuEnergeyProd=dataArray[22];
-	
+	var hoList=dataArray[23];
 	
 	var lat=ne_location.split("~");
 	//alert(holonColor);
 	var contentString="<h3 align=\"center\">Holon Object Details</h3>" +
-			"<b>Holon Object Id: </b>"+holonObjectId +"<br>"+
-			"<b>Holon Object Type: </b>"+holonObjectTypeName+"<br>"+
-			"<b>Holon Manager: </b>"+holonManagerName+"<br>"+
-			"<b>Line Connected State: </b>"+lineConnectedState+"<br>"+
-			"<b>Coordinator Id: </b>"+coordHolonId+"<br>"+
-			"<b>Minimum Energey Req: </b>"+minEnergeyHoObj+"<br>"+
-			"<b>Maximum Energey Req: </b>"+maxEnergeyHoObj+"<br>"+
-			"<b>Current Energey Req: </b>"+cuEnergeyHoObj+"<br>"+
-			"<b>Minimum Production capacity: </b>"+minEnergeyProdObj+"<br>"+
-			"<b>Maximum Production Capacity: </b>"+maxEnergeyProdObj+"<br>"+
-			"<b>Current Production: </b>"+cuEnergeyProdObj+"<br>"+
+			"<table>"+
+			"<tr><td><b>Holon Object Id: </b>"+holonObjectId +"<br> </td>"+
+			"<td><b>Holon Object Type: </b>"+holonObjectTypeName+"<br></td></tr>"+
+			"<tr><td><b>Holon Manager: </b>"+holonManagerName+"<br> </td>"+
+			"<td><b>Line Connected State: </b>"+lineConnectedState+"<br></td></tr>"+
+			"<tr><td><b>Coordinator Id: </b>"+coordHolonId+"<br></td>"+
+			"<td><b>Minimum Energey Req: </b>"+minEnergeyHoObj+"<br></td></tr>"+
+			"<tr><td><b>Maximum Energey Req: </b>"+maxEnergeyHoObj+"<br></td>"+
+			"<td><b>Current Energey Req: </b>"+cuEnergeyHoObj+"<br></td></tr>"+
+			"<tr><td><b>Minimum Production capacity: </b>"+minEnergeyProdObj+"<br></td>"+
+			"<td><b>Maximum Production Capacity: </b>"+maxEnergeyProdObj+"<br></td></tr>"+
+			"<tr><td><b>Current Production: </b>"+cuEnergeyProdObj+"<br></td><td></td></tr>"+
+			"</table>"+
 			"<span class='button'><i class='fa fa-plug'></i>&nbsp;&nbsp;Connect to Power Source</span>&nbsp;&nbsp;&nbsp;&nbsp;"+
 			"<span class='button' id='consumptionGraph'><i class='fa fa-line-chart'></i>&nbsp;&nbsp;Show Consumption</span>&nbsp;&nbsp;&nbsp;&nbsp;"+
 			"<span class='button' id='editHolonObject'><i class='fa fa-pencil-square-o'></i>&nbsp;&nbsp;Edit Holon Object</span>&nbsp;&nbsp;&nbsp;&nbsp;"+
@@ -211,15 +213,34 @@ function getHolonInfoWindowCallBack(data,options)
 	{
 		contentString = contentString.concat(
 				"<h3 align=\"center\">Holon Details</h3>" +
-				"<b>Number of Holon Objects: </b>"+nOfHolonObj +"<br>"+
-				"<b>Minimum Energey Req:</b>"+minEnergeyHo +"<br>"+
-				"<b>Maximum Energey Req: </b>"+maxEnergeyHo +"<br>"+
-				"<b>Current Energey Req: </b>"+cuEnergeyHo +"<br>"+
-				"<b>Minimum Production capacity: </b>"+minEnergeyProd +"<br>"+
-				"<b>Maximum Production Capacity: </b>"+maxEnergeyProd +"<br>"+
-				"<b>Current Production: </b>"+cuEnergeyProd +"<br>");
+				"<table>"+
+				"<tr><td><b>Number of Holon Objects: </b>"+nOfHolonObj +"<br></td>"+
+				"<td><b>Minimum Energey Req:</b>"+minEnergeyHo +"<br></td></tr>"+
+				"<tr><td><b>Maximum Energey Req: </b>"+maxEnergeyHo +"<br></td>"+
+				"<td><b>Current Energey Req: </b>"+cuEnergeyHo +"<br></td></tr>"+
+				"<tr><td><b>Minimum Production capacity: </b>"+minEnergeyProd +"<br></td>"+
+				"<td><b>Maximum Production Capacity: </b>"+maxEnergeyProd +"<br></td></tr>"+
+				"<tr><td><b>Current Production: </b>"+cuEnergeyProd +"<br></td><td></td></tr>"+
+				"</table>"+
+				"<select name=\"infoWindowHolonList\" id=\"infoWindowHolonList\">" +
+				hoList+
+				"</select></td>"
+				
+		);
 	}
 
+	if(typeof currentSwitchInfoWindow != 'undefined' && currentSwitchInfoWindow != null)
+	{
+		currentSwitchInfoWindow.close();
+	}
+	if(typeof currentInfoWindowObject != 'undefined' &&currentInfoWindowObject != null)
+	{
+	currentInfoWindowObject.close();
+	}
+	if(typeof currentLineInfoWindowObject != 'undefined' &&currentLineInfoWindowObject != null)
+	{
+		currentLineInfoWindowObject.close();
+	}
 	var infowindowHolonObject = new google.maps.InfoWindow({
 	      content: contentString,
 	      position:new google.maps.LatLng(lat[0],lat[1])
@@ -228,6 +249,7 @@ function getHolonInfoWindowCallBack(data,options)
 	$('#editHolonObject').click(function() {
 		editHolonObject(holonObjectId,infowindowHolonObject);			
 	})
+	
 	currentInfoWindowObject=infowindowHolonObject;
 }
 

@@ -196,13 +196,26 @@ function addMessageWindow(line,powerLineId)
 
 function getPowerLineInfoCallBack(data,options)
 {
+	if(typeof currentSwitchInfoWindow != 'undefined' && currentSwitchInfoWindow != null)
+	{
+		currentSwitchInfoWindow.close();
+	}
+	if(typeof currentInfoWindowObject != 'undefined' &&currentInfoWindowObject != null)
+	{
+	currentInfoWindowObject.close();
+	}
+	if(typeof currentLineInfoWindowObject != 'undefined' &&currentLineInfoWindowObject != null)
+	{
+		currentLineInfoWindowObject.close();
+	}
 	var content= data;
 	var position=options["position"];
 	var infowindowHolonObject = new google.maps.InfoWindow({
     content: content,		    
 	});
 	infowindowHolonObject.setOptions({position:position});
-	infowindowHolonObject.open(map,map);	
+	infowindowHolonObject.open(map,map);
+	currentLineInfoWindowObject=infowindowHolonObject;
 	}
 
 

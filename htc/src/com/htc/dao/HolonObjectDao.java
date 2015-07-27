@@ -14,4 +14,5 @@ public interface HolonObjectDao {
 	public ArrayList<HolonObject> getAllHolonObject();
 	public ArrayList<HolonObject> findByHCoordinator(HolonCoordinator holonCoordinator);
 
+
 }
