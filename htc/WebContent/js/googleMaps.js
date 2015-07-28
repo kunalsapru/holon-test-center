@@ -7,6 +7,7 @@ $(document)
 					window.loadHolon=true;
 					window.clickedMarkerChangeImage="";
 					window.createdHolonObject=null; //Save object on overlaycomplete Action to use it later to set its holon color
+					window.createdPowerLineObject=null
 					window.globalHoList=new Map();
 					window.globalPlList=new Map();
 					window.globalPsList=new Map();
@@ -103,11 +104,24 @@ $(document)
 					});
 					
 					$("#cancelHolonObject").click(function(event){
-						if(createdHolonObject!=null && typeof createdHolonObject != undefined)
+						if(createdHolonObject!=null && typeof createdHolonObject != 'undefined')
 							{
 							createdHolonObject.setMap(null);
 							}
 						closeDiv("holonObjectDetail");
+					});
+					
+					
+					$("#savePowerLineObject").click(function(event){
+						savePowerLineObject();						
+					});
+					
+					$("#cancelpowerLine").click(function(event){
+						if(createdPowerLineObject!=null && typeof createdPowerLineObject != 'undefined')
+							{
+							createdPowerLineObject.setMap(null);
+							}
+						closeDiv("lineObjectDetail");
 					});
 					
 					

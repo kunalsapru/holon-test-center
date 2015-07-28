@@ -118,6 +118,26 @@
 				</table>
 			</div>
 
+
+	<div id="lineObjectDetail">
+				<input type="hidden" id="powerLineStartLat" value="" /> 
+				<input type="hidden" id="powerLineStartLng" value="" /> 
+				<input type="hidden" id="powerLineEndLat" value="" />
+				<input type="hidden" id="powerLineEndLng" value="" />
+				<table id="powerLineObjectTable">
+					<tr>
+						<td>Power Line Capacity:</td>
+						<td><input id="powerLineCapacity" type="text"></td>
+					</tr>
+					<tr>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="cancelpowerLine" type='button' class="button"  value='Cancel' /></td>
+						<td><input id="savePowerLineObject" type='button' class="button"  value='Save Power Line' /></td>
+					</tr>
+				</table>
+			</div>
+
+
+
 			<div id="chartContainer" style="height: 300px; width: 30%;"></div>
 			<div id="holonCoordinatorInformation" class="ui-content"
 				data-transition="flip" data-overlay-theme="b" data-theme="a"

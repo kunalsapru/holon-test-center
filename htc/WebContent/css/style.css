@@ -143,6 +143,25 @@
 	height: 50px;
 }
 
+#lineObjectDetail {
+	    display: none;
+	    position: absolute;
+	    top: 50%;
+	    left: 50%;
+	    width: 300px;
+	    height: 100px;
+	    margin: -100px 0 0 -250px;    
+	    background: #E2E4DD;
+	    border: 5px solid rgb(128, 128, 128);
+}
+#powerLineObjectTable tr {
+	height: 50px;
+}
+
+
+
+
+
 #elementInfo tr {
 	height: 50px;
 }

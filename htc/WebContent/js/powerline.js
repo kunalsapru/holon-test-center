@@ -42,32 +42,17 @@ $(document).ready(function() {
 		    	var start=newShape.getPath().getAt(0);
 		    	var end=newShape.getPath().getAt(1);
 		    	var latLangArr=[start,end];
-		    	//alert("lat lang  "+latLangArr);
-		    	lineArray.push(latLangArr);
-		    	//alert("line "+lineArray);
-		    	var powerLineType="MAINLINE";
-		    	
+		       	lineArray.push(latLangArr);		    	
+		    	createdPowerLineObject=newShape;
 		    	var snappedStart= findSnappedLocation(start);		    	
-		    	var snappedEnd= findSnappedLocation(end);
-		    	var dataAttributes = {
-		    			powerLineType : "MAINLINE",
-		    			currentCapacity : 300,
-		    			maxCapacity : 300,
-		    			latStart : snappedStart.lat(),
-		    			lngStart : snappedStart.lng(),
-		    			latEnd : snappedEnd.lat(),
-		    			lngEnd : snappedEnd.lng(),
-		    			isConnected :false,
-		    			reasonDown : "",
-		    			powerSourceId:1,
-		    				};		    	
-		    	var options = {
-		    			newShape:newShape,
-		    			path:[new google.maps.LatLng(snappedStart.lat(), snappedStart.lng()),new google.maps.LatLng(snappedEnd.lat(),snappedEnd.lng())],
-		    			};	
-		    	if(powerLineType=="MAINLINE"){
-		    	ajaxRequest("drawPowerLine", dataAttributes, drawPoweLineCallBack,options);
-		    	}
+		    	var snappedEnd= findSnappedLocation(end);		    	
+		    	 $("#powerLineStartLat").text(snappedStart.lat());
+		    	 $("#powerLineStartLng").text(snappedStart.lng());
+		    	 $("#powerLineEndLat").text(snappedEnd.lat());
+		    	 $("#powerLineEndLng").text(snappedEnd.lng());
+		    	 alert("Abhinav")
+		    	 openDiv('lineObjectDetail');
+		    	
 			});
 
 		} else {
@@ -78,6 +63,37 @@ $(document).ready(function() {
 	})
 
 })
+
+function savePowerLineObject()
+{
+	var startLat=$("#powerLineStartLat").text();
+	var startLng=$("#powerLineStartLng").text();
+	var endLat=$("#powerLineEndLat").text();
+	var endLng=$("#powerLineEndLng").text();
+	var maxCapacity=$("#powerLineCapacity").val();
+	$( "#lineObjectDetail" ).slideUp(100);
+	var powerLineType="MAINLINE";
+	var dataAttributes = {
+			powerLineType : "MAINLINE",
+			currentCapacity : 300,
+			maxCapacity : maxCapacity,
+			latStart : startLat,
+			lngStart : startLng,
+			latEnd : endLat,
+			lngEnd : endLng,
+			isConnected :false,
+			reasonDown : "",
+			powerSourceId:1,
+				};		    	
+	var options = {
+			newShape:createdPowerLineObject,
+			path:[new google.maps.LatLng(startLat, startLng),new google.maps.LatLng(endLat,endLng)],
+			};	
+	if(powerLineType=="MAINLINE"){
+	ajaxRequest("drawPowerLine", dataAttributes, drawPoweLineCallBack,options);
+	}
+}
+
 
 function drawPoweLineCallBack(data, options) {
 	var newLineShape = options["newShape"];
