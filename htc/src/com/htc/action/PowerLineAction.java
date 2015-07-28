@@ -127,8 +127,9 @@ public class PowerLineAction extends CommonUtilities {
 						"<b>Current Capacity: </b>"+powerLine.getCurrentCapacity()+".<br>"+
 						"<b>PowerLine Type: </b>"+powerLine.getType()+".<br>"+
 						"<b>Start Location: </b>"+powerLine.getLatLngBySource().getLatitude()+"~"+powerLine.getLatLngBySource().getLongitude()+".<br>"+
-						"<b>End Location: </b>"+powerLine.getLatLngByDestination().getLatitude()+"~"+powerLine.getLatLngByDestination().getLongitude()+".<br>";			
-			
+						"<b>End Location: </b>"+powerLine.getLatLngByDestination().getLatitude()+"~"+powerLine.getLatLngByDestination().getLongitude()+".<br>"+
+						"<span class='button' id='editPowerLineObject'><i class='fa fa-pencil-square-o'></i>&nbsp;&nbsp;Edit Power Line</span>";			
+						
 			//Calling the response function and setting the content type of response.
 			getResponse().setContentType("text/html");
 			getResponse().getWriter().write(infoString);
@@ -211,10 +212,36 @@ public class PowerLineAction extends CommonUtilities {
 			startLocation = powerLine.getLatLngBySource().getLatitude()+"~"+powerLine.getLatLngBySource().getLongitude();
 			endLocation = powerLine.getLatLngByDestination().getLatitude()+"~"+powerLine.getLatLngByDestination().getLongitude();
 			color= CommonUtilities.getLineColor(CommonUtilities.getPercent(powerLine.getCurrentCapacity(),powerLine.getMaximumCapacity())); 				
-			String resp=startLocation+"^"+endLocation+"!"+color+"!"+powerLine.getId();			
+			String resp=startLocation+"^"+endLocation+"!"+color+"!"+powerLine.getId()+"!"+powerLine.getMaximumCapacity();			
 			//Calling the response function and setting the content type of response.
 			getResponse().setContentType("text/html");
 			getResponse().getWriter().write(resp);
+		} catch (Exception e) {
+			log.info("Exception "+e.getMessage()+" occurred in action showPowerLine()");
+			e.printStackTrace();
+		}
+	}
+	
+	public void editPowerLine()
+	{
+		try {
+			Integer maxCapacity = getRequest().getParameter("maxCapacity")!=null?Integer.parseInt(getRequest().getParameter("maxCapacity")):0;
+			Integer powerLineId = getRequest().getParameter("powerLineId")!=null?Integer.parseInt(getRequest().getParameter("powerLineId")):0;
+			PowerLine  powerLine =  getPowerLineService().findById(powerLineId);
+			powerLine.setMaximumCapacity(maxCapacity);
+			getPowerLineService().merge(powerLine);
+			String infoString="<b>Connected: </b>"+powerLine.isIsConnected()+".<br>"+
+					"<b>PowerLine Id: </b>"+powerLine.getId() +".<br>"+
+					"<b>Maximum Capacity: </b>"+powerLine.getMaximumCapacity()+".<br>"+
+					"<b>Current Capacity: </b>"+powerLine.getCurrentCapacity()+".<br>"+
+					"<b>PowerLine Type: </b>"+powerLine.getType()+".<br>"+
+					"<b>Start Location: </b>"+powerLine.getLatLngBySource().getLatitude()+"~"+powerLine.getLatLngBySource().getLongitude()+".<br>"+
+					"<b>End Location: </b>"+powerLine.getLatLngByDestination().getLatitude()+"~"+powerLine.getLatLngByDestination().getLongitude()+".<br>"+
+					"<span class='button' id='editPowerLineObject'><i class='fa fa-pencil-square-o'></i>&nbsp;&nbsp;Edit Power Line</span>";			
+					
+		//Calling the response function and setting the content type of response.
+		getResponse().setContentType("text/html");
+		getResponse().getWriter().write(infoString);
 		} catch (Exception e) {
 			log.info("Exception "+e.getMessage()+" occurred in action showPowerLine()");
 			e.printStackTrace();

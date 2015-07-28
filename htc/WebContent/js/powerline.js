@@ -50,7 +50,6 @@ $(document).ready(function() {
 		    	 $("#powerLineStartLng").text(snappedStart.lng());
 		    	 $("#powerLineEndLat").text(snappedEnd.lat());
 		    	 $("#powerLineEndLng").text(snappedEnd.lng());
-		    	 alert("Abhinav")
 		    	 openDiv('lineObjectDetail');
 		    	
 			});
@@ -71,6 +70,8 @@ function savePowerLineObject()
 	var endLat=$("#powerLineEndLat").text();
 	var endLng=$("#powerLineEndLng").text();
 	var maxCapacity=$("#powerLineCapacity").val();
+	var powerLineObjectActionState = $("#powerLineObjectActionState").text();
+	var powerLineId = $("#powerLineIdHidden").text();
 	$( "#lineObjectDetail" ).slideUp(100);
 	var powerLineType="MAINLINE";
 	var dataAttributes = {
@@ -84,14 +85,25 @@ function savePowerLineObject()
 			isConnected :false,
 			reasonDown : "",
 			powerSourceId:1,
+			powerLineId:powerLineId,
 				};		    	
 	var options = {
 			newShape:createdPowerLineObject,
 			path:[new google.maps.LatLng(startLat, startLng),new google.maps.LatLng(endLat,endLng)],
 			};	
-	if(powerLineType=="MAINLINE"){
-	ajaxRequest("drawPowerLine", dataAttributes, drawPoweLineCallBack,options);
-	}
+	if(powerLineObjectActionState=="Edit"){
+		ajaxRequest("editPowerLine", dataAttributes, editPowerLineObjectCallBack,{});
+	}else
+		{
+		ajaxRequest("drawPowerLine", dataAttributes, drawPoweLineCallBack,options);
+		}
+}
+
+function editPowerLineObjectCallBack(data, options) {
+	currentLineInfoWindowObject.setContent(data);
+	$('#editPowerLineObject').click(function() {
+		editPowerLine(powerLineId);			
+	})
 }
 
 
@@ -202,8 +214,12 @@ function addMessageWindow(line,powerLineId)
 		var dataAttributes= {
 				powerLineId : powerLineId,
 				}
+		var options= {
+				powerLineId : powerLineId,
+				position:event.latLng
+				}
 		
-		ajaxRequest("getPowerLineInfo", dataAttributes, getPowerLineInfoCallBack, {position:event.latLng});		
+		ajaxRequest("getPowerLineInfo", dataAttributes, getPowerLineInfoCallBack, options);		
 	}
     });
     
@@ -226,21 +242,48 @@ function getPowerLineInfoCallBack(data,options)
 	}
 	var content= data;
 	var position=options["position"];
+	var powerLineId=options["powerLineId"];
 	var infowindowHolonObject = new google.maps.InfoWindow({
     content: content,		    
 	});
 	infowindowHolonObject.setOptions({position:position});
 	infowindowHolonObject.open(map,map);
+	$('#editPowerLineObject').click(function() {
+		editPowerLine(powerLineId);			
+	})
 	currentLineInfoWindowObject=infowindowHolonObject;
 	}
 
+
+function editPowerLine(powerLineId)
+{
+	var dataAttributes= {
+			powerLineId : powerLineId,
+			}
+	ajaxRequest("updatePowerLine", dataAttributes, editPowerLineCallBack, {});	
+}
+
+function editPowerLineCallBack(data,options)
+{
+	var powerLine = data.split("!");
+	var powerLineId=powerLine[2].trim();
+	var maxCapacity=powerLine[3].trim();
+	 $("#powerLineIdHidden").text(powerLineId);
+	 $("#powerLineCapacity").val(maxCapacity);
+	 $("#powerLineObjectActionState").text("Edit");
+	 openDiv('lineObjectDetail');
+
+}
 
 function updateGlobalPowerLineList(powerLineId,toDelete)
 {
 	var dataAttributes= {
 			powerLineId : powerLineId,
 			}	
-	ajaxRequest("updatePowerLine", dataAttributes, updatePowerLineCallBack, {toDelete:toDelete});
+	var options= {
+			toDelete : toDelete,
+			}	
+	ajaxRequest("updatePowerLine", dataAttributes, updatePowerLineCallBack, {});
 
 }
 

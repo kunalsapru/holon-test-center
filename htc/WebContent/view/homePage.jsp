@@ -120,10 +120,12 @@
 
 
 	<div id="lineObjectDetail">
+				<input type="hidden" id="powerLineObjectActionState" value="" /> 
 				<input type="hidden" id="powerLineStartLat" value="" /> 
 				<input type="hidden" id="powerLineStartLng" value="" /> 
 				<input type="hidden" id="powerLineEndLat" value="" />
 				<input type="hidden" id="powerLineEndLng" value="" />
+				<input type="hidden" id="powerLineIdHidden" value="" />
 				<table id="powerLineObjectTable">
 					<tr>
 						<td>Power Line Capacity:</td>
