@@ -38,6 +38,9 @@
         <property name="lineConnectedState" type="java.lang.Boolean">
             <column name="line_connected_state" />
         </property>
+        <property name="canCommunicate" type="java.lang.Boolean">
+            <column name="can_communicate" />
+        </property>
         <property name="consumption" type="java.lang.Integer">
             <column name="consumption" />
         </property>

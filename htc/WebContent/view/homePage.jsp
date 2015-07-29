@@ -98,6 +98,11 @@
 					<tr>
 						<td>Holon Coordinator:</td>
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;<select name="holonCoordinatorId" id="holonCoordinatorId"></select></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;Can Communicate:</td>
+						<td><select name="canCommunicate" id="canCommunicate">
+							<option value=1>Yes</option>
+							<option value=0>No</option>
+						</select></td>
 					</tr>
 					<tr>
 						<td>Latitude NE</td>

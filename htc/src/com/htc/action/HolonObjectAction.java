@@ -28,6 +28,7 @@ public class HolonObjectAction extends CommonUtilities {
 		try {
 		Integer holonObjectTypeId = getRequest().getParameter("holonObjectType")!=null?Integer.parseInt(getRequest().getParameter("holonObjectType")):0;
 		Integer holonCoordinatorId = getRequest().getParameter("holonCoordinatorId")!=null?Integer.parseInt(getRequest().getParameter("holonCoordinatorId")):0;
+		Integer canCommunicate = getRequest().getParameter("canCommunicate")!=null?Integer.parseInt(getRequest().getParameter("canCommunicate")):0;
 		String holonManagerName = getRequest().getParameter("holonManager")!=null?getRequest().getParameter("holonManager"):"";
 		Double latNE = getRequest().getParameter("latNE")!=null?Double.parseDouble(getRequest().getParameter("latNE")):0D;
 		Double lngNE = getRequest().getParameter("lngNE")!=null?Double.parseDouble(getRequest().getParameter("lngNE")):0D;
@@ -64,6 +65,7 @@ public class HolonObjectAction extends CommonUtilities {
 		holonObject.setHolonObjectType(holonObjectType);
 		holonObject.setLineConnectedState(false);
 		holonObject.setHolonManager(holonManager2);
+		holonObject.setCanCommunicate(canCommunicate==1?true:false);
 		//Calling service method to save the object in database and saving the auto-incremented ID in an integer
 		Integer newHolonObjectID = getHolonObjectService().persist(holonObject);
 		
@@ -114,7 +116,8 @@ public class HolonObjectAction extends CommonUtilities {
 			String ne_location = holonObject2.getLatLngByNeLocation().getLatitude()+"~"+holonObject2.getLatLngByNeLocation().getLongitude();
 			String sw_location = holonObject2.getLatLngBySwLocation().getLatitude()+"~"+holonObject2.getLatLngBySwLocation().getLongitude();			
 			Integer coordinatorHolonId=holonObject2.getHolonCoordinator().getHolonObject().getId();
-			Boolean lineConnectedState = holonObject2.getLineConnectedState();		
+			String lineConnectedState = holonObject2.getLineConnectedState()==true?"Yes":"No";	
+			String canCommunicate = holonObject2.getCanCommunicate()==true?"Yes":"No"; 
 			Integer noOfElem=0;
 			Integer minEnergReq=0;
 			Integer maxEnergyReq=0;
@@ -237,7 +240,8 @@ public class HolonObjectAction extends CommonUtilities {
 			hoResponse.append(minProdCapHolon+"!");
 			hoResponse.append(maxProdCapHolon+"!");
 			hoResponse.append(cuProdHolon+"!");
-			hoResponse.append(hoListString);
+			hoResponse.append(hoListString+"!");
+			hoResponse.append(canCommunicate);
 				
 			System.out.println(hoResponse.toString());
 			getResponse().getWriter().write(hoResponse.toString());
@@ -258,6 +262,7 @@ public class HolonObjectAction extends CommonUtilities {
 		Integer holonObjectTypeId = getRequest().getParameter("holonObjectType")!=null?Integer.parseInt(getRequest().getParameter("holonObjectType")):0;
 		Integer hiddenHolonObjectId = getRequest().getParameter("hiddenHolonObjectId")!=null?Integer.parseInt(getRequest().getParameter("hiddenHolonObjectId")):0;
 		Integer holonCoordinatorId = getRequest().getParameter("holonCoordinatorId")!=null?Integer.parseInt(getRequest().getParameter("holonCoordinatorId")):0;
+		Integer canCommunicate = getRequest().getParameter("canCommunicate")!=null?Integer.parseInt(getRequest().getParameter("canCommunicate")):0;
 		String holonManagerName = getRequest().getParameter("holonManager")!=null?getRequest().getParameter("holonManager"):"";
 		
 		HolonObject holonObject = getHolonObjectService().findById(hiddenHolonObjectId);
@@ -269,6 +274,7 @@ public class HolonObjectAction extends CommonUtilities {
 		holonObject.setHolonCoordinator(holonCoordinator);
 		holonObject.setHolonObjectType(holonObjectType);
 		holonObject.getHolonManager().setName(holonManagerName);
+		holonObject.setCanCommunicate(canCommunicate==1?true:false);
 		//Calling service method to save the object in database and saving the auto-incremented ID in an integer
 		getHolonObjectService().merge(holonObject);
 		
@@ -285,6 +291,8 @@ public class HolonObjectAction extends CommonUtilities {
 		String holonObjectTypeName = updatedHolonObject.getHolonObjectType().getName();
 		Integer coordinatorHolonId=updatedHolonObject.getHolonCoordinator().getHolonObject().getId();
 		String hc_ne_location=updatedHolonObject.getHolonCoordinator().getHolonObject().getLatLngByNeLocation().getLatitude()+"~"+updatedHolonObject.getHolonCoordinator().getHolonObject().getLatLngByNeLocation().getLongitude();
+		log.info("Maaaarrrrrrrraaaaa "+updatedHolonObject.getCanCommunicate());
+		String canCommunicateVal=updatedHolonObject.getCanCommunicate()==true?"Yes":"No";
 		boolean isCoord=false;
 		if(coordinatorHolonId==updatedHolonObject.getId())
 		{
@@ -303,7 +311,8 @@ public class HolonObjectAction extends CommonUtilities {
 		hoResponse.append(coordinatorHolonId+"!");
 		hoResponse.append(isCoord+"!");
 		hoResponse.append(hc_ne_location+"!");
-		hoResponse.append(holonManagerName);
+		hoResponse.append(holonManagerName+"!");
+		hoResponse.append(canCommunicateVal);
 		//Calling the response function and setting the content type of response.
 		getResponse().setContentType("text/html");		
 		getResponse().getWriter().write(hoResponse.toString());

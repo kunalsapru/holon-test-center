@@ -23,6 +23,7 @@ public class HolonObject implements java.io.Serializable, Comparable{
 	private PowerLine powerLine;
 	private PowerLine subLine;
 	private Boolean lineConnectedState;
+	private Boolean canCommunicate;
 	private EnergyState energyState;
 	private Integer consumption;
 	private Set<HolonElement> holonElements = new HashSet<HolonElement>(0);
@@ -45,7 +46,7 @@ public class HolonObject implements java.io.Serializable, Comparable{
 			HolonManager holonManager, HolonObjectType holonObjectType,
 			LatLng latLngByNeLocation, LatLng latLngByDoorLocation,
 			LatLng latLngBySwLocation,EnergyState energyState, PowerLine powerLine,PowerLine subLine,
-			Boolean lineConnectedState, Integer consumption, Set<HolonElement> holonElements,
+			Boolean lineConnectedState,Boolean canCommunicate, Integer consumption, Set<HolonElement> holonElements,
 			Set<?> powerSwitches,Set<?> holonCoordinators) {
 		this.id = id;
 		this.holonCoordinator = holonCoordinator;
@@ -62,6 +63,7 @@ public class HolonObject implements java.io.Serializable, Comparable{
 		this.holonCoordinators=holonCoordinators;
 		this.energyState=energyState;
 		this.subLine=subLine;
+		this.canCommunicate=canCommunicate;
 	}
 
 	public int getId() {
@@ -211,6 +213,14 @@ public class HolonObject implements java.io.Serializable, Comparable{
 			result = (getProducerCount(this) < getProducerCount(ho2) ) ? -1: (getProducerCount(this) > getProducerCount(ho2) ) ? 1:0 ;
 		}
 		return result;
+	}
+
+	public Boolean getCanCommunicate() {
+		return canCommunicate;
+	}
+
+	public void setCanCommunicate(Boolean canCommunicate) {
+		this.canCommunicate = canCommunicate;
 	}
 
 }
