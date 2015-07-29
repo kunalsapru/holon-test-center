@@ -45,7 +45,7 @@ public class PowerLineAction extends CommonUtilities {
 			LatLng savedStartLatLng=getLatLngService().findById(newStartLatLngId);
 			LatLng savedEndLatLng=getLatLngService().findById(newEndLatLngId);
 			PowerSource powerSource = getPowerSourceService().findById(powerSourceId);
-			currentCapacity= (int) CommonUtilities.randomCapGenerator();
+			currentCapacity= (int) CommonUtilities.randomCapGenerator(maxCapacity);
 			log.info("Current Capacity "+currentCapacity);
 			PowerLine powerLine = new PowerLine();
 			powerLine.setCurrentCapacity(currentCapacity);
@@ -229,7 +229,9 @@ public class PowerLineAction extends CommonUtilities {
 			Integer powerLineId = getRequest().getParameter("powerLineId")!=null?Integer.parseInt(getRequest().getParameter("powerLineId")):0;
 			PowerLine  powerLine =  getPowerLineService().findById(powerLineId);
 			powerLine.setMaximumCapacity(maxCapacity);
+			powerLine.setCurrentCapacity((int) CommonUtilities.randomCapGenerator(maxCapacity));
 			getPowerLineService().merge(powerLine);
+			String color=CommonUtilities.getLineColor(CommonUtilities.getPercent(powerLine.getCurrentCapacity(),powerLine.getMaximumCapacity()));
 			String infoString="<b>Connected: </b>"+powerLine.isIsConnected()+".<br>"+
 					"<b>PowerLine Id: </b>"+powerLine.getId() +".<br>"+
 					"<b>Maximum Capacity: </b>"+powerLine.getMaximumCapacity()+".<br>"+
@@ -238,10 +240,10 @@ public class PowerLineAction extends CommonUtilities {
 					"<b>Start Location: </b>"+powerLine.getLatLngBySource().getLatitude()+"~"+powerLine.getLatLngBySource().getLongitude()+".<br>"+
 					"<b>End Location: </b>"+powerLine.getLatLngByDestination().getLatitude()+"~"+powerLine.getLatLngByDestination().getLongitude()+".<br>"+
 					"<span class='button' id='editPowerLineObject'><i class='fa fa-pencil-square-o'></i>&nbsp;&nbsp;Edit Power Line</span>";			
-					
+			String resp=infoString+"*"+color;		
 		//Calling the response function and setting the content type of response.
 		getResponse().setContentType("text/html");
-		getResponse().getWriter().write(infoString);
+		getResponse().getWriter().write(resp);
 		} catch (Exception e) {
 			log.info("Exception "+e.getMessage()+" occurred in action showPowerLine()");
 			e.printStackTrace();

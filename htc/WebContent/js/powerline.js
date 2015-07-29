@@ -92,7 +92,10 @@ function savePowerLineObject()
 			path:[new google.maps.LatLng(startLat, startLng),new google.maps.LatLng(endLat,endLng)],
 			};	
 	if(powerLineObjectActionState=="Edit"){
-		ajaxRequest("editPowerLine", dataAttributes, editPowerLineObjectCallBack,{});
+		var option={
+				powerLineId:powerLineId
+		}
+		ajaxRequest("editPowerLine", dataAttributes, editPowerLineObjectCallBack,option);
 	}else
 		{
 		ajaxRequest("drawPowerLine", dataAttributes, drawPoweLineCallBack,options);
@@ -100,10 +103,16 @@ function savePowerLineObject()
 }
 
 function editPowerLineObjectCallBack(data, options) {
-	currentLineInfoWindowObject.setContent(data);
+	var powerLineId =options["powerLineId"];
+	var content = data.split("*")[0];
+	var color = data.split("*")[1];
+	var newLineShape=globalPlList.get(powerLineId.toString());
+	newLineShape.setOptions({strokeColor:color});
+	currentLineInfoWindowObject.setContent(content);
 	$('#editPowerLineObject').click(function() {
 		editPowerLine(powerLineId);			
 	})
+	globalPlList.set(powerLineId, newLineShape);
 }
 
 
