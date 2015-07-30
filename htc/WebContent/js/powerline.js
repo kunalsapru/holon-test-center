@@ -14,7 +14,8 @@ $(document).ready(function() {
 	$('#addPowerLine').click(function() {
 		//alert("abhinav");
 		var bgColor=$(this).css("background-color");
-		if (bgColor == "rgb(26, 26, 26)"){
+		if (drawPowerLineMode==false){
+			drawPowerLineMode=true;
 			$(this).css("background-color", "rgb(153,153,0)");
 
 			lineDrawingManager = new google.maps.drawing.DrawingManager({
@@ -57,6 +58,7 @@ $(document).ready(function() {
 		} else {
 			$(this).css("background-color", "rgb(26, 26, 26)");
 			lineDrawingManager.setMap(null);
+			drawPowerLineMode=false;
 		}
 
 	})

@@ -94,10 +94,9 @@ $(document)
 													+ dist
 													+ " meters."
 										});
-								drawRoute(dPointA, dPointB,
+								var route = drawRoute(dPointA, dPointB,
 										infowinDist, map);
-								// alert("The distance between
-								// selected points is "+dist+"m.");
+								
 								swal({
 									title : "Distance",
 									text : "The distance between selected points is "
@@ -157,13 +156,8 @@ $(document)
 							if (status == google.maps.DirectionsStatus.OK) {
 								directionsDisplay.setDirections(response);
 							}
-							
-							response= {
-									
-									click:infowindow.open(map,ro)
-							};
-							
-							
+							infowindow.setOptions({position:start});
+								infowindow.open(map,map);							
 
 						});
 						
