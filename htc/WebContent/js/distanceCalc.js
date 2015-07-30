@@ -25,7 +25,8 @@ $(document)
 					$("#calcDistance").on('click',function() {
 						
 						//alert($(this).css("background-color"));
-						if ($(this).css("background-color") == "rgb(26, 26, 26)") {
+						if (calculateDistanceMode==false) {
+							calculateDistanceMode=true;
 							$(this).css("background-color", "rgb(153,153,0)");
 							swal({
 								title : "Select Points",
@@ -109,6 +110,7 @@ $(document)
 								deleteMarkers();
 								google.maps.event.removeListener(distListener);
 								$(this).css("background-color", "rgb(26,26,26)");
+								calculateDistanceMode=false;
 							}
 							
 							
