@@ -17,6 +17,7 @@
 <script type="text/javascript" src="js/holonObject.js"></script>
 <script type="text/javascript" src="js/holonElement.js"></script>
 <script type="text/javascript" src="js/switch.js"></script>
+<script type="text/javascript" src="js/connectToPowerSource.js"></script>
 <script src="js/sweetalert.min.js"></script>
 </head>
 
@@ -33,19 +34,10 @@
     <li><a href="#"><i class="fa fa-institution"></i>Holon Object<i class="fa fa-caret-down"></i></a>
     <ul>
         <li><a href="#" id="addHolonObject"><i class="fa fa-plus"></i>Add New Holon Object</a></li>
-        <li><a href="#"><i class="fa fa-wrench"></i>Edit Holon Object<i class="fa fa-caret-down"></i></a>
-        <ul>
-        
-        <li><a href="#"><i class="fa fa-plus-circle"></i>Add Holon Elements</a></li>
-        <li><a href="#"><i class="fa fa-edit"></i>Edit Holon Elements</a></li>
-        <li><a href="#"><i class="fa fa-remove"></i>Delete Holon Elements</a></li>
-        <li><a href="#"><i class="fa fa-info"></i>Show Holon Elements</a></li>
-        </ul>
-        </li>
-        <li><a href="#" ><i class="fa fa-plug"></i>Connect to Power Source</a></li>
+       <li><a href="#" id="connectToPowerSource"><i class="fa fa-plug"></i>Connect to Power Source</a></li>
         <li><a href="#" id="consumptionGraph"><i class="fa fa-line-chart"></i>Show Consumption</a></li>
       </ul></li>
-    <li> <a href="#" id="connectToPowerSource"><i class="fa fa-flash"></i>PowerLine<i class="fa fa-caret-down"></i></a>
+    <li> <a href="#" ><i class="fa fa-flash"></i>PowerLine<i class="fa fa-caret-down"></i></a>
       <ul>
         <li><a href="#" id="addPowerLine"><i class="fa fa-arrows-h"></i>Draw PowerLine</a></li>
         <li><a href="#" id="calcDistance"><i class="fa fa-arrows-h"></i>Calculate Distance</a></li>

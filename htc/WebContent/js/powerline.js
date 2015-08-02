@@ -217,7 +217,11 @@ function addMessageWindow(line,powerLineId)
 {		
 	 
     google.maps.event.addListener(line, 'click', function(event) {
-    	if(clickedToDrawSwitch=="switchOnPowerLine")
+    	if(connectToPowerSourceMode==true)
+    		{
+    			connectToPowerSource(event.latLng,powerLineId.trim(),"PowerLine");
+    		}
+    else if(addSwitchonPowerLineMode==true)
 		{
 			createPowerSwitch(event.latLng,powerLineId.trim());
 		}

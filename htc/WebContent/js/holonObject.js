@@ -117,13 +117,9 @@ function editHolonObjectCallBack(data, options){
 
 	var editedHolonObject=globalHoList.get(holonObjectId.toString());
 	editedHolonObject.setOptions({strokeColor:holonColor,fillColor: holonColor});
-	google.maps.event.addListener(editedHolonObject, 'click', function() {
-		  var dataAttributes= {
-				  holonObjectId : holonObjectId,
-				}
-		 ajaxRequest("getHolonObjectInfoWindow", dataAttributes, getHolonInfoWindowCallBack, {});		  
-		
-	  });
+	google.maps.event.addListener(editedHolonObject, 'click', function(event) {
+		addEventActionToObject(holonObjectId,event.latLng);
+		});
 	globalHoList.set(holonObjectId,editedHolonObject);
 
 }
@@ -136,13 +132,9 @@ function createHolonObjectCallBack(data, options) {
 	var holonColor= dataArray[4];
 	createdHolonObject.setOptions({strokeColor:holonColor,fillColor: holonColor});
 	 //When Rectangle is clicked
-	  google.maps.event.addListener(createdHolonObject, 'click', function() {
-		  var dataAttributes= {
-				  holonObjectId : holonObjectId,
-				}
-		 ajaxRequest("getHolonObjectInfoWindow", dataAttributes, getHolonInfoWindowCallBack, {});		  
-		
-	  });
+	  google.maps.event.addListener(createdHolonObject, 'click', function(event) {
+		  addEventActionToObject(holonObjectId,event.latLng)
+		  });
 	  if(noOfHolons=="1")
 		 {
 		  showCoordCircles(holonColor,true,createdHolonObject.getBounds().getNorthEast().lat(),createdHolonObject.getBounds().getNorthEast().lng());
@@ -156,6 +148,19 @@ function createHolonObjectCallBack(data, options) {
 	  //globalHoList[holonObjectId]=createdHolonObject;
 	  globalHoList.set(holonObjectId,createdHolonObject);
 	//createdHolonObject=null;
+}
+
+function addEventActionToObject(holonObjectId,latLng)
+{
+	 if(connectToPowerSourceMode==true)
+		{
+		  connectToPowerSource(latLng,holonObjectId,"HolonObject");
+		}else{
+	  var dataAttributes= {
+			  holonObjectId : holonObjectId,
+			}
+	 ajaxRequest("getHolonObjectInfoWindow", dataAttributes, getHolonInfoWindowCallBack, {});
+		}
 }
 
 function getHolonInfoWindowCallBack(data,options)
@@ -341,7 +346,6 @@ function showPowerCircles(holonObjectId)
 
 function getDetailForPowerSourceIconCallBack(data,options)
 {
-	console.log("Abhinav Prakash "+data);
 	var resp = data.split("*");
 	var hasPower = resp[0];
 	var hasPowerOn=resp[1];
@@ -405,8 +409,13 @@ function showCoordCircles(color,isCoord,ne_location_lat,ne_location_lng){
 }
 
 function attachMessage(dataAttributes, rectangleFromFactory) {
-	google.maps.event.addListener(rectangleFromFactory, 'click', function(event) {		
+	google.maps.event.addListener(rectangleFromFactory, 'click', function(event) {	
+			if(connectToPowerSourceMode==true)
+				{
+				connectToPowerSource(event.latLng, dataAttributes["holonObjectId"],"HolonObject");
+				}else{
 		  ajaxRequest("getHolonObjectInfoWindow", dataAttributes, getHolonInfoWindowCallBack, {});		
+				}
 		
 	  });
 }
@@ -419,9 +428,6 @@ function openDiv(id) {
 	$("#"+id).slideDown(100);
 }
 
-function connectToPowerSource(holonObjectId) {
-	alert("Holon Object ID = "+holonObjectId);
-}
 
 function deleteHolonObject(holonObjectId) {
 	alert("Holon Object ID = "+holonObjectId);

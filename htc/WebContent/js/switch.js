@@ -1,12 +1,12 @@
-function drawSwitchOnPowerLine(clickedValue){
-	clickedToDrawSwitch=clickedValue;
+function drawSwitchOnPowerLine(){
+	addSwitchonPowerLineMode=true;
 	if ($("#"+clickedValue).css("background-color") == "rgb(26, 26, 26)") {
 		$("#"+clickedValue).css("background-color", "rgb(153,153,0)");
 	}
 	else
 	{
 		$("#"+clickedValue).css("background-color", "rgb(26, 26, 26)");	
-		clickedToDrawSwitch="";
+		addSwitchonPowerLineMode=false;
 	}
 }
 

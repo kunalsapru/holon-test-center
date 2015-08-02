@@ -3,7 +3,6 @@ $(document)
 				function() {
 					// call initialize function
 					initialize();
-					window.clickedToDrawSwitch="";
 					window.loadHolon=true;
 					window.clickedMarkerChangeImage="";
 					window.createdHolonObject=null; //Save object on overlaycomplete Action to use it later to set its holon color
@@ -12,6 +11,7 @@ $(document)
 					window.drawHolonObjectMode=false;
 					window.calculateDistanceMode=false;
 					window.addSwitchonPowerLineMode=false;
+					window.connectToPowerSourceMode=false;
 					window.globalHoList=new Map();
 					window.globalPlList=new Map();
 					window.globalPsList=new Map();
@@ -46,7 +46,7 @@ $(document)
 					});
 								
 					$("#switchOnPowerLine").click(function(event){
-						drawSwitchOnPowerLine(this.id);
+						drawSwitchOnPowerLine();
 					});
 					
 					$("#holonObjectTypeforMasterTables").click(function(){
