@@ -116,7 +116,10 @@ public class HolonObjectAction extends CommonUtilities {
 			String ne_location = holonObject2.getLatLngByNeLocation().getLatitude()+"~"+holonObject2.getLatLngByNeLocation().getLongitude();
 			String sw_location = holonObject2.getLatLngBySwLocation().getLatitude()+"~"+holonObject2.getLatLngBySwLocation().getLongitude();			
 			Integer coordinatorHolonId=holonObject2.getHolonCoordinator().getHolonObject().getId();
-			String lineConnectedState = holonObject2.getLineConnectedState()==true?"Yes":"No";	
+			String lineConnectedState = holonObject2.getLineConnectedState()==true?"Yes":"No";
+			
+			HolonObject coOrdHolon= getHolonObjectService().findById(coordinatorHolonId);			
+			String coOredNeLocation= coOrdHolon.getLatLngByNeLocation().getLatitude()+"~"+coOrdHolon.getLatLngByNeLocation().getLongitude();
 			String canCommunicate = holonObject2.getCanCommunicate()==true?"Yes":"No"; 
 			Integer noOfElem=0;
 			Integer minEnergReq=0;
@@ -241,7 +244,8 @@ public class HolonObjectAction extends CommonUtilities {
 			hoResponse.append(maxProdCapHolon+"!");
 			hoResponse.append(cuProdHolon+"!");
 			hoResponse.append(hoListString+"!");
-			hoResponse.append(canCommunicate);
+			hoResponse.append(canCommunicate+"!");
+			hoResponse.append(coOredNeLocation);
 				
 			System.out.println(hoResponse.toString());
 			getResponse().getWriter().write(hoResponse.toString());

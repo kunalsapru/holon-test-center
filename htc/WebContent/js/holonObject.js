@@ -186,6 +186,7 @@ function getHolonInfoWindowCallBack(data,options)
 	var cuEnergeyProd=dataArray[22];
 	var hoList=dataArray[23];
 	var canCommunicate=dataArray[24];
+	var coOrd_ne_location=dataArray[25];
 	var lat=ne_location.split("~");
 	//alert(holonColor);
 	var contentString="<h3 align=\"center\">Holon Object Details</h3>" +
@@ -194,7 +195,7 @@ function getHolonInfoWindowCallBack(data,options)
 			"<td><b>Holon Object Type: </b>"+holonObjectTypeName+"<br></td></tr>"+
 			"<tr><td><b>Holon Manager: </b>"+holonManagerName+"<br> </td>"+
 			"<td><b>Line Connected State: </b>"+lineConnectedState+"<br></td></tr>"+
-			"<tr><td><b>Coordinator Id: </b>"+coordHolonId+"<br></td>"+
+			"<tr><td><b>Coordinator Id: </b> <a href='#' id='hoCoId'>"+coordHolonId+"</a><br></td>"+
 			"<td><b>Minimum Energey Req: </b>"+minEnergeyHoObj+"<br></td></tr>"+
 			"<tr><td><b>Maximum Energey Req: </b>"+maxEnergeyHoObj+"<br></td>"+
 			"<td><b>Current Energey Req: </b>"+cuEnergeyHoObj+"<br></td></tr>"+
@@ -247,6 +248,10 @@ function getHolonInfoWindowCallBack(data,options)
 	$('#editHolonObject').click(function() {
 		editHolonObject(holonObjectId,infowindowHolonObject);			
 	})
+		$('#hoCoId').click(function() {
+			zoomToHolon(coordHolonId,coOrd_ne_location);			
+	})
+	
 	$('#infoWindowHolonList').change(function(){
       if(jQuery("#infoWindowHolonList option:selected").val()!='Select Holon')
     	  {
