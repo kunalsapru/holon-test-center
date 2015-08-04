@@ -158,6 +158,20 @@
 	height: 50px;
 }
 
+#subLineObjectDetail {
+	    display: none;
+	    position: absolute;
+	    top: 50%;
+	    left: 50%;
+	    width: 350px;
+	    height: 100px;
+	    margin: -100px 0 0 -250px;    
+	    background: #E2E4DD;
+	    border: 5px solid rgb(128, 128, 128);
+}
+#subLineObjectTable tr {
+	height: 50px;
+}
 
 
 

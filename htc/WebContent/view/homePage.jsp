@@ -129,8 +129,28 @@
 						<td><input id="powerLineCapacity" type="text"></td>
 					</tr>
 					<tr>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="cancelpowerLine" type='button' class="button"  value='Cancel' /></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="cancelPowerLine" type='button' class="button"  value='Cancel' /></td>
 						<td><input id="savePowerLineObject" type='button' class="button"  value='Save Power Line' /></td>
+					</tr>
+				</table>
+			</div>
+			
+			
+			<div id="subLineObjectDetail">
+				<input type="hidden" id="subLineLineObjectActionState" value="" /> 
+				<input type="hidden" id="subLineStartLat" value="" /> 
+				<input type="hidden" id="subLineStartLng" value="" /> 
+				<input type="hidden" id="subLineEndLat" value="" />
+				<input type="hidden" id="subLineEndLng" value="" />
+				<input type="hidden" id="subLineIdHidden" value="" />
+				<table id="subLineObjectTable">
+					<tr>
+						<td>Sub Line Capacity:</td>
+						<td><input id="subLineCapacity" type="text"></td>
+					</tr>
+					<tr>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="cancelSubLine" type='button' class="button"  value='Cancel' /></td>
+						<td><input id="saveSubLineObject" type='button' class="button"  value='Save Sub-Line' /></td>
 					</tr>
 				</table>
 			</div>
