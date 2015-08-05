@@ -14,6 +14,7 @@ public class HolonCoordinator implements java.io.Serializable {
 	private String name;
 	private HolonObject holonObject;
 	private Set<?> holonObjects = new HashSet<Object>(0);
+	private Set<?> powerSources = new HashSet<Object>(0);
 
 	public HolonCoordinator() {
 	}
@@ -23,12 +24,21 @@ public class HolonCoordinator implements java.io.Serializable {
 	}
 
 	public HolonCoordinator(int id, Holon holon, HolonObject holonObject, String name,
-			Set<?> holonObjects) {
+			Set<?> holonObjects, Set<?> powerSources) {
 		this.id = id;
 		this.holon = holon;
 		this.holonObject=holonObject;
 		this.name = name;
 		this.holonObjects = holonObjects;
+		this.powerSources = powerSources;
+	}
+
+	public Set<?> getPowerSources() {
+		return powerSources;
+	}
+
+	public void setPowerSources(Set<?> powerSources) {
+		this.powerSources = powerSources;
 	}
 
 	public int getId() {

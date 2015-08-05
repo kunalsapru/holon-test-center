@@ -68,5 +68,11 @@
             </key>
             <one-to-many class="com.htc.hibernate.pojo.PowerSwitch" />
         </set>
+        <set name="powerSources" table="power_source" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="power_line" />
+            </key>
+            <one-to-many class="com.htc.hibernate.pojo.PowerSource" />
+        </set>
     </class>
 </hibernate-mapping>

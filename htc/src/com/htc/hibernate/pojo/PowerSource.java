@@ -10,13 +10,14 @@ public class PowerSource implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private int id;
-	private LatLng latLng;
 	private String name;
-	private Integer swLocation;
-	private String doorLocation;
 	private Integer minProduction;
 	private Integer maxProduction;
 	private Integer currentProduction;
+	private LatLng centre;
+	private HolonCoordinator holonCoordinator;
+	private PowerLine powerLine;
+	
 	private Set<?> powerLines = new HashSet<Object>(0);
 
 	public PowerSource() {
@@ -26,17 +27,17 @@ public class PowerSource implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public PowerSource(int id, LatLng latLng, String name, Integer swLocation,
-			String doorLocation, Integer minProduction, Integer maxProduction,
-			Integer currentProduction, Set<?> powerLines) {
+	public PowerSource(int id, String name, Integer minProduction, Integer maxProduction,
+			Integer currentProduction, LatLng centre, HolonCoordinator holonCoordinator, PowerLine powerLine,
+			Set<?> powerLines) {
 		this.id = id;
-		this.latLng = latLng;
 		this.name = name;
-		this.swLocation = swLocation;
-		this.doorLocation = doorLocation;
 		this.minProduction = minProduction;
 		this.maxProduction = maxProduction;
 		this.currentProduction = currentProduction;
+		this.centre = centre;
+		this.holonCoordinator = holonCoordinator;
+		this.powerLine = powerLine;
 		this.powerLines = powerLines;
 	}
 
@@ -48,14 +49,6 @@ public class PowerSource implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public LatLng getLatLng() {
-		return this.latLng;
-	}
-
-	public void setLatLng(LatLng latLng) {
-		this.latLng = latLng;
-	}
-
 	public String getName() {
 		return this.name;
 	}
@@ -64,20 +57,28 @@ public class PowerSource implements java.io.Serializable {
 		this.name = name;
 	}
 
-	public Integer getSwLocation() {
-		return this.swLocation;
+	public LatLng getCentre() {
+		return centre;
 	}
 
-	public void setSwLocation(Integer swLocation) {
-		this.swLocation = swLocation;
+	public void setCentre(LatLng centre) {
+		this.centre = centre;
 	}
 
-	public String getDoorLocation() {
-		return this.doorLocation;
+	public HolonCoordinator getHolonCoordinator() {
+		return holonCoordinator;
 	}
 
-	public void setDoorLocation(String doorLocation) {
-		this.doorLocation = doorLocation;
+	public void setHolonCoordinator(HolonCoordinator holonCoordinator) {
+		this.holonCoordinator = holonCoordinator;
+	}
+
+	public PowerLine getPowerLine() {
+		return powerLine;
+	}
+
+	public void setPowerLine(PowerLine powerLine) {
+		this.powerLine = powerLine;
 	}
 
 	public Integer getMinProduction() {

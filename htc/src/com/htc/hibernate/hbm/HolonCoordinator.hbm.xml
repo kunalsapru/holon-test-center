@@ -23,5 +23,13 @@
             </key>
             <one-to-many class="com.htc.hibernate.pojo.HolonObject" />
         </set>
+        <set name="powerSources" table="power_source" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="holon_coord" />
+            </key>
+            <one-to-many class="com.htc.hibernate.pojo.PowerSource" />
+        </set>
+
+
     </class>
 </hibernate-mapping>

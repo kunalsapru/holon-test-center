@@ -8,8 +8,6 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
-import com.htc.action.HolonElementTypeAction;
-
 public class HibernateSessionFactory {
 	static Logger log = Logger.getLogger(HibernateSessionFactory.class);
     private static String CONFIG_FILE_LOCATION = "hibernate.cfg.xml";
