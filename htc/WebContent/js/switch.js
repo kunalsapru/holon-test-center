@@ -113,12 +113,12 @@ function getSwitchInfoCallBack(data, options)
 	var status=individualData[5].trim();
 	var switchStatus="Off";
 	var contentString="<div id='contentId'>Switch Id: "+powerSwitchId+"</br>"+"Switch Status : "+switchStatus+"</br>"+"Connected Power Line A : "+powerLineAId+"</br>"+"Connected Power Line B : "+powerLineBId+"</br>"+"</br></br></br>"+
-	" <input type='button' value='Switch On' id='togglePowerSwitch' /> </div>";
+	" <input type='button' class='button' value='Switch On' id='togglePowerSwitch' /> </div>";
 	if(status=="1")
 		{
 		switchStatus="On";
 		contentString="<div id='contentId'>Switch Id: "+powerSwitchId+"</br>"+"Switch Status : "+switchStatus+"</br>"+"Connected Power Line A : "+powerLineAId+"</br>"+"Connected Power Line B : "+powerLineBId+"</br>"+"</br></br></br>"+
-		" <input type='button' value='Switch Off' id='togglePowerSwitch' /></div>";
+		" <input type='button' class='button' value='Switch Off' id='togglePowerSwitch' /></div>";
 		}
 	var position=options["position"];
 	var circleSwitch=options["circleSwitch"];

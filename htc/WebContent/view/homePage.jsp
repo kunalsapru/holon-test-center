@@ -88,6 +88,9 @@
 				<!-- <table id="holonObjectTable"> -->
 				<table class='table'>
 					<tr>
+						<td>Edit Holon Object</td>
+					</tr>
+					<tr>
 						<td>Holon Object Type:</td>
 						<td><select name="holonObjectType" id="holonObjectType"></select></td>
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;Holon Manager Name:</td>
@@ -114,11 +117,9 @@
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;Longtitude SW</td>
 						<td><label id="holonObjectLongitudeSW"></label></td>
 					</tr> -->
-					<tr>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="cancelHolonObject" type='button' class="button"  value='Cancel' /></td>
-						<td><input id="saveHolonObject" type='button' class="button"  value='Save Holon Object' /></td>
-					</tr>
-				</table>
+					</table>
+						<input id="cancelHolonObject" type='button' class="button"  value='Cancel' />
+						<input id="saveHolonObject" type='button' class="button"  value='Save Holon Object' />
 			</div>
 
 

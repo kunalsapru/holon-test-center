@@ -194,43 +194,44 @@ function getHolonInfoWindowCallBack(data,options)
 	var coOrd_ne_location=dataArray[25];
 	var lat=ne_location.split("~");
 	//alert(holonColor);
-	var contentString="<h3 align=\"center\">Holon Object Details</h3>" +
-			"<table>"+
-			"<tr><td><b>Holon Object Id: </b>"+holonObjectId +"<br> </td>"+
-			"<td><b>Holon Object Type: </b>"+holonObjectTypeName+"<br></td></tr>"+
-			"<tr><td><b>Holon Manager: </b>"+holonManagerName+"<br> </td>"+
-			"<td><b>Line Connected State: </b>"+lineConnectedState+"<br></td></tr>";
+	var contentString=
+			"<table class='table'>"+
+			"<tr><td>Holon Object Details</td></tr>"
+			"<tr><td><b>Holon Object Id: "+holonObjectId +"</td>"+
+			"<td>Holon Object Type: "+holonObjectTypeName+"</td></tr>"+
+			"<tr><td>Holon Manager: "+holonManagerName+"</td>"+
+			"<td>Line Connected State: "+lineConnectedState+"</td></tr>";
 	if(coordHolonId==0)
 		{
-		contentString=contentString.concat("<tr><td><b>Coordinator Id: </b>No Coordinator<br></td>");
+		contentString=contentString.concat("<tr><td>Coordinator Id: No Coordinator</td>");
 		}else
 		{
-		contentString=contentString.concat("<tr><td><b>Coordinator Id: </b> <a href='#' id='hoCoId'>"+coordHolonId+"</a><br></td>");
+		contentString=contentString.concat("<tr><td>Coordinator Id: <a href='#' id='hoCoId'>"+coordHolonId+"</a></td>");
 		}
 			
-	contentString=contentString.concat("<td><b>Minimum Energey Req: </b>"+minEnergeyHoObj+"<br></td></tr>"+
-			"<tr><td><b>Maximum Energey Req: </b>"+maxEnergeyHoObj+"<br></td>"+
-			"<td><b>Current Energey Req: </b>"+cuEnergeyHoObj+"<br></td></tr>"+
-			"<tr><td><b>Minimum Production capacity: </b>"+minEnergeyProdObj+"<br></td>"+
-			"<td><b>Maximum Production Capacity: </b>"+maxEnergeyProdObj+"<br></td></tr>"+
-			"<tr><td><b>Current Production: </b>"+cuEnergeyProdObj+"<br></td>" +
-			"<td><b>Can Communicate: </b>"+canCommunicate+"<br></td></tr>"+
+	contentString=contentString.concat("<td>Minimum Energey Req: "+minEnergeyHoObj+"</td></tr>"+
+			"<tr><td>Maximum Energey Req: "+maxEnergeyHoObj+"</td>"+
+			"<td>Current Energey Req: "+cuEnergeyHoObj+"</td></tr>"+
+			"<tr><td>Minimum Production capacity: "+minEnergeyProdObj+"</td>"+
+			"<td>Maximum Production Capacity: "+maxEnergeyProdObj+"</td></tr>"+
+			"<tr><td>Current Production: "+cuEnergeyProdObj+"</td>" +
+			"<td>Can Communicate: "+canCommunicate+"</td></tr>"+
 			"</table>"+
-			"<span class='button' id='consumptionGraph'><i class='fa fa-line-chart'></i>&nbsp;&nbsp;Show Consumption</span>&nbsp;&nbsp;&nbsp;&nbsp;"+
-			"<span class='button' id='editHolonObject'><i class='fa fa-pencil-square-o'></i>&nbsp;&nbsp;Edit Holon Object</span>&nbsp;&nbsp;&nbsp;&nbsp;"+
-			"<span class='button' id='showHolonElement' onclick='showHolonElements("+holonObjectId+")'><i class='fa fa-info'></i>&nbsp;&nbsp;Show Holon Elements</span><hr>");
+			"<span class='button' id='consumptionGraph' title='Show Consumption'><i class='fa fa-line-chart'></i></span>"+
+			"<span class='button' id='editHolonObject' title='Edit Holon Object'><i class='fa fa-pencil-square-o'></i></span>"+
+			"<span class='button' id='showHolonElement' title='Show Holon Elements' onclick='showHolonElements("+holonObjectId+")'><i class='fa fa-info'></i></span><hr>");
 	if(coordHolonId===holonObjectId)
 	{
 		contentString = contentString.concat(
-				"<h3 align=\"center\">Holon Details</h3>" +
-				"<table>"+
-				"<tr><td><b>Number of Holon Objects: </b>"+nOfHolonObj +"<br></td><td></td>"+
-				"<td><b>Minimum Energey Req:</b>"+minEnergeyHo +"<br></td></tr>"+
-				"<tr><td><b>Maximum Energey Req: </b>"+maxEnergeyHo +"<br></td><td></td>"+
-				"<td><b>Current Energey Req: </b>"+cuEnergeyHo +"<br></td></tr>"+
-				"<tr><td><b>Minimum Production capacity: </b>"+minEnergeyProd +"<br></td><td></td>"+
-				"<td><b>Maximum Production Capacity: </b>"+maxEnergeyProd +"<br></td></tr>"+
-				"<tr><td><b>Current Production: </b>"+cuEnergeyProd +"<br></td><td></td><td></td></tr>"+
+				"<table class='table'>"+
+				"<tr><td>Holon Details</td></tr>" +
+				"<tr><td>Number of Holon Objects: "+nOfHolonObj +"</td>"+
+				"<td>Minimum Energey Req:"+minEnergeyHo +"</td></tr>"+
+				"<tr><td>Maximum Energey Req: "+maxEnergeyHo +"</td>"+
+				"<td>Current Energey Req: "+cuEnergeyHo +"</td></tr>"+
+				"<tr><td>Minimum Production capacity: "+minEnergeyProd +"</td>"+
+				"<td>Maximum Production Capacity: "+maxEnergeyProd +"</td></tr>"+
+				"<tr><td>Current Production: "+cuEnergeyProd +"</td><td></td></tr>"+
 				"</table>"+
 				"<select name=\"infoWindowHolonList\" id=\"infoWindowHolonList\">" +
 				hoList+
@@ -360,7 +361,7 @@ function getDetailForPowerSourceIconCallBack(data,options)
 		 {
 			//alert("has power");
 		  
-		   /* currecntPC=new google.maps.Circle({
+		    currecntPC=new google.maps.Circle({
 				 strokeColor: powerColor,
 			     strokeOpacity: 1,
 			     strokeWeight: 1,
@@ -369,24 +370,7 @@ function getDetailForPowerSourceIconCallBack(data,options)
 			     map: map,
 			     center: new google.maps.LatLng(ne_location_lat, sw_location_lng),
 			     radius: 3
-			    });	  */
-		    
-		    currecntPC = new Marker({
-				map: map,
-				title: 'Power Producer',
-				position: new google.maps.LatLng(ne_location_lat, sw_location_lng),
-				zIndex: 9,
-				icon: {
-					path: ROUTE,
-					fillColor: '#0E77E9',
-					fillOpacity: 0,
-					strokeColor: '',
-					strokeWeight: 0,
-					scale: 1/2
-				},
-				custom_label: '<i style="color:'+powerColor+';" class="map-icon-electrician"></i>'
-			});
-		   
+			    });	  
 		    }
 		
 		}else
@@ -394,7 +378,7 @@ function getDetailForPowerSourceIconCallBack(data,options)
 				//alert("not null"+holonObjectId);
 				currecntPC.setOptions({map:null});
 				if(hasPower=="true"){
-				currecntPC.setOptions({map:map,custom_label: '<i style="color:'+powerColor+';" class="map-icon-electrician"></i>'});
+				currecntPC.setOptions({map:map,fillColor: powerColor,strokeColor: powerColor});
 				}
 				
 			}
@@ -406,7 +390,7 @@ function showCoordCircles(color,isCoord,ne_location_lat,ne_location_lng){
 	
 	 if(isCoord=="true")
 	 {
-	   /*var coOrdCircle=new google.maps.Circle({
+	   var coOrdCircle=new google.maps.Circle({
 			 strokeColor: '#000000',
 		     strokeOpacity: 1,
 		     strokeWeight: 1,
@@ -415,26 +399,7 @@ function showCoordCircles(color,isCoord,ne_location_lat,ne_location_lng){
 		     map: map,
 		     center: new google.maps.LatLng(ne_location_lat, ne_location_lng),
 		     radius: 2
-		    });*/
-	   
-	   var coOrdCircle = new Marker({
-			map: map,
-			title: 'Holon Coordinator',
-			position: new google.maps.LatLng(ne_location_lat, ne_location_lng),
-			zIndex: 9,
-			icon: {
-				path: ROUTE,
-				fillColor: '#0E77E9',
-				fillOpacity: 0,
-				strokeColor: '',
-				strokeWeight: 0,
-				scale: 1/2
-			},
-			custom_label: '<i class="map-icon-lawyer"></i>'
-		});
-	   
-	   
-	   
+		    });
 	   globalHKList.set(color,coOrdCircle);
 	 }
 }
