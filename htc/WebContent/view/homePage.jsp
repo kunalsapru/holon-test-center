@@ -58,7 +58,7 @@
   <div id="googleMap"></div>
   <div id="elementInfo">
   <input type="hidden" id="hiddenHolonElementId" value="" />
-				<table>
+				<table class="table">
 					<tr>
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;Holon Element Type:</td>
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;<select id="holonElementType"></select></td>
@@ -80,7 +80,8 @@
 			<div id="holonObjectDetail">
 				<input type="hidden" id="holonObjectActionState" value="" /> 
 				<input type="hidden" id="hiddenHolonObjectId" value="" />
-				<table id="holonObjectTable">
+				<!-- <table id="holonObjectTable"> -->
+				<table class='table'>
 					<tr>
 						<td>Holon Object Type:</td>
 						<td><select name="holonObjectType" id="holonObjectType"></select></td>
@@ -96,7 +97,7 @@
 							<option value=0>No</option>
 						</select></td>
 					</tr>
-					<tr>
+					<!-- <tr>
 						<td>Latitude NE</td>
 						<td><label id="holonObjectLatitudeNE"></label></td>
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;Longtitude NE</td>
@@ -107,7 +108,7 @@
 						<td><label id="holonObjectLatitudeSW"></label></td>
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;Longtitude SW</td>
 						<td><label id="holonObjectLongitudeSW"></label></td>
-					</tr>
+					</tr> -->
 					<tr>
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="cancelHolonObject" type='button' class="button"  value='Cancel' /></td>
 						<td><input id="saveHolonObject" type='button' class="button"  value='Save Holon Object' /></td>
@@ -123,17 +124,15 @@
 				<input type="hidden" id="powerLineEndLat" value="" />
 				<input type="hidden" id="powerLineEndLng" value="" />
 				<input type="hidden" id="powerLineIdHidden" value="" />
-				<input type="hidden" id="powerLineHolonObjectIdHidden" value="" />
-				<input type="hidden" id="powerLineType" value="" />
-				<input type="hidden" id="powerLineIdForSubLine" value="" />
-				<table id="powerLineObjectTable">
+				<!-- <table id="powerLineObjectTable"> -->
+				<table class="table">
 					<tr>
 						<td>Power Line Capacity:</td>
 						<td><input id="powerLineCapacity" type="text"></td>
 					</tr>
 					<tr>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="cancelPowerLine" type='button' class=btn  value='Cancel' /></td>
-						<td><input id="savePowerLineObject" type='button' class="btn"  value='Save Power Line' /></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="cancelPowerLine" type='button' class="button"  value='Cancel' /></td>
+						<td><input id="savePowerLineObject" type='button' class="button"  value='Save Power Line' /></td>
 					</tr>
 				</table>
 			</div>
@@ -146,7 +145,8 @@
 				<input type="hidden" id="subLineEndLat" value="" />
 				<input type="hidden" id="subLineEndLng" value="" />
 				<input type="hidden" id="subLineIdHidden" value="" />
-				<table id="subLineObjectTable">
+				<!-- <table id="subLineObjectTable"> -->
+				<table class="table">
 					<tr>
 						<td>Sub Line Capacity:</td>
 						<td><input id="subLineCapacity" type="text"></td>
@@ -166,7 +166,7 @@
 				data-content-theme="d">
 				<a href="#" data-rel="back" data-role="button" data-theme="a"
 					data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
-				<table>
+				<table class='table'>
 					<tr>
 						<td><label>Name:</label></td>
 						<td><input type="text" name="nameCoordinator"
@@ -225,7 +225,7 @@
  	<input type="hidden" id="holonElementActionState" value="Add" />
  	<fieldset>
  	<legend >Holon Element List</legend>
- 	<table>
+ 	<table class='table'>
  	<thead>
  		<tr>
 	 		<th>&nbsp;Type&nbsp;</th>
