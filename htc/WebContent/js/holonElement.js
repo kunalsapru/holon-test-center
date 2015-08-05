@@ -223,7 +223,7 @@ function updateCoordinatorCallBack(data,options)
 		if(typeof blueCObject != "undefined")
 		{		
 			//alert("11");
-			blueCObject.setOptions({center:cLocation});
+			blueCObject.setOptions({position:cLocation});
 			globalHKList.set("blue",blueCObject);
 		}
 	}
@@ -237,7 +237,7 @@ function updateCoordinatorCallBack(data,options)
 		if(typeof greenCObject != "undefined")
 		{		
 			//alert("22");
-			greenCObject.setOptions({center:cLocation});
+			greenCObject.setOptions({position:cLocation});
 			globalHKList.set("green",greenCObject);
 		}
 	}
@@ -251,7 +251,7 @@ function updateCoordinatorCallBack(data,options)
 		if(typeof yellowCObject != "undefined")
 		{		
 			//alert("33");
-			yellowCObject.setOptions({center:cLocation});
+			yellowCObject.setOptions({position:cLocation});
 			globalHKList.set("yellow",yellowCObject);
 		}
 	}
@@ -265,7 +265,7 @@ function updateCoordinatorCallBack(data,options)
 		if(typeof redCObject != "undefined")
 		{		
 			//alert("44");
-			redCObject.setOptions({center:cLocation});
+			redCObject.setOptions({position:cLocation});
 			globalHKList.set("red",redCObject);
 		}
 	}
