@@ -422,10 +422,11 @@ function getHolonCoordinatorFromDatabaseCallBack(data,option)
 	//alert(holonCoordinatorName);
 	var listHolonCoordinator= data.split("*");
 	$("#holonCoordinatorId").empty();
+	$("#holonCoordinatorId").append("<option value=\"0\" id= \"0\" >No Holon</option>");
 	for(var i=0;i<listHolonCoordinator.length-1;i++)
 	{
 		//alert(listHolonCoordinator[i].split("-")[1].split(" ")[0].trim());
-		if((typeof holonCoordinatorName != "undefined")&&(holonCoordinatorName==listHolonCoordinator[i].split("-")[1].split(" ")[0].trim())){			
+		if((holonCoordinatorName==listHolonCoordinator[i].split("-")[1].split(" ")[0].trim())){			
 			var options= "<option value="+listHolonCoordinator[i].split("-")[0]+" id= "+listHolonCoordinator[i].split("-")[0]+" selected>"+listHolonCoordinator[i].split("-")[1]+"</option>";
 			$("#holonCoordinatorId").append(options);
 			}

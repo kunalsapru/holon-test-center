@@ -199,9 +199,16 @@ function getHolonInfoWindowCallBack(data,options)
 			"<tr><td><b>Holon Object Id: </b>"+holonObjectId +"<br> </td>"+
 			"<td><b>Holon Object Type: </b>"+holonObjectTypeName+"<br></td></tr>"+
 			"<tr><td><b>Holon Manager: </b>"+holonManagerName+"<br> </td>"+
-			"<td><b>Line Connected State: </b>"+lineConnectedState+"<br></td></tr>"+
-			"<tr><td><b>Coordinator Id: </b> <a href='#' id='hoCoId'>"+coordHolonId+"</a><br></td>"+
-			"<td><b>Minimum Energey Req: </b>"+minEnergeyHoObj+"<br></td></tr>"+
+			"<td><b>Line Connected State: </b>"+lineConnectedState+"<br></td></tr>";
+	if(coordHolonId==0)
+		{
+		contentString=contentString.concat("<tr><td><b>Coordinator Id: </b>No Coordinator<br></td>");
+		}else
+		{
+		contentString=contentString.concat("<tr><td><b>Coordinator Id: </b> <a href='#' id='hoCoId'>"+coordHolonId+"</a><br></td>");
+		}
+			
+	contentString=contentString.concat("<td><b>Minimum Energey Req: </b>"+minEnergeyHoObj+"<br></td></tr>"+
 			"<tr><td><b>Maximum Energey Req: </b>"+maxEnergeyHoObj+"<br></td>"+
 			"<td><b>Current Energey Req: </b>"+cuEnergeyHoObj+"<br></td></tr>"+
 			"<tr><td><b>Minimum Production capacity: </b>"+minEnergeyProdObj+"<br></td>"+
@@ -212,7 +219,7 @@ function getHolonInfoWindowCallBack(data,options)
 			"<span class='button'><i class='fa fa-plug'></i>&nbsp;&nbsp;Connect to Power Source</span>&nbsp;&nbsp;&nbsp;&nbsp;"+
 			"<span class='button' id='consumptionGraph'><i class='fa fa-line-chart'></i>&nbsp;&nbsp;Show Consumption</span>&nbsp;&nbsp;&nbsp;&nbsp;"+
 			"<span class='button' id='editHolonObject'><i class='fa fa-pencil-square-o'></i>&nbsp;&nbsp;Edit Holon Object</span>&nbsp;&nbsp;&nbsp;&nbsp;"+
-			"<span class='button' id='showHolonElement' onclick='showHolonElements("+holonObjectId+")'><i class='fa fa-info'></i>&nbsp;&nbsp;Show Holon Elements</span><hr>";
+			"<span class='button' id='showHolonElement' onclick='showHolonElements("+holonObjectId+")'><i class='fa fa-info'></i>&nbsp;&nbsp;Show Holon Elements</span><hr>");
 	if(coordHolonId===holonObjectId)
 	{
 		contentString = contentString.concat(
