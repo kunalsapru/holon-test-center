@@ -360,7 +360,7 @@ function getDetailForPowerSourceIconCallBack(data,options)
 		 {
 			//alert("has power");
 		  
-		    currecntPC=new google.maps.Circle({
+		   /* currecntPC=new google.maps.Circle({
 				 strokeColor: powerColor,
 			     strokeOpacity: 1,
 			     strokeWeight: 1,
@@ -369,9 +369,9 @@ function getDetailForPowerSourceIconCallBack(data,options)
 			     map: map,
 			     center: new google.maps.LatLng(ne_location_lat, sw_location_lng),
 			     radius: 3
-			    });	  
+			    });	  */
 		    
-		 /*   currecntPC = new Marker({
+		    currecntPC = new Marker({
 				map: map,
 				title: 'Power Producer',
 				position: new google.maps.LatLng(ne_location_lat, sw_location_lng),
@@ -384,8 +384,8 @@ function getDetailForPowerSourceIconCallBack(data,options)
 					strokeWeight: 0,
 					scale: 1/2
 				},
-				custom_label: '<i class="map-icon-electrician"></i>'
-			});*/
+				custom_label: '<i style="color:'+powerColor+';" class="map-icon-electrician"></i>'
+			});
 		   
 		    }
 		
@@ -394,7 +394,7 @@ function getDetailForPowerSourceIconCallBack(data,options)
 				//alert("not null"+holonObjectId);
 				currecntPC.setOptions({map:null});
 				if(hasPower=="true"){
-				currecntPC.setOptions({map:map,fillColor: powerColor,strokeColor: powerColor});
+				currecntPC.setOptions({map:map,custom_label: '<i style="color:'+powerColor+';" class="map-icon-electrician"></i>'});
 				}
 				
 			}
