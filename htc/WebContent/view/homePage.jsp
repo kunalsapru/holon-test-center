@@ -123,6 +123,9 @@
 				<input type="hidden" id="powerLineEndLat" value="" />
 				<input type="hidden" id="powerLineEndLng" value="" />
 				<input type="hidden" id="powerLineIdHidden" value="" />
+				<input type="hidden" id="powerLineHolonObjectIdHidden" value="" />
+				<input type="hidden" id="powerLineType" value="" />
+				<input type="hidden" id="powerLineIdForSubLine" value="" />
 				<table id="powerLineObjectTable">
 					<tr>
 						<td>Power Line Capacity:</td>

@@ -35,6 +35,8 @@ public class PowerLineAction extends CommonUtilities {
 			Double lngStart = getRequest().getParameter("lngStart")!=null?Double.parseDouble(getRequest().getParameter("lngStart")):0D;
 			Double latEnd = getRequest().getParameter("latEnd")!=null?Double.parseDouble(getRequest().getParameter("latEnd")):0D;
 			Double lngEnd = getRequest().getParameter("lngEnd")!=null?Double.parseDouble(getRequest().getParameter("lngEnd")):0D;
+			Integer subLineHolonObjId= getRequest().getParameter("HolonObjectId")!=null?Integer.parseInt(getRequest().getParameter("HolonObjectId")):0;
+			Integer powerLineIdForsubLine= getRequest().getParameter("HolonObjectId")!=null?Integer.parseInt(getRequest().getParameter("HolonObjectId")):0;
 			
 			LatLng StartLatLng = new LatLng(latStart, lngStart);
 			LatLng EndLatLng = new LatLng(latEnd, lngEnd);
@@ -57,6 +59,11 @@ public class PowerLineAction extends CommonUtilities {
 			powerLine.setReasonDown(reasonDown);
 			powerLine.setType(powerLineType);
 			powerLine.setPowerSource(powerSource);
+			if(powerLineType.equals(ConstantValues.SUBLINE))
+			{
+				powerLine.setSubLineHolonObject(getHolonObjectService().findById(subLineHolonObjId));
+				powerLine.setPowerLine(getPowerLineService().findById(powerLineIdForsubLine));
+			}
 			
 			Integer newPowerLineID = getPowerLineService().persist(powerLine);
 			
@@ -130,7 +137,8 @@ public class PowerLineAction extends CommonUtilities {
 			respStr.append(powerLine.getCurrentCapacity()+"*");
 			respStr.append(powerLine.getType()+"*");
 			respStr.append(powerLine.getLatLngBySource().getLatitude()+"~"+powerLine.getLatLngBySource().getLongitude()+"*");
-			respStr.append(powerLine.getLatLngByDestination().getLatitude()+"~"+powerLine.getLatLngByDestination().getLongitude());
+			respStr.append(powerLine.getLatLngByDestination().getLatitude()+"~"+powerLine.getLatLngByDestination().getLongitude()+"*");
+			respStr.append(powerLine.getSubLineHolonObject().getId());
 			getResponse().setContentType("text/html");
 			getResponse().getWriter().write(respStr.toString());
 		} catch (Exception e) {
@@ -139,36 +147,8 @@ public class PowerLineAction extends CommonUtilities {
 		}
 		
 	}
-	
-	public void connectToPowerSource(HolonObject holonObject){
-		
-		try {
-			LatLng doorOfHolon = holonObject.getLatLngByDoorLocation();
-			LatLng intersection;
-			HolonObjectAction holonObjectAction = new HolonObjectAction();
-			PowerLine powerLine = holonObjectAction.getNearestLine(doorOfHolon);
-			intersection = getIntersectionPointOnTheLine(doorOfHolon,powerLine);
-			
-			holonObjectAction.updateConnectedPowerLine(holonObject,powerLine);
-			
-			StringBuffer connectToPowerSourceResponse = new StringBuffer();
-			
-			connectToPowerSourceResponse.append(doorOfHolon.toString() + "!");
-			connectToPowerSourceResponse.append(intersection.toString());
-			
-			getResponse().setContentType("text/html");
-			getResponse().getWriter().write(connectToPowerSourceResponse.toString());
-		} catch (Exception e) {
-			log.info("Exception "+e.getMessage()+" occurred in action connectToPowerSource()");
-			e.printStackTrace();
-		}
-	}
 
-	private LatLng getIntersectionPointOnTheLine(LatLng doorOfHolon,
-			PowerLine powerLine) {
-		LatLng intersectionPoint = null;
-		return intersectionPoint;
-	}
+
 	
 	
 	public Map<String, PowerLine> createPowerLinesUponSwitchAdd(Integer powerLineId, LatLng switchLatLng2)
@@ -242,6 +222,7 @@ public class PowerLineAction extends CommonUtilities {
 			respStr.append(powerLine.getType()+"*");
 			respStr.append(powerLine.getLatLngBySource().getLatitude()+"~"+powerLine.getLatLngBySource().getLongitude()+"*");
 			respStr.append(powerLine.getLatLngByDestination().getLatitude()+"~"+powerLine.getLatLngByDestination().getLongitude()+"*");
+			respStr.append(powerLine.getSubLineHolonObject().getId()+"*");
 			respStr.append(color);
 		
 		//Calling the response function and setting the content type of response.

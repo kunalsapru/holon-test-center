@@ -233,18 +233,7 @@ function getHolonInfoWindowCallBack(data,options)
 		);
 	}
 
-	if(typeof currentSwitchInfoWindow != 'undefined' && currentSwitchInfoWindow != null)
-	{
-		currentSwitchInfoWindow.close();
-	}
-	if(typeof currentInfoWindowObject != 'undefined' &&currentInfoWindowObject != null)
-	{
-	currentInfoWindowObject.close();
-	}
-	if(typeof currentLineInfoWindowObject != 'undefined' &&currentLineInfoWindowObject != null)
-	{
-		currentLineInfoWindowObject.close();
-	}
+	closeOtherInfoWindows();
 	var infowindowHolonObject = new google.maps.InfoWindow({
 	      content: contentString,
 	      position:new google.maps.LatLng(lat[0],lat[1])

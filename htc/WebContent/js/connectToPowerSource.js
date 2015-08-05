@@ -55,7 +55,7 @@ function connectToPowerSource(latLng,objectId,objectType)
 	if(hoIdForSubline.toString().length!=0 && lineIdForSubline.toString().length!=0)
 	{
 
-		openDivForCapacity(lineLocationForSubline,hoLocationForSubline);
+		openDivForCapacity(lineLocationForSubline,hoLocationForSubline,hoIdForSubline,lineIdForSubline);
 		var line = new google.maps.Polyline({
 			path: [
 			       lineLocationForSubline, 
@@ -66,7 +66,7 @@ function connectToPowerSource(latLng,objectId,objectType)
 			       strokeWeight: 4.0,
 			       map: map
 		});
-		createdSubLineObject=line;
+		createdPowerLineObject=line;
 		lineLocationForSubline="";
 		lineIdForSubline="";
 		hoLocationForSubline="";
@@ -79,64 +79,15 @@ function connectToPowerSource(latLng,objectId,objectType)
 
 }
 
-function openDivForCapacity(lineLocationForSubline,hoLocationForSubline)
+function openDivForCapacity(lineLocationForSubline,hoLocationForSubline,hoIdForSubline,lineIdForSubline)
 {
-	$("#subLineStartLat").text(hoLocationForSubline.lat());
-	$("#subLineStartLng").text(hoLocationForSubline.lng());
-	$("#subLineEndLat").text(lineLocationForSubline.lat());
-	$("#subLineEndLng").text(lineLocationForSubline.lng());
-	openDiv('subLineObjectDetail');
+	$("#powerLineStartLat").text(hoLocationForSubline.lat());
+	$("#powerLineStartLng").text(hoLocationForSubline.lng());
+	$("#powerLineEndLat").text(lineLocationForSubline.lat());
+	$("#powerLineEndLng").text(lineLocationForSubline.lng());
+	$("#powerLineHolonObjectIdHidden").text(hoIdForSubline);
+	$("#powerLineIdForSubLine").text(lineIdForSubline);
+	$("#powerLineType").text("SUBLINE");
+	openDiv('lineObjectDetail');
 }
 
-
-
-function saveSubLineObject()
-{
-	var startLat=$("#subLineStartLat").text();
-	var startLng=$("#subLineStartLng").text();
-	var endLat=$("#subLineEndLat").text();
-	var endLng=$("#subLineEndLng").text();
-	var maxCapacity=$("#subLineCapacity").val();
-	var subLineObjectActionState = $("#subLineObjectActionState").text();
-	var subLineId = $("#subLineIdHidden").text();
-	$( "#subLineObjectDetail" ).slideUp(100);
-	var lineType="SUBLINE";
-	var dataAttributes = {
-			lineType : "SUBLINE",
-			currentCapacity : 300,
-			maxCapacity : maxCapacity,
-			latStart : startLat,
-			lngStart : startLng,
-			latEnd : endLat,
-			lngEnd : endLng,
-			isConnected :false,
-			reasonDown : "",
-			powerSourceId:1,
-			powerLineId:powerLineId,
-				};		    	
-	var options = {
-			newShape:createdSubLineObject,
-			path:[new google.maps.LatLng(startLat, startLng),new google.maps.LatLng(endLat,endLng)],
-			};	
-	if(subLineObjectActionState=="Edit"){
-		var option={
-				subLineId:subLineId
-		}
-		ajaxRequest("editSubLine", dataAttributes, editSubLineObjectCallBack,option);
-	}else
-		{
-		ajaxRequest("drawSubLine", dataAttributes, drawSubLineCallBack,options);
-		}
-}
-
-
-function drawSubLineCallBack(data,options)
-{
-
-}
-
-function editSubLineObjectCallBack(data,options)
-{
-	
-
-}

@@ -103,18 +103,7 @@ function addSwitchInfo(circleSwitch, powerSwitchId)
 
 function getSwitchInfoCallBack(data, options)
 {
-	if(typeof currentSwitchInfoWindow != 'undefined' && currentSwitchInfoWindow != null)
-	{
-		currentSwitchInfoWindow.close();
-	}
-	if(typeof currentInfoWindowObject != 'undefined' &&currentInfoWindowObject != null)
-	{
-	currentInfoWindowObject.close();
-	}
-	if(typeof currentLineInfoWindowObject != 'undefined' &&currentLineInfoWindowObject != null)
-	{
-		currentLineInfoWindowObject.close();
-	}
+	closeOtherInfoWindows();
 	var individualData= data.split("^");
 	var switchLat=individualData[0].replace("[","").replace(",","");
 	var switchLong=individualData[1];

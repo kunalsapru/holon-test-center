@@ -51,9 +51,7 @@ $(document).ready(function() {
 		    	 $("#powerLineStartLng").text(snappedStart.lng());
 		    	 $("#powerLineEndLat").text(snappedEnd.lat());
 		    	 $("#powerLineEndLng").text(snappedEnd.lng());
-		    	 $("#powerLineObjectActionState").text("ADD");
-		    	 $("#powerLineIdHidden").text("");
-		    	 $("#powerLineCapacity").val("");
+		    	 $("#powerLineType").text("MAINLINE");
 		    	 openDiv('lineObjectDetail');
 		    	
 			});
@@ -77,10 +75,18 @@ function savePowerLineObject()
 	var maxCapacity=$("#powerLineCapacity").val();
 	var powerLineObjectActionState = $("#powerLineObjectActionState").text();
 	var powerLineId = $("#powerLineIdHidden").text();
+	var HolonObjectId = $("#powerLineHolonObjectIdHidden").text();
+	var powerLineForSubLine=$("#powerLineIdForSubLine").text();
+	var powerLineType=$("#powerLineType").text();
 	$( "#lineObjectDetail" ).slideUp(100);
-	var powerLineType="MAINLINE";
+	 $("#powerLineObjectActionState").text("ADD");
+	 $("#powerLineIdHidden").text("");
+	 $("#powerLineCapacity").text("");
+	 $("#powerLineType").text("");
+	 $("#powerLineHolonObjectIdHidden").text("");
+	 $("#powerLineIdForSubLine").text("");
 	var dataAttributes = {
-			powerLineType : "MAINLINE",
+			powerLineType : powerLineType,
 			currentCapacity : 300,
 			maxCapacity : maxCapacity,
 			latStart : startLat,
@@ -91,17 +97,17 @@ function savePowerLineObject()
 			reasonDown : "",
 			powerSourceId:1,
 			powerLineId:powerLineId,
+			HolonObjectId:HolonObjectId,
+			powerLineForSubLine:powerLineForSubLine,
 				};		    	
 	var options = {
 			newShape:createdPowerLineObject,
 			path:[new google.maps.LatLng(startLat, startLng),new google.maps.LatLng(endLat,endLng)],
 			};	
 	if(powerLineObjectActionState=="Edit"){
-		alert("A");
 		ajaxRequest("editPowerLine", dataAttributes, editPowerLineObjectCallBack,{});
 	}else
 		{
-		alert("b");
 		ajaxRequest("drawPowerLine", dataAttributes, drawPoweLineCallBack,options);
 		}
 }
@@ -109,7 +115,7 @@ function savePowerLineObject()
 function editPowerLineObjectCallBack(data, options) {
 	var powerLineId =data.split("*")[1];
 	var content = getLineInfoWindowContent(data);
-	var color = data.split("*")[7];
+	var color = data.split("*")[8];
 	var newLineShape=globalPlList.get(powerLineId.toString());
 	newLineShape.setOptions({strokeColor:color});
 	currentLineInfoWindowObject.setContent(content);
@@ -148,7 +154,6 @@ function editPowerLineCallBack(data,options)
 	 $("#powerLineCapacity").val(maxCapacity);
 	 $("#powerLineObjectActionState").text("Edit");
 	 openDiv('lineObjectDetail');
-
 }
 
 function findSnappedLocation(lineLocation)
@@ -263,7 +268,7 @@ function addMessageWindow(line,powerLineId)
 
 }
 
-function getPowerLineInfoCallBack(data,options)
+function closeOtherInfoWindows()
 {
 	if(typeof currentSwitchInfoWindow != 'undefined' && currentSwitchInfoWindow != null)
 	{
@@ -277,6 +282,10 @@ function getPowerLineInfoCallBack(data,options)
 	{
 		currentLineInfoWindowObject.close();
 	}
+}
+function getPowerLineInfoCallBack(data,options)
+{
+	closeOtherInfoWindows();
 	var position=options["position"];
 	var powerLineId =options["powerLineId"];
 	var content= getLineInfoWindowContent(data);	
@@ -303,15 +312,19 @@ function getLineInfoWindowContent(data)
 	var lineType=respStr[4];
 	var source=respStr[5];
 	var dest=respStr[6];
-		
+	var holonIdForSubline=respStr[7];
 	var content= "<b>Connected: </b>"+isConnected+".<br>"+
 	"<b>PowerLine Id: </b>"+powerLineId +".<br>"+
 	"<b>Maximum Capacity: </b>"+maximumCapacity+".<br>"+
 	"<b>Current Capacity: </b>"+currentCapacity+".<br>"+
-	"<b>PowerLine Type: </b>"+lineType+".<br>"+
-	"<b>Start Location: </b>"+source+".<br>"+
+	"<b>PowerLine Type: </b>"+lineType+".<br>";
+	if(lineType==="SUBLINE")
+		{
+		content = content.concat("<b>Connected Holon Object Id: </b>"+holonIdForSubline+".<br>");
+		}
+	content = content.concat("<b>Start Location: </b>"+source+".<br>"+
 	"<b>End Location: </b>"+dest+".<br>"+
-	"<span class='button' id='editPowerLineObject'><i class='fa fa-pencil-square-o'></i>&nbsp;&nbsp;Edit Power Line</span>";
+	"<span class='button' id='editPowerLineObject'><i class='fa fa-pencil-square-o'></i>&nbsp;&nbsp;Edit Power Line</span>");
 	return content;
 
 }
