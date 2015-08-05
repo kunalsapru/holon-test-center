@@ -51,6 +51,9 @@ $(document).ready(function() {
 		    	 $("#powerLineStartLng").text(snappedStart.lng());
 		    	 $("#powerLineEndLat").text(snappedEnd.lat());
 		    	 $("#powerLineEndLng").text(snappedEnd.lng());
+		    	 $("#powerLineObjectActionState").text("ADD");
+		    	 $("#powerLineIdHidden").text("");
+		    	 $("#powerLineCapacity").val("");
 		    	 openDiv('lineObjectDetail');
 		    	
 			});
@@ -94,9 +97,11 @@ function savePowerLineObject()
 			path:[new google.maps.LatLng(startLat, startLng),new google.maps.LatLng(endLat,endLng)],
 			};	
 	if(powerLineObjectActionState=="Edit"){
+		alert("A");
 		ajaxRequest("editPowerLine", dataAttributes, editPowerLineObjectCallBack,{});
 	}else
 		{
+		alert("b");
 		ajaxRequest("drawPowerLine", dataAttributes, drawPoweLineCallBack,options);
 		}
 }
@@ -124,6 +129,26 @@ function drawPoweLineCallBack(data, options) {
 	newLineShape.setOptions({strokeColor:color,path: path});
 	addMessageWindow(newLineShape,powerLineId)
 	globalPlList.set(powerLineId, newLineShape);
+}
+
+function editPowerLine(powerLineId)
+{
+		var dataAttributes= {
+			powerLineId : powerLineId,
+			}
+	ajaxRequest("updatePowerLine", dataAttributes, editPowerLineCallBack, {});	
+}
+
+function editPowerLineCallBack(data,options)
+{
+	var powerLine = data.split("!");
+	var powerLineId=powerLine[2].trim();
+	var maxCapacity=powerLine[3].trim();
+	 $("#powerLineIdHidden").text(powerLineId);
+	 $("#powerLineCapacity").val(maxCapacity);
+	 $("#powerLineObjectActionState").text("Edit");
+	 openDiv('lineObjectDetail');
+
 }
 
 function findSnappedLocation(lineLocation)
@@ -291,25 +316,7 @@ function getLineInfoWindowContent(data)
 
 }
 
-function editPowerLine(powerLineId)
-{
-		var dataAttributes= {
-			powerLineId : powerLineId,
-			}
-	ajaxRequest("updatePowerLine", dataAttributes, editPowerLineCallBack, {});	
-}
 
-function editPowerLineCallBack(data,options)
-{
-	var powerLine = data.split("!");
-	var powerLineId=powerLine[2].trim();
-	var maxCapacity=powerLine[3].trim();
-	 $("#powerLineIdHidden").text(powerLineId);
-	 $("#powerLineCapacity").val(maxCapacity);
-	 $("#powerLineObjectActionState").text("Edit");
-	 openDiv('lineObjectDetail');
-
-}
 
 function updateGlobalPowerLineList(powerLineId,toDelete)
 {

@@ -62,5 +62,12 @@
             </key>
             <one-to-many class="com.htc.hibernate.pojo.HolonObject" />
         </set>
+        
+        <set name="powerLines" table="power_line" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="holon_object" />
+            </key>
+            <one-to-many class="com.htc.hibernate.pojo.HolonObject" />
+        </set>
     </class>
 </hibernate-mapping>

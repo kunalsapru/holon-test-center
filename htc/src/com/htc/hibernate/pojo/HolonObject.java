@@ -26,6 +26,7 @@ public class HolonObject implements java.io.Serializable, Comparable{
 	private Boolean canCommunicate;
 	private EnergyState energyState;
 	private Integer consumption;
+	private Set<PowerLine> powerLines = new HashSet<PowerLine>(0);
 	private Set<HolonElement> holonElements = new HashSet<HolonElement>(0);
 	private Set<?> powerSwitches = new HashSet<Object>(0);
 	private Set<?> holonCoordinators = new HashSet<Object>(0);
@@ -47,7 +48,7 @@ public class HolonObject implements java.io.Serializable, Comparable{
 			LatLng latLngByNeLocation, LatLng latLngByDoorLocation,
 			LatLng latLngBySwLocation,EnergyState energyState, PowerLine powerLine,PowerLine subLine,
 			Boolean lineConnectedState,Boolean canCommunicate, Integer consumption, Set<HolonElement> holonElements,
-			Set<?> powerSwitches,Set<?> holonCoordinators) {
+			Set<?> powerSwitches,Set<?> holonCoordinators, Set<PowerLine> powerLines) {
 		this.id = id;
 		this.holonCoordinator = holonCoordinator;
 		this.holonManager = holonManager;
@@ -64,6 +65,7 @@ public class HolonObject implements java.io.Serializable, Comparable{
 		this.energyState=energyState;
 		this.subLine=subLine;
 		this.canCommunicate=canCommunicate;
+		this.setPowerLines(powerLines);
 	}
 
 	public int getId() {
@@ -221,6 +223,14 @@ public class HolonObject implements java.io.Serializable, Comparable{
 
 	public void setCanCommunicate(Boolean canCommunicate) {
 		this.canCommunicate = canCommunicate;
+	}
+
+	public Set<PowerLine> getPowerLines() {
+		return powerLines;
+	}
+
+	public void setPowerLines(Set<PowerLine> powerLines) {
+		this.powerLines = powerLines;
 	}
 
 }

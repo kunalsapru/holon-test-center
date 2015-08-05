@@ -20,6 +20,9 @@
         <many-to-one name="powerSource" class="com.htc.hibernate.pojo.PowerSource" fetch="select" lazy="false">
             <column name="power_source" />
         </many-to-one>
+         <many-to-one name="subLineHolonObject" class="com.htc.hibernate.pojo.HolonObject" fetch="select" lazy="false">
+            <column name="holon_object" />
+        </many-to-one>
         <property name="type" type="string">
             <column name="type" not-null="true" />
         </property>

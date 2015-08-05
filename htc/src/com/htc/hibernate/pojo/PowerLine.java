@@ -14,6 +14,7 @@ public class PowerLine implements java.io.Serializable {
 	private LatLng latLngByDestination;
 	private PowerLine powerLine;
 	private PowerSource powerSource;
+	private HolonObject subLineHolonObject;
 	private String type;
 	private int currentCapacity;
 	private int maximumCapacity;
@@ -42,7 +43,7 @@ public class PowerLine implements java.io.Serializable {
 
 	public PowerLine(LatLng latLngBySource, LatLng latLngByDestination,
 			PowerLine powerLine, PowerSource powerSource, String type,
-			int currentCapacity, int maximumCapacity, boolean isConnected,
+			int currentCapacity, int maximumCapacity, boolean isConnected, HolonObject subLineHolonObject,
 			String reasonDown, Set<?> powerLines, Set<?> holonObjects,
 			Set<?> powerSwitchesA,Set<?> powerSwitchesB,Set<?> subHolonObjects ) {
 		this.latLngBySource = latLngBySource;
@@ -54,6 +55,7 @@ public class PowerLine implements java.io.Serializable {
 		this.maximumCapacity = maximumCapacity;
 		this.isConnected = isConnected;
 		this.reasonDown = reasonDown;
+		this.subLineHolonObject = subLineHolonObject;
 		this.powerLines = powerLines;
 		this.holonObjects = holonObjects;
 		this.powerSwitchesA = powerSwitchesA;
@@ -179,6 +181,14 @@ public class PowerLine implements java.io.Serializable {
 
 	public void setSubHolonObjects(Set<?> subHolonObjects) {
 		this.subHolonObjects = subHolonObjects;
+	}
+
+	public HolonObject getSubLineHolonObject() {
+		return subLineHolonObject;
+	}
+
+	public void setSubLineHolonObject(HolonObject subLineHolonObject) {
+		this.subLineHolonObject = subLineHolonObject;
 	}
 
 }
