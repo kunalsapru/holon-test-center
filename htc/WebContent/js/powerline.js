@@ -230,7 +230,6 @@ function addMessageWindow(line,powerLineId)
 				powerLineId : powerLineId,
 				}
 		var options= {
-				powerLineId : powerLineId,
 				position:event.latLng
 				}
 		
@@ -255,9 +254,25 @@ function getPowerLineInfoCallBack(data,options)
 	{
 		currentLineInfoWindowObject.close();
 	}
-	var content= data;
+	var respStr= data.split("*");
 	var position=options["position"];
-	var powerLineId=options["powerLineId"];
+	var isConnected=respStr[0];
+	var powerLineId=respStr[1];
+	var maximumCapacity=respStr[2];
+	var currentCapacity=respStr[3];
+	var lineType=respStr[4];
+	var source=respStr[5];
+	var dest=respStr[6];	
+	
+	var content= "<b>Connected: </b>"+isConnected+".<br>"+
+				"<b>PowerLine Id: </b>"+powerLineId +".<br>"+
+				"<b>Maximum Capacity: </b>"+maximumCapacity+".<br>"+
+				"<b>Current Capacity: </b>"+currentCapacity+".<br>"+
+				"<b>PowerLine Type: </b>"+lineType+".<br>"+
+				"<b>Start Location: </b>"+source+".<br>"+
+				"<b>End Location: </b>"+dest+".<br>"+
+				"<span class='button' id='editPowerLineObject'><i class='fa fa-pencil-square-o'></i>&nbsp;&nbsp;Edit Power Line</span>";	
+	
 	var infowindowHolonObject = new google.maps.InfoWindow({
     content: content,		    
 	});
