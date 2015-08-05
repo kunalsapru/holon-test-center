@@ -227,7 +227,8 @@ function addMessageWindow(line,powerLineId)
 				powerLineId : powerLineId,
 				}
 		var options= {
-				position:event.latLng
+				position:event.latLng,
+				powerLineId : powerLineId
 				}
 		
 		ajaxRequest("getPowerLineInfo", dataAttributes, getPowerLineInfoCallBack, options);		
@@ -292,7 +293,7 @@ function getLineInfoWindowContent(data)
 
 function editPowerLine(powerLineId)
 {
-	var dataAttributes= {
+		var dataAttributes= {
 			powerLineId : powerLineId,
 			}
 	ajaxRequest("updatePowerLine", dataAttributes, editPowerLineCallBack, {});	
