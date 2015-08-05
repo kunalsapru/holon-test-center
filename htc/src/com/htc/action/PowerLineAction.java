@@ -232,6 +232,17 @@ public class PowerLineAction extends CommonUtilities {
 			powerLine.setCurrentCapacity((int) CommonUtilities.randomCapGenerator(maxCapacity));
 			getPowerLineService().merge(powerLine);
 			String color=CommonUtilities.getLineColor(CommonUtilities.getPercent(powerLine.getCurrentCapacity(),powerLine.getMaximumCapacity()));
+			
+			
+			StringBuffer respStr= new StringBuffer("");
+			respStr.append(powerLine.isIsConnected()+"*");
+			respStr.append(powerLine.getId()+"*");
+			respStr.append(powerLine.getMaximumCapacity()+"*");
+			respStr.append(powerLine.getCurrentCapacity()+"*");
+			respStr.append(powerLine.getType()+"*");
+			respStr.append(powerLine.getLatLngBySource().getLatitude()+"~"+powerLine.getLatLngBySource().getLongitude()+"*");
+			respStr.append(powerLine.getLatLngByDestination().getLatitude()+"~"+powerLine.getLatLngByDestination().getLongitude()+"*");
+			respStr.append(color);
 			String infoString="<b>Connected: </b>"+powerLine.isIsConnected()+".<br>"+
 					"<b>PowerLine Id: </b>"+powerLine.getId() +".<br>"+
 					"<b>Maximum Capacity: </b>"+powerLine.getMaximumCapacity()+".<br>"+
