@@ -94,10 +94,7 @@ function savePowerLineObject()
 			path:[new google.maps.LatLng(startLat, startLng),new google.maps.LatLng(endLat,endLng)],
 			};	
 	if(powerLineObjectActionState=="Edit"){
-		var option={
-				powerLineId:powerLineId
-		}
-		ajaxRequest("editPowerLine", dataAttributes, editPowerLineObjectCallBack,option);
+		ajaxRequest("editPowerLine", dataAttributes, editPowerLineObjectCallBack,{});
 	}else
 		{
 		ajaxRequest("drawPowerLine", dataAttributes, drawPoweLineCallBack,options);
@@ -105,9 +102,9 @@ function savePowerLineObject()
 }
 
 function editPowerLineObjectCallBack(data, options) {
-	var powerLineId =options["powerLineId"];
-	var content = data.split("*")[0];
-	var color = data.split("*")[1];
+	var powerLineId =data.split("*")[1];
+	var content = getLineInfoWindowContent(data);
+	var color = data.split("*")[7];
 	var newLineShape=globalPlList.get(powerLineId.toString());
 	newLineShape.setOptions({strokeColor:color});
 	currentLineInfoWindowObject.setContent(content);
@@ -230,7 +227,6 @@ function addMessageWindow(line,powerLineId)
 				powerLineId : powerLineId,
 				}
 		var options= {
-				powerLineId : powerLineId,
 				position:event.latLng
 				}
 		
@@ -255,9 +251,10 @@ function getPowerLineInfoCallBack(data,options)
 	{
 		currentLineInfoWindowObject.close();
 	}
-	var content= data;
 	var position=options["position"];
-	var powerLineId=options["powerLineId"];
+	var powerLineId =options["powerLineId"];
+	var content= getLineInfoWindowContent(data);	
+	
 	var infowindowHolonObject = new google.maps.InfoWindow({
     content: content,		    
 	});
@@ -269,6 +266,29 @@ function getPowerLineInfoCallBack(data,options)
 	currentLineInfoWindowObject=infowindowHolonObject;
 	}
 
+
+function getLineInfoWindowContent(data)
+{
+	var respStr= data.split("*");
+	var isConnected=respStr[0];
+	var powerLineId=respStr[1];
+	var maximumCapacity=respStr[2];
+	var currentCapacity=respStr[3];
+	var lineType=respStr[4];
+	var source=respStr[5];
+	var dest=respStr[6];
+		
+	var content= "<b>Connected: </b>"+isConnected+".<br>"+
+	"<b>PowerLine Id: </b>"+powerLineId +".<br>"+
+	"<b>Maximum Capacity: </b>"+maximumCapacity+".<br>"+
+	"<b>Current Capacity: </b>"+currentCapacity+".<br>"+
+	"<b>PowerLine Type: </b>"+lineType+".<br>"+
+	"<b>Start Location: </b>"+source+".<br>"+
+	"<b>End Location: </b>"+dest+".<br>"+
+	"<span class='button' id='editPowerLineObject'><i class='fa fa-pencil-square-o'></i>&nbsp;&nbsp;Edit Power Line</span>";
+	return content;
+
+}
 
 function editPowerLine(powerLineId)
 {
