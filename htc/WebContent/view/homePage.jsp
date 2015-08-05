@@ -7,9 +7,13 @@
 <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" type="text/css" href="css/sweetalert.css">
+<link rel="stylesheet" type="text/css" href="css/map-icons.css">
+<link rel="stylesheet" type="text/css" href="css/icon-style.css">
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=drawing"></script>
 <script type="text/javascript" src="js/googleMaps.js"></script>
+<script type="text/javascript" src="js/map-icons.js"></script>
+<script type="text/javascript" src="js/connectToPowerSource.js"></script>
 <script type="text/javascript" src="js/toggle.js"></script>
 <script type="text/javascript" src="js/common.js"></script>
 <script type="text/javascript" src="js/powerline.js"></script>
@@ -33,13 +37,14 @@
     </li>
     <li><a href="#"><i class="fa fa-institution"></i>Holon Object<i class="fa fa-caret-down"></i></a>
     <ul>
-        <li><a href="#" id="addHolonObject"><i class="fa fa-plus"></i>Add New Holon Object</a></li>
-       <li><a href="#" id="connectToPowerSource"><i class="fa fa-plug"></i>Connect to Power Source</a></li>
+        <li><a href="#" id="addHolonObject"><i class="fa fa-plus"></i>Add Holon Object</a></li>
+        <li><a href="#" id="addPowerSource"><i class="fa fa-circle-o-notch"></i>Add Power Source</a></li>
+       <li><a href="#" id="connectToPowerSource"><i class="fa fa-plug"></i>Connect to Main Line</a></li>
         <li><a href="#" id="consumptionGraph"><i class="fa fa-line-chart"></i>Show Consumption</a></li>
       </ul></li>
     <li> <a href="#" ><i class="fa fa-flash"></i>PowerLine<i class="fa fa-caret-down"></i></a>
       <ul>
-        <li><a href="#" id="addPowerLine"><i class="fa fa-arrows-h"></i>Draw PowerLine</a></li>
+        <li><a href="#" id="addPowerLine"><i class="fa fa-long-arrow-right"></i>Draw PowerLine</a></li>
         <li><a href="#" id="calcDistance"><i class="fa fa-arrows-h"></i>Calculate Distance</a></li>
         </ul>
     </li>

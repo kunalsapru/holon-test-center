@@ -1,0 +1,16 @@
+@CHARSET "ISO-8859-1";
+
+.marker-label,
+.marker-icon {
+	z-index: 99;
+	position: absolute;
+	display: block;
+	margin-top: -10px;
+	margin-left: -30px;
+	width: 60px;
+	height: 60px;
+	font-size: 20px;
+	text-align: center;
+	color: #800000;
+	white-space: nowrap;
+}
