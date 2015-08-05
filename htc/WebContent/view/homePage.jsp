@@ -157,9 +157,6 @@
 					</tr>
 				</table>
 			</div>
-
-
-
 			<div id="chartContainer" style="height: 300px; width: 30%;"></div>
 			<div id="holonCoordinatorInformation" class="ui-content"
 				data-transition="flip" data-overlay-theme="b" data-theme="a"

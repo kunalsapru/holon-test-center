@@ -364,7 +364,6 @@ public class HolonObjectAction extends CommonUtilities {
 				String holonColor;
 				Integer holonObjectId;
 				Integer coordHolonObjectId=0;		
-				HolonCoordinator hc;
 			    holonObject = holonObjectList.get(i);
 				ne_location = holonObject.getLatLngByNeLocation().getLatitude()+"~"+holonObject.getLatLngByNeLocation().getLongitude();
 				sw_location = holonObject.getLatLngBySwLocation().getLatitude()+"~"+holonObject.getLatLngBySwLocation().getLongitude();
@@ -376,8 +375,6 @@ public class HolonObjectAction extends CommonUtilities {
 					coordHolonObjectId=hco.getHolonObject().getId();
 				}
 				holonObjectId=holonObject.getId();
-				hc = holonObject.getHolonCoordinator();
-				
 				if(coordHolonObjectId==holonObjectId)
 				{
 					isCoord=true;
