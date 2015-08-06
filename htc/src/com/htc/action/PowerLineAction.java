@@ -128,7 +128,13 @@ public class PowerLineAction extends CommonUtilities {
 			Integer powerLineId = getRequest().getParameter("powerLineId")!=null?Integer.parseInt(getRequest().getParameter("powerLineId")):0;
 			PowerLine  powerLine = getPowerLineService().findById(powerLineId);
 			log.info("PowerLine Id: "+powerLine.getId());
-		
+			HolonObject subLineHolon=powerLine.getSubLineHolonObject();
+			Integer subLineHolonId= 0;
+			if(subLineHolon!=null)
+			{
+				subLineHolonId=subLineHolon.getId();
+			}
+			
 			//Calling the response function and setting the content type of response.
 			StringBuffer respStr= new StringBuffer("");
 			respStr.append(powerLine.isIsConnected()+"*");
@@ -138,7 +144,7 @@ public class PowerLineAction extends CommonUtilities {
 			respStr.append(powerLine.getType()+"*");
 			respStr.append(powerLine.getLatLngBySource().getLatitude()+"~"+powerLine.getLatLngBySource().getLongitude()+"*");
 			respStr.append(powerLine.getLatLngByDestination().getLatitude()+"~"+powerLine.getLatLngByDestination().getLongitude()+"*");
-			respStr.append(powerLine.getSubLineHolonObject().getId());
+			respStr.append(subLineHolonId);
 			getResponse().setContentType("text/html");
 			getResponse().getWriter().write(respStr.toString());
 		} catch (Exception e) {
