@@ -13,7 +13,6 @@
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=drawing"></script>
 <script type="text/javascript" src="js/googleMaps.js"></script>
 <script type="text/javascript" src="js/map-icons.js"></script>
-<script type="text/javascript" src="js/connectToPowerSource.js"></script>
 <script type="text/javascript" src="js/toggle.js"></script>
 <script type="text/javascript" src="js/common.js"></script>
 <script type="text/javascript" src="js/powerline.js"></script>
@@ -130,6 +129,9 @@
 				<input type="hidden" id="powerLineEndLat" value="" />
 				<input type="hidden" id="powerLineEndLng" value="" />
 				<input type="hidden" id="powerLineIdHidden" value="" />
+				<input type="hidden" id="powerLineHolonObjectIdHidden" value="" />
+				<input type="hidden" id="powerLineIdForSubLine" value="" />
+				<input type="hidden" id="powerLineType" value="" />
 				<!-- <table id="powerLineObjectTable"> -->
 				<table class="table">
 					<tr>
