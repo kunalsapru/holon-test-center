@@ -44,6 +44,9 @@
         <property name="consumption" type="java.lang.Integer">
             <column name="consumption" />
         </property>
+        <property name="createdFactory" type="java.lang.Boolean">
+            <column name="created_factory" />
+        </property>
         <set name="holonElements" table="holon_element" inverse="true" lazy="false" fetch="select">
             <key>
                 <column name="holon_object" />

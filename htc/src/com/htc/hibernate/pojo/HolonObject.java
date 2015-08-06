@@ -26,6 +26,7 @@ public class HolonObject implements java.io.Serializable, Comparable{
 	private Boolean canCommunicate;
 	private EnergyState energyState;
 	private Integer consumption;
+	private Boolean createdFactory;
 	private Set<PowerLine> powerLines = new HashSet<PowerLine>(0);
 	private Set<HolonElement> holonElements = new HashSet<HolonElement>(0);
 	private Set<?> powerSwitches = new HashSet<Object>(0);
@@ -47,8 +48,9 @@ public class HolonObject implements java.io.Serializable, Comparable{
 			HolonManager holonManager, HolonObjectType holonObjectType,
 			LatLng latLngByNeLocation, LatLng latLngByDoorLocation,
 			LatLng latLngBySwLocation,EnergyState energyState, PowerLine powerLine,PowerLine subLine,
-			Boolean lineConnectedState,Boolean canCommunicate, Integer consumption, Set<HolonElement> holonElements,
-			Set<?> powerSwitches,Set<?> holonCoordinators, Set<PowerLine> powerLines) {
+			Boolean lineConnectedState,Boolean canCommunicate, Integer consumption, Boolean createdFactory, 
+			Set<HolonElement> holonElements, Set<?> powerSwitches,Set<?> holonCoordinators, 
+			Set<PowerLine> powerLines) {
 		this.id = id;
 		this.holonCoordinator = holonCoordinator;
 		this.holonManager = holonManager;
@@ -66,6 +68,15 @@ public class HolonObject implements java.io.Serializable, Comparable{
 		this.subLine=subLine;
 		this.canCommunicate=canCommunicate;
 		this.setPowerLines(powerLines);
+		this.createdFactory = createdFactory;
+	}
+
+	public Boolean getCreatedFactory() {
+		return createdFactory;
+	}
+
+	public void setCreatedFactory(Boolean createdFactory) {
+		this.createdFactory = createdFactory;
 	}
 
 	public int getId() {
