@@ -4,7 +4,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Holon Test Center</title>
 <link rel="shortcut icon" href="css/images/favicon.ico" />
-<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" type="text/css" href="css/sweetalert.css">
 <link rel="stylesheet" type="text/css" href="css/map-icons.css">
@@ -37,10 +37,17 @@
     <li><a href="#"><i class="fa fa-institution"></i>Holon Object<i class="fa fa-caret-down"></i></a>
     <ul>
         <li><a href="#" id="addHolonObject"><i class="fa fa-plus"></i>Add Holon Object</a></li>
-        <li><a href="#" id="addPowerSource"><i class="fa fa-circle-o-notch"></i>Add Power Source</a></li>
-       <li><a href="#" id="connectToPowerSource"><i class="fa fa-plug"></i>Connect to Main Line</a></li>
+        <li><a href="#" id="connectToPowerSource"><i class="fa fa-plug"></i>Connect to Main Line</a></li>
         <li><a href="#" id="consumptionGraph"><i class="fa fa-line-chart"></i>Show Consumption</a></li>
-      </ul></li>
+      </ul>
+      </li>
+      <li><a href="#"><i class="fa  fa-certificate"></i>Power Source<i class="fa fa-caret-down"></i></a>
+    <ul>
+           <li><a href="#" id="addPowerSource"><i class="fa fa-plus"></i>Add Power Source</a></li>
+       	   <li><a href="#" id="connectPowerSource"><i class="fa fa-plug"></i>Connect Power Source</a></li>
+      </ul>
+      </li>
+      
     <li> <a href="#" ><i class="fa fa-flash"></i>PowerLine<i class="fa fa-caret-down"></i></a>
       <ul>
         <li><a href="#" id="addPowerLine"><i class="fa fa-long-arrow-right"></i>Draw PowerLine</a></li>

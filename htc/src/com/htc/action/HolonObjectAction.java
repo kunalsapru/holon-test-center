@@ -223,13 +223,14 @@ public class HolonObjectAction extends CommonUtilities {
 					
 				}
 				log.error("The coordinator Is is "+coordinatorHolonId);
-				hoObjectIdList.remove(coordinatorHolonId.toString());
+				hoObjectIdList.remove(coordinatorHolonId.toString().concat("~").concat(getHolonObjectService().findById(coordinatorHolonId).getHolonObjectType().getName()));
 				Iterator<String> itr = hoObjectIdList.iterator(); 
 				hoListString.append("<option value=\"Select Holon\" id= \"infoWinOpt\" selected>Select Holon Object</option>");
 				while(itr.hasNext())
 				{
-					String hoId= itr.next().split("~")[0];
-					String hoObjectType = itr.next().split("~")[1];
+					String valueString = itr.next();
+					String hoId= valueString.split("~")[0];
+					String hoObjectType =valueString.split("~")[1];
 					
 					hoListString.append(
 							"<option value="+hoId+" id= \"infoWinOpt\">"+hoObjectType+" (Id:"+hoId+")"+"</option>"
