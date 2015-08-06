@@ -354,6 +354,7 @@ function getDetailForPowerSourceIconCallBack(data,options)
 		   {
 		   powerColor = '#336600';
 		   }
+	 var labelTxt=  '<i style="color:'+powerColor+';" class="map-icon-electrician"></i>';
 	var currecntPC=globalPCList.get(holonObjectId.toString());
 	if(typeof(currecntPC) === "undefined")
 		{
@@ -383,9 +384,9 @@ function getDetailForPowerSourceIconCallBack(data,options)
 						fillOpacity: 0,
 						strokeColor: '',
 						strokeWeight: 0,
-						scale: 1/2
+						scale: 1/100
 					},
-					custom_label: '<i style="color:'+powerColor+';" class="map-icon-electrician"></i>'
+					custom_label: labelTxt
 				});
 			   
 			    }
@@ -395,7 +396,8 @@ function getDetailForPowerSourceIconCallBack(data,options)
 					//alert("not null"+holonObjectId);
 					currecntPC.setOptions({map:null});
 					if(hasPower=="true"){
-					currecntPC.setOptions({map:map,custom_label: '<i style="color:'+powerColor+';" class="map-icon-electrician"></i>'});
+						//alert(powerColor);
+					currecntPC.setOptions({map:map,custom_label:labelTxt});
 					}
 					
 				}
@@ -429,7 +431,7 @@ function showCoordCircles(color,isCoord,ne_location_lat,ne_location_lng){
 			fillOpacity: 0,
 			strokeColor: '',
 			strokeWeight: 0,
-			scale: 1/2
+			scale: 1/100
 		},
 		custom_label: '<i class="map-icon-lawyer"></i>'
 	});

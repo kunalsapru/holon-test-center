@@ -139,8 +139,8 @@
 						<td><input id="powerLineCapacity" type="text"></td>
 					</tr>
 					<tr>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="cancelPowerLine" type='button' class="button"  value='Cancel' /></td>
-						<td><input id="savePowerLineObject" type='button' class="button"  value='Save Power Line' /></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="cancelPowerLine" type='button' class="button"  value='Cancel' />
+						<input id="savePowerLineObject" type='button' class="button"  value='Save Power Line' /></td>
 					</tr>
 				</table>
 			</div>
