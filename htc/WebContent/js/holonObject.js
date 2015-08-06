@@ -217,9 +217,9 @@ function getHolonInfoWindowCallBack(data,options)
 			"<tr><td>Current Production: "+cuEnergeyProdObj+"</td>" +
 			"<td>Can Communicate: "+canCommunicate+"</td></tr>"+
 			"</table>"+
-			"<span class='button' id='consumptionGraph' title='Show Consumption'><i class='fa fa-line-chart'></i></span>"+
-			"<span class='button' id='editHolonObject' title='Edit Holon Object'><i class='fa fa-pencil-square-o'></i></span>"+
-			"<span class='button' id='showHolonElement' title='Show Holon Elements' onclick='showHolonElements("+holonObjectId+")'><i class='fa fa-info'></i></span><hr>");
+			"<span class='button' id='consumptionGraph' title='Show Consumption'><i class='fa fa-line-chart'>&nbspShow Consumption</i></span>&nbsp&nbsp&nbsp"+
+			"<span class='button' id='editHolonObject' title='Edit Holon Object'><i class='fa fa-pencil-square-o'>&nbspEdit Holon Object</i></span>&nbsp&nbsp&nbsp"+
+			"<span class='button' id='showHolonElement' title='Show Holon Elements' onclick='showHolonElements("+holonObjectId+")'><i class='fa fa-info'>&nbspShow Holon Elements</i></span><hr>");
 	if(coordHolonId===holonObjectId)
 	{
 		contentString = contentString.concat(
@@ -233,7 +233,7 @@ function getHolonInfoWindowCallBack(data,options)
 				"<td>Maximum Production Capacity: "+maxEnergeyProd +"</td></tr>"+
 				"<tr><td>Current Production: "+cuEnergeyProd +"</td><td></td></tr>"+
 				"</table>"+
-				"<select name=\"infoWindowHolonList\" id=\"infoWindowHolonList\">" +
+				"<select align = center name=\"infoWindowHolonList\" id=\"infoWindowHolonList\">" +
 				hoList+
 				"</select></td>"
 				

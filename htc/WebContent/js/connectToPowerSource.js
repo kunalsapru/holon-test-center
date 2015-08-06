@@ -8,17 +8,14 @@ var hoLocationForSubline="";
 var hoIdForSubline="";
 $(document).ready(function() {
 
-	$('#connectToPowerSource').click(function() {
-		//alert("abhinav");
+	$('#connectToPowerSource').click(function(evt) {
 		if (connectToPowerSourceMode==false){
 			connectToPowerSourceMode=true;
 			$(this).css("background-color", "rgb(153,153,0)");
-
 		} else {
 			$(this).css("background-color", "rgb(26, 26, 26)");
 			connectToPowerSourceMode=false;
 		}
-
 	})
 
 
