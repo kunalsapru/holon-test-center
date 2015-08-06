@@ -397,7 +397,21 @@ function getDetailForPowerSourceIconCallBack(data,options)
 					currecntPC.setOptions({map:null});
 					if(hasPower=="true"){
 						//alert(powerColor);
-					currecntPC.setOptions({map:map,custom_label:labelTxt});
+						currecntPC = new Marker({
+							map: map,
+							title: 'Power Producer',
+							position: new google.maps.LatLng(ne_location_lat, sw_location_lng),
+							zIndex: 9,
+							icon: {
+								path: ROUTE,
+								fillColor: '#0E77E9',
+								fillOpacity: 0,
+								strokeColor: '',
+								strokeWeight: 0,
+								scale: 1/100
+							},
+							custom_label: labelTxt
+						});
 					}
 					
 				}
