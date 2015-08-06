@@ -377,12 +377,12 @@
 }
 
 .button:hover {
-  background: #ff7f00;
-  background-image: -webkit-linear-gradient(top, #ff7f00, #ff7f00);
-  background-image: -moz-linear-gradient(top, #ff7f00, #ff7f00);
-  background-image: -ms-linear-gradient(top, #ff7f00, #ff7f00);
-  background-image: -o-linear-gradient(top, #ff7f00, #ff7f00);
-  background-image: linear-gradient(to bottom, #ff7f00, #ff7f00);
+  background: #ffd4aa;
+  background-image: -webkit-linear-gradient(top, #ffd4aa, #ffd4aa);
+  background-image: -moz-linear-gradient(top, #ffd4aa, #ffd4aa);
+  background-image: -ms-linear-gradient(top, #ffd4aa, #ffd4aa);
+  background-image: -o-linear-gradient(top, #ffd4aa, #ffd4aa);
+  background-image: linear-gradient(to bottom, #ffd4aa, #ffd4aa);
   text-decoration: none;
 }
 
