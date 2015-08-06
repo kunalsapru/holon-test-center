@@ -257,7 +257,7 @@ new formattng --><!--table -->.table {
 	margin: 0px;
 	padding: 0px;
 	width: 100%;
-	border: 1px solid #ffd4aa;
+	border: 1px solid #EAF4FF;
 	-moz-border-radius-bottomleft: 0px;
 	-webkit-border-bottom-left-radius: 0px;
 	border-bottom-left-radius: 0px;
@@ -279,6 +279,12 @@ new formattng --><!--table -->.table {
 	height: 100%;
 	margin: 0px;
 	padding: 0px;
+}
+.table table tr {
+	width: 100%;
+}
+.table table tr td {
+	width: 50%;
 }
 
 .table tr:last-child td:last-child {
@@ -310,7 +316,7 @@ new formattng --><!--table -->.table {
 }
 
 .table tr:nth-child(odd) {
-	background-color: #ffd4aa;
+	background-color: #EAF4FF;
 }
 
 .table tr:nth-child(even) {
@@ -319,7 +325,7 @@ new formattng --><!--table -->.table {
 
 .table td {
 	vertical-align: middle;
-	border: 1px solid #ffd4aa;
+	border: 1px solid #EAF4FF;
 	border-width: 0px 1px 1px 0px;
 	text-align: left;
 	padding: 7px;
@@ -342,15 +348,15 @@ new formattng --><!--table -->.table {
 }
 
 .table tr:first-child td {
-	background: -o-linear-gradient(bottom, #ffd4aa 5%, #ffd4aa 100%);
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ffd4aa
-		), color-stop(1, #ffd4aa));
-	background: -moz-linear-gradient(center top, #ffd4aa 5%, #ffd4aa 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffd4aa",
-		endColorstr="#ffd4aa");
-	background: -o-linear-gradient(top, #ffd4aa, ffd4aa);
-	background-color: #ffd4aa;
-	border: 0px solid #ffd4aa;
+	background: -o-linear-gradient(bottom, #EAF4FF 5%, #EAF4FF 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #EAF4FF
+		), color-stop(1, #EAF4FF));
+	background: -moz-linear-gradient(center top, #EAF4FF 5%, #EAF4FF 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#EAF4FF",
+		endColorstr="#EAF4FF");
+	background: -o-linear-gradient(top, #EAF4FF, EAF4FF);
+	background-color: #EAF4FF;
+	border: 0px solid #EAF4FF;
 	text-align: center;
 	border-width: 0px 0px 1px 1px;
 	font-size: 14px;
@@ -360,14 +366,14 @@ new formattng --><!--table -->.table {
 }
 
 .table tr:first-child:hover td {
-	background: -o-linear-gradient(bottom, #ffd4aa 5%, #ffd4aa 100%);
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ffd4aa
-		), color-stop(1, #ffd4aa));
-	background: -moz-linear-gradient(center top, #ffd4aa 5%, #ffd4aa 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffd4aa",
-		endColorstr="#ffd4aa");
-	background: -o-linear-gradient(top, #ffd4aa, ffd4aa);
-	background-color: #ffd4aa;
+	background: -o-linear-gradient(bottom, #EAF4FF 5%, #EAF4FF 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #EAF4FF
+		), color-stop(1, #EAF4FF));
+	background: -moz-linear-gradient(center top, #EAF4FF 5%, #EAF4FF 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#EAF4FF",
+		endColorstr="#EAF4FF");
+	background: -o-linear-gradient(top, #EAF4FF, EAF4FF);
+	background-color: #EAF4FF;
 }
 
 .table tr:first-child td:first-child {
@@ -400,12 +406,12 @@ new formattng --><!--table -->.table {
 }
 
 .button:hover {
-	background: #ffd4aa;
-	background-image: -webkit-linear-gradient(top, #ffd4aa, #ffd4aa);
-	background-image: -moz-linear-gradient(top, #ffd4aa, #ffd4aa);
-	background-image: -ms-linear-gradient(top, #ffd4aa, #ffd4aa);
-	background-image: -o-linear-gradient(top, #ffd4aa, #ffd4aa);
-	background-image: linear-gradient(to bottom, #ffd4aa, #ffd4aa);
+	background: #EAF4FF;
+	background-image: -webkit-linear-gradient(top, #EAF4FF, #EAF4FF);
+	background-image: -moz-linear-gradient(top, #EAF4FF, #EAF4FF);
+	background-image: -ms-linear-gradient(top, #EAF4FF, #EAF4FF);
+	background-image: -o-linear-gradient(top, #EAF4FF, #EAF4FF);
+	background-image: linear-gradient(to bottom, #EAF4FF, #EAF4FF);
 	text-decoration: none;
 }
 

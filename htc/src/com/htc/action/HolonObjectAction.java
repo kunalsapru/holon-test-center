@@ -196,7 +196,7 @@ public class HolonObjectAction extends CommonUtilities {
 				while(iterator.hasNext())
 				{
 					HolonObject ho=(HolonObject) iterator.next();
-					hoObjectIdList.add(new Integer(ho.getId()).toString());
+					hoObjectIdList.add(new Integer(ho.getId()).toString().concat("~").concat(ho.getHolonObjectType().getName()));
 					ArrayList<HolonElement> elemList= getHolonElementService().getHolonElements(ho);
 					for(int i=0;i<elemList.size();i++)
 					{
@@ -225,13 +225,14 @@ public class HolonObjectAction extends CommonUtilities {
 				log.error("The coordinator Is is "+coordinatorHolonId);
 				hoObjectIdList.remove(coordinatorHolonId.toString());
 				Iterator<String> itr = hoObjectIdList.iterator(); 
-				hoListString.append("<option value=\"Select Holon\" id= \"infoWinOpt\" selected>Select Holon</option>");
+				hoListString.append("<option value=\"Select Holon\" id= \"infoWinOpt\" selected>Select Holon Object</option>");
 				while(itr.hasNext())
 				{
-					String hoId=itr.next();
+					String hoId= itr.next().split("~")[0];
+					String hoObjectType = itr.next().split("~")[1];
 					
 					hoListString.append(
-							"<option value="+hoId+" id= \"infoWinOpt\">"+hoId+"</option>"
+							"<option value="+hoId+" id= \"infoWinOpt\">"+hoObjectType+" (Id:"+hoId+")"+"</option>"
 							);
 					
 				}

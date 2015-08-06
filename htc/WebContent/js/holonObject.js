@@ -195,12 +195,13 @@ function getHolonInfoWindowCallBack(data,options)
 	var lat=ne_location.split("~");
 	//alert(holonColor);
 	var contentString=
-			"<table class='table'>"+
-			"<tr><td>Holon Object Details</td></tr>"
+			"<div class='table'><table>"+
+			"<tr><td colspan='2'><u>Holon Object Details</u></td></tr>"+
 			"<tr><td><b>Holon Object Id: "+holonObjectId +"</td>"+
 			"<td>Holon Object Type: "+holonObjectTypeName+"</td></tr>"+
 			"<tr><td>Holon Manager: "+holonManagerName+"</td>"+
 			"<td>Line Connected State: "+lineConnectedState+"</td></tr>";
+	console.log(contentString);
 	if(coordHolonId==0)
 		{
 		contentString=contentString.concat("<tr><td>Coordinator Id: No Coordinator</td>");
@@ -217,28 +218,30 @@ function getHolonInfoWindowCallBack(data,options)
 			"<tr><td>Current Production: "+cuEnergeyProdObj+"</td>" +
 			"<td>Can Communicate: "+canCommunicate+"</td></tr>"+
 			"</table>"+
-			"<span class='button' id='consumptionGraph' title='Show Consumption'><i class='fa fa-line-chart'>&nbspShow Consumption</i></span>&nbsp&nbsp&nbsp"+
-			"<span class='button' id='editHolonObject' title='Edit Holon Object'><i class='fa fa-pencil-square-o'>&nbspEdit Holon Object</i></span>&nbsp&nbsp&nbsp"+
-			"<span class='button' id='showHolonElement' title='Show Holon Elements' onclick='showHolonElements("+holonObjectId+")'><i class='fa fa-info'>&nbspShow Holon Elements</i></span><hr>");
+			"<br /><hr>"+
+			"<span class='button' id='consumptionGraph' title='Show Consumption'><i class='fa fa-line-chart'>&nbspShow Consumption</i></span>"+
+			"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
+			"<span class='button' id='editHolonObject' title='Edit Holon Object'><i class='fa fa-pencil-square-o'>&nbspEdit Holon Object</i></span>"+
+			"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
+			"<span class='button' id='showHolonElement' title='Show Holon Elements' onclick='showHolonElements("+holonObjectId+")'><i class='fa fa-info'>&nbspShow Holon Elements</i></span><hr><br />");
 	if(coordHolonId===holonObjectId)
 	{
 		contentString = contentString.concat(
-				"<table class='table'>"+
-				"<tr><td>Holon Details</td></tr>" +
+				"<table>"+
+				"<tr><td colspan='2'><u>Holon Details</u></td></tr>" +
 				"<tr><td>Number of Holon Objects: "+nOfHolonObj +"</td>"+
 				"<td>Minimum Energey Req:"+minEnergeyHo +"</td></tr>"+
 				"<tr><td>Maximum Energey Req: "+maxEnergeyHo +"</td>"+
 				"<td>Current Energey Req: "+cuEnergeyHo +"</td></tr>"+
 				"<tr><td>Minimum Production capacity: "+minEnergeyProd +"</td>"+
 				"<td>Maximum Production Capacity: "+maxEnergeyProd +"</td></tr>"+
-				"<tr><td>Current Production: "+cuEnergeyProd +"</td><td></td></tr>"+
-				"</table>"+
-				"<select align = center name=\"infoWindowHolonList\" id=\"infoWindowHolonList\">" +
-				hoList+
-				"</select></td>"
-				
+				"<tr><td>Current Production: "+cuEnergeyProd +"</td><td></td></tr></table>"+
+				"<hr><table><tr><td colspan='2'>Other Holon Objects:&nbsp;&nbsp;"+
+				"<select align = \"center\" name=\"infoWindowHolonList\" id=\"infoWindowHolonList\">"+hoList+"</select></td></tr>"+
+				"</table>"
 		);
 	}
+	contentString.concat("</div>");
 
 	closeOtherInfoWindows();
 	var infowindowHolonObject = new google.maps.InfoWindow({
@@ -265,6 +268,7 @@ function getHolonInfoWindowCallBack(data,options)
 
 function zoomToHolon(holonObjectId,neLoc)
 {
+	
 	var location = new google.maps.LatLng(neLoc.split("~")[0], neLoc.split("~")[1])
 	var dataAttributes= {
 			  holonObjectId : holonObjectId,
