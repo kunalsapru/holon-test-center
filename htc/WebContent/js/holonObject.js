@@ -360,29 +360,46 @@ function getDetailForPowerSourceIconCallBack(data,options)
 		if(hasPower=="true")
 		 {
 			//alert("has power");
-		  
-		    currecntPC=new google.maps.Circle({
-				 strokeColor: powerColor,
-			     strokeOpacity: 1,
-			     strokeWeight: 1,
-			     fillColor: powerColor,
-			     fillOpacity: 0.35,
-			     map: map,
-			     center: new google.maps.LatLng(ne_location_lat, sw_location_lng),
-			     radius: 3
-			    });	  
-		    }
-		
-		}else
-			{
-				//alert("not null"+holonObjectId);
-				currecntPC.setOptions({map:null});
-				if(hasPower=="true"){
-				currecntPC.setOptions({map:map,fillColor: powerColor,strokeColor: powerColor});
+			  
+			   /* currecntPC=new google.maps.Circle({
+					 strokeColor: powerColor,
+				     strokeOpacity: 1,
+				     strokeWeight: 1,
+				     fillColor: powerColor,
+				     fillOpacity: 0.35,
+				     map: map,
+				     center: new google.maps.LatLng(ne_location_lat, sw_location_lng),
+				     radius: 3
+				    });	  */
+			    
+			    currecntPC = new Marker({
+					map: map,
+					title: 'Power Producer',
+					position: new google.maps.LatLng(ne_location_lat, sw_location_lng),
+					zIndex: 9,
+					icon: {
+						path: ROUTE,
+						fillColor: '#0E77E9',
+						fillOpacity: 0,
+						strokeColor: '',
+						strokeWeight: 0,
+						scale: 1/2
+					},
+					custom_label: '<i style="color:'+powerColor+';" class="map-icon-electrician"></i>'
+				});
+			   
+			    }
+			
+			}else
+				{
+					//alert("not null"+holonObjectId);
+					currecntPC.setOptions({map:null});
+					if(hasPower=="true"){
+					currecntPC.setOptions({map:map,custom_label: '<i style="color:'+powerColor+';" class="map-icon-electrician"></i>'});
+					}
+					
 				}
-				
-			}
-	  globalPCList.set(holonObjectId,currecntPC);	
+	globalPCList.set(holonObjectId,currecntPC);	
 }
 
 
@@ -390,16 +407,32 @@ function showCoordCircles(color,isCoord,ne_location_lat,ne_location_lng){
 	
 	 if(isCoord=="true")
 	 {
-	   var coOrdCircle=new google.maps.Circle({
-			 strokeColor: '#000000',
-		     strokeOpacity: 1,
-		     strokeWeight: 1,
-		     fillColor: '#000000',
-		     fillOpacity: 1,
-		     map: map,
-		     center: new google.maps.LatLng(ne_location_lat, ne_location_lng),
-		     radius: 2
-		    });
+		 /*var coOrdCircle=new google.maps.Circle({
+		 strokeColor: '#000000',
+	     strokeOpacity: 1,
+	     strokeWeight: 1,
+	     fillColor: '#000000',
+	     fillOpacity: 1,
+	     map: map,
+	     center: new google.maps.LatLng(ne_location_lat, ne_location_lng),
+	     radius: 2
+	    });*/
+   
+   var coOrdCircle = new Marker({
+		map: map,
+		title: 'Holon Coordinator',
+		position: new google.maps.LatLng(ne_location_lat, ne_location_lng),
+		zIndex: 9,
+		icon: {
+			path: ROUTE,
+			fillColor: '#0E77E9',
+			fillOpacity: 0,
+			strokeColor: '',
+			strokeWeight: 0,
+			scale: 1/2
+		},
+		custom_label: '<i class="map-icon-lawyer"></i>'
+	});
 	   globalHKList.set(color,coOrdCircle);
 	 }
 }
