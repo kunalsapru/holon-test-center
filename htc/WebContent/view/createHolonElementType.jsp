@@ -44,7 +44,7 @@ color: green;
      <input type="button" id='tmpOpen' value='Open' />
      <div id='tmpDialogue'>
        <p>
-         Dialog content
+         Dialog content / Testing
        </p>
        <div id='tmpButtons'>
          <input type="button" id='tmpClose' value='Close' />
