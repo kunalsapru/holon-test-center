@@ -3,6 +3,82 @@
  */
 
 var editOptions = {};
+
+var hoShape;
+$(document).ready(function() {
+
+	var holonDrawingManager;
+	$('#addHolonObject').click(function() {
+	if (drawHolonObjectMode==false) {
+			$(this).css("background-color", "rgb(153,153,0)");
+			drawHolonObjectMode=true;
+			//Creates a new drawing manager object for first time
+			holonDrawingManager = new google.maps.drawing.DrawingManager({
+    	    drawingMode: google.maps.drawing.OverlayType.RECTANGLE,
+    	    drawingControl: false,
+    	    rectangleOptions: {
+                geodesic:true,
+                clickable: true,
+                strokeColor:"black"
+            }
+    	    });
+     // Setting the layout on the map 
+			holonDrawingManager.setMap(map);
+     // Event when the overlay is complete 
+      google.maps.event.addListener(holonDrawingManager, 'overlaycomplete', function(event) {
+    	  hoShape = event.overlay; // Object
+    	  hoShape.type = event.type;	// Rectangle
+    	  createdHolonObject=hoShape;
+    	  var latNorthEast = hoShape.getBounds().getNorthEast().lat(); //get lat of northeast
+    	  var lngNorthEast = hoShape.getBounds().getNorthEast().lng();	//get longitude of north east
+    	  var latSouthWest = hoShape.getBounds().getSouthWest().lat();
+    	  var lngSouthWest = hoShape.getBounds().getSouthWest().lng();
+    	  $("#holonObjectLatitudeNE").text(latNorthEast);
+    	  $("#holonObjectLongitudeNE").text(lngNorthEast);
+    	  $("#holonObjectLatitudeSW").text(latSouthWest);
+    	  $("#holonObjectLongitudeSW").text(lngSouthWest);
+    	  $("#hoObjTitle").text("Add Holon Object");
+    	  $("#holonObjectActionState").val("Add");
+    	  getHolonObjectTypeFromDatabase();
+    	  getHolonCoordinatorFromDatabase("","holonCoordinatorId","holonObjectDetail");
+    	 
+  	});
+     //END of overlay Complete 
+	}
+	else
+	{
+		$(this).css("background-color", "rgb(26, 26, 26)");
+		drawHolonObjectMode=false;
+		holonDrawingManager.setMap(null);
+		
+	}
+	
+	})
+
+	$("#showHolonObjects").click(showHolonObjects);
+	
+	$("#saveHolonObject").click(function(event){
+		saveHolonObject();						
+	});
+	
+	$("#cancelHolonObject").click(function(event){
+		if(createdHolonObject!=null && typeof createdHolonObject != 'undefined')
+			{
+			createdHolonObject.setMap(null);
+			}
+		closeDiv("holonObjectDetail");
+	});	
+	
+	$('#showHolonObjects').hover(function() {
+		$('#showHolonObjects').css('cursor','pointer');
+			  });
+	
+	$("#close").click(function(){
+		$(this).parent().fadeOut("slow", function(c) {
+        });
+	})
+})
+
 function saveHolonObject(){
 	//alert("saveHolonObject");
 	var holonObjectPriority=$("#holonObjectPriority").val();
@@ -68,6 +144,7 @@ function getHolonDetailCallBack(data, option) {
 	 $("#holonObjectLatitudeSW").text(sw_latlng[0]);
 	 $("#holonObjectLongitudeSW").text(sw_latlng[1]);
 	 $("#holonObjectActionState").val("Edit");
+	 $("#hoObjTitle").text("Edit Holon Object");
 	 $("#hiddenHolonObjectId").val(holonObjectId);
 	 $("#holonManagerName").val(holonManagerName);
 	 $("#canCommunicate").empty();
@@ -78,7 +155,7 @@ function getHolonDetailCallBack(data, option) {
 			}
 		$("#canCommunicate").append(selOptions);
 	 getHolonObjectTypeFromDatabase(holonObjectTypeName);
-	 getHolonCoordinatorFromDatabase(holonCoordinatorName_Holon.trim());	
+	 getHolonCoordinatorFromDatabase(holonCoordinatorName_Holon.trim(),"holonCoordinatorId","holonObjectDetail");	
 }
 
 function editHolonObjectCallBack(data, options){

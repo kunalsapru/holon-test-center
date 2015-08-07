@@ -8,54 +8,32 @@ $(document)
 					window.createdHolonObject=null; //Save object on overlaycomplete Action to use it later to set its holon color
 					window.createdPowerLineObject=null;
 					window.createdSubLineObject=null;
+					window.createdPowerSourceObject=null;
 					window.drawPowerLineMode=false;
 					window.drawHolonObjectMode=false;
 					window.calculateDistanceMode=false;
 					window.addSwitchonPowerLineMode=false;
 					window.connectToPowerSourceMode=false;
+					window.addPowerSourceMode=false;
 					window.globalHoList=new Map();
 					window.globalPlList=new Map();
 					window.globalPsList=new Map();
 					window.globalHKList=new Map();
 					window.globalHPList=new Map();
 					window.globalPCList=new Map();
+					window.globalPSList=new Map();
 					window.currentInfoWindowObject=null;
 					window.currentLineInfoWindowObject=null;
 					window.currentSwitchInfoWindow=null;
 					window.ajaxReqStatus=false;
-					var drawingManager;
-					var clickedValuePanel;
-					var startPowerLine;
-					var next = 0;
-					var infowindow = "";
-					// Array of Markers and Infowindow
-					var infowindowArray = [];
-					var markerslat = [];
-					var markerslng = [];
-					// Variable to get the old content from the info window
-					var contentInfoWindow = "";
-					var clickedToAddElements = "";
-					// Div to add details about the new elements inserted
-					$("#displayHolonDetails").hide();
-					/*$("#holonObjectDetail").hide();*/
 					$("#holonCoordinatorInformation").hide();
 					$("#addMasterHolonElementTypeDetail").hide();
 					$("#addMasterHolonElementStateDetail").hide();
 					$("#addMasterHolonDetail").hide();
-					$(document).on("click","#delete",function(){
-						alert("ready");
-					});
-								
-					$("#switchOnPowerLine").click(function(event){
-						drawSwitchOnPowerLine();
-					});
-					
 					$("#holonObjectTypeforMasterTables").click(function(){
-						getHolonObjectTypesFromDatabase();});
-					$("#switch").on('click',function(){
-						addNewSwitch=true;
-						//console.log($(this).find("a").attr("id"));
-					});
+						getHolonObjectTypesFromDatabase();
+						});
+					
 					$("#addMasterHolonObjDetail").hide(); 
 					$("#masterTableHolonObjectsTypes").hide();
 					
@@ -103,157 +81,7 @@ $(document)
 						ajaxRequest("createHolonElementState", dataAttributes, createHolonElementStateCallBack, {});
 					});
 					
-					
-					$("#saveHolonObject").click(function(event){
-						saveHolonObject();						
-					});
-					
-					$("#cancelHolonObject").click(function(event){
-						if(createdHolonObject!=null && typeof createdHolonObject != 'undefined')
-							{
-							createdHolonObject.setMap(null);
-							}
-						closeDiv("holonObjectDetail");
-					});
-					
-					
-					$("#savePowerLineObject").click(function(event){
-						savePowerLineObject();						
-					});
-					
-					$("#cancelPowerLine").click(function(event){
-						if(createdPowerLineObject!=null && typeof createdPowerLineObject != 'undefined')
-							{
-							createdPowerLineObject.setMap(null);
-							}
-						closeDiv("lineObjectDetail");
-					});
-					
-					$("#saveSubLineObject").click(function(event){
-						saveSubLineObject();						
-					});
-					
-					$("#cancelSubLine").click(function(event){
-						if(createdSubLineObject!=null && typeof createdSubLineObject != 'undefined')
-							{
-							createdSubLineObject.setMap(null);
-							}
-						closeDiv("subLineObjectDetail");
-					});
-					
-					
-					$("#saveCoordinator").click(function(event){
-						saveCoordinator();
-					});
-					
-					
-					/*$("#addHolonCoordinator").click(function(){
-						$("#holonCoordinatorInformation").show();
-						$("#holonCoordinatorInformation").popup();
-						$("#holonCoordinatorInformation").popup("open");
-					});*/
-					
-					$('#addHolonObject').click(function(){
-						clickedValuePanel=this.id;
-						overlayTool(this.id);
-					});
-					
-					$("#addHolonCoordinator").click(function(){
-						clickedValuePanel=this.id;
-						overlayTool(this.id);
-					});
-					$("#edit").click(function(){
-						alert("Hellooo");
-					});
-					
-					$(document).on('click', '#edit', function(){ 
-					     alert();
-					 });
-					$("#showHolonObjects").click(showHolonObjects);
-					
-					function overlayTool(clickedValue)
-					{
-						//alert($("#"+clickedValuePanel).css("background-color"));
-						if ($("#"+clickedValuePanel).css("background-color") == "rgb(26, 26, 26)") {
-							$("#"+clickedValuePanel).css("background-color", "rgb(153,153,0)");
-					
-						$("#displayHolonDetails").hide();
-
-					//	To check If the layout is already present ;
-						
-						if (drawingManager== null){
-							//Creates a new drawing manager object for first time
-							var rectangleColor="black";
-							if(clickedValuePanel=="addHolonCoordinator"){
-								rectangleColor="red";
-							}
-							if(clickedValuePanel=="addHolonObject"){
-								rectangleColor="black";
-							}
-						 drawingManager = new google.maps.drawing.DrawingManager({
-				    	    drawingMode: google.maps.drawing.OverlayType.RECTANGLE,
-				    	    drawingControl: false,
-//				    	    drawingControlOptions: {
-//				    	      position: google.maps.ControlPosition.TOP_CENTER,
-//				    	      drawingModes: [
-//				    	   		 google.maps.drawing.OverlayType.RECTANGLE,
-//				    	   		google.maps.drawing.OverlayType.POLYLINE
-//				   	   		 
-//				    	      ]
-//				    	    },
-				            rectangleOptions: {
-				                geodesic:true,
-				                clickable: true,
-				                strokeColor:rectangleColor
-				            }
-				    	    });}
-				     // Setting the layout on the map 
-				      drawingManager.setMap(map);
-				     // Event when the overlay is complete 
-				      google.maps.event.addListener(drawingManager, 'overlaycomplete', function(event) {
-				    	  var newShape = event.overlay; // Object
-				    	  newShape.type = event.type;	// Rectangle
-				    	  createdHolonObject=newShape;
-				    	  var latNorthEast = newShape.getBounds().getNorthEast().lat(); //get lat of northeast
-				    	  var lngNorthEast = newShape.getBounds().getNorthEast().lng();	//get longitude of north east
-				    	  var latSouthWest = newShape.getBounds().getSouthWest().lat();
-				    	  var lngSouthWest = newShape.getBounds().getSouthWest().lng();
-				    	  $("#holonObjectLatitudeNE").text(latNorthEast);
-				    	  $("#holonObjectLongitudeNE").text(lngNorthEast);
-				    	  $("#holonObjectLatitudeSW").text(latSouthWest);
-				    	  $("#holonObjectLongitudeSW").text(lngSouthWest);
-				    	  if(clickedValuePanel=="addHolonObject"){
-				    		  $("#holonObjectActionState").val("Add");
-				    		  getHolonObjectTypeFromDatabase();
-				    		  getHolonCoordinatorFromDatabase();
-				    	  } else {
-				    		  getHolonFromDatabase();
-				    		  }	
-				  	});
-				     //END of overlay Complete 
-					}
-					else
-					{
-						$("#"+clickedValuePanel).css("background-color", "rgb(26, 26, 26)");
-						drawingManager.setMap(null);
-						
-					}
-					}
-					
-					$('#addHolonCoordinator').hover(function() {
-						$('#addHolonCoordinator').css('cursor','pointer');
-							  });
-					
-					$('#showHolonObjects').hover(function() {
-						$('#showHolonObjects').css('cursor','pointer');
-							  });
-					
-					$("#close").click(function(){
-						$(this).parent().fadeOut("slow", function(c) {
-                        });
-					})
-					
-					
+									
 					// Callback for add a holonName 
 					function addHolonCallBack(data, options)
 					{
@@ -285,8 +113,7 @@ $(document)
 						},
 						function(isConfirm){
 					    if (isConfirm){
-					    	$("#displayHolonDetails").hide();
-							initialize();
+					    	initialize();
 							loadHolon=true;
 							swal("Cleared", "Map has been cleared", "info");
 					    } else {
@@ -295,13 +122,7 @@ $(document)
 						});
 						
 					});
-					
-					
-					function cursorCrossHair() {
-						$("#googleMap").css('cursor', 'pointer');
-					}
-					
-					//function to check if a point falls in a circle overlay
+					//function to check if a point falls in a circle overlay for snapping never remove
 					google.maps.Circle.prototype.contains = function(latLng,theCircle) {
 						  return theCircle.getBounds().contains(latLng) && google.maps.geometry.spherical.computeDistanceBetween(theCircle.getCenter(), latLng) <= theCircle.getRadius();
 						}
@@ -318,31 +139,6 @@ function initialize() {
 	directionsDisplay = new google.maps.DirectionsRenderer();
 	directionsDisplay.setMap(map);
 
-}
-
-function showHolonElementsForHolon (holonObjectId){
-	$("#displayHolonDetails").show();
-	$("#displayHolonDetails").empty();
-	var holonElementType=["Fridge","Washing Machine"];
-	var holonManager=["HolonManager1","HolonManager4"];
-	var maxCapacity=["300W","2500W"];
-	var data="";
-	for (var k = 0; k < holonElementType.length; k++) {
-		
-		var individualElementDetail = "<div data-role='collapsible'><h3>Holon Element :"+(k+1)+"</h3><button onclick='delete()' id='delete' class='ui-btn ui-btn-inline ui-icon-delete ui-btn-icon-notext ui-corner-all'>No text</button>" +
-				"<button onclick='edit()' class='ui-btn ui-btn-inline ui-icon-edit ui-btn-icon-notext ui-corner-all' id='edit'>No text</button>"+holonElementType[k]+"</div>"
-		$("#displayHolonDetails").append(individualElementDetail);
-	}
-	console.log($("#displayHolonDetailsData"));
-    $('#displayHolonDetails').panel({ position: "right"});       
-    $('#displayHolonDetails').panel("open");   	
-		
-	
-}
-
-function edit()
-{
-	alert("Clicked Edit");
 }
 
 function getHolonObjectTypesFromDatabase() {
@@ -401,45 +197,60 @@ $("#holonCoordinatorInformation").popup("open");
 		
 }
 
-function getHolonCoordinatorFromDatabase(holonCoordinatorName)
+function getHolonCoordinatorFromDatabase(holonCoordinatorName,elementId,divId)
 {
 	var options={};
-	if(typeof holonCoordinatorName != "undefined")
+	if(holonCoordinatorName.trim().length==0 )
+	{
+	options={
+			elementId:elementId,
+			divId:divId
+			};
+	}
+	else if(typeof holonCoordinatorName != "undefined")
 		{
-		options={holonCoordinatorName:holonCoordinatorName};
+		options={
+				holonCoordinatorName:holonCoordinatorName,
+			};
 		}
+	
+	
 	ajaxRequest("getListHolonCoordinator", {}, getHolonCoordinatorFromDatabaseCallBack,options);
 }
 
 function getHolonCoordinatorFromDatabaseCallBack(data,option)
 {
 	var holonCoordinatorName="undefined";
+	var elementId ="#".concat(option['elementId']);
+	alert(elementId);
 	var holonCoordinatorNameFromOption =option['holonCoordinatorName'];
+	var divId =option['divId'];
+	alert(divId);
 	if(typeof holonCoordinatorNameFromOption !="undefined")
 	{
 		holonCoordinatorName=holonCoordinatorNameFromOption.split("_")[0].trim();
 	}
 	//alert(holonCoordinatorName);
 	var listHolonCoordinator= data.split("*");
-	$("#holonCoordinatorId").empty();
-	$("#holonCoordinatorId").append("<option value=\"0\" id= \"0\" >No Holon</option>");
+	$(elementId).empty();
+	$(elementId).append("<option value=\"0\" id= \"0\" >No Holon</option>");
 	for(var i=0;i<listHolonCoordinator.length-1;i++)
 	{
 		//alert(listHolonCoordinator[i].split("-")[1].split(" ")[0].trim());
 		if((holonCoordinatorName==listHolonCoordinator[i].split("-")[1].split(" ")[0].trim())){			
 			var options= "<option value="+listHolonCoordinator[i].split("-")[0]+" id= "+listHolonCoordinator[i].split("-")[0]+" selected>"+listHolonCoordinator[i].split("-")[1]+"</option>";
-			$("#holonCoordinatorId").append(options);
+			$(elementId).append(options);
 			}
 			else
 			{				
 				var options= "<option value="+listHolonCoordinator[i].split("-")[0]+" id= "+listHolonCoordinator[i].split("-")[0]+">"+listHolonCoordinator[i].split("-")[1]+"</option>";
-				$("#holonCoordinatorId").append(options);
+				$(elementId).append(options);
 				}
 		
 	}
 //	$("#holonCoordinatorId").selectmenu('refresh', true);
 
-	openDiv('holonObjectDetail');
+	openDiv(divId);
 }
 
 function getHolonObjectTypeFromDatabase(holonObjectTypeName)

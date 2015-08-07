@@ -20,6 +20,9 @@
         <property name="currentProduction" type="java.lang.Integer">
             <column name="current_production" />
         </property>
+        <property name="radius" type="double">
+            <column name="radius" precision="22" scale="0" not-null="true" />
+        </property>
         <many-to-one name="centre" class="com.htc.hibernate.pojo.LatLng" fetch="select" lazy="false">
             <column name="centre" />
         </many-to-one>

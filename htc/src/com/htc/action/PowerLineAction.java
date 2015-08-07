@@ -35,8 +35,8 @@ public class PowerLineAction extends CommonUtilities {
 			Double lngStart = getRequest().getParameter("lngStart")!=null?Double.parseDouble(getRequest().getParameter("lngStart")):0D;
 			Double latEnd = getRequest().getParameter("latEnd")!=null?Double.parseDouble(getRequest().getParameter("latEnd")):0D;
 			Double lngEnd = getRequest().getParameter("lngEnd")!=null?Double.parseDouble(getRequest().getParameter("lngEnd")):0D;
-			Integer subLineHolonObjId= getRequest().getParameter("HolonObjectId")!=null?Integer.parseInt(getRequest().getParameter("HolonObjectId")):0;
-			Integer powerLineIdForsubLine= getRequest().getParameter("HolonObjectId")!=null?Integer.parseInt(getRequest().getParameter("HolonObjectId")):0;
+			Integer subLineHolonObjId=0;
+			Integer powerLineIdForsubLine=0;
 			
 			LatLng StartLatLng = new LatLng(latStart, lngStart);
 			LatLng EndLatLng = new LatLng(latEnd, lngEnd);
@@ -61,6 +61,8 @@ public class PowerLineAction extends CommonUtilities {
 			powerLine.setPowerSource(powerSource);
 			if(powerLineType.equals(ConstantValues.SUBLINE))
 			{
+				subLineHolonObjId= getRequest().getParameter("HolonObjectId")!=null?Integer.parseInt(getRequest().getParameter("HolonObjectId")):0;
+				powerLineIdForsubLine= getRequest().getParameter("HolonObjectId")!=null?Integer.parseInt(getRequest().getParameter("HolonObjectId")):0;
 				powerLine.setSubLineHolonObject(getHolonObjectService().findById(subLineHolonObjId));
 				powerLine.setPowerLine(getPowerLineService().findById(powerLineIdForsubLine));
 			}

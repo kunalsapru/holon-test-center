@@ -4,7 +4,7 @@
  * 
  * 
  */
-var newShape;
+var lineShape;
 $(document).ready(function() {
 
 	var lineDrawingManager;
@@ -38,13 +38,13 @@ $(document).ready(function() {
 			
 			google.maps.event.addListener(lineDrawingManager, 'overlaycomplete', function(event) {
 			
-				newShape = event.overlay; // Object
-		    	newShape.type = event.type;	
-		    	var start=newShape.getPath().getAt(0);
-		    	var end=newShape.getPath().getAt(1);
+				lineShape = event.overlay; // Object
+				lineShape.type = event.type;	
+		    	var start=lineShape.getPath().getAt(0);
+		    	var end=lineShape.getPath().getAt(1);
 		    	var latLangArr=[start,end];
 		       	lineArray.push(latLangArr);		    	
-		    	createdPowerLineObject=newShape;
+		    	createdPowerLineObject=lineShape;
 		    	var snappedStart= findSnappedLocation(start);		    	
 		    	var snappedEnd= findSnappedLocation(end);		    	
 		    	 $("#powerLineStartLat").text(snappedStart.lat());
@@ -63,6 +63,18 @@ $(document).ready(function() {
 		}
 
 	})
+	
+	$("#savePowerLineObject").click(function(event){
+		savePowerLineObject();						
+	});
+	
+	$("#cancelPowerLine").click(function(event){
+		if(createdPowerLineObject!=null && typeof createdPowerLineObject != 'undefined')
+			{
+			createdPowerLineObject.setMap(null);
+			}
+		closeDiv("lineObjectDetail");
+	});
 
 })
 
@@ -101,7 +113,7 @@ function savePowerLineObject()
 			powerLineForSubLine:powerLineForSubLine,
 				};		    	
 	var options = {
-			newShape:createdPowerLineObject,
+			lineShape:createdPowerLineObject,
 			path:[new google.maps.LatLng(startLat, startLng),new google.maps.LatLng(endLat,endLng)],
 			};	
 	if(powerLineObjectActionState=="Edit"){
@@ -127,7 +139,7 @@ function editPowerLineObjectCallBack(data, options) {
 
 
 function drawPoweLineCallBack(data, options) {
-	var newLineShape = options["newShape"];
+	var newLineShape = options["lineShape"];
 	var path = options["path"];
 	var dataArray = data.split("!");
 	var powerLineId = dataArray[0];

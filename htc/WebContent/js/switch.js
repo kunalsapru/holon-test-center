@@ -1,14 +1,19 @@
-function drawSwitchOnPowerLine(){
-	addSwitchonPowerLineMode=true;
-	if ($("#"+clickedValue).css("background-color") == "rgb(26, 26, 26)") {
-		$("#"+clickedValue).css("background-color", "rgb(153,153,0)");
-	}
-	else
-	{
-		$("#"+clickedValue).css("background-color", "rgb(26, 26, 26)");	
-		addSwitchonPowerLineMode=false;
-	}
-}
+
+$(document).ready(function() {	
+	
+	$("#switchOnPowerLine").click(function(event){		
+		if (addSwitchonPowerLineMode==false) {
+			$(this).css("background-color", "rgb(153,153,0)");
+			addSwitchonPowerLineMode=true;
+		}
+		else
+		{
+			$(this).css("background-color", "rgb(26, 26, 26)");	
+			addSwitchonPowerLineMode=false;
+		}
+	});
+	
+})
 
 
 
