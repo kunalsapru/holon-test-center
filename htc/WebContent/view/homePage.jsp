@@ -89,15 +89,14 @@
 					</tr>
 				</table>
 			</div>
-			<div id="holonObjectDetail">
+			<div id="holonObjectDetail" class='table'>
 				<input type="hidden" id="holonObjectActionState" value="" /> 
 				<input type="hidden" id="hiddenHolonObjectId" value="" />
-				<table class='table'>
+				
+				<table>
 					<tr>
-						<td id='hoObjTitle' colspan="2"></td>
-					</tr>				
-				</table>
-				<table class='table'>
+						<td id='hoObjTitle' colspan="2"><u></u></td>
+					</tr>	
 					
 					<tr>
 						<td>Holon Object Type:
@@ -126,46 +125,44 @@
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;Longtitude SW:
 						<label id="holonObjectLongitudeSW"></label></td>
 					</tr> 
-					</table>
-					<table class='table'>
+					</table><hr>
+					<table>
 					<tr>
-						<td colspan="2"><input id="cancelHolonObject" type='button' class="button"  value='Cancel' />
+						<td colspan="2"><input id="cancelHolonObject" type='button' class="button"  value='Cancel' />&nbsp;&nbsp;&nbsp;&nbsp;
 						<input id="saveHolonObject" type='button' class="button"  value='Save Holon Object' /></td>					
 					</tr> 
-					</table>						
+					</table>	
+					<hr>					
 			</div>
 			
-			<div id="powerObjectDetail">
+			<div id="powerObjectDetail" class='table'>
 				<input type="hidden" id="powerObjectActionState" value="" /> 
 				<input type="hidden" id="hiddenPowerObjectId" value="" />
 				<input type="hidden" id="hiddenPowerObjectCenterLat" value="" />
 				<input type="hidden" id="hiddenPowerObjectCenterLng" value="" />
 				<input type="hidden" id="hiddenPowerObjectRad" value="" />
 				<table class='table'>
-						<tr>
-						<td id='powerObjTitle' colspan="2"></td>
-					</tr>
-				</table>
-				<table class='table'>
-					
 					<tr>
-						<td>Holon:&nbsp;&nbsp;&nbsp;&nbsp;<select name="pwholonCoordinatorId" id="pwholonCoordinatorId"></select></td>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;Status:<select name="psStatus" id="psStatus">
+						<td id='powerObjTitle' colspan="2"><u></u></td>
+					</tr>
+					<tr>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;Holon:&nbsp;&nbsp;&nbsp;&nbsp;<select name="pwholonCoordinatorId" id="pwholonCoordinatorId"></select></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;&nbsp;&nbsp;&nbsp;<select name="psStatus" id="psStatus">
 							<option value=1>OFF</option>
 							<option value=0>ON</option>
 							</select></td>
 					</tr>
 					<tr>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;Maximum Production Capacity:<input id="psMaxProdCap" type="text"></td>	
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;Current Production:<input id="psCurrentPord" type="text"></td>						
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;Maximum Production Capacity:&nbsp;&nbsp;&nbsp;&nbsp;<input id="psMaxProdCap" type="text"></td>	
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;Current Production:&nbsp;&nbsp;&nbsp;&nbsp;<input id="psCurrentPord" type="text"></td>						
 					</tr>
-					</table>
-					<table class='table'>
+					</table><hr>
+					<table >
 					<tr>
-						<td colspan="2"><input id="cancelPowerObject" type='button' class="button"  value='Cancel' />
+						<td colspan="2"><input id="cancelPowerObject" type='button' class="button"  value='Cancel' />&nbsp;&nbsp;&nbsp;&nbsp;
 						<input id="savePowerObject" type='button' class="button"  value='Save Holon Object' /></td>	
 					</tr>					
-					</table>
+					</table><hr>
 						
 			</div>
 			
