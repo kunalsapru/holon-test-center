@@ -111,7 +111,7 @@ function editHolonObjectCallBack(data, options){
 		 
 		}else
 			{
-			newCoordCircle.setOptions({center:new google.maps.LatLng(kc_lat[0],kc_lat[1])});
+			newCoordCircle.setOptions({position:new google.maps.LatLng(kc_lat[0],kc_lat[1])});
 			globalHKList.set(holonColor,newCoordCircle);
 			}	
 
@@ -141,7 +141,7 @@ function createHolonObjectCallBack(data, options) {
 		  }else
 			 {
 			 var newCoordCircle = globalHKList.get(holonColor);
-			 newCoordCircle.setOptions({center:new google.maps.LatLng(hc_ne_location.split("~")[0],hc_ne_location.split("~")[1])});
+			 newCoordCircle.setOptions({position:new google.maps.LatLng(hc_ne_location.split("~")[0],hc_ne_location.split("~")[1])});
 			 globalHKList.set(holonColor,newCoordCircle);
 			 }
 	  
