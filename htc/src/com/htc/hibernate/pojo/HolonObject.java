@@ -18,7 +18,6 @@ public class HolonObject implements java.io.Serializable, Comparable{
 	private HolonManager holonManager;
 	private HolonObjectType holonObjectType;
 	private LatLng latLngByNeLocation;
-	private LatLng latLngByDoorLocation;
 	private LatLng latLngBySwLocation;
 	private PowerLine powerLine;
 	private PowerLine subLine;
@@ -46,7 +45,7 @@ public class HolonObject implements java.io.Serializable, Comparable{
 
 	public HolonObject(int id, HolonCoordinator holonCoordinator,
 			HolonManager holonManager, HolonObjectType holonObjectType,
-			LatLng latLngByNeLocation, LatLng latLngByDoorLocation,
+			LatLng latLngByNeLocation,
 			LatLng latLngBySwLocation,EnergyState energyState, PowerLine powerLine,PowerLine subLine,
 			Boolean lineConnectedState,Boolean canCommunicate, Integer consumption, Boolean createdFactory, 
 			Set<HolonElement> holonElements, Set<?> powerSwitches,Set<?> holonCoordinators, 
@@ -56,7 +55,6 @@ public class HolonObject implements java.io.Serializable, Comparable{
 		this.holonManager = holonManager;
 		this.holonObjectType = holonObjectType;
 		this.latLngByNeLocation = latLngByNeLocation;
-		this.latLngByDoorLocation = latLngByDoorLocation;
 		this.latLngBySwLocation = latLngBySwLocation;
 		this.powerLine = powerLine;
 		this.lineConnectedState = lineConnectedState;
@@ -117,14 +115,6 @@ public class HolonObject implements java.io.Serializable, Comparable{
 
 	public void setLatLngByNeLocation(LatLng latLngByNeLocation) {
 		this.latLngByNeLocation = latLngByNeLocation;
-	}
-
-	public LatLng getLatLngByDoorLocation() {
-		return this.latLngByDoorLocation;
-	}
-
-	public void setLatLngByDoorLocation(LatLng latLngByDoorLocation) {
-		this.latLngByDoorLocation = latLngByDoorLocation;
 	}
 
 	public LatLng getLatLngBySwLocation() {

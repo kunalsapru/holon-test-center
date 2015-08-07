@@ -20,12 +20,6 @@
             </key>
             <one-to-many class="com.htc.hibernate.pojo.HolonObject" />
         </set>
-        <set name="holonObjectsForDoorLocation" table="holon_object" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="door_location" />
-            </key>
-            <one-to-many class="com.htc.hibernate.pojo.HolonObject" />
-        </set>
         <set name="holons" table="holon" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="holon_center" />

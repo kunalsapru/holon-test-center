@@ -1,8 +1,6 @@
 package com.htc.action;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -37,14 +35,10 @@ public class HolonObjectAction extends CommonUtilities {
 		
 		LatLng NorthlatLng = new LatLng(latNE, lngNE);
 		LatLng SouthlatLng = new LatLng(latSW, lngSW);
-		//LatLng DoorlatLng = getDoorLocation(NorthlatLng,SouthlatLng);
-		LatLng DoorlatLng = new LatLng(latSW, lngSW);
 		Integer NorthlocationId = getLatLngService().persist(NorthlatLng);
 		Integer SouthlocationId = getLatLngService().persist(SouthlatLng);
-		Integer DoorlocationId = getLatLngService().persist(DoorlatLng);
 		LatLng NorthlatLng2 = getLatLngService().findById(NorthlocationId);
 		LatLng SouthlatLng2 = getLatLngService().findById(SouthlocationId);
-		LatLng DoorlatLng2 = getLatLngService().findById(DoorlocationId);
 		HolonObject holonObject = new HolonObject(); // Creating HolonObject object to store values
 
 		HolonCoordinator holonCoordinator = getHolonCoordinatorService().findById(holonCoordinatorId);
@@ -61,7 +55,6 @@ public class HolonObjectAction extends CommonUtilities {
 		
 		holonObject.setLatLngByNeLocation(NorthlatLng2);
 		holonObject.setLatLngBySwLocation(SouthlatLng2);
-		holonObject.setLatLngByDoorLocation(DoorlatLng2);//Temporarily saving the ne latlng. Need to be calculated and saved.
 		if(holonCoordinatorId!=0)
 		{
 		holonObject.setHolonCoordinator(holonCoordinator);
@@ -413,66 +406,6 @@ public class HolonObjectAction extends CommonUtilities {
 		productionDetails.add(hasPower);
 		productionDetails.add(hasPowerOn);
 		return productionDetails;
-	}
-
-	public LatLng getDoorLocation(LatLng northlatLng, LatLng southlatLng) {
-		LatLng doorLocation = new LatLng();
-		LatLng midPoint = new LatLng();
-		double distance=0;
-		HashMap<Double,LatLng> distanceMap = new HashMap<Double,LatLng>();
-		PowerLine powerLine = getNearestLine(midPoint);
-		List<LatLng> probableDoorLocList = new ArrayList<LatLng>();
-		List<Double> distanceList = new ArrayList<Double>();
-		probableDoorLocList = getProbableDoorLocations(northlatLng,southlatLng);
-		for(LatLng loc: probableDoorLocList){
-			distance = getDistanceFromPointToLine(powerLine,loc);
-			distanceList.add(distance);
-			distanceMap.put(distance,loc);
-		}
-		Collections.sort(distanceList);
-		doorLocation = distanceMap.get(distanceList.get(0));
-		
-		return doorLocation;
-	}
-
-	public List<LatLng> getProbableDoorLocations(LatLng northlatLng,
-			LatLng southlatLng) {
-		List<LatLng> doorLocationsList = new ArrayList<LatLng>();
-		LatLng north = new LatLng();
-		LatLng south = new LatLng();
-		LatLng east = new LatLng();
-		LatLng west = new LatLng();
-		north.setLatitude(northlatLng.getLatitude());
-		north.setLongitude((northlatLng.getLongitude() + southlatLng.getLongitude())/2);
-		south.setLatitude(southlatLng.getLatitude());
-		south.setLongitude((northlatLng.getLongitude() + southlatLng.getLongitude())/2);
-		east.setLatitude((northlatLng.getLatitude() + southlatLng.getLatitude())/2);
-		east.setLongitude(northlatLng.getLongitude());
-		west.setLatitude((northlatLng.getLatitude() + southlatLng.getLatitude())/2);
-		west.setLongitude(southlatLng.getLongitude());
-		return doorLocationsList;
-	}
-
-	public double getDistanceFromPointToLine(PowerLine powerLine, LatLng loc) {
-		return 0;
-		// TODO Auto-generated method stub
-		
-	}
-
-	public PowerLine getNearestLine(LatLng midPoint) {
-		double distance;
-		List<Double> distanceList = new ArrayList<Double>();
-		HashMap<Double,PowerLine> distanceMap = new HashMap<Double,PowerLine>();
-		PowerLine nearestPowerLine = new PowerLine();
-		List<PowerLine> powerLineList = getPowerLineService().getAllPowerLine();
-		for(PowerLine powerLine : powerLineList){
-			distance = getDistanceFromPointToLine(powerLine, midPoint);
-			distanceList.add(distance);
-			distanceMap.put(distance,powerLine);
-		}
-		Collections.sort(distanceList);
-		nearestPowerLine = distanceMap.get(distanceList.get(0));
-		return nearestPowerLine;
 	}
 
 	public void updateConnectedPowerLine(HolonObject holonObject,

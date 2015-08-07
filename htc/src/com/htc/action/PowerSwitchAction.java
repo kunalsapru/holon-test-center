@@ -37,7 +37,6 @@ public class PowerSwitchAction extends CommonUtilities {
 		PowerSwitch powerSwitch=new PowerSwitch();
 		powerSwitch.setHolonObject(holonObject);
 		powerSwitch.setPowerLineA(null);
-		powerSwitch.setLatLng(holonObject.getLatLngByDoorLocation());
 		powerSwitch.setStatus(true);
 		
 		//Calling service method to save the object in database and saving the auto-incremented ID in an integer
