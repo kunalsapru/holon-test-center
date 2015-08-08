@@ -201,7 +201,7 @@ $("#holonCoordinatorInformation").popup("open");
 function getHolonCoordinatorFromDatabase(holonCoordinatorName,elementId,divId)
 {
 	var options={};
-	if(holonCoordinatorName.trim().length==0 )
+	if(holonCoordinatorName.trim().length==0 || holonCoordinatorName.trim()=='Not Part of any Holon')
 	{
 	options={
 			elementId:elementId,
@@ -231,7 +231,8 @@ function getHolonCoordinatorFromDatabaseCallBack(data,option)
 	{
 		holonCoordinatorName=holonCoordinatorNameFromOption.split("_")[0].trim();
 	}
-	//alert(holonCoordinatorName);
+	alert(data);
+	
 	var listHolonCoordinator= data.split("*");
 	$(elementId).empty();
 	$(elementId).append("<option value=\"0\" id= \"0\" >No Holon</option>");

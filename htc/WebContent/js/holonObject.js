@@ -155,6 +155,7 @@ function getHolonDetailCallBack(data, option) {
 			}
 		$("#canCommunicate").append(selOptions);
 	 getHolonObjectTypeFromDatabase(holonObjectTypeName);
+	 alert(holonCoordinatorName_Holon.trim());
 	 getHolonCoordinatorFromDatabase(holonCoordinatorName_Holon.trim(),"holonCoordinatorId","holonObjectDetail");	
 }
 
@@ -273,7 +274,7 @@ function getHolonInfoWindowCallBack(data,options)
 	//alert(holonColor);
 	var contentString=
 			"<div class='table'><table>"+
-			"<tr><td colspan='2'><u>Holon Object Details</u></td></tr>"+
+			"<tr><td colspan='2' style='text-decoration: underline;'>Holon Object Details</td></tr>"+
 			"<tr><td><b>Holon Object Id: "+holonObjectId +"</td>"+
 			"<td>Holon Object Type: "+holonObjectTypeName+"</td></tr>"+
 			"<tr><td>Holon Manager: "+holonManagerName+"</td>"+
@@ -296,16 +297,18 @@ function getHolonInfoWindowCallBack(data,options)
 			"<td>Can Communicate: "+canCommunicate+"</td></tr>"+
 			"</table>"+
 			"<br /><hr>"+
+			"<table><tr><td colspan='2' style='text-align: center;'>"+
 			"<span class='button' id='consumptionGraph' title='Show Consumption' onclick='showConsumptionGraph("+holonObjectId+")'><i class='fa fa-line-chart'>&nbspShow Consumption</i></span>"+
 			"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
 			"<span class='button' id='editHolonObject' title='Edit Holon Object'><i class='fa fa-pencil-square-o'>&nbspEdit Holon Object</i></span>"+
 			"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
-			"<span class='button' id='showHolonElement' title='Show Holon Elements' onclick='showHolonElements("+holonObjectId+")'><i class='fa fa-info'>&nbspShow Holon Elements</i></span><hr><br />");
+			"<span class='button' id='showHolonElement' title='Show Holon Elements' onclick='showHolonElements("+holonObjectId+")'><i class='fa fa-info'>&nbspShow Holon Elements</i></span>" +
+			"</td></tr></table><hr>");
 	if(coordHolonId===holonObjectId)
 	{
 		contentString = contentString.concat(
 				"<table>"+
-				"<tr><td colspan='2'><u>Holon Details</u></td></tr>" +
+				"<tr><td colspan='2' style='text-decoration: underline;'>Holon Details</td></tr>" +
 				"<tr><td>Number of Holon Objects: "+nOfHolonObj +"</td>"+
 				"<td>Minimum Energey Req:"+minEnergeyHo +"</td></tr>"+
 				"<tr><td>Maximum Energey Req: "+maxEnergeyHo +"</td>"+
@@ -313,7 +316,7 @@ function getHolonInfoWindowCallBack(data,options)
 				"<tr><td>Minimum Production capacity: "+minEnergeyProd +"</td>"+
 				"<td>Maximum Production Capacity: "+maxEnergeyProd +"</td></tr>"+
 				"<tr><td>Current Production: "+cuEnergeyProd +"</td><td></td></tr></table>"+
-				"<hr><table><tr><td colspan='2'>Other Holon Objects:&nbsp;&nbsp;"+
+				"<hr><table><tr><td colspan='2' style='text-align: center;'>Other Holon Objects:&nbsp;&nbsp;"+
 				"<select align = \"center\" name=\"infoWindowHolonList\" id=\"infoWindowHolonList\">"+hoList+"</select></td></tr>"+
 				"</table>"
 		);
@@ -327,6 +330,7 @@ function getHolonInfoWindowCallBack(data,options)
 	  });
 	infowindowHolonObject.open(map,map);
 	$('#editHolonObject').click(function() {
+		alert(holonObjectId+"+"+infowindowHolonObject);
 		editHolonObject(holonObjectId,infowindowHolonObject);			
 	})
 		$('#hoCoId').click(function() {

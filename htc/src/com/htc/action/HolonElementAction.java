@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 
+import com.htc.hibernate.pojo.HolonCoordinator;
 import com.htc.hibernate.pojo.HolonElement;
 import com.htc.hibernate.pojo.HolonElementState;
 import com.htc.hibernate.pojo.HolonElementType;
@@ -28,7 +29,11 @@ public class HolonElementAction extends CommonUtilities {
 
 			HolonObject holonObject = getHolonObjectService().findById(holonObjectId);
 			HolonElementType holonElementType = getHolonElementTypeService().findById(holonElementTypeId);
-			Integer hoCoObjIdOld=holonObject.getHolonCoordinator().getHolonObject().getId();
+			Integer hoCoObjIdOld=0;
+			HolonCoordinator oldHC=holonObject.getHolonCoordinator();
+			if(oldHC!=null){
+			hoCoObjIdOld=holonObject.getHolonCoordinator().getHolonObject().getId();
+			}
 			HolonElementState holonElementState = getHolonElementStateService().findById(holonElementStateId);
 			HolonElement holonElement = new HolonElement(); // Creating HolonElement Element to store values
 			holonElement.setCurrentCapacity(currentCapacity);

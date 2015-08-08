@@ -51,6 +51,7 @@ $(document).ready(function() {
 		    	 $("#powerLineStartLng").text(snappedStart.lng());
 		    	 $("#powerLineEndLat").text(snappedEnd.lat());
 		    	 $("#powerLineEndLng").text(snappedEnd.lng());
+		    	  $("#powerLineTitle").text("Add Power Line");
 		    	 $("#powerLineType").text("MAINLINE");
 		    	 openDiv('lineObjectDetail');
 		    	
@@ -164,6 +165,7 @@ function editPowerLineCallBack(data,options)
 	var maxCapacity=powerLine[3].trim();
 	 $("#powerLineIdHidden").text(powerLineId);
 	 $("#powerLineCapacity").val(maxCapacity);
+	  $("#powerLineTitle").text("Edit Power Line");
 	 $("#powerLineObjectActionState").text("Edit");
 	 openDiv('lineObjectDetail');
 }
@@ -325,18 +327,26 @@ function getLineInfoWindowContent(data)
 	var source=respStr[5];
 	var dest=respStr[6];
 	var holonIdForSubline=respStr[7];
-	var content= "<b>Connected: </b>"+isConnected+".<br>"+
-	"<b>PowerLine Id: </b>"+powerLineId +".<br>"+
-	"<b>Maximum Capacity: </b>"+maximumCapacity+".<br>"+
-	"<b>Current Capacity: </b>"+currentCapacity+".<br>"+
-	"<b>PowerLine Type: </b>"+lineType+".<br>";
+	var content= "<div class='table'><table>"+
+			"<tr><td colspan='2' style='text-decoration: underline;'>Power Line Detail</td></tr>" +
+			"<tr><td><b>PowerLine Id: </b>"+powerLineId +"</td>"+
+			"<td><b>Connected: </b>"+isConnected+"</td></tr>"+
+			"<tr><td><b>Maximum Capacity: </b>"+maximumCapacity+"</td>"+
+			"<td><b>Current Capacity: </b>"+currentCapacity+"</td></tr>"+
+			"<tr><td><b>PowerLine Type: </b>"+lineType+"</td>";
 	if(lineType==="SUBLINE")
 		{
-		content = content.concat("<b>Connected Holon Object Id: </b>"+holonIdForSubline+".<br>");
+		content = content.concat("<td><b>Connected Holon Object Id: </b>"+holonIdForSubline+"</td></tr>"+
+				"<tr><td colspan='2' style='text-align: center;'>" +
+				"<span class='button' id='editPowerLineObject'><i class='fa fa-pencil-square-o'></i>&nbsp;&nbsp;Edit Power Line</span></td></tr>" +
+				"</div>");
+		}else
+		{
+			content = content.concat("<td></td></td></tr>"+
+					"<tr><td colspan='2' style='text-align: center;'>" +
+					"<span class='button' id='editPowerLineObject'><i class='fa fa-pencil-square-o'></i>&nbsp;&nbsp;Edit Power Line</span></td></tr>" +
+					"</div>");
 		}
-	content = content.concat("<b>Start Location: </b>"+source+".<br>"+
-	"<b>End Location: </b>"+dest+".<br>"+
-	"<span class='button' id='editPowerLineObject'><i class='fa fa-pencil-square-o'></i>&nbsp;&nbsp;Edit Power Line</span>");
 	return content;
 
 }

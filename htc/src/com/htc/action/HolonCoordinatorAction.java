@@ -5,10 +5,8 @@ import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 
-import com.htc.hibernate.pojo.Holon;
 import com.htc.hibernate.pojo.HolonCoordinator;
 import com.htc.hibernate.pojo.HolonObject;
-import com.htc.hibernate.pojo.LatLng;
 import com.htc.utilities.CommonUtilities;
 import com.htc.utilities.ConstantValues;
 
@@ -54,7 +52,7 @@ public class HolonCoordinatorAction extends CommonUtilities{
 	
 	public void deleteHolonCoordinator(){}
 	
-	
+	*/
 	public void getListHolonCoordinator(){
 
 		 
@@ -75,7 +73,7 @@ public class HolonCoordinatorAction extends CommonUtilities{
 			e.printStackTrace();
 		}
 	}
-*/
+
 
 	public  void chooseCoordinator(Integer holonCoordinatorId) {
 		log.info("Abhinav is fool "+holonCoordinatorId);

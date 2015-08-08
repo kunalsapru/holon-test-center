@@ -76,13 +76,13 @@ public class HolonObjectAction extends CommonUtilities {
 		HolonObject holonObject2 = getHolonObjectService().findById(newHolonObjectID);
 		Integer coordHolonObjId=0;
 		String hc_ne_location="";
+		Integer noOfHolons=0;
 		if(holonCoordinatorId!=0)
 		{
 		coordHolonObjId=holonObject2.getHolonCoordinator().getHolonObject().getId();
 		hc_ne_location=holonObject2.getHolonCoordinator().getHolonObject().getLatLngByNeLocation().getLatitude()+"~"+holonObject2.getHolonCoordinator().getHolonObject().getLatLngByNeLocation().getLongitude();
+		noOfHolons=getHolonObjectService().findByHCoordinator(holonObject2.getHolonCoordinator()).size();
 		}
-
-		Integer noOfHolons=getHolonObjectService().findByHCoordinator(holonObject2.getHolonCoordinator()).size();
 		
 		boolean isCoord=false;
 		if(coordHolonObjId==holonObject2.getId())

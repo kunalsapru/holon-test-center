@@ -96,7 +96,7 @@
 				
 				<table>
 					<tr>
-						<td id='hoObjTitle' colspan="2"><u></u></td>
+						<td id='hoObjTitle' colspan="2"  style="text-decoration: underline;"></td>
 					</tr>	
 					
 					<tr>
@@ -144,7 +144,7 @@
 				<input type="hidden" id="hiddenPowerObjectRad" value="" />
 				<table class='table'>
 					<tr>
-						<td id='powerObjTitle' colspan="2"><u></u></td>
+						<td id='powerObjTitle' colspan="2" style="text-decoration: underline;"></td>
 					</tr>
 					<tr>
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;Holon:&nbsp;&nbsp;&nbsp;&nbsp;<select name="pwholonCoordinatorId" id="pwholonCoordinatorId"></select></td>
@@ -169,7 +169,7 @@
 			
 
 
-	<div id="lineObjectDetail">
+	<div id="lineObjectDetail" class='table'>
 				<input type="hidden" id="powerLineObjectActionState" value="" /> 
 				<input type="hidden" id="powerLineStartLat" value="" /> 
 				<input type="hidden" id="powerLineStartLng" value="" /> 
@@ -180,38 +180,23 @@
 				<input type="hidden" id="powerLineIdForSubLine" value="" />
 				<input type="hidden" id="powerLineType" value="" />
 				<!-- <table id="powerLineObjectTable"> -->
-				<table class="table">
+				<table>
+				<tr>
+					<td id='powerLineTitle' colspan="2" style="text-decoration: underline; "></td>
+				</tr>
 					<tr>
 						<td>Power Line Capacity:</td>
 						<td><input id="powerLineCapacity" type="text"></td>
 					</tr>
+					</table><hr>
+					<table>
 					<tr>
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="cancelPowerLine" type='button' class="button"  value='Cancel' />
 						<input id="savePowerLineObject" type='button' class="button"  value='Save Power Line' /></td>
 					</tr>
-				</table>
+				</table><hr>
 			</div>
-			
-			
-			<div id="subLineObjectDetail">
-				<input type="hidden" id="subLineLineObjectActionState" value="" /> 
-				<input type="hidden" id="subLineStartLat" value="" /> 
-				<input type="hidden" id="subLineStartLng" value="" /> 
-				<input type="hidden" id="subLineEndLat" value="" />
-				<input type="hidden" id="subLineEndLng" value="" />
-				<input type="hidden" id="subLineIdHidden" value="" />
-				<!-- <table id="subLineObjectTable"> -->
-				<table class="table">
-					<tr>
-						<td>Sub Line Capacity:</td>
-						<td><input id="subLineCapacity" type="text"></td>
-					</tr>
-					<tr>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="cancelSubLine" type='button' class="button"  value='Cancel' /></td>
-						<td><input id="saveSubLineObject" type='button' class="button"  value='Save Sub-Line' /></td>
-					</tr>
-				</table>
-			</div>
+					
 			<div id="chartContainer" style="height: 300px; width: 30%;"></div>
 			<div id="holonCoordinatorInformation" class="ui-content"
 				data-transition="flip" data-overlay-theme="b" data-theme="a"
