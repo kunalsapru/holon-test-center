@@ -212,6 +212,8 @@ function getHolonCoordinatorFromDatabase(holonCoordinatorName,elementId,divId)
 		{
 		options={
 				holonCoordinatorName:holonCoordinatorName,
+				elementId:elementId,
+				divId:divId
 			};
 		}
 	
@@ -223,16 +225,12 @@ function getHolonCoordinatorFromDatabaseCallBack(data,option)
 {
 	var holonCoordinatorName="undefined";
 	var elementId ="#".concat(option['elementId']);
-	alert(elementId);
 	var holonCoordinatorNameFromOption =option['holonCoordinatorName'];
 	var divId =option['divId'];
-	alert(divId);
 	if(typeof holonCoordinatorNameFromOption !="undefined")
 	{
 		holonCoordinatorName=holonCoordinatorNameFromOption.split("_")[0].trim();
 	}
-	alert(data);
-	
 	var listHolonCoordinator= data.split("*");
 	$(elementId).empty();
 	$(elementId).append("<option value=\"0\" id= \"0\" >No Holon</option>");
@@ -250,8 +248,6 @@ function getHolonCoordinatorFromDatabaseCallBack(data,option)
 				}
 		
 	}
-//	$("#holonCoordinatorId").selectmenu('refresh', true);
-
 	openDiv(divId);
 }
 

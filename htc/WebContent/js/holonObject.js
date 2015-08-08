@@ -155,7 +155,6 @@ function getHolonDetailCallBack(data, option) {
 			}
 		$("#canCommunicate").append(selOptions);
 	 getHolonObjectTypeFromDatabase(holonObjectTypeName);
-	 alert(holonCoordinatorName_Holon.trim());
 	 getHolonCoordinatorFromDatabase(holonCoordinatorName_Holon.trim(),"holonCoordinatorId","holonObjectDetail");	
 }
 
@@ -330,7 +329,6 @@ function getHolonInfoWindowCallBack(data,options)
 	  });
 	infowindowHolonObject.open(map,map);
 	$('#editHolonObject').click(function() {
-		alert(holonObjectId+"+"+infowindowHolonObject);
 		editHolonObject(holonObjectId,infowindowHolonObject);			
 	})
 		$('#hoCoId').click(function() {
