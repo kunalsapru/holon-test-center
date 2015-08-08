@@ -61,6 +61,7 @@ $(document)
 					
 					});
 					
+					
 					$("#buttonHolonElementTypeMaster").click(function(){
 						var textHolonElementTypeMaster= $("#textHolonElementTypeMaster").val();
 						var dataAttributes= {

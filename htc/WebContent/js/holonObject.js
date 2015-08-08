@@ -296,7 +296,7 @@ function getHolonInfoWindowCallBack(data,options)
 			"<td>Can Communicate: "+canCommunicate+"</td></tr>"+
 			"</table>"+
 			"<br /><hr>"+
-			"<span class='button' id='consumptionGraph' title='Show Consumption'><i class='fa fa-line-chart'>&nbspShow Consumption</i></span>"+
+			"<span class='button' id='consumptionGraph' title='Show Consumption' onclick='showConsumptionGraph("+holonObjectId+")'><i class='fa fa-line-chart'>&nbspShow Consumption</i></span>"+
 			"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
 			"<span class='button' id='editHolonObject' title='Edit Holon Object'><i class='fa fa-pencil-square-o'>&nbspEdit Holon Object</i></span>"+
 			"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+

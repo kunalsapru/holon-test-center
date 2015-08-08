@@ -22,6 +22,7 @@
 <script type="text/javascript" src="js/switch.js"></script>
 <script type="text/javascript" src="js/powerSource.js"></script>
 <script type="text/javascript" src="js/connectToPowerSource.js"></script>
+<script type="text/javascript" src="js/consumptionGraph.js"></script>
 <script src="js/sweetalert.min.js"></script>
 </head>
 
@@ -291,6 +292,7 @@
  	<tbody id="holonElementsListBody" ></tbody>
  	</table> 	 	
  	</fieldset>
+ 	<div id="consumptionGraphBody"></div>
  	<input type="button" id="closeElementList" onclick="closeDiv('divHolonElementsDetail')" value="X"  />
  	</div>
 </div>
