@@ -454,7 +454,7 @@ function getDetailForPowerSourceIconCallBack(data,options)
 			
 			}else
 				{
-					
+			
 					if(hasPower=="true"){
 						//alert(powerColor);
 						currecntPC = new Marker({
@@ -473,8 +473,12 @@ function getDetailForPowerSourceIconCallBack(data,options)
 							custom_label: labelTxt
 						});
 						
-						currntPC.setOptions({strokeColor:powerColor, fillColor:powerColor,center:new google.maps.LatLng(ne_location_lat, sw_location_lng)});
-					}
+						//currntPC.setOptions({strokeColor:powerColor, fillColor:powerColor,center:new google.maps.LatLng(ne_location_lat, sw_location_lng)});
+					}else
+						{
+							currecntPC.setMap(null);
+						
+						}
 					
 				}
 	globalPCList.set(holonObjectId,currecntPC);	

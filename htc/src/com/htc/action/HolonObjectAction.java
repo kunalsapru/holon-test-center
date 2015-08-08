@@ -14,7 +14,6 @@ import com.htc.hibernate.pojo.HolonObjectType;
 import com.htc.hibernate.pojo.LatLng;
 import com.htc.hibernate.pojo.PowerLine;
 import com.htc.utilities.CommonUtilities;
-import com.htc.utilities.ConstantValues;
 
 public class HolonObjectAction extends CommonUtilities {
 

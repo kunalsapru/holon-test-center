@@ -79,7 +79,11 @@ public class HolonElementAction extends CommonUtilities {
 
 			HolonElement holonElement = getHolonElementService().findById(holonElementId);
 			Integer holonObjectId = holonElement.getHolonObject().getId();
-			Integer hoCoObjIdOld = getHolonObjectService().findById(holonObjectId).getHolonCoordinator().getHolonObject().getId();
+			HolonCoordinator hoc= getHolonObjectService().findById(holonObjectId).getHolonCoordinator();
+			Integer hoCoObjIdOld=0;
+			if(hoc!=null){
+			hoCoObjIdOld = getHolonObjectService().findById(holonObjectId).getHolonCoordinator().getHolonObject().getId();
+			}
 			holonElement.setCurrentCapacity(currentCapacity);
 			holonElement.setHolonElementState(holonElementState);
 			holonElement.setHolonElementType(holonElementType);
@@ -148,8 +152,12 @@ public class HolonElementAction extends CommonUtilities {
 		Integer holonElementId = getRequest().getParameter("holonElementId")!=null?Integer.parseInt(getRequest().getParameter("holonElementId")):0;
 		HolonElement holonElement = getHolonElementService().findById(holonElementId);
 		Integer holonObjectId = holonElement.getHolonObject().getId();
-		Integer hoCoObjIdOld = getHolonObjectService().findById(holonObjectId).getHolonCoordinator().getHolonObject().getId();
-		
+		HolonCoordinator hoc= getHolonObjectService().findById(holonObjectId).getHolonCoordinator();
+		Integer hoCoObjIdOld=0;
+		if(hoc!=null)
+		{
+			hoCoObjIdOld = hoc.getHolonObject().getId();
+		}
 
 		//Editing holonElement object and saving in database 
 		boolean deleteStatus = getHolonElementService().delete(holonElement);
