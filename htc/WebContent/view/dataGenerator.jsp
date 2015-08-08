@@ -18,20 +18,26 @@
 		var holonObjectList = data.split("*");
 		var innerHtmlHolonObject = "";
 		var holonObjectTypesIDs = "";
+		var holonObjectTypesPriorities = "";
 		for (var i=0; i<holonObjectList.length; i++) {
 			var holonObjectTypeId = holonObjectList[i].split("~")[0];
 			var holonObjectTypeName = holonObjectList[i].split("~")[1];
 			var holonObjectTypePriority = holonObjectList[i].split("~")[2];
+			
 			var htmlId = "holonObjectType_"+holonObjectTypeId;
 			if(i == holonObjectList.length-1) {
 				holonObjectTypesIDs += htmlId;
+				holonObjectTypesPriorities += holonObjectTypePriority;
 			} else {
 				holonObjectTypesIDs += htmlId+"~";
+				holonObjectTypesPriorities += holonObjectTypePriority+"~";
 			}
 			innerHtmlHolonObject +=	"<tr><td>"+holonObjectTypeName+" (Priority = "+holonObjectTypePriority+"):</td><td>"+
 			"<input type=\"text\" id=\""+htmlId+"\" /></td></tr>";
 		}
 		$("#holonObjectTypesIDs").val(holonObjectTypesIDs);
+		$("#holonObjectTypesPriorities").val(holonObjectTypesPriorities);
+		
 		$("#totalHolonObjectTypes").val(holonObjectList.length);
 		$("#holonObjectTypeListFactory").html(innerHtmlHolonObject);
 	}
@@ -46,6 +52,7 @@
 	}
 
 	function factoryDataGenerator() {
+		var holonObjectTypesPriorities = $("#holonObjectTypesPriorities").val();
 		var totalHolonObjectTypes = $("#totalHolonObjectTypes").val();
 		var htmlIdHolonObjectTypes = "";
 		var htmlValuesHolonObjectTypes = "";
@@ -62,7 +69,8 @@
 		var dataAttributes = {
 			totalHolonObjectTypes : totalHolonObjectTypes,
 			htmlIdHolonObjectTypes : htmlIdHolonObjectTypes,
-			htmlValuesHolonObjectTypes : htmlValuesHolonObjectTypes
+			htmlValuesHolonObjectTypes : htmlValuesHolonObjectTypes,
+			holonObjectTypesPriorities : holonObjectTypesPriorities
 		};
 		ajaxRequest("factoryDataGenerator", dataAttributes,
 				factoryDataGeneratorCallBack, {})
@@ -93,6 +101,7 @@
 			</table>
 			<input type="hidden" id="totalHolonObjectTypes" value="" />
 			<input type="hidden" id="holonObjectTypesIDs" value="" />
+			<input type="hidden" id="holonObjectTypesPriorities" value="" />
 			<table border="2">
 				<tr>
 					<td colspan="2" style="text-align: center;"><input class="button" type="button"

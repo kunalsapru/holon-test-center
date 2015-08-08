@@ -20,22 +20,26 @@ public class FactoryDataGeneratorAction extends CommonUtilities {
 			Integer totalHolonObjectTypes = getRequest().getParameter("totalHolonObjectTypes")!=null?Integer.parseInt(getRequest().getParameter("totalHolonObjectTypes")):0;
 			String htmlIdHolonObjectTypes = getRequest().getParameter("htmlIdHolonObjectTypes")!=null?getRequest().getParameter("htmlIdHolonObjectTypes"):"";
 			String htmlValuesHolonObjectTypes = getRequest().getParameter("htmlValuesHolonObjectTypes")!=null?getRequest().getParameter("htmlValuesHolonObjectTypes"):"";
+			String holonObjectTypesPriorities = getRequest().getParameter("holonObjectTypesPriorities")!=null?getRequest().getParameter("holonObjectTypesPriorities"):"";
+
 			System.out.println("No of HolonObject Types = "+totalHolonObjectTypes);
 			System.out.println("htmlIdHolonObjectTypes = "+htmlIdHolonObjectTypes);
 			System.out.println("htmlValuesHolonObjectTypes = "+htmlValuesHolonObjectTypes);
 
 			String[] holonObjectTypesIdsList = htmlIdHolonObjectTypes.replaceAll("holonObjectType_", "").split("~~");
 			String[] holonObjectTypesValues = htmlValuesHolonObjectTypes.split("~~");
-		
-			Map<Integer, Integer> holonObjectTypeProbabilityMap = new TreeMap<Integer, Integer>();
+			String[] holonObjectTypesPrioritiesList = holonObjectTypesPriorities.split("~");
+			
+			Map<Integer, String> holonObjectTypeProbabilityMap = new TreeMap<Integer, String>();
 			for(int i=0;i<holonObjectTypesIdsList.length;i++) {
 				Integer holonObjectTypeId = Integer.parseInt(holonObjectTypesIdsList[i]);
 				Integer objectTypeProbability = Integer.parseInt(holonObjectTypesValues[i]);
-				holonObjectTypeProbabilityMap.put(holonObjectTypeId, objectTypeProbability);
+				Integer holonObjectTypesPriority = Integer.parseInt(holonObjectTypesPrioritiesList[i]);
+				holonObjectTypeProbabilityMap.put(holonObjectTypesPriority, holonObjectTypeId+":"+objectTypeProbability);
 			}
 			
 			FactoryUtilities factoryUtilities = new FactoryUtilities();
-			factoryUtilities.createHolonObjects(holonObjectTypeProbabilityMap);
+			factoryUtilities.sendDataToFactory(holonObjectTypeProbabilityMap);
 			
 			
 			getResponse().setContentType("text/html");
