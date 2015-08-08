@@ -115,12 +115,16 @@
 			<action name="editPowerLine" class="com.htc.action.PowerLineAction"
 			method="editPowerLine" />
 
-		<action name="dataGenerator" class="com.htc.action.DataGeneratorAction"
-			method="dataGenerator" />
+	<!-- Start of Factory related actions -->
 
-
-		<!-- Actions used by Kunal and Ritka...we will discuss this tomorrow and 
-			then modify this XML -->
+	<action name="factoryDataGenerator" class="com.htc.factory.FactoryDataGeneratorAction"
+		method="factoryDataGenerator" />
+	<action name="factoryListHolonObjectType" class="com.htc.factory.FactoryDataGeneratorAction"
+		method="factoryListHolonObjectType" />
+	<action name="factoryListHolonElementType" class="com.htc.factory.FactoryDataGeneratorAction"
+		method="factoryListHolonElementType" />
+		
+	<!-- End of factory related actions  -->
 
 		<!-- Start of Actions for master tables -->
 		<action name="createHolonObjectType" class="com.htc.action.HolonObjectTypeAction"
@@ -188,8 +192,6 @@
 			method="deleteHolonObject" />
 		<action name="showHolonObjects" class="com.htc.action.HolonObjectAction"
 			method="showHolonObjects" />
-
-		<!-- End of actions used by Kunal and Ritika -->
 
 	</package>
 

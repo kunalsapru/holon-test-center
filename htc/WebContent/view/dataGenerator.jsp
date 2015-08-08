@@ -4,88 +4,116 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Data Generator</title>
+<title>Data Factory (htc)</title>
+<link rel="shortcut icon" href="../css/images/favicon.ico" />
 <script type="text/javascript" src="../js/common.js"></script>
-<script type="text/javascript" src="../js/jquery-2.1.4.js"></script>
+<script type="text/javascript" src="../js/jquery-2.1.4.min.js"></script>
 <script type="text/javascript">
-	function dataGenerator() {
-		var attr1 = $("#attr1").val();
-		var attr2 = $("#attr2").val();
-		var attr3 = $("#attr3").val();
-		var attr4 = $("#attr4").val();
-		var attr5 = $("#attr5").val();
-		var dataAttributes = {
-			attr1 : attr1,
-			attr2 : attr2,
-			attr3 : attr3,
-			attr4 : attr4,
-			attr5 : attr5			
-		};
-		ajaxRequest("dataGenerator", dataAttributes,
-				dataGeneratorCallBack, {})
+	$(document).ready(function() {
+		ajaxRequest("factoryListHolonObjectType", {},factoryListHolonObjectTypeCallBack, {});
+		ajaxRequest("factoryListHolonElementType", {},factoryListHolonElementTypeCallBack, {});
+	});
+	
+	function factoryListHolonObjectTypeCallBack(data, options) {
+		var holonObjectList = data.split("*");
+		var innerHtmlHolonObject = "";
+		var holonObjectTypesIDs = "";
+		for (var i=0; i<holonObjectList.length; i++) {
+			var holonObjectTypeId = holonObjectList[i].split("~")[0];
+			var holonObjectTypeName = holonObjectList[i].split("~")[1];
+			var holonObjectTypePriority = holonObjectList[i].split("~")[2];
+			var htmlId = "holonObjectType_"+holonObjectTypeId;
+			if(i == holonObjectList.length-1) {
+				holonObjectTypesIDs += htmlId;
+			} else {
+				holonObjectTypesIDs += htmlId+"~";
+			}
+			innerHtmlHolonObject +=	"<tr><td>"+holonObjectTypeName+" (Priority = "+holonObjectTypePriority+"):</td><td>"+
+			"<input type=\"text\" id=\""+htmlId+"\" /></td></tr>";
+		}
+		$("#holonObjectTypesIDs").val(holonObjectTypesIDs);
+		$("#totalHolonObjectTypes").val(holonObjectList.length);
+		$("#holonObjectTypeListFactory").html(innerHtmlHolonObject);
 	}
 
-	function dataGeneratorCallBack(data, options) {
-		
+	function factoryListHolonElementTypeCallBack(data, options) {
+		var holonElementTypeListFactoryHtml = "<tr><td colspan=\"2\"><b><u>Holon Element Types</u></b></td></tr>";
+		var holonElementTypeList = data.split("~~");
+		for(var i=0; i<holonElementTypeList.length;i++) {
+			holonElementTypeListFactoryHtml += "<tr><td colspan=\"2\">"+holonElementTypeList[i]+"</td></tr>";			
+		}
+		$("#holonElementTypeListFactory").html(holonElementTypeListFactoryHtml);
+	}
+
+	function factoryDataGenerator() {
+		var totalHolonObjectTypes = $("#totalHolonObjectTypes").val();
+		var htmlIdHolonObjectTypes = "";
+		var htmlValuesHolonObjectTypes = "";
+		var holonObjectTypesIds = $("#holonObjectTypesIDs").val().split("~");
+		for(var i=0; i<totalHolonObjectTypes; i++){
+			if(i == totalHolonObjectTypes-1){
+				htmlValuesHolonObjectTypes += $("#"+holonObjectTypesIds[i]).val();
+				htmlIdHolonObjectTypes += holonObjectTypesIds[i];
+			} else {
+				htmlValuesHolonObjectTypes += $("#"+holonObjectTypesIds[i]).val()+"~~";
+				htmlIdHolonObjectTypes += holonObjectTypesIds[i]+"~~";
+			}
+		}
+		var dataAttributes = {
+			totalHolonObjectTypes : totalHolonObjectTypes,
+			htmlIdHolonObjectTypes : htmlIdHolonObjectTypes,
+			htmlValuesHolonObjectTypes : htmlValuesHolonObjectTypes
+		};
+		ajaxRequest("factoryDataGenerator", dataAttributes,
+				factoryDataGeneratorCallBack, {})
+	}
+
+	function factoryDataGeneratorCallBack(data, options) {
 		alert(data);
-		
 	}
 </script>
-
+<link rel="stylesheet" href="../css/style.css">
+<style type="text/css">
+.table tr td:first-child {
+	text-align: right;
+	padding-right: 2%;
+}
+.table tr td:last-child {
+	text-align: left;
+	padding-left: 2%;
+}
+</style>
 </head>
 <body>
-	<div style="height: 60%; width: 50%; text-align: center; background-color: aqua;">
-		<form  action="dataGenerator" method="Post" id="dataGeneratorFormID">
+<div style="float: left;width: 44%;margin-left: 5%;">
+	<div  class="table">
+	<span style="font-family: sans-serif;"><b><u>Data Factory</u></b><i>(Enter weight for the following Holon Object Types in percentage)</i></span>
 			<table border="1">
-				<tbody>
-					<tr>
-						<td width="100%">Number of Holons:</td>
-						<td><input type="text" id="attr1" /></td>
-					</tr>
-					<tr>
-						<td width="50%">Weight for Hospitals:</td>
-						<td><input type="text" id="attr2" /></td>
-					</tr>
-					<tr>
-						<td width="50%">Weight for Govt Infrastructure:</td>
-						<td><input type="text" id="attr3" /></td>
-					</tr>
-					<tr>
-						<td width="50%">Weight for Physician Buildings: </td>
-						<td><input type="text" id="attr4" /></td>
-					</tr>
-					<tr>
-						<td width="50%">Weight for Police Buildings:</td>
-						<td><input type="text" id="attr5" /></td>
-					</tr>
-					<tr>
-						<td width="50%">Weight for Fire Department:</td>
-						<td><input type="text" id="attr6" /></td>
-					</tr>
-					<tr>
-						<td width="50%">Weight for Industries:</td>
-						<td><input type="text" id="attr7" /></td>
-					</tr>
-					<tr>
-						<td width="50%">Weight for Household Buildings:</td>
-						<td><input type="text" id="attr8" /></td>
-					</tr>
-					<tr>
-						<td width="50%">Weight for PowerPlant:</td>
-						<td><input type="text" id="attr8" /></td>
-					</tr>
-					<tr>
-						<td width="50%">Weight for Transformers:</td>
-						<td><input type="text" id="attr8" /></td>
-					</tr>
-					<tr>
-						<td colspan="2" align="center"><input type="button"
-							style="cursor: pointer;" value="Send to data generator"
-							onclick="dataGenerator()" /></td>
-					</tr>
-				</tbody>
+				<tbody id="holonObjectTypeListFactory"></tbody>
 			</table>
-		</form>
+			<input type="hidden" id="totalHolonObjectTypes" value="" />
+			<input type="hidden" id="holonObjectTypesIDs" value="" />
+			<table border="2">
+				<tr>
+					<td colspan="2" style="text-align: center;"><input class="button" type="button"
+						style="cursor: pointer;" value="Send to data generator"
+						onclick="factoryDataGenerator()" /></td>
+				</tr>
+			</table>
 	</div>
+</div>
+<div style="float: right;width: 44%;margin-right: 5%;">
+	<div class="table">
+	<span style="font-family: sans-serif;"><i>(Each Holon Object will have a maximum of 10 randomly selected Holon Elements)</i></span>
+			<table border="1">
+				<tbody id="holonElementTypeListFactory"></tbody>
+			</table>
+	</div>
+</div>
+<div>
+	<table>
+		<tbody id="dataFactoryOutput"></tbody>
+	</table>
+</div>
 </body>
 </html>
