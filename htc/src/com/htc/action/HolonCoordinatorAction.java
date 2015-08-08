@@ -17,7 +17,7 @@ public class HolonCoordinatorAction extends CommonUtilities{
 	private static final long serialVersionUID = 1L;
 	static Logger log = Logger.getLogger(HolonCoordinatorAction.class);
 
-	
+	/*
 	public void createHolonCoordinator(){
 		try{
 		Double latNE = getRequest().getParameter("latNE")!=null?Double.parseDouble(getRequest().getParameter("latNE")):0D;
@@ -75,7 +75,7 @@ public class HolonCoordinatorAction extends CommonUtilities{
 			e.printStackTrace();
 		}
 	}
-
+*/
 
 	public  void chooseCoordinator(Integer holonCoordinatorId) {
 		log.info("Abhinav is fool "+holonCoordinatorId);

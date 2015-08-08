@@ -43,4 +43,10 @@ public class LatLngDaoImpl implements LatLngDao {
 		return getLatLngHome().getAllLatLng();
 	}
 
+	@Override
+	public ArrayList<LatLng> findByLocation(Double lat, Double lng) {
+		return getLatLngHome().findByLocation(lat,lng);
+	}
+
+
 }

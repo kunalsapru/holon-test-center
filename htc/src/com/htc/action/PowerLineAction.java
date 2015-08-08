@@ -41,8 +41,8 @@ public class PowerLineAction extends CommonUtilities {
 			LatLng StartLatLng = new LatLng(latStart, lngStart);
 			LatLng EndLatLng = new LatLng(latEnd, lngEnd);
 			
-			int newStartLatLngId = getLatLngService().persist(StartLatLng);
-			int newEndLatLngId = getLatLngService().persist(EndLatLng);
+			int newStartLatLngId = new LatLngAction().saveLocation(StartLatLng);
+			int newEndLatLngId = new LatLngAction().saveLocation(EndLatLng);
 			
 			LatLng savedStartLatLng=getLatLngService().findById(newStartLatLngId);
 			LatLng savedEndLatLng=getLatLngService().findById(newEndLatLngId);

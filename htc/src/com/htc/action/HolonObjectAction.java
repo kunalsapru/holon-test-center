@@ -35,8 +35,9 @@ public class HolonObjectAction extends CommonUtilities {
 		
 		LatLng NorthlatLng = new LatLng(latNE, lngNE);
 		LatLng SouthlatLng = new LatLng(latSW, lngSW);
-		Integer NorthlocationId = getLatLngService().persist(NorthlatLng);
-		Integer SouthlocationId = getLatLngService().persist(SouthlatLng);
+		LatLngAction latLngAct= new LatLngAction();
+		Integer NorthlocationId = latLngAct.saveLocation(NorthlatLng);
+		Integer SouthlocationId = latLngAct.saveLocation(SouthlatLng);
 		LatLng NorthlatLng2 = getLatLngService().findById(NorthlocationId);
 		LatLng SouthlatLng2 = getLatLngService().findById(SouthlocationId);
 		HolonObject holonObject = new HolonObject(); // Creating HolonObject object to store values

@@ -1,8 +1,12 @@
 package com.htc.hibernate.utilities;
 
 import java.util.ArrayList;
+
+import org.apache.log4j.Logger;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
 import com.htc.hibernate.config.HibernateSessionFactory;
 import com.htc.hibernate.pojo.LatLng;
 
@@ -11,7 +15,7 @@ import com.htc.hibernate.pojo.LatLng;
  * @see .LatLng
  */
 public class LatLngHome {
-	
+	static Logger log = Logger.getLogger(LatLngHome.class);
 	public Integer persist(LatLng transientInstance) {
 		Integer latLng_id=null;
 		Session session = null;
@@ -87,6 +91,30 @@ public class LatLngHome {
 			return listLatLng;
 		} catch (RuntimeException re) {
 			System.out.println("get LatLng list failed");
+		}
+		return listLatLng;
+	}
+
+	
+
+	@SuppressWarnings("unchecked")
+	public ArrayList<LatLng> findByLocation(Double lat, Double lng) {
+		Session session = null;
+		Transaction tx = null;
+		ArrayList<LatLng> listLatLng = null;
+		try {
+			session = HibernateSessionFactory.getSessionFactory().getCurrentSession();
+			tx = session.beginTransaction();
+			Query qr= session.createQuery("from LatLng l where l.latitude=:latitude and l.longitude=:longitude");
+			qr.setParameter("latitude", lat);
+			qr.setParameter("longitude", lng);
+			listLatLng =  (ArrayList<LatLng>) qr.list();
+			tx.commit();
+			return listLatLng;
+		} catch (RuntimeException re) {
+			log.info("Exception --> "+re.getMessage());
+			re.printStackTrace();
+		
 		}
 		return listLatLng;
 	}
