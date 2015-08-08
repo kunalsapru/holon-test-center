@@ -349,10 +349,7 @@ public class HolonObjectAction extends CommonUtilities {
 		try {			
 			ArrayList<String> hoListArray = new ArrayList<String>();
 			HolonObject holonObject = null;
-			new HolonCoordinatorAction().chooseCoordinator(ConstantValues.HOLON_CO_BLUE);
-			new HolonCoordinatorAction().chooseCoordinator(ConstantValues.HOLON_CO_GREEN);
-			new HolonCoordinatorAction().chooseCoordinator(ConstantValues.HOLON_CO_YELLOW);
-			new HolonCoordinatorAction().chooseCoordinator(ConstantValues.HOLON_CO_RED);
+			new HolonCoordinatorAction().chooseCoordinatorValue();
 			
 			ArrayList<HolonObject> holonObjectList = getHolonObjectService().getAllHolonObject();
 			for(int i=0; i<holonObjectList.size();i++){
