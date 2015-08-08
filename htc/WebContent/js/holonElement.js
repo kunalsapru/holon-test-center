@@ -59,7 +59,8 @@ function deleteHolonElementCallBack(data, options) {
 		var holonObjectId = options['holonObjectId'];
 		showHolonElements(holonObjectId);
 		showPowerCircles(holonObjectId);
-		updateCoordinator(resp[1],resp[2]);		
+		updateCoordinator(resp[1]);	
+		showHolonCoIcons();
 		
 	} else {
 		alert("Error in deleting Holon Element. Please check application logs.")
@@ -152,7 +153,8 @@ function addHolonElementCallBack(data, options) {
 	if(resp[0] == "true"){
 		var holonObjectId = options['holonObjectId'];
 		closeDiv('elementInfo');
-		updateCoordinator(resp[1],resp[2]);
+		updateCoordinator(resp[1]);
+		showHolonCoIcons();
 		showHolonElements(holonObjectId);
 		showPowerCircles(holonObjectId);
 		
@@ -167,7 +169,8 @@ function editHolonElementCallBack(data, options) {
 	if(resp[0]  == "true"){
 		var holonObjectId = options['holonObjectId'];
 		closeDiv('elementInfo');
-		updateCoordinator(resp[1],resp[2]);
+		updateCoordinator(resp[1]);
+		showHolonCoIcons();
 		showHolonElements(holonObjectId);
 		showPowerCircles(holonObjectId);
 		
@@ -186,91 +189,23 @@ function editHolonElement(holonElementId,holonElementTypeId,state,currentCapacit
 	openDiv('elementInfo');
 }
 
-function updateCoordinator(holonObjectId,hoCoObjIdOld)
+function updateCoordinator(holonObjectId)
 {
-	
-	var dataAttributes = {
-			holonObjectId : holonObjectId,
-			hoCoObjIdOld : hoCoObjIdOld,
-			
-		};
-	var options = {
-			holonObjectId : holonObjectId,
-			};
-	ajaxRequest("updateCoordinator", dataAttributes, updateCoordinatorCallBack, options);
+	var options= {
+			  holonObjectId : holonObjectId,
+			}
+	ajaxRequest("updateCoordinator", {}, updateCoordinatorCallBack, options);
 
 }
 
 function updateCoordinatorCallBack(data,options)
 {
-	var coObjIdBlue=data.split("*")[0];
-	var coObjIdGreen=data.split("*")[1];
-	var coObjIdYellow=data.split("*")[2];
-	var coObjIdRed=data.split("*")[3];
-	var itsOwnCoStatusChanged=data.split("*")[4];
-	var changedToCoord=data.split("*")[5];
-	var holonObjectId=options["holonObjectId"];
-	 var dataAttributes= {
+	var holonObjectId=options['holonObjectId'];
+	var dataAttributes= {
 			  holonObjectId : holonObjectId,
 			}
-	 ajaxRequest("getHolonObjectInfoWindow", dataAttributes, getHolonInfoWindowCallBack, {});	
-	var blueObj=globalHoList.get(coObjIdBlue.toString());
-	if(typeof blueObj != "undefined")
-	{		
-		//alert("1");
-		var cLocation=blueObj.getBounds().getNorthEast();
-		var blueCObject=globalHKList.get("blue");
-		if(typeof blueCObject != "undefined")
-		{		
-			//alert("11");
-			blueCObject.setOptions({position:cLocation});
-			globalHKList.set("blue",blueCObject);
-		}
-	}
-	
-	var greenObj=globalHoList.get(coObjIdGreen.toString());
-	if(typeof greenObj != "undefined")
-	{		
-		//alert("2");
-		var cLocation=greenObj.getBounds().getNorthEast();
-		var greenCObject=globalHKList.get("green");
-		if(typeof greenCObject != "undefined")
-		{		
-			//alert("22");
-			greenCObject.setOptions({position:cLocation});
-			globalHKList.set("green",greenCObject);
-		}
-	}
-
-	var yellowObj=globalHoList.get(coObjIdYellow.toString());
-	if(typeof yellowObj != "undefined")
-	{		
-		//alert("3");
-		var cLocation=yellowObj.getBounds().getNorthEast();
-		var yellowCObject=globalHKList.get("yellow");
-		if(typeof yellowCObject != "undefined")
-		{		
-			//alert("33");
-			yellowCObject.setOptions({position:cLocation});
-			globalHKList.set("yellow",yellowCObject);
-		}
-	}
-	
-	var redObj=globalHoList.get(coObjIdRed.toString());
-	if(typeof redObj != "undefined")
-	{		
-		//alert("4");
-		var cLocation=redObj.getBounds().getNorthEast();
-		var redCObject=globalHKList.get("red");
-		if(typeof redCObject != "undefined")
-		{		
-			//alert("44");
-			redCObject.setOptions({position:cLocation});
-			globalHKList.set("red",redCObject);
-		}
-	}
-
-	
+	 ajaxRequest("getHolonObjectInfoWindow", dataAttributes, getHolonInfoWindowCallBack, {});
+	console.log(data);
 }
 
 function updateInfoWindow(itsOwnCoStatusChanged,changedToCoord)
@@ -292,5 +227,7 @@ function updateInfoWindow(itsOwnCoStatusChanged,changedToCoord)
 			infoWindow.setContent(finalCont);
 		
 		}
+	
+
 	
 }

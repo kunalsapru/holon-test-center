@@ -86,9 +86,11 @@
 		<action name="showHolonObjectConsumption" class="com.htc.action.ConsumptionGraphAction"
 			method="showConsumptionGraph" />
 
-
+<!-- 		Coordinator Related Actions -->
 		<action name="updateCoordinator" class="com.htc.action.HolonCoordinatorAction"
 			method="updateCoordinator" />
+		<action name="getHoCoIcons" class="com.htc.action.HolonCoordinatorAction"
+			method="getHoCoIcons" />
 
 
 		<!--SWITCH LEVEL -->

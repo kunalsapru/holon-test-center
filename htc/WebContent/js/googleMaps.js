@@ -127,6 +127,7 @@ $(document)
 					google.maps.Circle.prototype.contains = function(latLng,theCircle) {
 						  return theCircle.getBounds().contains(latLng) && google.maps.geometry.spherical.computeDistanceBetween(theCircle.getCenter(), latLng) <= theCircle.getRadius();
 						}
+					
 				});
 
 function initialize() {

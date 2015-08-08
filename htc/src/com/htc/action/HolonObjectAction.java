@@ -67,21 +67,19 @@ public class HolonObjectAction extends CommonUtilities {
 		//Calling service method to save the object in database and saving the auto-incremented ID in an integer
 		Integer newHolonObjectID = getHolonObjectService().persist(holonObject);
 		
-		new HolonCoordinatorAction().chooseCoordinator(ConstantValues.HOLON_CO_BLUE);
-		new HolonCoordinatorAction().chooseCoordinator(ConstantValues.HOLON_CO_GREEN);
-		new HolonCoordinatorAction().chooseCoordinator(ConstantValues.HOLON_CO_YELLOW);
-		new HolonCoordinatorAction().chooseCoordinator(ConstantValues.HOLON_CO_RED);
-		
+		new HolonCoordinatorAction().chooseCoordinatorValue();		
 		log.info("NewLy Generated Holon Object ID --> "+newHolonObjectID);
 		HolonObject holonObject2 = getHolonObjectService().findById(newHolonObjectID);
 		Integer coordHolonObjId=0;
 		String hc_ne_location="";
 		Integer noOfHolons=0;
+		String holonColor="black";
 		if(holonCoordinatorId!=0)
 		{
 		coordHolonObjId=holonObject2.getHolonCoordinator().getHolonObject().getId();
 		hc_ne_location=holonObject2.getHolonCoordinator().getHolonObject().getLatLngByNeLocation().getLatitude()+"~"+holonObject2.getHolonCoordinator().getHolonObject().getLatLngByNeLocation().getLongitude();
 		noOfHolons=getHolonObjectService().findByHCoordinator(holonObject2.getHolonCoordinator()).size();
+		holonColor= holonObject2.getHolonCoordinator().getHolon().getColor();
 		}
 		
 		boolean isCoord=false;
@@ -89,7 +87,7 @@ public class HolonObjectAction extends CommonUtilities {
 		{
 			isCoord=true;
 		}
-		String holonColor= holonObject2.getHolonCoordinator().getHolon().getColor();
+		
 		//Calling the response function and setting the content type of response.
 		getResponse().setContentType("text/html");
 		StringBuffer hoResponse = new StringBuffer();
@@ -298,19 +296,23 @@ public class HolonObjectAction extends CommonUtilities {
 		//Calling service method to save the object in database and saving the auto-incremented ID in an integer
 		getHolonObjectService().merge(holonObject);
 		
-		new HolonCoordinatorAction().chooseCoordinator(ConstantValues.HOLON_CO_BLUE);
-		new HolonCoordinatorAction().chooseCoordinator(ConstantValues.HOLON_CO_GREEN);
-		new HolonCoordinatorAction().chooseCoordinator(ConstantValues.HOLON_CO_YELLOW);
-		new HolonCoordinatorAction().chooseCoordinator(ConstantValues.HOLON_CO_RED);
+		new HolonCoordinatorAction().chooseCoordinatorValue();
 		HolonObject updatedHolonObject=getHolonObjectService().findById(hiddenHolonObjectId);
 		
-		String holonColor=updatedHolonObject.getHolonCoordinator().getHolon().getColor();
+		HolonCoordinator updatedHoCo=updatedHolonObject.getHolonCoordinator();
+		String holonColor="black";
+		Integer coordinatorHolonId=0;
+		String hc_ne_location="";
+		if(updatedHoCo!=null)
+		{
+		holonColor=updatedHolonObject.getHolonCoordinator().getHolon().getColor();
+		coordinatorHolonId=updatedHoCo.getHolonObject().getId();
+		hc_ne_location=updatedHoCo.getHolonObject().getLatLngByNeLocation().getLatitude()+"~"+updatedHoCo.getHolonObject().getLatLngByNeLocation().getLongitude();
+		}
 		String ne_location = updatedHolonObject.getLatLngByNeLocation().getLatitude()+"~"+holonObject.getLatLngByNeLocation().getLongitude();
 		String sw_location = updatedHolonObject.getLatLngBySwLocation().getLatitude()+"~"+holonObject.getLatLngBySwLocation().getLongitude();
 		Boolean lineConnectedState = updatedHolonObject.getLineConnectedState();		
 		String holonObjectTypeName = updatedHolonObject.getHolonObjectType().getName();
-		Integer coordinatorHolonId=updatedHolonObject.getHolonCoordinator().getHolonObject().getId();
-		String hc_ne_location=updatedHolonObject.getHolonCoordinator().getHolonObject().getLatLngByNeLocation().getLatitude()+"~"+updatedHolonObject.getHolonCoordinator().getHolonObject().getLatLngByNeLocation().getLongitude();
 		log.info("Maaaarrrrrrrraaaaa "+updatedHolonObject.getCanCommunicate());
 		String canCommunicateVal=updatedHolonObject.getCanCommunicate()==true?"Yes":"No";
 		boolean isCoord=false;

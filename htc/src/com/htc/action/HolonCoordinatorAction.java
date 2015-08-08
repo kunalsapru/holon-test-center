@@ -15,46 +15,7 @@ public class HolonCoordinatorAction extends CommonUtilities{
 	private static final long serialVersionUID = 1L;
 	static Logger log = Logger.getLogger(HolonCoordinatorAction.class);
 
-	/*
-	public void createHolonCoordinator(){
-		try{
-		Double latNE = getRequest().getParameter("latNE")!=null?Double.parseDouble(getRequest().getParameter("latNE")):0D;
-		Double lngNE = getRequest().getParameter("lngNE")!=null?Double.parseDouble(getRequest().getParameter("lngNE")):0D;
-		//Double latSW = getRequest().getParameter("latSW")!=null?Double.parseDouble(getRequest().getParameter("latSW")):0D;
-		//Double lngSW = getRequest().getParameter("lngSW")!=null?Double.parseDouble(getRequest().getParameter("lngSW")):0D;
-		Integer coordinatorOfHolon = getRequest().getParameter("coordinatorHolon")!=null?Integer.parseInt(getRequest().getParameter("coordinatorHolon")):0;
-		String nameCoordinator= getRequest().getParameter("nameCoordinator")!=null?getRequest().getParameter("nameCoordinator"):"";
-		LatLng NeLatLng = new LatLng(latNE, lngNE);
-		//LatLng SeLatLng = new LatLng(latNE, lngNE);
-		Integer NeLocationId = getLatLngService().persist(NeLatLng);
-		//Integer SeLocationId = getLatLngService().persist(SeLatLng);
-		@SuppressWarnings("unused")
-		LatLng NeLatLng2 = getLatLngService().findById(NeLocationId);
-		//LatLng SeLatLng2 = getLatLngService().findById(SeLocationId);
-		Holon holon = new Holon(coordinatorOfHolon);
-		HolonCoordinator holonCoordinator = new HolonCoordinator();
-		holonCoordinator.setName(nameCoordinator);
-		holonCoordinator.setHolon(holon);
-		Integer newHolonCoordinatortID = getHolonCoordinatorService().persist(holonCoordinator);
-		getResponse().setContentType("text/html");
-		getResponse().getWriter().write(newHolonCoordinatortID);
-		}
-		catch(Exception e){
-			log.debug("Exception "+e.getMessage()+" occurred in action createHolonObject()");
-			e.printStackTrace();
-		}
-
-	}
-
-	
-	public void editHolonCoordinator(){}
-	
-	
-	public void deleteHolonCoordinator(){}
-	
-	*/
 	public void getListHolonCoordinator(){
-
 		 
 		ArrayList<HolonCoordinator> holonCoordinators = getHolonCoordinatorService().getAllHolonCoordinator();
 		StringBuffer holonCoordinatorList = new StringBuffer();
@@ -121,45 +82,9 @@ public class HolonCoordinatorAction extends CommonUtilities{
 	public void updateCoordinator()
 	{
 		try {
-			Integer holonObjectId = getRequest().getParameter("holonObjectId")!=null?Integer.parseInt(getRequest().getParameter("holonObjectId")):0;
-			Integer hoCoObjIdOld = getRequest().getParameter("hoCoObjIdOld")!=null?Integer.parseInt(getRequest().getParameter("hoCoObjIdOld")):0;
-			chooseCoordinator(ConstantValues.HOLON_CO_BLUE);
-			chooseCoordinator(ConstantValues.HOLON_CO_GREEN);
-			chooseCoordinator(ConstantValues.HOLON_CO_YELLOW);
-			chooseCoordinator(ConstantValues.HOLON_CO_RED);
-			Integer hoCoObIdBlue=0;
-			Integer hoCoObIdGreen=0;
-			Integer hoCoObIdYellow=0;
-			Integer hoCoObIdRed=0;
-			HolonObject hoCoBlue=getHolonCoordinatorService().findById(ConstantValues.HOLON_CO_BLUE).getHolonObject();
-			HolonObject hoCoGreen=getHolonCoordinatorService().findById(ConstantValues.HOLON_CO_GREEN).getHolonObject();
-			HolonObject hoCoYellow=getHolonCoordinatorService().findById(ConstantValues.HOLON_CO_YELLOW).getHolonObject();
-			HolonObject hoCoRed=getHolonCoordinatorService().findById(ConstantValues.HOLON_CO_RED).getHolonObject();
-			if(hoCoBlue!=null)
-			{
-				hoCoObIdBlue= hoCoBlue.getId();
-			}
-			if(hoCoGreen!=null)
-			{
-				hoCoObIdGreen= hoCoGreen.getId();
-			}
-			if(hoCoYellow!=null)
-			{
-				hoCoObIdYellow= hoCoYellow.getId();
-			}
-			if(hoCoRed!=null)
-			{
-				hoCoObIdRed= hoCoRed.getId();
-			}
 			
-			Integer neCoHoObjId= getHolonObjectService().findById(holonObjectId).getHolonCoordinator().getHolonObject().getId();
-			
-			ArrayList <Boolean> coChangeStatusList = checkForCoordinatorChange(holonObjectId, neCoHoObjId, hoCoObjIdOld);
-			
-			boolean itsOwnCoStatusChanged=coChangeStatusList.get(0);
-			boolean changedToCoord = coChangeStatusList.get(1);
-			
-			String response = hoCoObIdBlue+"*"+hoCoObIdGreen+"*"+hoCoObIdYellow+"*"+hoCoObIdRed+"*"+itsOwnCoStatusChanged+"*"+changedToCoord;
+			chooseCoordinatorValue();						
+			String response = "true";
 			
 			getResponse().setContentType("text/html");
 			getResponse().getWriter().write(response);
@@ -168,26 +93,59 @@ public class HolonCoordinatorAction extends CommonUtilities{
 			e.printStackTrace();
 		}
 	}
-	private ArrayList<Boolean> checkForCoordinatorChange(Integer holonObjectId,Integer hoCoObjId,Integer hoCoObjIdOld)
+	
+	public void getHoCoIcons()
 	{
-		ArrayList <Boolean>resultList =new ArrayList<Boolean>();
-		boolean itsOwnCoStatusChanged=true;
-		boolean changedToCoord=false;
-		if(((hoCoObjIdOld==holonObjectId)&&(hoCoObjId==holonObjectId))||((hoCoObjIdOld!=holonObjectId)&&(hoCoObjId!=holonObjectId)))
-		{
-			itsOwnCoStatusChanged=false;
-		}
-		if(itsOwnCoStatusChanged)
-		{
-			if(((hoCoObjIdOld!=holonObjectId)&&(hoCoObjId==holonObjectId)))
+
+		try {
+			HolonObject hoCoObBlue=getHolonCoordinatorService().findById(ConstantValues.HOLON_CO_BLUE).getHolonObject();
+			HolonObject hoCoObRed=getHolonCoordinatorService().findById(ConstantValues.HOLON_CO_RED).getHolonObject();
+			HolonObject hoCoObYellow=getHolonCoordinatorService().findById(ConstantValues.HOLON_CO_YELLOW).getHolonObject();
+			HolonObject hoCoObGreen=getHolonCoordinatorService().findById(ConstantValues.HOLON_CO_GREEN).getHolonObject();
+			Integer noOfBlue=getHolonObjectService().findByHCoordinator(getHolonCoordinatorService().findById(ConstantValues.HOLON_CO_BLUE)).size();
+			Integer noOfGreen=getHolonObjectService().findByHCoordinator(getHolonCoordinatorService().findById(ConstantValues.HOLON_CO_GREEN)).size();
+			Integer noOfYellow=getHolonObjectService().findByHCoordinator(getHolonCoordinatorService().findById(ConstantValues.HOLON_CO_YELLOW)).size();
+			Integer noOfRed=getHolonObjectService().findByHCoordinator(getHolonCoordinatorService().findById(ConstantValues.HOLON_CO_RED)).size();			
+			Integer hoCoObIdBlue=0;
+			Integer hoCoObIdGreen=0;
+			Integer hoCoObIdYellow=0;
+			Integer hoCoObIdRed=0;
+			if(hoCoObBlue!=null && noOfBlue!=0)
 			{
-				changedToCoord=true;
+				hoCoObIdBlue=hoCoObBlue.getId();
+			}
+			if(hoCoObRed!=null && noOfRed!=0)
+			{
+				hoCoObIdRed=hoCoObRed.getId();
+			}
+			if(hoCoObYellow!=null && noOfYellow!=0)
+			{
+				hoCoObIdYellow=hoCoObYellow.getId();
+			}
+			if(hoCoObGreen!=null && noOfGreen!=0)
+			{
+				hoCoObIdGreen=hoCoObGreen.getId();
 			}
 			
+			String response = hoCoObIdBlue+"*"+hoCoObIdGreen+"*"+hoCoObIdYellow+"*"+hoCoObIdRed;
+			
+			getResponse().setContentType("text/html");
+			getResponse().getWriter().write(response);
+		} catch (IOException e) {
+			
+			e.printStackTrace();
 		}
-		resultList.add(itsOwnCoStatusChanged);
-		resultList.add(changedToCoord);
-		return resultList;
+	
+		
+	}
+
+
+	public void chooseCoordinatorValue() {
+		chooseCoordinator(ConstantValues.HOLON_CO_BLUE);
+		chooseCoordinator(ConstantValues.HOLON_CO_GREEN);
+		chooseCoordinator(ConstantValues.HOLON_CO_YELLOW);
+		chooseCoordinator(ConstantValues.HOLON_CO_RED);
+		
 	}
 
 }

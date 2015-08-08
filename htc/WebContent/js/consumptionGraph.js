@@ -1,5 +1,5 @@
 function showConsumptionGraph(holonObjectId)
 {
 	//Render To consumptionGraphBody
- alert(holonObjectId);	
+		alert("Id for consumption Graph "+holonObjectId);	
 }
