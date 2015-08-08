@@ -45,7 +45,6 @@ public class HolonObjectTypeHome {
 	public HolonObjectType findById(int id) {
 		Session session = null;
 		Transaction tx = null;
-		System.out.println("Holon Object Type ID = "+id);
 		try {
 			session = HibernateSessionFactory.getSessionFactory().getCurrentSession();
 			tx = session.beginTransaction();

@@ -3,8 +3,13 @@ package com.htc.factory;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class FactoryUtilities {
+import com.htc.hibernate.pojo.HolonObjectType;
+import com.htc.utilities.CommonUtilities;
+
+public class FactoryUtilities extends CommonUtilities{
 	
+	private static final long serialVersionUID = 1L;
+
 	public void sendDataToFactory(Map<Integer, String> holonObjectType_ProbabilityMap) {
 		int cumulativeProbability = 0;
 		for(Integer holonObjectPriority: holonObjectType_ProbabilityMap.keySet()) {
@@ -12,8 +17,9 @@ public class FactoryUtilities {
 			cumulativeProbability += Integer.parseInt(holonObjectType_ProbabilityMap.get(holonObjectPriority).split(":")[1]);
 		}
 		Map<Integer, Integer> finalMapAfterFactoryAlgorithm = algorithmForPriorityProbability(holonObjectType_ProbabilityMap, cumulativeProbability);
-		for(Integer holonObjectId: finalMapAfterFactoryAlgorithm.keySet()) {
-			System.out.println("Holon Object ID : "+holonObjectId+", No of Objects = "+finalMapAfterFactoryAlgorithm.get(holonObjectId));
+		for(Integer holonObjectTypeId: finalMapAfterFactoryAlgorithm.keySet()) {
+			HolonObjectType holonObjectType = getHolonObjectTypeService().findById(holonObjectTypeId);
+			System.out.println("Holon Object Type : "+holonObjectType.getName()+", No of Objects = "+finalMapAfterFactoryAlgorithm.get(holonObjectTypeId));
 		}
 	}
 	
@@ -27,7 +33,7 @@ public class FactoryUtilities {
 						int noOfObjects = 0;
 						double calculatedProbability = 0.0;
 						if(mapLocationSize > 0 && cumulativeProbability > 1) {
-							Integer holonObjectId = Integer.parseInt(holonObjectType_ProbabilityMap.get(holonObjectPriority).split(":")[0]);
+							Integer holonObjectTypeId = Integer.parseInt(holonObjectType_ProbabilityMap.get(holonObjectPriority).split(":")[0]);
 							Integer holonObjectProbability = Integer.parseInt(holonObjectType_ProbabilityMap.get(holonObjectPriority).split(":")[1]);
 							if(holonObjectPriority.equals(1)){
 								if(holonObjectProbability >= 10) {
@@ -59,11 +65,11 @@ public class FactoryUtilities {
 									}
 							}
 							if(mapLocationSize > 0 && cumulativeProbability > 1) {
-								holonObjectType_ProbabilityMap.put(holonObjectPriority, holonObjectId+":"+((int)(holonObjectProbability-calculatedProbability)));
-								if(mapHolonObjectTypesOccurences.size() > 0 && mapHolonObjectTypesOccurences.containsKey(holonObjectId)) {
-									mapHolonObjectTypesOccurences.put(holonObjectId, mapHolonObjectTypesOccurences.get(holonObjectId)+noOfObjects);
+								holonObjectType_ProbabilityMap.put(holonObjectPriority, holonObjectTypeId+":"+((int)(holonObjectProbability-calculatedProbability)));
+								if(mapHolonObjectTypesOccurences.size() > 0 && mapHolonObjectTypesOccurences.containsKey(holonObjectTypeId)) {
+									mapHolonObjectTypesOccurences.put(holonObjectTypeId, mapHolonObjectTypesOccurences.get(holonObjectTypeId)+noOfObjects);
 								} else {
-									mapHolonObjectTypesOccurences.put(holonObjectId, noOfObjects);
+									mapHolonObjectTypesOccurences.put(holonObjectTypeId, noOfObjects);
 								}
 							}
 							cumulativeProbability -= calculatedProbability;
