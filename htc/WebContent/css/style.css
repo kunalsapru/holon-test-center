@@ -194,6 +194,18 @@
 	border: 5px solid rgb(128, 128, 128);
 	z-index: 1;
 }
+#consumptionGraphBody {
+	display: none;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: auto;
+	height: auto;
+	margin: -100px 0 0 -250px;
+	background: #E2E4DD;
+	border: 5px solid rgb(128, 128, 128);
+	z-index: 1;
+}
 /* .button {
 	background-color:#E2E4DD;
 	color: #000000;
