@@ -43,8 +43,7 @@
     <ul>
         <li><a href="#" id="addHolonObject"><i class="fa fa-plus"></i>Add Holon Object</a></li>
         <li><a href="#" id="connectToPowerSource"><i class="fa fa-plug"></i>Connect to Main Line</a></li>
-        <li><a href="#" id="consumptionGraph"><i class="fa fa-line-chart"></i>Show Consumption</a></li>
-      </ul>
+    </ul>
       </li>
       <li><a href="#"><i class="fa  fa-certificate"></i>Power Source<i class="fa fa-caret-down"></i></a>
     <ul>
@@ -200,32 +199,7 @@
 				</table><hr>
 			</div>
 					
-			<div id="chartContainer" style="height: 300px; width: 30%;"></div>
-			<div id="holonCoordinatorInformation" class="ui-content"
-				data-transition="flip" data-overlay-theme="b" data-theme="a"
-				data-content-theme="d">
-				<a href="#" data-rel="back" data-role="button" data-theme="a"
-					data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
-				<table class='table'>
-					<tr>
-						<td><label>Name:</label></td>
-						<td><input type="text" name="nameCoordinator"
-							id="nameCoordinator" /></td>
-					</tr>
-					<tr>
-						<td><label>Holon:</label></td>
-						<td><div data-role="fieldcontain">
-								<select name="holon" id="holon"></select>
-							</div></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td><input type="button" name="saveCoordinator"
-							id="saveCoordinator" value="Save"></td>
-					</tr>
-				</table>
-			</div>
-			<div id="masterTableHolonObjectsTypes" class="ui-content"
+				<div id="masterTableHolonObjectsTypes" class="ui-content"
 				data-transition="flip" data-overlay-theme="b" data-theme="a"
 				data-content-theme="d">
 				<a href="#" data-rel="back" data-role="button" data-theme="a"
@@ -283,11 +257,14 @@
  	<input type="button" id="closeElementList" onclick="closeDiv('divHolonElementsDetail')" value="X"  />
  	</div>
  	<div id="consumptionGraphBody"></div>
- 	<div id="supplierDetailsBody">
+ 	<div id="supplierDetailsBody"  class='table'>
+ 	<table>
+ 	</table>
  	<hr>
 	<table>
 	<tr>
 	<td colspan="2" style="text-align: center;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="cancelShowSupply" type='button' class="button"  value='Close' />
+	</td>
 	</tr>
 	</table><hr>
  	

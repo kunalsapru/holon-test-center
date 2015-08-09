@@ -26,7 +26,6 @@ $(document)
 					window.currentLineInfoWindowObject=null;
 					window.currentSwitchInfoWindow=null;
 					window.ajaxReqStatus=false;
-					$("#holonCoordinatorInformation").hide();
 					$("#addMasterHolonElementTypeDetail").hide();
 					$("#addMasterHolonElementStateDetail").hide();
 					$("#addMasterHolonDetail").hide();
@@ -176,27 +175,6 @@ function openHolonElementStateforMasterTables(){
 	$("#addMasterHolonElementStateDetail").show();
 	$("#addMasterHolonElementStateDetail").popup();
 	$("#addMasterHolonElementStateDetail").popup("open");
-}
-
-function getHolonFromDatabase()
-{
-	ajaxRequest("getListHolon", {}, getHolonFromDatabaseCallBack, {});
-}
-
-function getHolonFromDatabaseCallBack(data,options)
-{
-	var listHolonMaster= data.split("*");
-	$("#holon").empty();
-	for(var i=0;i<listHolonMaster.length-1;i++)
-	{
-	var options= "<option value="+listHolonMaster[i].split("-")[0]+" id= "+listHolonMaster[i].split("-")[0]+">"+listHolonMaster[i].split("-")[1]+"</option>";
-	$("#holon").append(options);
-	}
-$("#holon").selectmenu('refresh', true);
-$("#holonCoordinatorInformation").show();
-$("#holonCoordinatorInformation").popup();
-$("#holonCoordinatorInformation").popup("open");
-		
 }
 
 function getHolonCoordinatorFromDatabase(holonCoordinatorName,elementId,divId)
