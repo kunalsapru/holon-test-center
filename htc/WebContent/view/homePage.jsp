@@ -4,8 +4,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Holon Test Center</title>
 <link rel="shortcut icon" href="css/images/favicon.ico" />
-<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" type="text/css" href="css/font-awesome/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="css/sweetalert.css">
 <link rel="stylesheet" type="text/css" href="css/map-icons.css">
 <link rel="stylesheet" type="text/css" href="css/icon-style.css">
@@ -23,6 +23,7 @@
 <script type="text/javascript" src="js/powerSource.js"></script>
 <script type="text/javascript" src="js/connectToPowerSource.js"></script>
 <script type="text/javascript" src="js/consumptionGraph.js"></script>
+<script type="text/javascript" src="js/supplierDetails.js"></script>
 <script type="text/javascript" src="js/highcharts.js"></script>
 <script type="text/javascript" src="js/highcharts_exporting.js"></script>
 <script src="js/sweetalert.min.js"></script>
@@ -282,6 +283,7 @@
  	<input type="button" id="closeElementList" onclick="closeDiv('divHolonElementsDetail')" value="X"  />
  	</div>
  	<div id="consumptionGraphBody"></div>
+ 	<div id="supplierDetailsBody"></div>
 </div>
 <script type="text/javascript" src="js/trigger.js"></script>
 </body>
