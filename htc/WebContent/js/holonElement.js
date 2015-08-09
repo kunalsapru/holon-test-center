@@ -10,6 +10,7 @@ function showHolonElementsCallBack(data, options) {
 	$("#addHolonElementTableHeader").click(function() {
 		$("#hiddenHolonObjectId").val(holonObjectId);
 		$("#holonElementActionState").val("Add");
+		$("#elmTitle").text("Add Holon Element");
 		getListHolonElementType();
 		getListHolonElementState();
 		openDiv('elementInfo');
@@ -184,6 +185,7 @@ function editHolonElement(holonElementId,holonElementTypeId,state,currentCapacit
 	$("#hiddenHolonElementId").val(holonElementId);
 	$("#holonElementActionState").val("Edit");	
 	$("#currentCapacity").val(currentCapacity);
+	$("#elmTitle").text("Edit Holon Element");
 	getListHolonElementType(holonElementTypeId);
 	getListHolonElementState(state);
 	openDiv('elementInfo');

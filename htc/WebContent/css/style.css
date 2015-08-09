@@ -109,7 +109,7 @@
 #container {
 	position: relative;
 	width: 100%;
-	padding-bottom: 24%;
+	padding-bottom: 47%;
 }
 
 #googleMap {
@@ -172,22 +172,20 @@
 	height: auto;
 }
 
-#elementInfo tr {
-	height: 50px;
-}
 
 #elementInfo {
 	display: none;
 	position: absolute;
 	bottom: 0%;
 	left: 50%;
-	width: auto;
+	width: 45%;
 	height: auto;
 	margin: -100px 0 0 -250px;
 	background: #E2E4DD;
 	border: 5px solid rgb(128, 128, 128);
 	z-index: 1;
 }
+
 #consumptionGraphBody {
 	display: none;
 	position: absolute;
@@ -204,8 +202,7 @@
 #supplierDetailsBody {
 	display: none;
 	position: absolute;
-	top: 50%;
-	
+	bottom:0%;
 	left: 50%;
 	width: 500px;
 	height: 200px;
@@ -221,7 +218,7 @@
 #divHolonElementsDetail {
 	display: none;
 	position: absolute;
-	top: 32%;
+	bottom:0%;
 	left: 42%;
 	width: auto;
 	height: auto;
@@ -270,7 +267,8 @@
 }
 
 <!--
-new formattng --><!--table -->.table {
+new formattng --><!--table -->
+.table {
 	margin: 0px;
 	padding: 0px;
 	width: 100%;

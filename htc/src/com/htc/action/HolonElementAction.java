@@ -134,9 +134,8 @@ public class HolonElementAction extends CommonUtilities {
 				listElements.append("<td>"+holonElement.getHolonElementType().getMinCapacity()+"</td>");
 				listElements.append("<td>"+holonElement.getHolonElementState().getName()+"</td>");
 				listElements.append("<td>"+holonElement.getCurrentCapacity()+"</td>");
-				listElements.append("<td><i class=\"fa fa-remove\" onclick=\"deleteHolonElement("+holonElement.getId()+","+holonObjectId+")\"></i></td>");
-				listElements.append("<td><i class=\"fa fa-edit\" onclick=\"editHolonElement("+holonElement.getId()+","+holonElement.getHolonElementType().getId()+","+holonElement.getHolonElementState().getId()+","+holonElement.getCurrentCapacity()+","+holonObjectId+")\"></i></td>");
-				listElements.append("<td><i class=\"fa fa-line-chart\"></i></td>");
+				listElements.append("<td title='Delete Element'><i class=\"fa fa-remove\" onclick=\"deleteHolonElement("+holonElement.getId()+","+holonObjectId+")\"></i></td>");
+				listElements.append("<td title='Edit Element'><i class=\"fa fa-edit\" onclick=\"editHolonElement("+holonElement.getId()+","+holonElement.getHolonElementType().getId()+","+holonElement.getHolonElementState().getId()+","+holonElement.getCurrentCapacity()+","+holonObjectId+")\"></i></td>");
 				listElements.append("</tr>");
 			}
 		} else {

@@ -71,26 +71,30 @@
 <!-- contenido de pagina, realmente no importa -->
 <div id="container">
   <div id="googleMap"></div>
-  <div id="elementInfo">
-  <input type="hidden" id="hiddenHolonElementId" value="" />
-				<table class="table">
+  <div id="elementInfo" class='table'>
+ 				 <input type="hidden" id="hiddenHolonElementId" value="" />
+				<table>
+				<tr>
+						<td id='elmTitle' style="text-decoration: underline;"></td>
+				</tr>
 					<tr>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;Holon Element Type:</td>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;<select id="holonElementType"></select></td>
+						<td >Holon Element Type:&nbsp;&nbsp;<select id="holonElementType"></select></td>						
 					</tr>
 					<tr>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;Holon Element State:</td>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;<select id="holonElementState"></select></td>
+						<td>Holon Element State:&nbsp;&nbsp;<select id="holonElementState"></select></td>
 					</tr>
 					<tr>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;Current Usage/Production:</td>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;<input id="currentCapacity" type="text"></td>
+						<td>Current Usage/Production:&nbsp;&nbsp;<input id="currentCapacity" type="text"></td>
 					</tr>
+					</table>
+					<hr>
+					<table>
 					<tr>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;<input id="cancelElementInfo" onclick="closeDiv('elementInfo')" type='button' value='Cancel' class="button"/></td>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;<input id="saveElementInfo" type='button' value='Save' class="button"/></td>
-					</tr>
-				</table>
+						<td colspan="2"><input id="cancelElementInfo" onclick="closeDiv('elementInfo')"  type='button' class="button"  value='Cancel' />&nbsp;&nbsp;&nbsp;&nbsp;
+						<input id="saveElementInfo" type='button' class="button"  value='Save Element' /></td>					
+					</tr> 
+					</table>	
+					<hr>					
 			</div>
 			<div id="holonObjectDetail" class='table'>
 				<input type="hidden" id="holonObjectActionState" value="" /> 
@@ -235,21 +239,21 @@
 					id="textHolonElementStateMaster"></input> <input type="button"
 					id="buttonHolonElementStateMaster" value="Save" />
 			</div>
- 	<div id="divHolonElementsDetail">
+ 	<div id="divHolonElementsDetail" class='table'>
  	<input type="hidden" id="holonElementActionState" value="Add" />
  	<fieldset>
  	<legend >Holon Element List</legend>
- 	<table class='table'>
+ 	<table>
  	<thead>
  		<tr>
-	 		<th>&nbsp;Type&nbsp;</th>
-	 		<th>&nbsp;Producer&nbsp;</th>
-	 		<th>&nbsp;Max. Capacity&nbsp;</th>
-	 		<th>&nbsp;Min. Capacity&nbsp;</th>
-	 		<th>&nbsp;State&nbsp;</th>
-	 		<th>&nbsp;Current Usage/Production&nbsp;</th>
-	 		<th colspan="3" id="addHolonElementTableHeader"><i class="fa fa-plus-circle"></i>Add Holon Element</th>
- 		</tr>
+	 		<th>Type</th>
+	 		<th>Producer</th>
+	 		<th>Max. Capacity</th>
+	 		<th>Min. Capacity</th>
+	 		<th>State</th>
+	 		<th>Current Usage/Production</th>
+	 		<th colspan="2" id="addHolonElementTableHeader"><i class="fa fa-plus-circle"></i>Add Holon Element</th>
+ 		<tr>
  	</thead>
  	<tbody id="holonElementsListBody" ></tbody>
  	</table> 	 	
