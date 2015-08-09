@@ -210,7 +210,7 @@
 #supplierDetailsBody {
 	display: none;
 	position: absolute;
-	top: 50%;
+	bottom:0%;
 	left: 50%;
 	width: 500px;
 	height: 200px;

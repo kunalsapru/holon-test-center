@@ -193,8 +193,8 @@
 					</tr>
 					</table><hr>
 					<table>
-					<tr>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="cancelPowerLine" type='button' class="button"  value='Cancel' />
+					<tr >
+						<td colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="cancelPowerLine" type='button' class="button"  value='Cancel' />
 						<input id="savePowerLineObject" type='button' class="button"  value='Save Power Line' /></td>
 					</tr>
 				</table><hr>
@@ -283,7 +283,15 @@
  	<input type="button" id="closeElementList" onclick="closeDiv('divHolonElementsDetail')" value="X"  />
  	</div>
  	<div id="consumptionGraphBody"></div>
- 	<div id="supplierDetailsBody"></div>
+ 	<div id="supplierDetailsBody">
+ 	<hr>
+	<table>
+	<tr>
+	<td colspan="2" style="text-align: center;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="cancelShowSupply" type='button' class="button"  value='Close' />
+	</tr>
+	</table><hr>
+ 	
+ 	</div>
 </div>
 <script type="text/javascript" src="js/trigger.js"></script>
 </body>

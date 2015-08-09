@@ -1,7 +1,12 @@
 /**
  * 
  */
-
+$(document).ready(function() {
+	
+	$("#cancelShowSupply").click(function(event){
+		closeDiv("supplierDetailsBody");
+	});	
+})
 function showSupplierDetails(holonObjectId)
 {
 
