@@ -3,7 +3,6 @@ package com.htc.hibernate.utilities;
 import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
