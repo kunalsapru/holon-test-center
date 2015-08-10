@@ -195,9 +195,7 @@ function showPowerSourcesCallBack(data,option)
 		var psObject = psObjectsList[i];
 		var pwSrcId =  psObject.split("#")[0].trim();
 		var radius = psObject.split("#")[1].trim();	
-		alert(radius);
 		var floatRad=parseFloat(radius);
-		alert(floatRad);
 		var center = psObject.split("#")[2];
 		var status = psObject.split("#")[3];
 		var center_lat = center.split("~")[0].replace("[","").replace(",","");
