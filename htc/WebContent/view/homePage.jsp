@@ -155,8 +155,8 @@
 					<tr>
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;Holon:&nbsp;&nbsp;&nbsp;&nbsp;<select name="pwholonCoordinatorId" id="pwholonCoordinatorId"></select></td>
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;&nbsp;&nbsp;&nbsp;<select name="psStatus" id="psStatus">
-							<option value=1>OFF</option>
-							<option value=0>ON</option>
+							<option value=0>OFF</option>
+							<option value=1>ON</option>
 							</select></td>
 					</tr>
 					<tr>

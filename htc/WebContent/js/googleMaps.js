@@ -15,6 +15,7 @@ $(document)
 					window.addSwitchonPowerLineMode=false;
 					window.connectToPowerSourceMode=false;
 					window.addPowerSourceMode=false;
+					window.addPowerSourceToLineMode=false;
 					window.globalHoList=new Map();
 					window.globalPlList=new Map();
 					window.globalPsList=new Map();
@@ -25,6 +26,7 @@ $(document)
 					window.currentInfoWindowObject=null;
 					window.currentLineInfoWindowObject=null;
 					window.currentSwitchInfoWindow=null;
+					window.currentPsInfoWindowObject=null;
 					window.ajaxReqStatus=false;
 					$("#addMasterHolonElementTypeDetail").hide();
 					$("#addMasterHolonElementStateDetail").hide();

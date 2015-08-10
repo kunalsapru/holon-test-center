@@ -202,6 +202,7 @@ function createHolonObjectCallBack(data, options) {
 		  addEventActionToObject(holonObjectId,event.latLng)
 		  });
 		showHolonCoIcons();
+		globalHoList.set(holonObjectId,createdHolonObject);
 	}
 
 function addEventActionToObject(holonObjectId,latLng)

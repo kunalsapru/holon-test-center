@@ -288,13 +288,17 @@ function closeOtherInfoWindows()
 	{
 		currentSwitchInfoWindow.close();
 	}
-	if(typeof currentInfoWindowObject != 'undefined' &&currentInfoWindowObject != null)
+	if(typeof currentInfoWindowObject != 'undefined' && currentInfoWindowObject != null)
 	{
 	currentInfoWindowObject.close();
 	}
-	if(typeof currentLineInfoWindowObject != 'undefined' &&currentLineInfoWindowObject != null)
+	if(typeof currentLineInfoWindowObject != 'undefined' && currentLineInfoWindowObject != null)
 	{
 		currentLineInfoWindowObject.close();
+	}
+	if(typeof currentPsInfoWindowObject != 'undefined' && currentPsInfoWindowObject != null)
+	{
+		currentPsInfoWindowObject.close();
 	}
 }
 function getPowerLineInfoCallBack(data,options)

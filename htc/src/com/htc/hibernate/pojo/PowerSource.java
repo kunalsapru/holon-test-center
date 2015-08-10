@@ -16,6 +16,7 @@ public class PowerSource implements java.io.Serializable {
 	private Integer currentProduction;
 	private LatLng centre;
 	private double radius;
+	private boolean status;
 	private HolonCoordinator holonCoordinator;
 	private PowerLine powerLine;
 	
@@ -28,7 +29,7 @@ public class PowerSource implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public PowerSource(int id, String name, Integer minProduction, Integer maxProduction,
+	public PowerSource(int id, String name, Integer minProduction, Integer maxProduction,boolean status,
 			Integer currentProduction, LatLng centre,double radius, HolonCoordinator holonCoordinator, PowerLine powerLine,
 			Set<?> powerLines) {
 		this.id = id;
@@ -38,6 +39,7 @@ public class PowerSource implements java.io.Serializable {
 		this.currentProduction = currentProduction;
 		this.centre = centre;
 		this.radius = radius;
+		this.status=status;
 		this.holonCoordinator = holonCoordinator;
 		this.powerLine = powerLine;
 		this.powerLines = powerLines;
@@ -121,6 +123,14 @@ public class PowerSource implements java.io.Serializable {
 
 	public void setRadius(double radius) {
 		this.radius = radius;
+	}
+
+	public boolean isStatus() {
+		return status;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
 	}
 
 }
