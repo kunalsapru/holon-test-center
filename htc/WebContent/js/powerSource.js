@@ -13,7 +13,7 @@ $(document).ready(function() {
 				drawingControl : false,
 				circleOptions : {
 					 strokeColor:'#FF0000',
-				     strokeOpacity: 0.8,
+				     strokeOpacity: 1,
 				     strokeWeight: 2,
 				     fillColor: '#FF0000',
 				     fillOpacity: 0.35,
@@ -96,22 +96,24 @@ var resp = data.split("!");
 		psStatusColor="green";
 		}
 createdPowerSourceObject.setOptions({strokeColor:psStatusColor,fillColor: psStatusColor});
-google.maps.event.addListener(createdPowerSourceObject, 'click', function(event) {
-	  addEventActionToPsObject(psId,event.latLng)
-	  });
+addEventActionToPsObject(psId,createdPowerSourceObject)
 }
 
-function addEventActionToPsObject(psId,latLng)
+function addEventActionToPsObject(psId,createdPowerSourceObject)
 {
-	 if(addPowerSourceToLineMode==true)
+	google.maps.event.addListener(createdPowerSourceObject, 'click', function(event) {
+		if(addPowerSourceToLineMode==true)
 		{
-		 addPowerSourceToLine(latLng,psId,"PSObject");
+		 addPowerSourceToLine(event.latLng,psId,"PSObject");
 		}else{
 	  var dataAttributes= {
 			  psId : psId,
 			}
 	  ajaxRequest("getPsObjectInfoWindow", dataAttributes, getPsObjectInfoWindowCallBack, {});
 		}
+	  });
+	
+	 
 }
 
 function getPsObjectInfoWindowCallBack(data,option)
@@ -176,6 +178,50 @@ function editPowerSourceObjectCallBack(data,options)
 {
 alert(data);	
 
+}
+
+function showSavedPowerSources()
+{
+	ajaxRequest("showPowerSources", {}, showPowerSourcesCallBack, {});
+
+}
+
+function showPowerSourcesCallBack(data,option)
+{
+	var res = data.replace("[", "").replace("]", "").split(',').join("");
+	//alert(res);
+	var psObjectsList = res.split("*");
+	for (var i=0; i<psObjectsList.length-1; i++) {
+		var psObject = psObjectsList[i];
+		var pwSrcId =  psObject.split("#")[0].trim();
+		var radius = psObject.split("#")[1].trim();	
+		alert(radius);
+		var floatRad=parseFloat(radius);
+		alert(floatRad);
+		var center = psObject.split("#")[2];
+		var status = psObject.split("#")[3];
+		var center_lat = center.split("~")[0].replace("[","").replace(",","");
+		var center_lng = center.split("~")[1];
+		var pscolor="red";
+		if(status=="true")
+			{
+			pscolor="green";
+			}
+		//alert("a+"+color+"+b")
+	    var savedPowerSourceFromDB = new google.maps.Circle({
+			 strokeColor: pscolor,
+		     strokeOpacity: 1,
+		     strokeWeight: 2,
+		     fillColor: pscolor,
+		     fillOpacity: 0.35,
+		     map: map,
+		     center: new google.maps.LatLng(center_lat,center_lng),
+		     radius: floatRad
+		    });
+	    addEventActionToPsObject(pwSrcId, savedPowerSourceFromDB);
+		globalPsList.set(pwSrcId,savedPowerSourceFromDB);
+	}
+	
 }
 
 function createPowerSource(event)

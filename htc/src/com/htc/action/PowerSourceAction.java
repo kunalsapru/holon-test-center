@@ -1,5 +1,7 @@
 package com.htc.action;
 
+import java.util.ArrayList;
+
 import org.apache.log4j.Logger;
 
 import com.htc.hibernate.pojo.HolonCoordinator;
@@ -107,6 +109,34 @@ public class PowerSourceAction  extends CommonUtilities{
 				e.printStackTrace();
 			}
 		}
+	
+	public void showPowerSources(){
+		try {			
+			ArrayList<String> psListArray = new ArrayList<String>();
+			PowerSource pwSrc = null;
+				
+			ArrayList<PowerSource> psObjectList = getPowerSourceService().getAllPowerSource();
+			for(int i=0; i<psObjectList.size();i++){
+				boolean status=false;
+				String center;
+				double radius;
+				Integer psObjectId;
+				pwSrc = psObjectList.get(i);
+				center = pwSrc.getCentre().getLatitude()+"~"+pwSrc.getCentre().getLongitude();
+				radius = pwSrc.getRadius();
+				status=pwSrc.isStatus();
+				psObjectId=pwSrc.getId();
+				psListArray.add(psObjectId+"#"+radius+"#"+center+"#"+status+"*");
+			}
+			
+			//Calling the response function and setting the content type of response.
+			getResponse().setContentType("text/html");
+			getResponse().getWriter().write(psListArray.toString());
+		} catch (Exception e) {
+			log.info("Exception "+e.getMessage()+" occurred in action showPowerSources()");
+			e.printStackTrace();
+		}
+	}
 	
 
 }

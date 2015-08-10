@@ -171,8 +171,10 @@
 			method="editPowerSourceObject" />
 		<action name="createPowerSourceObject" class="com.htc.action.PowerSourceAction"
 			method="createPowerSourceObject" />
-			<action name="getPsObjectInfoWindow" class="com.htc.action.PowerSourceAction"
+		<action name="getPsObjectInfoWindow" class="com.htc.action.PowerSourceAction"
 			method="getPsObjectInfoWindow" />
+		<action name="showPowerSources" class="com.htc.action.PowerSourceAction"
+			method="showPowerSources" />
 
 	</package>
 

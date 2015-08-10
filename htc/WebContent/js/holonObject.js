@@ -183,9 +183,7 @@ function editHolonObjectCallBack(data, options){
 	 showHolonCoIcons();
 	var editedHolonObject=globalHoList.get(holonObjectId.toString());
 	editedHolonObject.setOptions({strokeColor:holonColor,fillColor: holonColor});
-	google.maps.event.addListener(editedHolonObject, 'click', function(event) {
-		addEventActionToObject(holonObjectId,event.latLng);
-		});
+	attachMessage(holonObjectId,editedHolonObject);
 	globalHoList.set(holonObjectId,editedHolonObject);
 
 }
@@ -204,19 +202,6 @@ function createHolonObjectCallBack(data, options) {
 		showHolonCoIcons();
 		globalHoList.set(holonObjectId,createdHolonObject);
 	}
-
-function addEventActionToObject(holonObjectId,latLng)
-{
-	 if(connectToPowerSourceMode==true)
-		{
-		  connectToPowerSource(latLng,holonObjectId,"HolonObject");
-		}else{
-	  var dataAttributes= {
-			  holonObjectId : holonObjectId,
-			}
-	 ajaxRequest("getHolonObjectInfoWindow", dataAttributes, getHolonInfoWindowCallBack, {});
-		}
-}
 
 function getHolonInfoWindowCallBack(data,options)
 {
@@ -343,6 +328,7 @@ function showHolonObjects() {
 	ajaxRequest("showHolonObjects", {}, showHolonObjectsCallBack, {});
 	showSavedPowerLines();
 	showSavedPowerSwitches();
+	showSavedPowerSources();
 	loadHolon=false;
 	}else{
 		
@@ -383,11 +369,8 @@ function showHolonObjectsCallBack(data, options){
 		    	      new google.maps.LatLng(ne_location_lat, ne_location_lng))
 		    });
 	    showPowerCircles(holonObjectId);
-	    var dataAttributes= {
-			  holonObjectId : holonObjectId
-			};
-		    attachMessage(dataAttributes, rectangleFromFactory);
-	 	    globalHoList.set(holonObjectId,rectangleFromFactory);
+	    attachMessage(holonObjectId, rectangleFromFactory);
+	 	globalHoList.set(holonObjectId,rectangleFromFactory);
 	}
 	
 
@@ -487,12 +470,15 @@ function getDetailForPowerSourceIconCallBack(data,options)
 	globalPCList.set(holonObjectId,currecntPC);	
 }
 
-function attachMessage(dataAttributes, rectangleFromFactory) {
+function attachMessage(holonObjectId, rectangleFromFactory) {
 	google.maps.event.addListener(rectangleFromFactory, 'click', function(event) {	
 			if(connectToPowerSourceMode==true)
 				{
-				connectToPowerSource(event.latLng, dataAttributes["holonObjectId"],"HolonObject");
+				connectToPowerSource(event.latLng,holonObjectId,"HolonObject");
 				}else{
+					var dataAttributes={
+							holonObjectId:holonObjectId	
+					};
 		  ajaxRequest("getHolonObjectInfoWindow", dataAttributes, getHolonInfoWindowCallBack, {});		
 				}
 		
