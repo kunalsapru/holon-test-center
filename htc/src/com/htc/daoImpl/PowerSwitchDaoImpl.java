@@ -49,10 +49,4 @@ public class PowerSwitchDaoImpl implements PowerSwitchDao {
 
 	}
 
-	@Override
-	public int changeSwitchStatus(int powerSwitchId, int status) {
-		// TODO Auto-generated method stub
-		return powerSwitchHome.changeSwitchStatus(powerSwitchId, status);
-	}
-
 }

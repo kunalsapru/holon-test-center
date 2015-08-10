@@ -97,34 +97,4 @@ public class PowerSwitchHome {
 		return listPowerSwitch;
 	}
 
-	public int changeSwitchStatus(int powerSwitchId, int statusVal) {
-		log.info("changeSwitchStatus start ");
-		Session session = null;
-		Transaction tx = null;
-		int result=0;
-		boolean status=false;
-		if(statusVal==1)
-			status=true;
-			try {
-			session = HibernateSessionFactory.getSessionFactory().getCurrentSession();
-			log.info("changeSwitchStatus createQuery ");
-			tx = session.beginTransaction();
-			String hql = "UPDATE PowerSwitch set status = :status "  + 
-		             "WHERE id = :id";
-			Query query = session.createQuery(hql);
-			log.info("changeSwitchStatus createQuery ");
-			query.setParameter("status", status);
-			query.setParameter("id", powerSwitchId);
-			log.info("changeSwitchStatus setParameter ");
-			result = query.executeUpdate();
-			log.info("changeSwitchStatus executeUpdate ");
-			tx.commit();
-			log.info("changeSwitchStatus commit ");
-		} catch (RuntimeException re) {
-			re.printStackTrace();
-			System.out.println("switch status change Failed...");
-		}
-			return result;
-	}
-
 }

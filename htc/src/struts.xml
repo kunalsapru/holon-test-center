@@ -175,6 +175,8 @@
 			method="getPsObjectInfoWindow" />
 		<action name="showPowerSources" class="com.htc.action.PowerSourceAction"
 			method="showPowerSources" />
+			<action name="powerSourceOnOff" class="com.htc.action.PowerSourceAction"
+			method="powerSourceOnOff" />
 
 	</package>
 

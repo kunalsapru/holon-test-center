@@ -67,9 +67,9 @@ function getListPowerSwitchCallBack(data,options){
 		var switchLong=individualData[1];
 		var powerSwitchId=individualData[2].trim();
 		var status=individualData[3];
-		var switchStatus="#0B6121";		
+		var switchStatus="#FF0000";		
 		if(status==1){
-			switchStatus="#FF0000";
+			switchStatus="#0B6121";
 		}
 		var circleSwitch = new google.maps.Circle({
 			 strokeColor: switchStatus,
@@ -117,14 +117,21 @@ function getSwitchInfoCallBack(data, options)
 	var powerLineBId=individualData[4];
 	var status=individualData[5].trim();
 	var switchStatus="Off";
-	var contentString="<div id='contentId'>Switch Id: "+powerSwitchId+"</br>"+"Switch Status : "+switchStatus+"</br>"+"Connected Power Line A : "+powerLineAId+"</br>"+"Connected Power Line B : "+powerLineBId+"</br>"+"</br></br></br>"+
-	" <input type='button' class='button' value='Switch On' id='togglePowerSwitch' /> </div>";
+	var btnText="Switch On";
 	if(status=="1")
 		{
 		switchStatus="On";
-		contentString="<div id='contentId'>Switch Id: "+powerSwitchId+"</br>"+"Switch Status : "+switchStatus+"</br>"+"Connected Power Line A : "+powerLineAId+"</br>"+"Connected Power Line B : "+powerLineBId+"</br>"+"</br></br></br>"+
-		" <input type='button' class='button' value='Switch Off' id='togglePowerSwitch' /></div>";
+		btnText="Switch Off";
 		}
+		var contentString= "<div id='contentId' class='table'><table>"+
+							"<tr><td colspan='2' style='text-decoration: underline;'>Switch Details</td></tr>" +
+							"<tr><td><b>Switch Id: </b>"+powerSwitchId +"</td>"+
+							"<td><b>Switch Status: </b>"+switchStatus+"</td></tr>"+
+							"<tr><td><b>Connected Power Line A: </b>"+powerLineAId+"</td>"+
+							"<td><b>Connected Power Line B : </b>"+powerLineBId+"</td></tr>"+
+							"<tr><td colspan='2' style='text-align: center;'>" +
+							"<span class='button' id='togglePowerSwitch'><i class='fa fa-circle-o-notch'></i>&nbsp;&nbsp;"+btnText+"</span></td></tr></table></div>";
+
 	var position=options["position"];
 	var circleSwitch=options["circleSwitch"];
 	var infowindowHolonObject = new google.maps.InfoWindow({
@@ -143,12 +150,7 @@ function getSwitchInfoCallBack(data, options)
 function SwitchOnOff(circleSwitch,powerSwitchId,infowindowHolonObject)
 {	 
 
-	var switchStatusColor = circleSwitch.get('fillColor');
-	var dataAttributes;
-	if(switchStatusColor=="#FF0000")
-		{
-		dataAttributes = {
-    			newSwitchStatus :0,
+		var dataAttributes = {    			
     			powerSwitchId:powerSwitchId,
     			};	
 		options = {
@@ -156,18 +158,7 @@ function SwitchOnOff(circleSwitch,powerSwitchId,infowindowHolonObject)
 				infowindowHolonObject:infowindowHolonObject,
 				powerSwitchId:powerSwitchId,
     			};
-		}else
-		{
-			dataAttributes = {
-					newSwitchStatus :1,
-					powerSwitchId:powerSwitchId,
-	    			};
-			options = {
-					circleSwitch:circleSwitch,
-					infowindowHolonObject:infowindowHolonObject,
-					powerSwitchId:powerSwitchId,
-	    			};
-		}
+	
 		ajaxRequest("powerSwitchOnOff", dataAttributes, powerSwitchOnOffCallBack,options);
 		//globalPsList[powerSwitchId]=circleSwitch;
 		globalPsList.set(powerSwitchId,circleSwitch);
@@ -184,8 +175,8 @@ function powerSwitchOnOffCallBack(data,options){
 	if(newSwitchStatus== 1)
 		{
 		//alert("Abhinav");
-		circleSwitch.setOptions({strokeColor:'#FF0000',fillColor: '#FF0000'});
-		var newContent=content.replace("Switch Status : Off","Switch Status : On").replace("Switch On","Switch Off");
+		circleSwitch.setOptions({strokeColor:'#0B6121',fillColor: '#0B6121'});
+		var newContent=content.replace("<b>Switch Status: </b>Off","<b>Switch Status: </b>On").replace("Switch On","Switch Off");
 		//alert("newSwitchStatus "+newSwitchStatus+" "+newContent);
 		infowindowHolonObject.setContent(newContent);
 		infowindowHolonObject.close();	
@@ -193,8 +184,8 @@ function powerSwitchOnOffCallBack(data,options){
 		}
 	else{
 		//alert("Abhinava");
-		circleSwitch.setOptions({strokeColor:'#0B6121', fillColor: '#0B6121'});
-		var newContent=content.replace("Switch Status : On","Switch Status : Off").replace("Switch Off","Switch On");
+		circleSwitch.setOptions({strokeColor:'#FF0000', fillColor: '#FF0000'});
+		var newContent=content.replace("<b>Switch Status: </b>On","<b>Switch Status: </b>Off").replace("Switch Off","Switch On");
 		infowindowHolonObject.setContent(newContent);
 		infowindowHolonObject.close();		
 		}

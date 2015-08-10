@@ -65,7 +65,7 @@ public class PowerSwitchAction extends CommonUtilities {
 		powerSwitch.setLatLng(switchLatLng2);
 		powerSwitch.setPowerLineA(powerLineA);
 		powerSwitch.setPowerLineB(powerLineB);
-		powerSwitch.setStatus(true);
+		powerSwitch.setStatus(false);
 		Integer newPowerSwitchId= getPowerSwitchService().persist(powerSwitch);
 		String resp= newPowerSwitchId.toString()+"*"+powerLineA.getId().toString()+"*"+powerLineB.getId();
 		
@@ -138,15 +138,21 @@ public class PowerSwitchAction extends CommonUtilities {
 	
 	public void powerSwitchOnOff(){
 		try{
-		log.info("powerSwitchOnOff start ");
-		Integer newSwitchStatus= getRequest().getParameter("newSwitchStatus")!=null?Integer.parseInt(getRequest().getParameter("newSwitchStatus")):0;
+
 		Integer powerSwitchId= getRequest().getParameter("powerSwitchId")!=null?Integer.parseInt(getRequest().getParameter("powerSwitchId")):0;
-		log.info("powerSwitchOnOff Data Base Call start ");
-		int result=getPowerSwitchService().changeSwitchStatus(powerSwitchId, newSwitchStatus);
-		//PowerSwitch pwSwitch = getPowerSwitchService().findById(powerSwitchId);
-		log.info("No of rows updated "+result);
+		PowerSwitch pwSw= getPowerSwitchService().findById(powerSwitchId); 
+		boolean psOldStatus=pwSw.getStatus();
+		boolean psNewStatus=true;
+		Integer psNewIntStatus=1;
+		if(psOldStatus)
+		{
+			psNewStatus=false;
+			psNewIntStatus=0;
+		}
+		pwSw.setStatus(psNewStatus);
+		getPowerSwitchService().merge(pwSw);
 		getResponse().setContentType("text/html");
-		getResponse().getWriter().write(newSwitchStatus.toString());
+		getResponse().getWriter().write(psNewIntStatus.toString());
 		}
 		catch(Exception e){
 		log.info("Exception in powerSwitchOnOff ");

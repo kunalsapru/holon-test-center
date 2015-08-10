@@ -90,13 +90,14 @@ function createPowerSourceObjectCallBack(data,options)
 var resp = data.split("!");
 	var psId=resp[0];
 	var status=resp[1];
-	var psStatusColor="red";
+	var psStatusColor="#FF0000";
 	if(status==1)
 		{
-		psStatusColor="green";
+		psStatusColor="#0B6121";
 		}
 createdPowerSourceObject.setOptions({strokeColor:psStatusColor,fillColor: psStatusColor});
 addEventActionToPsObject(psId,createdPowerSourceObject)
+globalPSrcList.set(psId,createdPowerSourceObject);
 }
 
 function addEventActionToPsObject(psId,createdPowerSourceObject)
@@ -109,7 +110,10 @@ function addEventActionToPsObject(psId,createdPowerSourceObject)
 	  var dataAttributes= {
 			  psId : psId,
 			}
-	  ajaxRequest("getPsObjectInfoWindow", dataAttributes, getPsObjectInfoWindowCallBack, {});
+	  var option= {
+			  powerSrc : createdPowerSourceObject,
+			}
+	  ajaxRequest("getPsObjectInfoWindow", dataAttributes, getPsObjectInfoWindowCallBack, option);
 		}
 	  });
 	
@@ -128,11 +132,11 @@ function getPsObjectInfoWindowCallBack(data,option)
 	var minProd=resp[6];
 	var latCenter=resp[7];
 	var lngCenter=resp[8];
-	
-	var powerStatusVal="Power On";
+	var powerSrc=option['powerSrc'];
+	var powerStatusVal="Producing";
 	if(powerStatus=="false")
 		{
-		powerStatusVal="Power Off";
+		powerStatusVal="Not Producing";
 		}
 	
 	var contentString=
@@ -153,10 +157,17 @@ function getPsObjectInfoWindowCallBack(data,option)
 		contentString=contentString.concat("<td>Minimum Production Capacity: "+minProd+"</td></tr>"+
 				"</table>"+
 				"<br /><hr>"+
-				"<table><tr><td colspan='2' style='text-align: center;'>"+
-				"<span class='button' id='editPowerSource' title='Edit Power Source'><i class='fa fa-pencil-square-o'>&nbspEdit Power Source</i></span>"+
-				"</td></tr></table><hr>");
+				"<table><tr><td colspan='2' style='text-align: center;'>");
+		if(powerStatus=="true")
+			{
+			contentString=contentString.concat("<span class='button' id='powerOnOff' ><i class='fa fa-circle-o-notch'>&nbsp; Power Off </i></span>");
+			}else
+				{
+				contentString=contentString.concat("<span class='button' id='powerOnOff' ><i class='fa fa-circle-o-notch'>&nbsp; Power On </i></span>");	
+				}
 		
+		contentString=contentString.concat("&nbsp;&nbsp;&nbsp;&nbsp;<span class='button' id='editPowerSource' title='Edit Power Source'><i class='fa fa-pencil-square-o'>&nbsp; Edit Power Source</i></span>"+
+		"</td></tr></table><hr>");
 		closeOtherInfoWindows();
 		var infowindowPsObject = new google.maps.InfoWindow({
 		      content: contentString,
@@ -166,6 +177,10 @@ function getPsObjectInfoWindowCallBack(data,option)
 		$('#editPowerSource').click(function() {
 			editPowerSource(powerSrcId,infowindowPsObject);			
 		})
+		
+		$('#powerOnOff').click(function() {
+			powerSourceOnOff(powerSrc,powerSrcId,infowindowPsObject);			
+		})
 			$('#CoHolonId').click(function() {
 				zoomToHolon(CoHolonId,coHoLocation);			
 		})
@@ -173,6 +188,65 @@ function getPsObjectInfoWindowCallBack(data,option)
 		currentPsInfoWindowObject=infowindowPsObject;
 }
 
+function powerSourceOnOff(powerSrc,powerSrcId,infowindowPsObject)
+{
+	var	dataAttributes = {
+					powerSrcId:powerSrcId,
+	    			};
+		
+		var options = {
+			powerSrc:powerSrc,
+			infowindowPsObject:infowindowPsObject,
+			powerSrcId:powerSrcId,
+			};
+		ajaxRequest("powerSourceOnOff", dataAttributes, powerSourceOnOffCallBack, options);
+		globalPSrcList.set(powerSrcId,powerSrc);
+		
+}
+
+function powerSourceOnOffCallBack(data, options)
+{
+	var powerSrc = options["powerSrc"];
+	var infowindowPsObject = options["infowindowPsObject"];
+	var powerSrcId = options["powerSrcId"];
+	var content = infowindowPsObject.getContent();
+	var resp = data.split("!");
+	var coHolonId = resp[0];
+	var coHoLocation = resp[1];
+	var newPowerSrcStatus = resp[2];
+	
+	if(newPowerSrcStatus== 1)
+		{
+		//alert("Abhinav");
+		powerSrc.setOptions({strokeColor:'#0B6121',fillColor: '#0B6121'});
+		var newContent=content.replace("Not Producing","Producing").replace("Power On","Power Off");
+		//alert("newSwitchStatus "+newSwitchStatus+" "+newContent);
+		infowindowPsObject.setContent(newContent);
+		infowindowPsObject.close();	
+	
+		}
+	else{
+		//alert("Abhinava");
+		powerSrc.setOptions({strokeColor:'#FF0000', fillColor: '#FF0000'});
+		var newContent=content.replace("Producing","Not Producing").replace("Power Off","Power On");
+		infowindowPsObject.setContent(newContent);
+		infowindowPsObject.close();		
+		}
+	infowindowPsObject.open(map,powerSrc);
+	$('#editPowerSource').click(function() {
+		editPowerSource(powerSrcId,infowindowPsObject);			
+	})
+	
+	$('#powerOnOff').click(function() {
+		powerSourceOnOff(powerSrc,powerSrcId,infowindowPsObject);			
+	})
+		$('#CoHolonId').click(function() {
+			zoomToHolon(coHolonId,coHoLocation);			
+	})
+			
+	currentPsInfoWindowObject=infowindowPsObject;
+	
+}
 
 function editPowerSourceObjectCallBack(data,options)
 {
@@ -217,7 +291,7 @@ function showPowerSourcesCallBack(data,option)
 		     radius: floatRad
 		    });
 	    addEventActionToPsObject(pwSrcId, savedPowerSourceFromDB);
-		globalPsList.set(pwSrcId,savedPowerSourceFromDB);
+	    globalPSrcList.set(pwSrcId,savedPowerSourceFromDB);
 	}
 	
 }

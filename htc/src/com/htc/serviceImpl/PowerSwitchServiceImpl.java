@@ -38,10 +38,5 @@ public class PowerSwitchServiceImpl extends AbstractService implements  PowerSwi
 		return getPowerSwitchDao().getAllPowerSwitch();
 	}
 
-	@Override
-	public int changeSwitchStatus(int powerSwitchId, int status) {
-		// TODO Auto-generated method stub
-		return getPowerSwitchDao().changeSwitchStatus(powerSwitchId, status);
-	}
-
+	
 }

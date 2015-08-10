@@ -69,7 +69,7 @@ public class PowerSourceAction  extends CommonUtilities{
 	{
 		try {
 			Integer psId = getRequest().getParameter("psId")!=null?Integer.parseInt(getRequest().getParameter("psId")):0;
-			PowerSource pwSrc = getPowerSourceService().findById(psId); // Creating HolonObject object to store values
+			PowerSource pwSrc = getPowerSourceService().findById(psId); 
 			
 			Integer MaxProdCap=pwSrc.getMaxProduction();
 			Integer currProd=pwSrc.getCurrentProduction();
@@ -138,5 +138,44 @@ public class PowerSourceAction  extends CommonUtilities{
 		}
 	}
 	
+	public void powerSourceOnOff()
+	{
+		try {			
+			Integer powerSrcId = getRequest().getParameter("powerSrcId")!=null?Integer.parseInt(getRequest().getParameter("powerSrcId")):0;
+			PowerSource pwSrc = getPowerSourceService().findById(powerSrcId); 
+			boolean pwOldStatus=pwSrc.isStatus();
+			boolean pwNewStatus=true;
+			Integer pwNewIntStatus=1;
+			if(pwOldStatus)
+			{
+				pwNewStatus=false;
+				pwNewIntStatus=0;
+			}
+			pwSrc.setStatus(pwNewStatus);
+			getPowerSourceService().merge(pwSrc);
+			
+			HolonCoordinator hc= pwSrc.getHolonCoordinator();
+			Integer CoHolonId=0;
+			String coHoLoc="";
+			
+			if(hc!=null)
+			{
+				CoHolonId=hc.getHolonObject().getId();
+				coHoLoc=hc.getHolonObject().getLatLngByNeLocation().getLatitude()+"~"+hc.getHolonObject().getLatLngByNeLocation().getLongitude();
+			}
+			
+			StringBuffer respStr=new StringBuffer();
+			respStr.append(CoHolonId+"!");
+			respStr.append(coHoLoc+"!");
+			respStr.append(pwNewIntStatus+"!");
+			//Calling the response function and setting the content type of response.
+			getResponse().setContentType("text/html");
+			getResponse().getWriter().write(respStr.toString());
+		} catch (Exception e) {
+			log.info("Exception "+e.getMessage()+" occurred in action powerSourceOnOff()");
+			e.printStackTrace();
+		}
+		
+	}
 
 }
