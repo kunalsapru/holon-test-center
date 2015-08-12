@@ -2,6 +2,7 @@ package com.htc.serviceImpl;
 
 import java.util.ArrayList;
 
+import com.htc.hibernate.pojo.HolonCoordinator;
 import com.htc.hibernate.pojo.PowerSource;
 import com.htc.service.AbstractService;
 import com.htc.service.PowerSourceService;
@@ -31,6 +32,12 @@ public class PowerSourceServiceImpl extends AbstractService implements PowerSour
 	@Override
 	public ArrayList<PowerSource> getAllPowerSource() {
 		return getPowerSourceDao().getAllPowerSource();
+	}
+
+	@Override
+	public ArrayList<PowerSource> findByHCoordinator(HolonCoordinator hoc) {
+		// TODO Auto-generated method stub
+		return getPowerSourceDao().findByHCoordinator(hoc);
 	}
 
 }

@@ -55,7 +55,6 @@ public class PowerLineAction extends CommonUtilities {
 			powerLine.setLatLngByDestination(savedEndLatLng);
 			powerLine.setLatLngBySource(savedStartLatLng);
 			powerLine.setMaximumCapacity(maxCapacity);
-			powerLine.setPowerSource(null);
 			powerLine.setReasonDown(reasonDown);
 			powerLine.setType(powerLineType);
 			powerLine.setPowerSource(powerSource);

@@ -239,6 +239,7 @@
 					id="textHolonElementStateMaster"></input> <input type="button"
 					id="buttonHolonElementStateMaster" value="Save" />
 			</div>
+			
  	<div id="divHolonElementsDetail" class='table'>
  	<input type="hidden" id="holonElementActionState" value="Add" />
  	<fieldset>
@@ -260,18 +261,26 @@
  	</fieldset>
  	<input type="button" id="closeElementList" onclick="closeDiv('divHolonElementsDetail')" value="X"  />
  	</div>
+ 	
  	<div id="consumptionGraphBody"></div>
+ 	
  	<div id="supplierDetailsBody"  class='table'>
  	<table>
- 	</table>
- 	<hr>
-	<table>
+ 	<tr>
+	<td colspan="3" style="text-decoration: underline; ">Power Supply Details</td>
+	</tr>
 	<tr>
-	<td colspan="2" style="text-align: center;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="cancelShowSupply" type='button' class="button"  value='Close' />
+	 		<td style="text-decoration: underline;font-weight:bold;text-align: center">Type of Supplier</td>
+	 		<td style="text-decoration: underline;font-weight:bold;text-align: center">Id of Supplier</td>
+	 		<td style="text-decoration: underline;font-weight:bold;text-align: center">Power Supplied</td>	 		
+ 		<tr>
+  	<tbody id="suppLierDetailList" ></tbody>
+ 		
+ 	<tr>
+	<td colspan="3" style="text-align: center;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="cancelShowSupply" type='button' class="button"  value='Close' />
 	</td>
 	</tr>
-	</table><hr>
- 	
+	</table><hr> 	
  	</div>
 </div>
 <script type="text/javascript" src="js/trigger.js"></script>

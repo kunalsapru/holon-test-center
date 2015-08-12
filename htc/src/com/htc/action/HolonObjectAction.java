@@ -1,8 +1,11 @@
 package com.htc.action;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 
@@ -13,6 +16,7 @@ import com.htc.hibernate.pojo.HolonObject;
 import com.htc.hibernate.pojo.HolonObjectType;
 import com.htc.hibernate.pojo.LatLng;
 import com.htc.hibernate.pojo.PowerLine;
+import com.htc.hibernate.pojo.PowerSource;
 import com.htc.utilities.CommonUtilities;
 
 public class HolonObjectAction extends CommonUtilities {
@@ -434,6 +438,134 @@ public class HolonObjectAction extends CommonUtilities {
 			log.info("Exception "+e.getMessage()+" occurred in getDetailForPowerSourceIcon()");
 			e.printStackTrace();
 		}
+	}
+	
+	
+	public void getDataForSupplierDetails()
+	{
+		try{
+			Integer holonObjectId = getRequest().getParameter("holonObjectId")!=null?Integer.parseInt(getRequest().getParameter("holonObjectId")):0;
+			HolonObject hObject = getHolonObjectService().findById(holonObjectId);
+			Integer powReqByHolon= getPowerRequiredByHolon(hObject);
+			Map<Integer,Integer> powProducedByPowSourceMap=new HashMap<Integer,Integer>();
+			Map<Integer,Integer> powProducedByHOProdMap=new HashMap<Integer,Integer>();
+			HolonCoordinator hoc= hObject.getHolonCoordinator();
+			ArrayList<PowerSource> pSrcList = new ArrayList<PowerSource>();
+			ArrayList<HolonObject> hoList = new ArrayList<HolonObject>();
+			if(hoc!=null)
+			{
+				pSrcList=getPowerSourceService().findByHCoordinator(hoc);
+				hoList=getHolonObjectService().findByHCoordinator(hoc);
+			}
+			 for(int i=0;i<pSrcList.size();i++)
+			 {
+				 PowerSource pSrc=pSrcList.get(i);
+				 if(pSrc.isStatus()==true)
+				 {
+					 Integer powProduced=pSrc.getCurrentProduction();
+					 if(powProduced>0)
+					 {
+					 powProducedByPowSourceMap.put(pSrc.getId(), powProduced);
+					 }
+					 
+				 }
+			 }
+			 
+			 for(int i=0;i<hoList.size();i++)
+			 {
+				 HolonObject ho=hoList.get(i);
+				 Integer pwProdByHO= getPowerProducedByHolon(ho);
+				 if(pwProdByHO>0)
+				 {
+				 powProducedByHOProdMap.put(ho.getId(), pwProdByHO);
+				 }
+			 }
+			StringBuffer responseStr =new StringBuffer("");
+			Integer powReqValForItr= powReqByHolon;
+			Set<Integer> pSrcKeySet=powProducedByPowSourceMap.keySet();
+			Iterator<Integer> pSrcKeySetItr = pSrcKeySet.iterator();
+			while(pSrcKeySetItr.hasNext() && powReqValForItr>0)
+				{
+					Integer cuKey=pSrcKeySetItr.next();
+					Integer powerVal=powProducedByPowSourceMap.get(cuKey);
+					powReqValForItr=powReqValForItr-powerVal;
+					Integer powToAdd=0;
+					if((powReqValForItr)>0)
+					{
+						powToAdd= powerVal;
+					}
+					else
+					{
+						powToAdd= powReqValForItr+powerVal;
+					}
+					
+					PowerSource pSrcObj=getPowerSourceService().findById(cuKey);
+					double centreLat= pSrcObj.getCentre().getLatitude();
+					double centreLng=pSrcObj.getCentre().getLongitude();
+					responseStr.append(cuKey+"!"+powToAdd+"!"+centreLat+"!"+centreLng+"!"+"Power Source"+"*");
+				}
+			Set<Integer> hProdKeySet=powProducedByHOProdMap.keySet();
+			Iterator<Integer> hProdKeySetItr = hProdKeySet.iterator();
+			while(hProdKeySetItr.hasNext() && powReqValForItr>0)
+				{
+					Integer cuKey=hProdKeySetItr.next();
+					Integer powerVal=powProducedByHOProdMap.get(cuKey);
+					powReqValForItr=powReqValForItr-powerVal;					
+					Integer powToAdd=0;
+					if((powReqValForItr)>0)
+					{
+						powToAdd= powerVal;
+					}
+					else
+					{
+						powToAdd= powReqValForItr+powerVal;
+					}
+					HolonObject hoObj=getHolonObjectService().findById(cuKey);
+					double neLat= hoObj.getLatLngByNeLocation().getLatitude();
+					double neLng=hoObj.getLatLngByNeLocation().getLongitude();
+					responseStr.append(cuKey+"!"+powToAdd+"!"+neLat+"!"+neLng+"!"+"Holon Object"+"*");
+					
+				}
+			System.out.println("The Abhinav Response Str for supplier Details is "+responseStr);
+			getResponse().setContentType("text/html");
+			getResponse().getWriter().write(responseStr.toString());
+			
+		} catch(Exception e)
+		{
+			log.info("Exception "+e.getMessage()+" occurred in getDataForSupplierDetails()");
+			e.printStackTrace();
+		}
+	}
+
+	private Integer getPowerProducedByHolon(HolonObject ho) {
+		ArrayList<HolonElement> heList= new ArrayList<HolonElement>();
+		heList= getHolonElementService().getHolonElements(ho);
+		Integer powProd=0;
+		for(int i=0;i<heList.size();i++)
+		{
+			HolonElement helm=heList.get(i);
+			if(helm.getHolonElementState().getId()==1 && helm.getHolonElementType().getProducer() ==true)
+			{
+				powProd=powProd+helm.getCurrentCapacity();
+			}
+		}
+		return powProd;
+	
+	}
+
+	private Integer getPowerRequiredByHolon(HolonObject hObject) {
+		ArrayList<HolonElement> heList= new ArrayList<HolonElement>();
+		heList= getHolonElementService().getHolonElements(hObject);
+		Integer currentPow=0;
+		for(int i=0;i<heList.size();i++)
+		{
+			HolonElement helm=heList.get(i);
+			if(helm.getHolonElementState().getId()==1 && helm.getHolonElementType().getProducer()!=true)
+			{
+				currentPow=currentPow+helm.getCurrentCapacity();
+			}
+		}
+		return currentPow;
 	}
 }
 

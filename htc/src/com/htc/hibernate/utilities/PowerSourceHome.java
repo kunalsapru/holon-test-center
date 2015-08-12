@@ -1,9 +1,14 @@
 package com.htc.hibernate.utilities;
 
 import java.util.ArrayList;
+
+import org.apache.log4j.Logger;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
 import com.htc.hibernate.config.HibernateSessionFactory;
+import com.htc.hibernate.pojo.HolonCoordinator;
 import com.htc.hibernate.pojo.PowerSource;
 
 /**
@@ -11,6 +16,7 @@ import com.htc.hibernate.pojo.PowerSource;
  * @see .PowerSource
  */
 public class PowerSourceHome {
+	static Logger log = Logger.getLogger(PowerSourceHome.class);
 	
 	public Integer persist(PowerSource transientInstance) {
 		Integer powerSource_id=null;
@@ -89,6 +95,28 @@ public class PowerSourceHome {
 			System.out.println("get Power Source list failed");
 		}
 		return listPowerSource;
+	}
+
+	@SuppressWarnings("unchecked")
+	public ArrayList<PowerSource> findByHCoordinator(HolonCoordinator hoc) {
+		log.info("Abhinav holonCoordinator value --> "+hoc);
+		Session session = null;
+		Transaction tx = null;
+		ArrayList<PowerSource> listPSrcObject = null;
+		try {
+			session = HibernateSessionFactory.getSessionFactory().getCurrentSession();
+			tx = session.beginTransaction();
+			Query qr= session.createQuery("from PowerSource p where p.holonCoordinator=:holonCoordinator");
+			qr.setEntity("holonCoordinator", hoc);
+			listPSrcObject =  (ArrayList<PowerSource>) qr.list();
+			tx.commit();
+			return listPSrcObject;
+		} catch (RuntimeException re) {
+			log.info("Exception --> "+re.getMessage());
+			re.printStackTrace();
+		
+		}
+		return listPSrcObject;
 	}
 
 }

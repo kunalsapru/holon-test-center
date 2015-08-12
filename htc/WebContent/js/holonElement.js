@@ -210,26 +210,4 @@ function updateCoordinatorCallBack(data,options)
 	console.log(data);
 }
 
-function updateInfoWindow(itsOwnCoStatusChanged,changedToCoord)
-{
-	
-	var infoWindow = currentInfoWindowObject;	
-	var content = infoWindow.getContent();
-	var finalCont="";
-	if(itsOwnCoStatusChanged=="true")
-		{
-			if(changedToCoord)
-				{
-				finalCont=content.concat("<h3 align=\"center\">Holon Details</h3>");			
-				}
-			else
-				{
-				finalCont=content.replace("<h3 align=\"center\">Holon Details</h3>","");	
-				}
-			infoWindow.setContent(finalCont);
-		
-		}
-	
 
-	
-}
