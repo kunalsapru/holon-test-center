@@ -22,6 +22,7 @@
 <script type="text/javascript" src="js/switch.js"></script>
 <script type="text/javascript" src="js/powerSource.js"></script>
 <script type="text/javascript" src="js/connectToPowerSource.js"></script>
+<script type="text/javascript" src="js/connectPowerSourceToLine.js"></script>
 <script type="text/javascript" src="js/consumptionGraph.js"></script>
 <script type="text/javascript" src="js/supplierDetails.js"></script>
 <script type="text/javascript" src="js/highcharts.js"></script>
@@ -167,7 +168,7 @@
 					<table >
 					<tr>
 						<td colspan="2"><input id="cancelPowerObject" type='button' class="button"  value='Cancel' />&nbsp;&nbsp;&nbsp;&nbsp;
-						<input id="savePowerObject" type='button' class="button"  value='Save Holon Object' /></td>	
+						<input id="savePowerObject" type='button' class="button"  value='Save Power Source' /></td>	
 					</tr>					
 					</table><hr>
 						

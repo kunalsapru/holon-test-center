@@ -258,7 +258,7 @@ function addMessageWindow(line,powerLineId)
 {		
 	 
     google.maps.event.addListener(line, 'click', function(event) {
-    	if(connectToPowerSourceMode==true)
+    	if(connectToPowerSourceMode==true || addPowerSourceToLineMode==true)
     		{
     			connectToPowerSource(event.latLng,powerLineId.trim(),"PowerLine");
     		}
@@ -331,6 +331,7 @@ function getLineInfoWindowContent(data)
 	var source=respStr[5];
 	var dest=respStr[6];
 	var holonIdForSubline=respStr[7];
+	var powerSrcIdForSubline=respStr[8];
 	var content= "<div class='table'><table>"+
 			"<tr><td colspan='2' style='text-decoration: underline;'>Power Line Detail</td></tr>" +
 			"<tr><td><b>PowerLine Id: </b>"+powerLineId +"</td>"+
@@ -344,7 +345,14 @@ function getLineInfoWindowContent(data)
 				"<tr><td colspan='2' style='text-align: center;'>" +
 				"<span class='button' id='editPowerLineObject'><i class='fa fa-pencil-square-o'></i>&nbsp;&nbsp;Edit Power Line</span></td></tr>" +
 				"</div>");
-		}else
+		}else if(lineType==="POWERSUBLINE")
+			{
+			content = content.concat("<td><b>Connected Power Source Id: </b>"+powerSrcIdForSubline+"</td></tr>"+
+					"<tr><td colspan='2' style='text-align: center;'>" +
+					"<span class='button' id='editPowerLineObject'><i class='fa fa-pencil-square-o'></i>&nbsp;&nbsp;Edit Power Line</span></td></tr>" +
+					"</div>");
+			}
+		else
 		{
 			content = content.concat("<td></td></td></tr>"+
 					"<tr><td colspan='2' style='text-align: center;'>" +

@@ -343,7 +343,7 @@ public class HolonObjectAction extends CommonUtilities {
 		getResponse().getWriter().write(hoResponse.toString());
 		
 		} catch (Exception e) {
-			log.debug("Exception "+e.getMessage()+" occurred in action createHolonObject()");
+			log.debug("Exception "+e.getMessage()+" occurred in action HolonObject()");
 			e.printStackTrace();
 		}
 	}

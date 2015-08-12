@@ -1,7 +1,7 @@
 /**
  * This code in this file creates a power source
  */
-var psShape;
+
 $(document).ready(function() {
 	var psDrawingManager;
 	$('#addPowerSource').click(function(evt) {
@@ -22,7 +22,7 @@ $(document).ready(function() {
 			psDrawingManager.setMap(map);
 			
 		google.maps.event.addListener(psDrawingManager, 'overlaycomplete', function(event) {
-				psShape = event.overlay; // Object
+				var psShape = event.overlay; // Object
 				psShape.type = event.type;	
 				createdPowerSourceObject=psShape;
 		    	var center=psShape.getCenter();
@@ -100,12 +100,83 @@ addEventActionToPsObject(psId,createdPowerSourceObject)
 globalPSrcList.set(psId,createdPowerSourceObject);
 }
 
+function editPowerSourceObjectCallBack(data,options)
+{
+	var resp = data.split("!");
+	var psId=resp[0];
+	var status=resp[1];
+	var psStatusColor="#FF0000";
+	if(status==1)
+		{
+		psStatusColor="#0B6121";
+		}
+var editedPowerSourceObject= globalPSrcList.get(psId.toString()); 
+editedPowerSourceObject.setOptions({strokeColor:psStatusColor,fillColor: psStatusColor});
+addEventActionToPsObject(psId,editedPowerSourceObject)
+var dataAttributes= {
+		  psId : psId,
+		}
+var option= {
+		  powerSrc : editedPowerSourceObject,
+		}
+ajaxRequest("getPsObjectInfoWindow", dataAttributes, getPsObjectInfoWindowCallBack, option);
+globalPSrcList.set(psId,editedPowerSourceObject);
+
+}
+
+
+
+function editPowerSource(powerSrcId,infowindowPsObject) {
+	var dataAttributes= {
+			psId : powerSrcId
+	}
+	var options= {
+			infowindowPsObject : infowindowPsObject
+	}
+	ajaxRequest("getPsObjectInfoWindow", dataAttributes, getPowerSrcDetailCallBack, options);
+}
+
+function getPowerSrcDetailCallBack(data, option) {
+	var resp =data.split("!");
+	var powerSrcId=resp[0];
+	var maxProd=resp[1];
+	var currProd=resp[2];
+	var CoHolonId=resp[3];
+	var coHoLocation=resp[4];
+	var powerStatus=resp[5];
+	var minProd=resp[6];
+	var latCenter=resp[7];
+	var lngCenter=resp[8];
+	var rad= resp[9];
+	var coName= resp[10];
+	 $("#hiddenPowerObjectCenterLat").text(coHoLocation.trim("~")[0]);
+	 $("#hiddenPowerObjectCenterLng").text(coHoLocation.trim("~")[1]);
+	 $("#hiddenPowerObjectRad").text(rad);
+	 $("#psMaxProdCap").val(maxProd);
+	 $("#psCurrentPord").val(currProd);
+	 $("#powerObjectActionState").val("Edit");
+	 $("#hoObjTitle").text("Edit Power Source");
+	 $("#hiddenPowerObjectId").val(powerSrcId);
+	 $("#holonManagerName").val(holonManagerName);
+	 $("#psStatus").empty();
+	 var selOptions= "<option value=1 selected>Yes</option><option value=0>No</option>"
+		 if(powerStatus=="No")
+			{
+			 selOptions= "<option value=1 >Yes</option><option value=0 selected>No</option>"
+			}
+		$("#psStatus").append(selOptions);
+	getHolonCoordinatorFromDatabase(coName,"pwholonCoordinatorId","powerObjectDetail");	
+}
+
+
+
+
 function addEventActionToPsObject(psId,createdPowerSourceObject)
 {
 	google.maps.event.addListener(createdPowerSourceObject, 'click', function(event) {
 		if(addPowerSourceToLineMode==true)
 		{
-		 addPowerSourceToLine(event.latLng,psId,"PSObject");
+			connectToPowerSource(event.latLng,psId,"PSObject");
 		}else{
 	  var dataAttributes= {
 			  psId : psId,
@@ -182,7 +253,7 @@ function getPsObjectInfoWindowCallBack(data,option)
 			powerSourceOnOff(powerSrc,powerSrcId,infowindowPsObject);			
 		})
 			$('#CoHolonId').click(function() {
-				zoomToHolon(CoHolonId,coHoLocation);			
+				zoomToHolon(CoHolonId,coHoLocation,"Holon Object");			
 		})
 				
 		currentPsInfoWindowObject=infowindowPsObject;
@@ -241,18 +312,14 @@ function powerSourceOnOffCallBack(data, options)
 		powerSourceOnOff(powerSrc,powerSrcId,infowindowPsObject);			
 	})
 		$('#CoHolonId').click(function() {
-			zoomToHolon(coHolonId,coHoLocation);			
+			zoomToHolon(coHolonId,coHoLocation,"Holon Object");			
 	})
 			
 	currentPsInfoWindowObject=infowindowPsObject;
 	
 }
 
-function editPowerSourceObjectCallBack(data,options)
-{
-alert(data);	
 
-}
 
 function showSavedPowerSources()
 {

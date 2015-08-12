@@ -23,7 +23,7 @@ public class PowerSourceAction  extends CommonUtilities{
 		try {
 		Integer psCoordinatorId = getRequest().getParameter("psCoordinatorId")!=null?Integer.parseInt(getRequest().getParameter("psCoordinatorId")):0;
 		Integer psMaxProdCap = getRequest().getParameter("psMaxProdCap")!=null?Integer.parseInt(getRequest().getParameter("psMaxProdCap")):0;
-		Integer psCurrentPord = getRequest().getParameter("holonCoordinatorId")!=null?Integer.parseInt(getRequest().getParameter("psCurrentPord")):0;
+		Integer psCurrentPord = getRequest().getParameter("psCurrentPord")!=null?Integer.parseInt(getRequest().getParameter("psCurrentPord")):0;
 		Integer psStatus = getRequest().getParameter("psStatus")!=null?Integer.parseInt(getRequest().getParameter("psStatus")):0;
 		Double radius = getRequest().getParameter("radius")!=null?Double.parseDouble(getRequest().getParameter("radius")):0D;
 		Double latCenter = getRequest().getParameter("latCenter")!=null?Double.parseDouble(getRequest().getParameter("latCenter")):0D;
@@ -65,6 +65,49 @@ public class PowerSourceAction  extends CommonUtilities{
 		}
 	}
 	
+	
+	public void editPowerSourceObject()
+	{
+		
+		try {
+			Integer psCoordinatorId = getRequest().getParameter("psCoordinatorId")!=null?Integer.parseInt(getRequest().getParameter("psCoordinatorId")):0;
+			Integer psMaxProdCap = getRequest().getParameter("psMaxProdCap")!=null?Integer.parseInt(getRequest().getParameter("psMaxProdCap")):0;
+			Integer psCurrentPord = getRequest().getParameter("psCurrentPord")!=null?Integer.parseInt(getRequest().getParameter("psCurrentPord")):0;
+			Integer psStatus = getRequest().getParameter("psStatus")!=null?Integer.parseInt(getRequest().getParameter("psStatus")):0;
+			Integer pSourceId = getRequest().getParameter("hiddenPowerObjectId")!=null?Integer.parseInt(getRequest().getParameter("hiddenPowerObjectId")):0;		
+			
+			PowerSource pwSrcOld = getPowerSourceService().findById(pSourceId); // Creating HolonObject object to store values
+
+			HolonCoordinator holonCoordinator = getHolonCoordinatorService().findById(psCoordinatorId);
+			if(psCoordinatorId!=0)
+			{
+				pwSrcOld.setHolonCoordinator(holonCoordinator);
+			}
+			
+			pwSrcOld.setCurrentProduction(psCurrentPord);
+			pwSrcOld.setMaxProduction(psMaxProdCap);
+			pwSrcOld.setMinProduction(0);
+			pwSrcOld.setStatus((psStatus==1?true:false));
+			getPowerSourceService().merge(pwSrcOld);
+			PowerSource pwSrc2 = getPowerSourceService().findById(pSourceId);
+					
+			//Calling the response function and setting the content type of response.
+			getResponse().setContentType("text/html");
+			StringBuffer psResponse = new StringBuffer();
+			psResponse.append(pwSrc2.getId()+"!");
+			psResponse.append(psStatus);
+					
+			log.info(psResponse.toString());
+			getResponse().getWriter().write(psResponse.toString());
+			
+			} catch (Exception e) {
+				System.out.println("Exception "+e.getMessage()+" occurred in action createPowerSourceObject()");
+				e.printStackTrace();
+			}
+
+	}
+	
+	
 	public void getPsObjectInfoWindow()
 	{
 		try {
@@ -77,13 +120,16 @@ public class PowerSourceAction  extends CommonUtilities{
 			Boolean status = pwSrc.isStatus();
 			double latCenter=pwSrc.getCentre().getLatitude();
 			double lngCenter=pwSrc.getCentre().getLongitude();
+			double pwSrcRad=pwSrc.getRadius();
 			HolonCoordinator hc= pwSrc.getHolonCoordinator();
 			Integer CoHolonId=0;
 			String coHoLoc="";
+			String CoHolonName="";
 			
 			if(hc!=null)
 			{
 				CoHolonId=hc.getHolonObject().getId();
+				CoHolonName= hc.getName().concat("_"+hc.getHolon().getName());
 				coHoLoc=hc.getHolonObject().getLatLngByNeLocation().getLatitude()+"~"+hc.getHolonObject().getLatLngByNeLocation().getLongitude();
 			}
 			
@@ -100,12 +146,14 @@ public class PowerSourceAction  extends CommonUtilities{
 			psResponse.append(minProd+"!");
 			psResponse.append(latCenter+"!");
 			psResponse.append(lngCenter+"!");
+			psResponse.append(pwSrcRad+"!");
+			psResponse.append(CoHolonName+"!");
 			
 			log.info(psResponse.toString());
 			getResponse().getWriter().write(psResponse.toString());
 			
 			} catch (Exception e) {
-				System.out.println("Exception "+e.getMessage()+" occurred in action createPowerSourceObject()");
+				System.out.println("Exception "+e.getMessage()+" occurred in action getPsObjectInfoWindow()");
 				e.printStackTrace();
 			}
 		}

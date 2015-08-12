@@ -9,4 +9,5 @@ public class ConstantValues {
 	public static final Integer HOLON_CO_YELLOW = 2;
 	public static final Integer HOLON_CO_BLUE = 3;
 	public static final Integer HOLON_CO_GREEN = 4;
+	public static final Object POWERSUBLINE = "POWERSUBLINE";
 }

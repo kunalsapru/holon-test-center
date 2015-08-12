@@ -6,6 +6,9 @@ var lineLocationForSubline="";
 var lineIdForSubline="";
 var hoLocationForSubline="";
 var hoIdForSubline="";
+var pSrcObjInd=false;
+var hoObjInd=false;
+
 $(document).ready(function() {
 
 	$('#connectToPowerSource').click(function(evt) {
@@ -36,8 +39,16 @@ function connectToPowerSource(latLng,objectId,objectType)
 		}
 
 	}
-	else if(objectType=="HolonObject")
+	else if(objectType=="HolonObject" || objectType=="PSObject")
 	{
+		if( objectType=="PSObject")
+		{
+			pSrcObjInd=true;
+		}
+		if( objectType=="HolonObject")
+		{
+			hoObjInd=true;
+		}
 		if(hoIdForSubline.toString().length==0)
 		{
 			hoIdForSubline=objectId;
@@ -45,14 +56,23 @@ function connectToPowerSource(latLng,objectId,objectType)
 		}
 		else 
 		{
-			alert("Holon Object clicked already");
+			alert("Holon Object/Power Source clicked already");
 
 		}
 	}
 	if(hoIdForSubline.toString().length!=0 && lineIdForSubline.toString().length!=0)
 	{
-
-		openDivForCapacity(lineLocationForSubline,hoLocationForSubline,hoIdForSubline,lineIdForSubline);
+		var lineType="";
+		if(pSrcObjInd)
+			{
+			lineType="POWERSUBLINE";
+			}else
+				{
+				lineType="SUBLINE";
+				}
+		pSrcObjInd=false;
+		hoObjInd=false;
+		openDivForCapacity(lineLocationForSubline,hoLocationForSubline,hoIdForSubline,lineIdForSubline,lineType);
 		var line = new google.maps.Polyline({
 			path: [
 			       lineLocationForSubline, 
@@ -76,7 +96,7 @@ function connectToPowerSource(latLng,objectId,objectType)
 
 }
 
-function openDivForCapacity(lineLocationForSubline,hoLocationForSubline,hoIdForSubline,lineIdForSubline)
+function openDivForCapacity(lineLocationForSubline,hoLocationForSubline,hoIdForSubline,lineIdForSubline,lineType)
 {
 	$("#powerLineStartLat").text(hoLocationForSubline.lat());
 	$("#powerLineStartLng").text(hoLocationForSubline.lng());
@@ -84,7 +104,7 @@ function openDivForCapacity(lineLocationForSubline,hoLocationForSubline,hoIdForS
 	$("#powerLineEndLng").text(lineLocationForSubline.lng());
 	$("#powerLineHolonObjectIdHidden").text(hoIdForSubline);
 	$("#powerLineIdForSubLine").text(lineIdForSubline);
-	$("#powerLineType").text("SUBLINE");
+	$("#powerLineType").text(lineType);
 	openDiv('lineObjectDetail');
 }
 

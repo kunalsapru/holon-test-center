@@ -61,8 +61,14 @@ public class PowerLineAction extends CommonUtilities {
 			if(powerLineType.equals(ConstantValues.SUBLINE))
 			{
 				subLineHolonObjId= getRequest().getParameter("HolonObjectId")!=null?Integer.parseInt(getRequest().getParameter("HolonObjectId")):0;
-				powerLineIdForsubLine= getRequest().getParameter("HolonObjectId")!=null?Integer.parseInt(getRequest().getParameter("HolonObjectId")):0;
+				powerLineIdForsubLine= getRequest().getParameter("powerLineIdForSubLine")!=null?Integer.parseInt(getRequest().getParameter("powerLineIdForSubLine")):0;
 				powerLine.setSubLineHolonObject(getHolonObjectService().findById(subLineHolonObjId));
+				powerLine.setPowerLine(getPowerLineService().findById(powerLineIdForsubLine));
+			}else if(powerLineType.equals(ConstantValues.POWERSUBLINE)) //Saving Connector for power Source. Dont confuse because of the variable name .
+			{
+				subLineHolonObjId= getRequest().getParameter("HolonObjectId")!=null?Integer.parseInt(getRequest().getParameter("HolonObjectId")):0;
+				powerLineIdForsubLine= getRequest().getParameter("powerLineForSubLine")!=null?Integer.parseInt(getRequest().getParameter("powerLineForSubLine")):0;
+				powerLine.setPowerSource(getPowerSourceService().findById(subLineHolonObjId));
 				powerLine.setPowerLine(getPowerLineService().findById(powerLineIdForsubLine));
 			}
 			
@@ -130,10 +136,17 @@ public class PowerLineAction extends CommonUtilities {
 			PowerLine  powerLine = getPowerLineService().findById(powerLineId);
 			log.info("PowerLine Id: "+powerLine.getId());
 			HolonObject subLineHolon=powerLine.getSubLineHolonObject();
+			PowerSource subLinePowerSrc=powerLine.getPowerSource();
 			Integer subLineHolonId= 0;
+			Integer subLinePowerSrcId=0;
 			if(subLineHolon!=null)
 			{
 				subLineHolonId=subLineHolon.getId();
+			}
+			
+			if(subLinePowerSrc!=null)
+			{
+				subLinePowerSrcId=subLinePowerSrc.getId();
 			}
 			
 			//Calling the response function and setting the content type of response.
@@ -145,7 +158,8 @@ public class PowerLineAction extends CommonUtilities {
 			respStr.append(powerLine.getType()+"*");
 			respStr.append(powerLine.getLatLngBySource().getLatitude()+"~"+powerLine.getLatLngBySource().getLongitude()+"*");
 			respStr.append(powerLine.getLatLngByDestination().getLatitude()+"~"+powerLine.getLatLngByDestination().getLongitude()+"*");
-			respStr.append(subLineHolonId);
+			respStr.append(subLineHolonId+"*");
+			respStr.append(subLinePowerSrcId);
 			getResponse().setContentType("text/html");
 			getResponse().getWriter().write(respStr.toString());
 		} catch (Exception e) {

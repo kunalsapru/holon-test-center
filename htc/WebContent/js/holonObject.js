@@ -2,7 +2,7 @@
  * Java Script file for functions related to holon objects
  */
 
-var editOptions = {};
+var holonEditOptions = {};
 
 var hoShape;
 $(document).ready(function() {
@@ -108,7 +108,7 @@ function saveHolonObject(){
 			hiddenHolonManagerId : hiddenHolonManagerId
 		};
 	if(holonObjectActionState == "Edit"){
-		ajaxRequest("editHolonObject", dataAttributes, editHolonObjectCallBack, editOptions);
+		ajaxRequest("editHolonObject", dataAttributes, editHolonObjectCallBack, holonEditOptions);
 	} else {
 		ajaxRequest("createHolonObject", dataAttributes, createHolonObjectCallBack, {});							
 	}
@@ -126,7 +126,7 @@ function editHolonObject(holonObjectId,infowindowHolonObject) {
 }
 
 function getHolonDetailCallBack(data, option) {
-	editOptions = option;
+	holonEditOptions = option;
 	var dataArray = data.split("!");
 	var holonObjectId = dataArray[0];
 	var holonCoordinatorName_Holon= dataArray[1];	
@@ -303,7 +303,7 @@ function getHolonInfoWindowCallBack(data,options)
 	$('#infoWindowHolonList').change(function(){
       if(jQuery("#infoWindowHolonList option:selected").val()!='Select Holon')
     	  {
-    	  	zoomToHolon(jQuery("#infoWindowHolonList option:selected").val(),ne_location);
+    	  	zoomToHolon(jQuery("#infoWindowHolonList option:selected").val(),ne_location,"Holon Object");
     	  }
     });
 	
