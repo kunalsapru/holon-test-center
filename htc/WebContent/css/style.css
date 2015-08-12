@@ -202,10 +202,11 @@
 #supplierDetailsBody {
 	display: none;
 	position: absolute;
-	bottom:0%;
-	left: 50%;
-	width: 500px;
-	height: 200px;
+	bottom: 0%;
+	left: 40%;
+	right: 40%;
+	width: auto;
+	height: auto;
 	margin: -100px 0 0 -250px;
 	background: #E2E4DD;
 	border: 5px solid rgb(128, 128, 128);

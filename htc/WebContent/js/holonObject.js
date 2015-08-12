@@ -313,20 +313,21 @@ function getHolonInfoWindowCallBack(data,options)
 function zoomToHolon(holonObjectId,neLoc, type)
 {
 	
-	var location = new google.maps.LatLng(neLoc.split("~")[0], neLoc.split("~")[1])
-	if(type="Holon Object"){
+	var location = new google.maps.LatLng(neLoc.split("~")[0], neLoc.split("~")[1]);
+	if(type=="Holon Object"){
+		
 	var dataAttributes= {
 			  holonObjectId : holonObjectId,
-			}
+			};
 	 ajaxRequest("getHolonObjectInfoWindow", dataAttributes, getHolonInfoWindowCallBack, {});
 	}else
 		{
 		  var dataAttributes= {
 				  psId : holonObjectId,
-				}
+				};
 		  var option= {
 				  powerSrc : globalPSrcList.get(holonObjectId.toString()),
-				}
+				};
 		  ajaxRequest("getPsObjectInfoWindow", dataAttributes, getPsObjectInfoWindowCallBack, option);			
 		
 		}

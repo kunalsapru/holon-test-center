@@ -267,17 +267,18 @@
  	<div id="supplierDetailsBody"  class='table'>
  	<table>
  	<tr>
-	<td colspan="3" style="text-decoration: underline; ">Power Supply Details</td>
+	<td colspan="3" style="text-decoration: underline;width: 33%; ">Power Supply Details</td>
 	</tr>
 	<tr>
-	 		<td style="text-decoration: underline;font-weight:bold;text-align: center">Type of Supplier</td>
-	 		<td style="text-decoration: underline;font-weight:bold;text-align: center">Id of Supplier</td>
-	 		<td style="text-decoration: underline;font-weight:bold;text-align: center">Power Supplied</td>	 		
+	 		<td style="text-decoration: underline;font-weight:bold;text-align:center;width: 33%;">Type of Supplier</td>
+	 		<td style="text-decoration: underline;font-weight:bold;text-align: center;width: 33%;">Id of Supplier</td>
+	 		<td style="text-decoration: underline;font-weight:bold;text-align: center;width: 33%;">Power Supplied</td>	 		
  		<tr>
-  	<tbody id="suppLierDetailList" ></tbody>
- 		
+  	<tbody id="suppLierDetailList"></tbody>
+ 	</table><hr>
+ 	<table>	
  	<tr>
-	<td colspan="3" style="text-align: center;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="cancelShowSupply" type='button' class="button"  value='Close' />
+	<td colspan="3" style="text-align: center;width: 33%;"><input id="cancelShowSupply" type='button' class="button"  value='Close' />
 	</td>
 	</tr>
 	</table><hr> 	
