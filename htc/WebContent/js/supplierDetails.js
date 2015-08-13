@@ -25,7 +25,7 @@ function getDataForSupplierDetailsCallBack(data,options)
 		var pSrcObj=powerDetObjList[i];
 		var pSrcObjDetail=pSrcObj.split("!");
 		var loc= pSrcObjDetail[2]+"~"+pSrcObjDetail[3];
-		tableStr = tableStr.concat("<tr><td>"+pSrcObjDetail[4]+"</td><td><a href='#' onclick='zoomToHolon("+pSrcObjDetail[0]+", "+loc+", "+pSrcObjDetail[4]+")'>"+pSrcObjDetail[0]+"</a></td><td>"+pSrcObjDetail[1]+"</td></tr>");
+		tableStr = tableStr.concat("<tr></tr><tr><td style='text-align: center;width: 33%;'>"+pSrcObjDetail[4]+"</td><td style='text-align: center;width: 33%;'><a href='#' onclick='zoomToHolon("+pSrcObjDetail[0]+", "+loc+", "+pSrcObjDetail[4]+")'>"+pSrcObjDetail[0]+"</a></td><td style='text-align: center;width: 33%;'>"+pSrcObjDetail[1]+"</td></tr>");
 	}
 	}
 	else
