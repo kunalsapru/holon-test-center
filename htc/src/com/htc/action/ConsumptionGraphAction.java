@@ -35,7 +35,7 @@ public class ConsumptionGraphAction extends CommonUtilities {
 		}
 		catch(Exception e)
 		{
-			log.debug("Error occurred in getting Holon Elements. Please check application Logs for more information.");
+			log.debug("Error occurred in consumption graph action. Please check application Logs for more information.");
 			e.printStackTrace();
 		}
 	}
