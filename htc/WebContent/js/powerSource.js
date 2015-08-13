@@ -78,6 +78,11 @@ function savePowerObject()
 			lngCenter : lngCenter,
 			hiddenPowerObjectId : hiddenPowerObjectId
 		};
+	var options = {
+			radius : radius,
+			latCenter : latCenter,
+			lngCenter : lngCenter,
+			};
 	if(psActionState == "Edit"){
 		ajaxRequest("editPowerSourceObject", dataAttributes, editPowerSourceObjectCallBack, {});
 	} else {
@@ -90,6 +95,9 @@ function createPowerSourceObjectCallBack(data,options)
 var resp = data.split("!");
 	var psId=resp[0];
 	var status=resp[1];
+	var holonColor=resp[2];
+	var rad=options.radius;
+	var centerLoc= new google.maps.LatLng(options.latCenter,options.lngCenter)
 	var psStatusColor="#FF0000";
 	if(status==1)
 		{
@@ -111,7 +119,7 @@ function editPowerSourceObjectCallBack(data,options)
 		psStatusColor="#0B6121";
 		}
 var editedPowerSourceObject= globalPSrcList.get(psId.toString()); 
-editedPowerSourceObject.setOptions({strokeColor:psStatusColor,fillColor: psStatusColor});
+editedPowerSourceObject.setOptions({strokeColor:psStatusColor,fillColor: black});
 addEventActionToPsObject(psId,editedPowerSourceObject)
 var dataAttributes= {
 		  psId : psId,

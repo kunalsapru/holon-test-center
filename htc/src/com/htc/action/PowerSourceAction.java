@@ -33,11 +33,13 @@ public class PowerSourceAction  extends CommonUtilities{
 		LatLngAction latLngAct= new LatLngAction();
 		Integer centerLatLngId = latLngAct.saveLocation(centerLatLng);
 		PowerSource pwSrc = new PowerSource(); // Creating HolonObject object to store values
+		String holonColor="black";
 
 		HolonCoordinator holonCoordinator = getHolonCoordinatorService().findById(psCoordinatorId);
 		if(psCoordinatorId!=0)
 		{
 			pwSrc.setHolonCoordinator(holonCoordinator);
+			holonColor= holonCoordinator.getHolon().getColor();
 		}
 		pwSrc.setCentre(getLatLngService().findById(centerLatLngId));
 		pwSrc.setCurrentProduction(psCurrentPord);
@@ -54,7 +56,8 @@ public class PowerSourceAction  extends CommonUtilities{
 		getResponse().setContentType("text/html");
 		StringBuffer psResponse = new StringBuffer();
 		psResponse.append(pwSrc2.getId()+"!");
-		psResponse.append(psStatus);
+		psResponse.append(psStatus+"!");
+		psResponse.append(holonColor);
 				
 		log.info(psResponse.toString());
 		getResponse().getWriter().write(psResponse.toString());
@@ -79,9 +82,11 @@ public class PowerSourceAction  extends CommonUtilities{
 			PowerSource pwSrcOld = getPowerSourceService().findById(pSourceId); // Creating HolonObject object to store values
 
 			HolonCoordinator holonCoordinator = getHolonCoordinatorService().findById(psCoordinatorId);
+			String holonColor="black";
 			if(psCoordinatorId!=0)
 			{
 				pwSrcOld.setHolonCoordinator(holonCoordinator);
+				holonColor= holonCoordinator.getHolon().getColor();
 			}
 			
 			pwSrcOld.setCurrentProduction(psCurrentPord);
@@ -95,7 +100,8 @@ public class PowerSourceAction  extends CommonUtilities{
 			getResponse().setContentType("text/html");
 			StringBuffer psResponse = new StringBuffer();
 			psResponse.append(pwSrc2.getId()+"!");
-			psResponse.append(psStatus);
+			psResponse.append(psStatus+"!");
+			psResponse.append(holonColor);
 					
 			log.info(psResponse.toString());
 			getResponse().getWriter().write(psResponse.toString());
