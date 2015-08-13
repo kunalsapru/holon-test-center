@@ -262,8 +262,13 @@ public class HolonObjectAction extends CommonUtilities {
 			hoResponse.append(cuProdHolon+"!");
 			hoResponse.append(hoListString+"!");
 			hoResponse.append(canCommunicate+"!");
-			hoResponse.append(coOredNeLocation);
-				
+			hoResponse.append(coOredNeLocation+"!");
+			boolean createdFromFactory = holonObject2.getCreatedFactory() != null ? holonObject2.getCreatedFactory() : false;
+			if(createdFromFactory) {
+				hoResponse.append("Yes");
+			} else {
+				hoResponse.append("No");
+			}
 			System.out.println(hoResponse.toString());
 			getResponse().getWriter().write(hoResponse.toString());
 			

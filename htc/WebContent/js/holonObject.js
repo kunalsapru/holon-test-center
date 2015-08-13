@@ -232,6 +232,7 @@ function getHolonInfoWindowCallBack(data,options)
 	var hoList=dataArray[23];
 	var canCommunicate=dataArray[24];
 	var coOrd_ne_location=dataArray[25];
+	var createdFromFactory = dataArray[26];
 	var lat=ne_location.split("~");
 	//alert(holonColor);
 	var contentString=
@@ -257,6 +258,7 @@ function getHolonInfoWindowCallBack(data,options)
 			"<td>Maximum Production Capacity: "+maxEnergeyProdObj+"</td></tr>"+
 			"<tr><td>Current Production: "+cuEnergeyProdObj+"</td>" +
 			"<td>Can Communicate: "+canCommunicate+"</td></tr>"+
+			"<tr><td>Created from factory: "+createdFromFactory+"</td></tr>" +
 			"</table>"+
 			"<br /><hr>"+
 			"<table><tr><td colspan='2' style='text-align: center;'>"+
