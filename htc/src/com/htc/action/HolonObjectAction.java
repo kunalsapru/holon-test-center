@@ -480,7 +480,7 @@ public class HolonObjectAction extends CommonUtilities {
 				 powProducedByHOProdMap.put(ho.getId(), pwProdByHO);
 				 }
 			 }
-			StringBuffer responseStr =new StringBuffer("");
+			StringBuffer responseStr =new StringBuffer( hObject.getLatLngByNeLocation().getLatitude()+"~"+hObject.getLatLngByNeLocation().getLongitude()+"#");
 			Integer powReqValForItr= powReqByHolon;
 			Set<Integer> pSrcKeySet=powProducedByPowSourceMap.keySet();
 			Iterator<Integer> pSrcKeySetItr = pSrcKeySet.iterator();

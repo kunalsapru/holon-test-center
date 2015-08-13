@@ -268,7 +268,7 @@
  	<div id="supplierDetailsBody"  class='table'>
  	<table>
  	<tr>
-	<td colspan="3" style="text-decoration: underline;width: 33%; ">Power Supply Details</td>
+	<td id='pwSuppTitle' colspan="3" style="text-decoration: underline;width: 33%; "></td>
 	</tr>
 	<tr>
 	 		<td style="text-decoration: underline;font-weight:bold;text-align:center;width: 33%;">Type of Supplier</td>
