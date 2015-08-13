@@ -64,8 +64,10 @@
     	<li><a href="#" id="switchOnPowerLine"><i class=" fa fa-life-saver "></i>Switch on Power Line</a></li>
     </ul>
     </li>
-		<li><a href="#" id="clear"><i class="fa fa-eraser"></i>Clear Map</a></li> 
+	<li><a href="#" id="clear"><i class="fa fa-eraser"></i>Clear Map</a></li>
+	<li><a href="view/dataGenerator.jsp" target="_blank" id="dataFactoryGenerator"><i class="fa fa-eraser"></i>Data Factory</a></li>
 	</ul>
+	
   <a href="#" id="showmenu"> <i class="fa fa-align-justify"></i> </a> </nav>
 <!-- /menu vertical --> 
 
