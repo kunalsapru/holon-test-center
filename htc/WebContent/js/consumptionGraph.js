@@ -50,7 +50,7 @@ function getDataForConsumptionGraphCallBack(data,options)
 	            }
 	        },
 	        title: {
-	            text: 'Consumption Graph of Holon : '+holonObjectId
+	            text: 'Consumption Graph for Holon Object Id : '+holonObjectId
 	        },
 	        xAxis: {
 	            type: 'datetime',
