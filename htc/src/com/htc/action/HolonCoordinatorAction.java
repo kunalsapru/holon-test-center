@@ -37,6 +37,7 @@ public class HolonCoordinatorAction extends CommonUtilities{
 
 
 	public  void chooseCoordinator(Integer holonCoordinatorId) {
+		holonCoordinatorId = holonCoordinatorId !=null ? holonCoordinatorId : 1; 
 		log.info("Abhinav is fool "+holonCoordinatorId);
 		HolonCoordinator hCoordinator= getHolonCoordinatorService().findById(holonCoordinatorId);
 		
@@ -68,7 +69,6 @@ public class HolonCoordinatorAction extends CommonUtilities{
 			    		fHoObj=hoList.get(i);			    		
 			    	}
 			 	}
-			log.info("Id of Holon Set as coordinator is "+hCoordinator.getHolonObject().getId());				
 			}
 	}
 		if(fHoObj != null)
@@ -76,6 +76,7 @@ public class HolonCoordinatorAction extends CommonUtilities{
 		hCoordinator.setHolonObject(fHoObj);
 		getHolonCoordinatorService().merge(hCoordinator);		
 		}
+		log.info("Id of Holon Set as coordinator is "+hCoordinator.getHolonObject().getId());				
 	}
 	
 	

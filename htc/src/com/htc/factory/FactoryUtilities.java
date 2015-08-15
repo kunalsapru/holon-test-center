@@ -84,6 +84,10 @@ public class FactoryUtilities extends CommonUtilities{
 				holonObject.setCreatedFactory(true);
 				//Calling service method to save the object in database and saving the auto-incremented ID in an integer
 				newHolonObjectId = getHolonObjectService().persist(holonObject);
+				//Adding holon object reference in holon coordinator
+				holonCoordinator.setHolonObject(holonObject);
+				getHolonCoordinatorService().merge(holonCoordinator);
+				
 				System.out.println("New HolonObject ID = "+newHolonObjectId);
 
 				//Adding 10 Holon Elements to the newly generated Holon Object
@@ -116,11 +120,11 @@ public class FactoryUtilities extends CommonUtilities{
 		int mapLocationSize = HolonObjectsLocationFactory.mapLocations.size();
 		
 		try {
-				while(mapLocationSize > 0 && cumulativeProbability > 1) {
+				while(mapLocationSize > 0 && cumulativeProbability > 0) {
 					for(Integer holonObjectPriority : holonObjectType_ProbabilityMap.keySet()) {
 						int noOfObjects = 0;
 						double calculatedProbability = 0.0;
-						if(mapLocationSize > 0 && cumulativeProbability > 1) {
+						if(mapLocationSize > 0 && cumulativeProbability > 0) {
 							Integer holonObjectTypeId = Integer.parseInt(holonObjectType_ProbabilityMap.get(holonObjectPriority).split(":")[0]);
 							Integer holonObjectProbability = Integer.parseInt(holonObjectType_ProbabilityMap.get(holonObjectPriority).split(":")[1]);
 							if(holonObjectPriority.equals(1)){
@@ -152,7 +156,7 @@ public class FactoryUtilities extends CommonUtilities{
 									noOfObjects = (int)(Math.ceil((holonObjectProbability)*(mapLocationSize)/100.0));
 									}
 							}
-							if(mapLocationSize > 0 && cumulativeProbability > 1) {
+							if(mapLocationSize > 0 && cumulativeProbability > 0) {
 								holonObjectType_ProbabilityMap.put(holonObjectPriority, holonObjectTypeId+":"+((int)(holonObjectProbability-calculatedProbability)));
 								if(mapHolonObjectTypesOccurences.size() > 0 && mapHolonObjectTypesOccurences.containsKey(holonObjectTypeId)) {
 									mapHolonObjectTypesOccurences.put(holonObjectTypeId, mapHolonObjectTypesOccurences.get(holonObjectTypeId)+noOfObjects);
