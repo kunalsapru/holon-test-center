@@ -71,12 +71,11 @@ public class HolonCoordinatorAction extends CommonUtilities{
 			 	}
 			}
 	}
-		if(fHoObj != null)
-		{
-		hCoordinator.setHolonObject(fHoObj);
-		getHolonCoordinatorService().merge(hCoordinator);		
+		if(fHoObj != null) {
+			hCoordinator.setHolonObject(fHoObj);
+			getHolonCoordinatorService().merge(hCoordinator);		
+			log.info("Id of Holon Set as coordinator is "+hCoordinator.getHolonObject().getId());				
 		}
-		log.info("Id of Holon Set as coordinator is "+hCoordinator.getHolonObject().getId());				
 	}
 	
 	
