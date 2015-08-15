@@ -67,11 +67,11 @@ public class FactoryUtilities extends CommonUtilities{
 				holonObject.setLatLngByNeLocation(NorthlatLng2);
 				holonObject.setLatLngBySwLocation(SouthlatLng2);
 				
-				int holonCoordinatorId = randomNumber(1, 4); // Replace this with hibernate function to get minimum and maximum ID of holonCoordinator in DB.
+/*				int holonCoordinatorId = randomNumber(1, 4); // Replace this with hibernate function to get minimum and maximum ID of holonCoordinator in DB.
 				if(holonCoordinatorId!=0) {
 					holonCoordinator = getHolonCoordinatorService().findById(holonCoordinatorId);
 					holonObject.setHolonCoordinator(holonCoordinator);
-				}
+				}*/
 				holonObject.setHolonObjectType(holonObjectType);
 				holonObject.setLineConnectedState(false);
 				
