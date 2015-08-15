@@ -1,12 +1,17 @@
 
-function showConsumptionGraph(holonObjectId)
+function showConsumptionGraph(holonElementId,holonObjectId,holonType)
 {
 	//$("#consumptionGraphBody").html("<p>Hrnjdjshd</p>");
-	
-	var dataAttributes= {
-			holonObjectId : holonObjectId
+	if(holonType=="ho"){
+		var dataAttributes= {
+				holonObjectId : holonObjectId
+		}
+		ajaxRequest("showHolonObjectConsumption", dataAttributes, getDataForConsumptionGraphCallBack, dataAttributes);
+	}else{
+		var currrentConsumption=holonType;
+		showGraphForHolonTypes(holonElementId,parseInt(currrentConsumption),"Holon Element");
 	}
-	ajaxRequest("showHolonObjectConsumption", dataAttributes, getDataForConsumptionGraphCallBack, dataAttributes);
+	
 //	openDiv("consumptionGraphBody");
 	
  //alert(holonObjectId);	
@@ -17,10 +22,14 @@ function getDataForConsumptionGraphCallBack(data,options)
 	var graphForConsumption;
 	var holonObjectId=data.split("*")[1];
 	var currentConsumption=parseInt(data.split("*")[0]);
-	console.log(holonObjectId+"****"+currentConsumption+"****"+data);
+	showGraphForHolonTypes(holonObjectId,currentConsumption,"Holon Object");
 	
-	if(currentConsumption==0 || holonObjectId==undefined ){
-		alert("No Holon Elements to show");
+}
+
+function showGraphForHolonTypes(id,currentConsumption,holonType)
+{
+	if(currentConsumption==0 || id==undefined ){
+		alert("No Data to show");
 	}
 	else{
 		openDiv("consumptionGraphBody");
@@ -35,7 +44,7 @@ function getDataForConsumptionGraphCallBack(data,options)
 	        	renderTo: "consumptionGraphBody",
 	            type: 'spline',
 	            animation: Highcharts.svg, // don't animate in old IE
-	            marginRight: 10,
+	            //marginRight: 10,
 	            events: {
 	                load : function (event) {
 	                	// set up the updating of the chart each second
@@ -52,7 +61,8 @@ function getDataForConsumptionGraphCallBack(data,options)
 	        	enabled : false
 	        },
 	        title: {
-	            text: 'Consumption Graph for Holon Object Id : '+holonObjectId
+	            text: 'Consumption Graph for ' +holonType+":"+ +id,
+	            align: "left"
 	        },
 	        xAxis: {
 	            type: 'datetime',
@@ -122,6 +132,5 @@ function getDataForConsumptionGraphCallBack(data,options)
 
 	}
 	  
-	//Render To consumptionGraphBody
-	console.log(data);
+	
 }
