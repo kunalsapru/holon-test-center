@@ -1,3 +1,4 @@
+
 function showConsumptionGraph(holonObjectId)
 {
 	//$("#consumptionGraphBody").html("<p>Hrnjdjshd</p>");
@@ -17,13 +18,12 @@ function getDataForConsumptionGraphCallBack(data,options)
 	var holonObjectId=data.split("*")[1];
 	var currentConsumption=parseInt(data.split("*")[0]);
 	console.log(holonObjectId+"****"+currentConsumption+"****"+data);
-	openDiv("consumptionGraphBody");
+	
 	if(currentConsumption==0 || holonObjectId==undefined ){
 		alert("No Holon Elements to show");
-	closeDiv("consumptionGraphBody");
 	}
 	else{
-		//openDiv("consumptionGraphBody");
+		openDiv("consumptionGraphBody");
 		
 		Highcharts.setOptions({
 	        global: {
@@ -37,17 +37,19 @@ function getDataForConsumptionGraphCallBack(data,options)
 	            animation: Highcharts.svg, // don't animate in old IE
 	            marginRight: 10,
 	            events: {
-	                load: function () {
+	                load : function (event) {
 	                	// set up the updating of the chart each second
 	                    var series = this.series[0];
-
-	                	if(series) { setInterval(function () {
+	                 intervalTimeConsumptionGraph = setInterval(function () {
 	                        var x = (new Date()).getTime(), // current time
                             y = currentConsumption+ Math.floor((Math.random() * 10) + 1);
                         series.addPoint([x, y], true, true);
-                    }, 1000); }	                    
+                    }, 1000);                    
 	                }
 	            }
+	        },
+	        credits:{
+	        	enabled : false
 	        },
 	        title: {
 	            text: 'Consumption Graph for Holon Object Id : '+holonObjectId
@@ -105,6 +107,7 @@ function getDataForConsumptionGraphCallBack(data,options)
 	                    text: 'Close',
 	                    onclick: function () {
 	                    	closeDiv('consumptionGraphBody');
+	                    	clearInterval(intervalTimeConsumptionGraph);
 	                    }
 	                },
 	                exportButton: {
@@ -118,7 +121,7 @@ function getDataForConsumptionGraphCallBack(data,options)
 	    });
 
 	}
-	    
+	  
 	//Render To consumptionGraphBody
 	console.log(data);
 }
