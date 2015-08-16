@@ -11,7 +11,6 @@ import org.apache.log4j.Logger;
 
 import com.htc.hibernate.pojo.HolonCoordinator;
 import com.htc.hibernate.pojo.HolonElement;
-import com.htc.hibernate.pojo.HolonManager;
 import com.htc.hibernate.pojo.HolonObject;
 import com.htc.hibernate.pojo.HolonObjectType;
 import com.htc.hibernate.pojo.LatLng;
@@ -51,10 +50,6 @@ public class HolonObjectAction extends CommonUtilities {
 		{
 		new HolonCoordinatorAction().chooseCoordinator(holonCoordinatorId);				
 		}
-		HolonManager holonManager = new HolonManager();
-		holonManager.setName(holonManagerName);
-		Integer hmId = getHolonManagerService().persist(holonManager);
-		HolonManager holonManager2 = getHolonManagerService().findById(hmId);
 		
 		
 		holonObject.setLatLngByNeLocation(NorthlatLng2);
@@ -65,7 +60,6 @@ public class HolonObjectAction extends CommonUtilities {
 		}
 		holonObject.setHolonObjectType(holonObjectType);
 		holonObject.setLineConnectedState(false);
-		holonObject.setHolonManager(holonManager2);
 		holonObject.setCanCommunicate(canCommunicate==1?true:false);
 		//Calling service method to save the object in database and saving the auto-incremented ID in an integer
 		Integer newHolonObjectID = getHolonObjectService().persist(holonObject);
@@ -245,7 +239,6 @@ public class HolonObjectAction extends CommonUtilities {
 			hoResponse.append(lineConnectedState+"!");
 			hoResponse.append(holonColor+"!");
 			hoResponse.append(coordinatorHolonId+"!");
-			hoResponse.append(holonObject2.getHolonManager().getName()+"!");
 			hoResponse.append(noOfElem+"!");
 			hoResponse.append(minEnergReq+"!");
 			hoResponse.append(maxEnergyReq+"!");
@@ -299,7 +292,6 @@ public class HolonObjectAction extends CommonUtilities {
 	
 		holonObject.setHolonCoordinator(holonCoordinator);
 		holonObject.setHolonObjectType(holonObjectType);
-		holonObject.getHolonManager().setName(holonManagerName);
 		holonObject.setCanCommunicate(canCommunicate==1?true:false);
 		//Calling service method to save the object in database and saving the auto-incremented ID in an integer
 		getHolonObjectService().merge(holonObject);
@@ -418,8 +410,8 @@ public class HolonObjectAction extends CommonUtilities {
 
 	public void updateConnectedPowerLine(HolonObject holonObject,
 			PowerLine powerLine) {
-		holonObject.setPowerLine(powerLine);
-		getHolonObjectService().merge(holonObject);
+		powerLine.setHolonObject(holonObject);
+		getPowerLineService().merge(powerLine);
 		
 	}
 	
@@ -465,7 +457,7 @@ public class HolonObjectAction extends CommonUtilities {
 			 for(int i=0;i<pSrcList.size();i++)
 			 {
 				 PowerSource pSrc=pSrcList.get(i);
-				 if(pSrc.isStatus()==true)
+				 if(pSrc.getStatus()==true)
 				 {
 					 Integer powProduced=pSrc.getCurrentProduction();
 					 if(powProduced>0)
@@ -505,8 +497,8 @@ public class HolonObjectAction extends CommonUtilities {
 					}
 					
 					PowerSource pSrcObj=getPowerSourceService().findById(cuKey);
-					double centreLat= pSrcObj.getCentre().getLatitude();
-					double centreLng=pSrcObj.getCentre().getLongitude();
+					double centreLat= pSrcObj.getCenter().getLatitude();
+					double centreLng=pSrcObj.getCenter().getLongitude();
 					responseStr.append(cuKey+"!"+powToAdd+"!"+centreLat+"!"+centreLng+"!"+"Power Source"+"*");
 				}
 			Set<Integer> hProdKeySet=powProducedByHOProdMap.keySet();

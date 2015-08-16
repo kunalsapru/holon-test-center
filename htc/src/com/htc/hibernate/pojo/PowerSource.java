@@ -13,14 +13,14 @@ public class PowerSource implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 	private int id;
 	private HolonCoordinator holonCoordinator;
-	private LatLng latLng;
+	private LatLng center;
 	private String name;
 	private Integer minProduction;
 	private Integer maxProduction;
 	private Integer currentProduction;
 	private Double radius;
 	private Boolean status;
-	private Set powerLines = new HashSet(0);
+	private Set<?> powerLines = new HashSet<Object>(0);
 
 	public PowerSource() {
 	}
@@ -30,12 +30,12 @@ public class PowerSource implements java.io.Serializable {
 	}
 
 	public PowerSource(int id, HolonCoordinator holonCoordinator,
-			LatLng latLng, String name, Integer minProduction,
+			LatLng center, String name, Integer minProduction,
 			Integer maxProduction, Integer currentProduction, Double radius,
-			Boolean status, Set powerLines) {
+			Boolean status, Set<?> powerLines) {
 		this.id = id;
 		this.holonCoordinator = holonCoordinator;
-		this.latLng = latLng;
+		this.setCenter(center);
 		this.name = name;
 		this.minProduction = minProduction;
 		this.maxProduction = maxProduction;
@@ -59,14 +59,6 @@ public class PowerSource implements java.io.Serializable {
 
 	public void setHolonCoordinator(HolonCoordinator holonCoordinator) {
 		this.holonCoordinator = holonCoordinator;
-	}
-
-	public LatLng getLatLng() {
-		return this.latLng;
-	}
-
-	public void setLatLng(LatLng latLng) {
-		this.latLng = latLng;
 	}
 
 	public String getName() {
@@ -117,12 +109,20 @@ public class PowerSource implements java.io.Serializable {
 		this.status = status;
 	}
 
-	public Set getPowerLines() {
+	public Set<?> getPowerLines() {
 		return this.powerLines;
 	}
 
-	public void setPowerLines(Set powerLines) {
+	public void setPowerLines(Set<?> powerLines) {
 		this.powerLines = powerLines;
+	}
+
+	public LatLng getCenter() {
+		return center;
+	}
+
+	public void setCenter(LatLng center) {
+		this.center = center;
 	}
 
 }

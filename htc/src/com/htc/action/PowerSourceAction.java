@@ -41,7 +41,7 @@ public class PowerSourceAction  extends CommonUtilities{
 			pwSrc.setHolonCoordinator(holonCoordinator);
 			holonColor= holonCoordinator.getHolon().getColor();
 		}
-		pwSrc.setCentre(getLatLngService().findById(centerLatLngId));
+		pwSrc.setCenter(getLatLngService().findById(centerLatLngId));
 		pwSrc.setCurrentProduction(psCurrentPord);
 		pwSrc.setRadius(radius);
 		pwSrc.setMaxProduction(psMaxProdCap);
@@ -123,9 +123,9 @@ public class PowerSourceAction  extends CommonUtilities{
 			Integer MaxProdCap=pwSrc.getMaxProduction();
 			Integer currProd=pwSrc.getCurrentProduction();
 			Integer minProd=pwSrc.getMinProduction();
-			Boolean status = pwSrc.isStatus();
-			double latCenter=pwSrc.getCentre().getLatitude();
-			double lngCenter=pwSrc.getCentre().getLongitude();
+			Boolean status = pwSrc.getStatus();
+			double latCenter=pwSrc.getCenter().getLatitude();
+			double lngCenter=pwSrc.getCenter().getLongitude();
 			double pwSrcRad=pwSrc.getRadius();
 			HolonCoordinator hc= pwSrc.getHolonCoordinator();
 			Integer CoHolonId=0;
@@ -176,9 +176,9 @@ public class PowerSourceAction  extends CommonUtilities{
 				double radius;
 				Integer psObjectId;
 				pwSrc = psObjectList.get(i);
-				center = pwSrc.getCentre().getLatitude()+"~"+pwSrc.getCentre().getLongitude();
+				center = pwSrc.getCenter().getLatitude()+"~"+pwSrc.getCenter().getLongitude();
 				radius = pwSrc.getRadius();
-				status=pwSrc.isStatus();
+				status=pwSrc.getStatus();
 				psObjectId=pwSrc.getId();
 				psListArray.add(psObjectId+"#"+radius+"#"+center+"#"+status+"*");
 			}
@@ -197,7 +197,7 @@ public class PowerSourceAction  extends CommonUtilities{
 		try {			
 			Integer powerSrcId = getRequest().getParameter("powerSrcId")!=null?Integer.parseInt(getRequest().getParameter("powerSrcId")):0;
 			PowerSource pwSrc = getPowerSourceService().findById(powerSrcId); 
-			boolean pwOldStatus=pwSrc.isStatus();
+			boolean pwOldStatus=pwSrc.getStatus();
 			boolean pwNewStatus=true;
 			Integer pwNewIntStatus=1;
 			if(pwOldStatus)

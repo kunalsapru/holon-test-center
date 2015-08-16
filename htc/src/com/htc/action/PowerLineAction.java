@@ -62,14 +62,16 @@ public class PowerLineAction extends CommonUtilities {
 			{
 				subLineHolonObjId= getRequest().getParameter("HolonObjectId")!=null?Integer.parseInt(getRequest().getParameter("HolonObjectId")):0;
 				powerLineIdForsubLine= getRequest().getParameter("powerLineIdForSubLine")!=null?Integer.parseInt(getRequest().getParameter("powerLineIdForSubLine")):0;
-				powerLine.setSubLineHolonObject(getHolonObjectService().findById(subLineHolonObjId));
-				powerLine.setPowerLine(getPowerLineService().findById(powerLineIdForsubLine));
+				powerLine.setHolonObject(getHolonObjectService().findById(subLineHolonObjId));
+				/*This code is not required as per new DB changes. Recursive reference of power line has now been removed.
+				 * powerLine.setPowerLine(getPowerLineService().findById(powerLineIdForsubLine));*/
 			}else if(powerLineType.equals(ConstantValues.POWERSUBLINE)) //Saving Connector for power Source. Dont confuse because of the variable name .
 			{
 				subLineHolonObjId= getRequest().getParameter("HolonObjectId")!=null?Integer.parseInt(getRequest().getParameter("HolonObjectId")):0;
 				powerLineIdForsubLine= getRequest().getParameter("powerLineForSubLine")!=null?Integer.parseInt(getRequest().getParameter("powerLineForSubLine")):0;
 				powerLine.setPowerSource(getPowerSourceService().findById(subLineHolonObjId));
-				powerLine.setPowerLine(getPowerLineService().findById(powerLineIdForsubLine));
+				/*This code is not required as per new DB changes. Recursive reference of power line has now been removed.
+				 * powerLine.setPowerLine(getPowerLineService().findById(powerLineIdForsubLine));*/
 			}
 			
 			Integer newPowerLineID = getPowerLineService().persist(powerLine);
@@ -135,7 +137,7 @@ public class PowerLineAction extends CommonUtilities {
 			Integer powerLineId = getRequest().getParameter("powerLineId")!=null?Integer.parseInt(getRequest().getParameter("powerLineId")):0;
 			PowerLine  powerLine = getPowerLineService().findById(powerLineId);
 			log.info("PowerLine Id: "+powerLine.getId());
-			HolonObject subLineHolon=powerLine.getSubLineHolonObject();
+			HolonObject subLineHolon=powerLine.getHolonObject();
 			PowerSource subLinePowerSrc=powerLine.getPowerSource();
 			Integer subLineHolonId= 0;
 			Integer subLinePowerSrcId=0;
@@ -243,7 +245,7 @@ public class PowerLineAction extends CommonUtilities {
 			respStr.append(powerLine.getType()+"*");
 			respStr.append(powerLine.getLatLngBySource().getLatitude()+"~"+powerLine.getLatLngBySource().getLongitude()+"*");
 			respStr.append(powerLine.getLatLngByDestination().getLatitude()+"~"+powerLine.getLatLngByDestination().getLongitude()+"*");
-			respStr.append(powerLine.getSubLineHolonObject().getId()+"*");
+			respStr.append(powerLine.getHolonObject().getId()+"*");
 			respStr.append(color);
 		
 		//Calling the response function and setting the content type of response.

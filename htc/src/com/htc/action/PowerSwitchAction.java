@@ -35,8 +35,7 @@ public class PowerSwitchAction extends CommonUtilities {
 	
 	public void addPowerSwitchForHolonObject(HolonObject holonObject){
 		PowerSwitch powerSwitch=new PowerSwitch();
-		powerSwitch.setHolonObject(holonObject);
-		powerSwitch.setPowerLineA(null);
+		powerSwitch.setPowerLineByPowerLineA(null);
 		powerSwitch.setStatus(true);
 		
 		//Calling service method to save the object in database and saving the auto-incremented ID in an integer
@@ -63,8 +62,8 @@ public class PowerSwitchAction extends CommonUtilities {
 		PowerLine powerLineB = powerLineMap.get("powerLineB");
 		
 		powerSwitch.setLatLng(switchLatLng2);
-		powerSwitch.setPowerLineA(powerLineA);
-		powerSwitch.setPowerLineB(powerLineB);
+		powerSwitch.setPowerLineByPowerLineA(powerLineA);
+		powerSwitch.setPowerLineByPowerLineB(powerLineB);
 		powerSwitch.setStatus(false);
 		Integer newPowerSwitchId= getPowerSwitchService().persist(powerSwitch);
 		String resp= newPowerSwitchId.toString()+"*"+powerLineA.getId().toString()+"*"+powerLineB.getId();
@@ -118,8 +117,8 @@ public class PowerSwitchAction extends CommonUtilities {
 		Double switchLatitude= powerSwitch.getLatLng().getLatitude();
 		Double switchLongitude= powerSwitch.getLatLng().getLongitude();
 		Integer switchId = powerSwitch.getId();
-		Integer powerLineAId = powerSwitch.getPowerLineA().getId();
-		Integer powerLineBId = powerSwitch.getPowerLineB().getId();
+		Integer powerLineAId = powerSwitch.getPowerLineByPowerLineA().getId();
+		Integer powerLineBId = powerSwitch.getPowerLineByPowerLineB().getId();
 		boolean statusBool=powerSwitch.getStatus();
 		int status=0;
 		if(statusBool){
@@ -176,7 +175,7 @@ public class PowerSwitchAction extends CommonUtilities {
 		
 		if(powerSwitch!=null)
 		{
-			powerSwitch.setPowerLineA(powerLineB);
+			powerSwitch.setPowerLineByPowerLineA(powerLineB);
 			getPowerSwitchService().merge(powerSwitch);
 		}
 		
