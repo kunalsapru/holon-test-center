@@ -86,7 +86,7 @@ public class CommonUtilities extends AbstractAction{
 		return color;
 	}
 	
-	public static float randomCapGenerator(float maxCap)
+/*	public static float randomCapGenerator(float maxCap)
 	{
 		float finalX=0.0f;
 		
@@ -99,6 +99,6 @@ public class CommonUtilities extends AbstractAction{
 		
 		return finalX;
 	}
-	
+*/	
 
 }

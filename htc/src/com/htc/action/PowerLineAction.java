@@ -27,7 +27,6 @@ public class PowerLineAction extends CommonUtilities {
 			
 			Boolean isConnected = getRequest().getParameter("isConnected")!=null?Boolean.parseBoolean(getRequest().getParameter("isConnected")):false;
 			Integer maxCapacity = getRequest().getParameter("maxCapacity")!=null?Integer.parseInt(getRequest().getParameter("maxCapacity")):0;
-			Integer currentCapacity = getRequest().getParameter("currentCapacity")!=null?Integer.parseInt(getRequest().getParameter("currentCapacity")):maxCapacity;
 			String powerLineType = getRequest().getParameter("powerLineType")!=null?getRequest().getParameter("powerLineType"):ConstantValues.MAINLINE;
 			String reasonDown = getRequest().getParameter("reasonDown")!=null?getRequest().getParameter("reasonDown"):"";
 			Integer powerSourceId= getRequest().getParameter("powerSourceId")!=null?Integer.parseInt(getRequest().getParameter("powerSourceId")):1;
@@ -36,7 +35,6 @@ public class PowerLineAction extends CommonUtilities {
 			Double latEnd = getRequest().getParameter("latEnd")!=null?Double.parseDouble(getRequest().getParameter("latEnd")):0D;
 			Double lngEnd = getRequest().getParameter("lngEnd")!=null?Double.parseDouble(getRequest().getParameter("lngEnd")):0D;
 			Integer subLineHolonObjId=0;
-			Integer powerLineIdForsubLine=0;
 			
 			LatLng StartLatLng = new LatLng(latStart, lngStart);
 			LatLng EndLatLng = new LatLng(latEnd, lngEnd);
@@ -47,8 +45,7 @@ public class PowerLineAction extends CommonUtilities {
 			LatLng savedStartLatLng=getLatLngService().findById(newStartLatLngId);
 			LatLng savedEndLatLng=getLatLngService().findById(newEndLatLngId);
 			PowerSource powerSource = getPowerSourceService().findById(powerSourceId);
-			currentCapacity= (int) CommonUtilities.randomCapGenerator(maxCapacity);
-			log.info("Current Capacity "+currentCapacity);
+			int currentCapacity= 0;
 			PowerLine powerLine = new PowerLine();
 			powerLine.setCurrentCapacity(currentCapacity);
 			powerLine.setIsConnected(isConnected);
@@ -61,14 +58,12 @@ public class PowerLineAction extends CommonUtilities {
 			if(powerLineType.equals(ConstantValues.SUBLINE))
 			{
 				subLineHolonObjId= getRequest().getParameter("HolonObjectId")!=null?Integer.parseInt(getRequest().getParameter("HolonObjectId")):0;
-				powerLineIdForsubLine= getRequest().getParameter("powerLineIdForSubLine")!=null?Integer.parseInt(getRequest().getParameter("powerLineIdForSubLine")):0;
 				powerLine.setHolonObject(getHolonObjectService().findById(subLineHolonObjId));
 				/*This code is not required as per new DB changes. Recursive reference of power line has now been removed.
 				 * powerLine.setPowerLine(getPowerLineService().findById(powerLineIdForsubLine));*/
 			}else if(powerLineType.equals(ConstantValues.POWERSUBLINE)) //Saving Connector for power Source. Dont confuse because of the variable name .
 			{
 				subLineHolonObjId= getRequest().getParameter("HolonObjectId")!=null?Integer.parseInt(getRequest().getParameter("HolonObjectId")):0;
-				powerLineIdForsubLine= getRequest().getParameter("powerLineForSubLine")!=null?Integer.parseInt(getRequest().getParameter("powerLineForSubLine")):0;
 				powerLine.setPowerSource(getPowerSourceService().findById(subLineHolonObjId));
 				/*This code is not required as per new DB changes. Recursive reference of power line has now been removed.
 				 * powerLine.setPowerLine(getPowerLineService().findById(powerLineIdForsubLine));*/
@@ -232,7 +227,7 @@ public class PowerLineAction extends CommonUtilities {
 			Integer powerLineId = getRequest().getParameter("powerLineId")!=null?Integer.parseInt(getRequest().getParameter("powerLineId")):0;
 			PowerLine  powerLine =  getPowerLineService().findById(powerLineId);
 			powerLine.setMaximumCapacity(maxCapacity);
-			powerLine.setCurrentCapacity((int) CommonUtilities.randomCapGenerator(maxCapacity));
+			powerLine.setCurrentCapacity(0);
 			getPowerLineService().merge(powerLine);
 			String color=CommonUtilities.getLineColor(CommonUtilities.getPercent(powerLine.getCurrentCapacity(),powerLine.getMaximumCapacity()));
 			

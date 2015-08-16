@@ -100,7 +100,6 @@ function savePowerLineObject()
 	 $("#powerLineIdForSubLine").text("");
 	var dataAttributes = {
 			powerLineType : powerLineType,
-			currentCapacity : 300,
 			maxCapacity : maxCapacity,
 			latStart : startLat,
 			lngStart : startLng,
