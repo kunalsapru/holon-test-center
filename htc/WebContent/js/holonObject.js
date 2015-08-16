@@ -85,27 +85,23 @@ function saveHolonObject(){
 	var holonObjectType=$("#holonObjectType option:selected").val();
 	var holonCoordinatorId=$("#holonCoordinatorId option:selected").val();
 	var canCommunicate=$("#canCommunicate option:selected").val();
-	var holonManager=$("#holonManagerName").val();
 	var latNE=$("#holonObjectLatitudeNE").text();
 	var lngNE=$("#holonObjectLongitudeNE").text();
 	var latSW=$("#holonObjectLatitudeSW").text();
 	var lngSW=$("#holonObjectLongitudeSW").text();
 	var holonObjectActionState = $("#holonObjectActionState").val();
 	var hiddenHolonObjectId = $("#hiddenHolonObjectId").val();
-	var hiddenHolonManagerId = $("#hiddenHolonManagerId").val();
 	$( "#holonObjectDetail" ).slideUp(100);
 	var dataAttributes = {
 			holonObjectType : holonObjectType,
 			holonCoordinatorId : holonCoordinatorId,
-			holonManager : holonManager,
 			canCommunicate:canCommunicate,
 			latNE : latNE,
 			lngNE : lngNE,
 			latSW : latSW,
 			lngSW : lngSW,
 			holonObjectPriority : holonObjectPriority,
-			hiddenHolonObjectId : hiddenHolonObjectId,
-			hiddenHolonManagerId : hiddenHolonManagerId
+			hiddenHolonObjectId : hiddenHolonObjectId
 		};
 	if(holonObjectActionState == "Edit"){
 		ajaxRequest("editHolonObject", dataAttributes, editHolonObjectCallBack, holonEditOptions);
@@ -171,8 +167,7 @@ function editHolonObjectCallBack(data, options){
 	var coordHolonId= resp[7];
 	var isCoord= resp[8];
 	var hc_ne= resp[9];
-	var holonManagerName= resp[10];
-	var canComunicate= resp[11];
+	var canComunicate= resp[10];
 	var lat=ne_location.split("~");
 	var kc_lat=hc_ne.split("~");
 	
@@ -214,25 +209,24 @@ function getHolonInfoWindowCallBack(data,options)
 	var lineConnectedState= dataArray[5];
 	var holonColor= dataArray[6];
 	var coordHolonId= dataArray[7];
-	var holonManagerName= dataArray[8];
-	var nOfElmInHolon=dataArray[9];
-	var minEnergeyHoObj=dataArray[10];
-	var maxEnergeyHoObj=dataArray[11];
-	var cuEnergeyHoObj=dataArray[12];
-	var minEnergeyProdObj=dataArray[13];
-	var maxEnergeyProdObj=dataArray[14];
-	var cuEnergeyProdObj=dataArray[15];	
-	var nOfHolonObj=dataArray[16];
-	var minEnergeyHo=dataArray[17];
-	var maxEnergeyHo=dataArray[18];
-	var cuEnergeyHo=dataArray[19];
-	var minEnergeyProd=dataArray[20];
-	var maxEnergeyProd=dataArray[21];
-	var cuEnergeyProd=dataArray[22];
-	var hoList=dataArray[23];
-	var canCommunicate=dataArray[24];
-	var coOrd_ne_location=dataArray[25];
-	var createdFromFactory = dataArray[26];
+	var nOfElmInHolon=dataArray[8];
+	var minEnergeyHoObj=dataArray[9];
+	var maxEnergeyHoObj=dataArray[10];
+	var cuEnergeyHoObj=dataArray[11];
+	var minEnergeyProdObj=dataArray[12];
+	var maxEnergeyProdObj=dataArray[13];
+	var cuEnergeyProdObj=dataArray[14];	
+	var nOfHolonObj=dataArray[15];
+	var minEnergeyHo=dataArray[16];
+	var maxEnergeyHo=dataArray[17];
+	var cuEnergeyHo=dataArray[18];
+	var minEnergeyProd=dataArray[19];
+	var maxEnergeyProd=dataArray[20];
+	var cuEnergeyProd=dataArray[21];
+	var hoList=dataArray[22];
+	var canCommunicate=dataArray[23];
+	var coOrd_ne_location=dataArray[24];
+	var createdFromFactory = dataArray[25];
 	var lat=ne_location.split("~");
 	//alert(holonColor);
 	var contentString=
@@ -240,8 +234,7 @@ function getHolonInfoWindowCallBack(data,options)
 			"<tr><td colspan='2' style='text-decoration: underline;'>Holon Object Details</td></tr>"+
 			"<tr><td><b>Holon Object Id: "+holonObjectId +"</td>"+
 			"<td>Holon Object Type: "+holonObjectTypeName+"</td></tr>"+
-			"<tr><td>Holon Manager: "+holonManagerName+"</td>"+
-			"<td>Line Connected State: "+lineConnectedState+"</td></tr>";
+			"<tr><td colspan='2'>Line Connected State: "+lineConnectedState+"</td></tr>";
 	console.log(contentString);
 	if(coordHolonId==0)
 		{
