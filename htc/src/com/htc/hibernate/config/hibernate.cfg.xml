@@ -35,12 +35,10 @@
         <mapping resource="com/htc/hibernate/hbm/HolonCoordinator.hbm.xml" />
         <mapping resource="com/htc/hibernate/hbm/HolonElement.hbm.xml" />
         <mapping resource="com/htc/hibernate/hbm/HolonElementType.hbm.xml" />
-        <mapping resource="com/htc/hibernate/hbm/HolonManager.hbm.xml" />
         <mapping resource="com/htc/hibernate/hbm/HolonObject.hbm.xml" />
         <mapping resource="com/htc/hibernate/hbm/HolonObjectType.hbm.xml" />
         <mapping resource="com/htc/hibernate/hbm/LatLng.hbm.xml" />
         <mapping resource="com/htc/hibernate/hbm/PowerLine.hbm.xml" />
-        <mapping resource="com/htc/hibernate/hbm/PowerLineNode.hbm.xml" />
         <mapping resource="com/htc/hibernate/hbm/PowerSwitch.hbm.xml" />
         <mapping resource="com/htc/hibernate/hbm/PowerSource.hbm.xml" />
         <mapping resource="com/htc/hibernate/hbm/EnergyState.hbm.xml" />
