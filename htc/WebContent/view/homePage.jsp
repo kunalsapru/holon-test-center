@@ -111,17 +111,16 @@
 					<tr>
 						<td>Holon Object Type:
 						<select name="holonObjectType" id="holonObjectType"></select></td>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;Holon Manager Name:
-						<input id="holonManagerName" type="text"></td>
-					</tr>
-					<tr>
-						<td>Holon Coordinator:
-						&nbsp;&nbsp;&nbsp;&nbsp;<select name="holonCoordinatorId" id="holonCoordinatorId"></select></td>
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;Can Communicate:
 						<select name="canCommunicate" id="canCommunicate">
 							<option value=1>Yes</option>
 							<option value=0>No</option>
 						</select></td>
+					</tr>
+					<tr>
+						<td colspan="2">Holon Coordinator:
+						&nbsp;&nbsp;&nbsp;&nbsp;<select name="holonCoordinatorId" id="holonCoordinatorId"></select></td>
+						
 					</tr>
 					<tr>
 						<td>Latitude NE:
