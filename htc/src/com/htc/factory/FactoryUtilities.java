@@ -2,13 +2,10 @@ package com.htc.factory;
 
 import java.util.Map;
 import java.util.TreeMap;
-
 import com.htc.action.LatLngAction;
-import com.htc.hibernate.pojo.HolonCoordinator;
 import com.htc.hibernate.pojo.HolonElement;
 import com.htc.hibernate.pojo.HolonElementState;
 import com.htc.hibernate.pojo.HolonElementType;
-import com.htc.hibernate.pojo.HolonManager;
 import com.htc.hibernate.pojo.HolonObject;
 import com.htc.hibernate.pojo.HolonObjectType;
 import com.htc.hibernate.pojo.LatLng;
@@ -26,10 +23,6 @@ public class FactoryUtilities extends CommonUtilities{
 		//Variables to be used inside the loop for data factory declared outside the loop so that we don't have to create a new object for entity.
 		HolonObjectType holonObjectType = null;
 		HolonObject holonObject = null;
-		HolonCoordinator holonCoordinator = null;
-		HolonManager holonManager = null;
-		HolonManager holonManager2 = null;
-		Integer holonManagerId = null;
 		Double latNE = null;
 		Double lngNE = null;
 		Double latSW = null;
@@ -74,20 +67,10 @@ public class FactoryUtilities extends CommonUtilities{
 				}*/
 				holonObject.setHolonObjectType(holonObjectType);
 				holonObject.setLineConnectedState(false);
-				
-				holonManager = new HolonManager();
-				holonManager.setName("Holon_Manager");
-				holonManagerId = getHolonManagerService().persist(holonManager);
-				holonManager2 = getHolonManagerService().findById(holonManagerId);
-				holonObject.setHolonManager(holonManager2);
 				holonObject.setCanCommunicate(true);
 				holonObject.setCreatedFactory(true);
 				//Calling service method to save the object in database and saving the auto-incremented ID in an integer
 				newHolonObjectId = getHolonObjectService().persist(holonObject);
-				//Adding holon object reference in holon coordinator
-				holonCoordinator.setHolonObject(holonObject);
-				getHolonCoordinatorService().merge(holonCoordinator);
-				
 				System.out.println("New HolonObject ID = "+newHolonObjectId);
 
 				//Adding 10 Holon Elements to the newly generated Holon Object

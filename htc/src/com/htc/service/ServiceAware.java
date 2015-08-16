@@ -5,7 +5,6 @@ import com.htc.serviceImpl.HolonCoordinatorServiceImpl;
 import com.htc.serviceImpl.HolonElementServiceImpl;
 import com.htc.serviceImpl.HolonElementStateServiceImpl;
 import com.htc.serviceImpl.HolonElementTypeServiceImpl;
-import com.htc.serviceImpl.HolonManagerServiceImpl;
 import com.htc.serviceImpl.HolonObjectServiceImpl;
 import com.htc.serviceImpl.HolonObjectTypeServiceImpl;
 import com.htc.serviceImpl.HolonServiceImpl;
@@ -27,7 +26,6 @@ public abstract class ServiceAware extends ActionSupport {
 	private HolonElementService holonElementService = new HolonElementServiceImpl();
 	private HolonElementStateService holonElementStateService = new HolonElementStateServiceImpl();
 	private HolonElementTypeService holonElementTypeService = new HolonElementTypeServiceImpl();
-	private HolonManagerService holonManagerService = new HolonManagerServiceImpl();
 	private HolonObjectService holonObjectService = new HolonObjectServiceImpl();
 	private HolonObjectTypeService holonObjectTypeService = new HolonObjectTypeServiceImpl();
 	private LatLngService latLngService = new LatLngServiceImpl();
@@ -67,12 +65,6 @@ public abstract class ServiceAware extends ActionSupport {
 	public void setHolonElementTypeService(
 			HolonElementTypeService holonElementTypeService) {
 		this.holonElementTypeService = holonElementTypeService;
-	}
-	public HolonManagerService getHolonManagerService() {
-		return holonManagerService;
-	}
-	public void setHolonManagerService(HolonManagerService holonManagerService) {
-		this.holonManagerService = holonManagerService;
 	}
 	public HolonObjectService getHolonObjectService() {
 		return holonObjectService;

@@ -6,7 +6,6 @@ import com.htc.dao.HolonDao;
 import com.htc.dao.HolonElementDao;
 import com.htc.dao.HolonElementStateDao;
 import com.htc.dao.HolonElementTypeDao;
-import com.htc.dao.HolonManagerDao;
 import com.htc.dao.HolonObjectDao;
 import com.htc.dao.HolonObjectTypeDao;
 import com.htc.dao.LatLngDao;
@@ -19,7 +18,6 @@ import com.htc.daoImpl.HolonDaoImpl;
 import com.htc.daoImpl.HolonElementDaoImpl;
 import com.htc.daoImpl.HolonElementStateDaoImpl;
 import com.htc.daoImpl.HolonElementTypeDaoImpl;
-import com.htc.daoImpl.HolonManagerDaoImpl;
 import com.htc.daoImpl.HolonObjectDaoImpl;
 import com.htc.daoImpl.HolonObjectTypeDaoImpl;
 import com.htc.daoImpl.LatLngDaoImpl;
@@ -38,7 +36,6 @@ public class AbstractService {
 	private HolonElementDao holonElementDao = new HolonElementDaoImpl();
 	private HolonElementStateDao holonElementStateDao = new HolonElementStateDaoImpl() ;
 	private HolonElementTypeDao holonElementTypeDao = new HolonElementTypeDaoImpl() ;
-	private HolonManagerDao holonManagerDao = new HolonManagerDaoImpl();
 	private HolonObjectDao holonObjectDao = new HolonObjectDaoImpl();
 	private HolonObjectTypeDao holonObjectTypeDao = new HolonObjectTypeDaoImpl() ;
 	private LatLngDao latLngDao = new LatLngDaoImpl();
@@ -76,12 +73,6 @@ public class AbstractService {
 	}
 	public void setHolonElementTypeDao(HolonElementTypeDao holonElementTypeDao) {
 		this.holonElementTypeDao = holonElementTypeDao;
-	}
-	public HolonManagerDao getHolonManagerDao() {
-		return holonManagerDao;
-	}
-	public void setHolonManagerDao(HolonManagerDao holonManagerDao) {
-		this.holonManagerDao = holonManagerDao;
 	}
 	public HolonObjectDao getHolonObjectDao() {
 		return holonObjectDao;
