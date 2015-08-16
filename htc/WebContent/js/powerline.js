@@ -53,7 +53,8 @@ $(document).ready(function() {
 		    	 $("#powerLineEndLng").text(snappedEnd.lng());
 		    	  $("#powerLineTitle").text("Add Power Line");
 		    	 $("#powerLineType").text("MAINLINE");
-		    	 openDiv('lineObjectDetail');
+		    	 getListHolonFromDatabase();
+		    	 
 		    	
 			});
 
@@ -404,4 +405,22 @@ function updatePowerLineCallBack(data, options)
      addMessageWindow(line,powerLineId);
      globalPlList.set(powerLineId,line);
      
+}
+
+function getListHolonFromDatabase()
+{
+	ajaxRequest("getListHolon", "", getListHolonPowerLineCallBack, "");
+}
+
+function getListHolonPowerLineCallBack(data,options)
+{
+	$("#holonForPowerLine").empty();
+	var listHolonForPower = data.split("*");
+	for(var i=0;i< listHolonForPower.length-1;i++)
+		{
+		var options= "<option value="+listHolonForPower[i].split("-")[0]+" id= "+listHolonForPower[i].split("-")[0]+" >"+listHolonForPower[i].split("-")[1]+"</option>";
+		$("#holonForPowerLine").append(options);
+		}
+	openDiv('lineObjectDetail');
+	
 }

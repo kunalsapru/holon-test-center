@@ -190,6 +190,7 @@
 						<td>Power Line Capacity:</td>
 						<td><input id="powerLineCapacity" type="text"></td>
 					</tr>
+					<tr><td >Holon:&nbsp;&nbsp;<select id="holonForPowerLine"></select></td></tr>
 					</table><hr>
 					<table>
 					<tr >
