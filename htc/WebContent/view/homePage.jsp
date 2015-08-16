@@ -118,11 +118,6 @@
 						</select></td>
 					</tr>
 					<tr>
-						<td colspan="2">Holon Coordinator:
-						&nbsp;&nbsp;&nbsp;&nbsp;<select name="holonCoordinatorId" id="holonCoordinatorId"></select></td>
-						
-					</tr>
-					<tr>
 						<td>Latitude NE:
 						<label id="holonObjectLatitudeNE"></label></td>
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;Longtitude NE:
@@ -155,15 +150,14 @@
 						<td id='powerObjTitle' colspan="2" style="text-decoration: underline;"></td>
 					</tr>
 					<tr>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;Holon:&nbsp;&nbsp;&nbsp;&nbsp;<select name="pwholonCoordinatorId" id="pwholonCoordinatorId"></select></td>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;&nbsp;&nbsp;&nbsp;<select name="psStatus" id="psStatus">
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;Maximum Production Capacity:&nbsp;&nbsp;&nbsp;&nbsp;<input id="psMaxProdCap" type="text"></td>	
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;Current Production:&nbsp;&nbsp;&nbsp;&nbsp;<input id="psCurrentPord" type="text"></td>						
+					</tr>
+					<tr>
+						<td colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;&nbsp;&nbsp;&nbsp;<select name="psStatus" id="psStatus">
 							<option value=0>OFF</option>
 							<option value=1>ON</option>
 							</select></td>
-					</tr>
-					<tr>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;Maximum Production Capacity:&nbsp;&nbsp;&nbsp;&nbsp;<input id="psMaxProdCap" type="text"></td>	
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;Current Production:&nbsp;&nbsp;&nbsp;&nbsp;<input id="psCurrentPord" type="text"></td>						
 					</tr>
 					</table><hr>
 					<table >

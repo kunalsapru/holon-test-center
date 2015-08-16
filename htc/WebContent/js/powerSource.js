@@ -59,9 +59,7 @@ $(document).ready(function() {
 function savePowerObject()
 {
 	var psMaxProdCap=$("#psMaxProdCap").val();
-	var psCurrentPord=$("#psCurrentPord").val();
 	var psStatus=$("#psStatus option:selected").val();
-	var psCoordinatorId=$("#pwholonCoordinatorId option:selected").val();
 	var radius=$("#hiddenPowerObjectRad").val();
 	var latCenter=$("#hiddenPowerObjectCenterLat").val();
 	var lngCenter=$("#hiddenPowerObjectCenterLng").val();
@@ -70,9 +68,7 @@ function savePowerObject()
 	$( "#powerObjectDetail" ).slideUp(100);
 	var dataAttributes = {
 			psMaxProdCap : psMaxProdCap,
-			psCurrentPord : psCurrentPord,
 			psStatus : psStatus,
-			psCoordinatorId:psCoordinatorId,
 			radius : radius,
 			latCenter : latCenter,
 			lngCenter : lngCenter,
@@ -90,12 +86,10 @@ function savePowerObject()
 	}
 }
 
-function createPowerSourceObjectCallBack(data,options)
-{
-var resp = data.split("!");
+function createPowerSourceObjectCallBack(data,options) {
+	var resp = data.split("!");
 	var psId=resp[0];
 	var status=resp[1];
-	var holonColor=resp[2];
 	var rad=options.radius;
 	var centerLoc= new google.maps.LatLng(options.latCenter,options.lngCenter)
 	var psStatusColor="#FF0000";
@@ -103,33 +97,30 @@ var resp = data.split("!");
 		{
 		psStatusColor="#0B6121";
 		}
-createdPowerSourceObject.setOptions({strokeColor:psStatusColor,fillColor: psStatusColor});
-addEventActionToPsObject(psId,createdPowerSourceObject)
-globalPSrcList.set(psId,createdPowerSourceObject);
+	createdPowerSourceObject.setOptions({strokeColor:psStatusColor,fillColor: psStatusColor});
+	addEventActionToPsObject(psId,createdPowerSourceObject)
+	globalPSrcList.set(psId,createdPowerSourceObject);
 }
 
-function editPowerSourceObjectCallBack(data,options)
-{
+function editPowerSourceObjectCallBack(data,options){
 	var resp = data.split("!");
 	var psId=resp[0];
 	var status=resp[1];
 	var psStatusColor="#FF0000";
-	if(status==1)
-		{
+	if(status==1) {
 		psStatusColor="#0B6121";
-		}
-var editedPowerSourceObject= globalPSrcList.get(psId.toString()); 
-editedPowerSourceObject.setOptions({strokeColor:psStatusColor,fillColor: black});
-addEventActionToPsObject(psId,editedPowerSourceObject)
-var dataAttributes= {
-		  psId : psId,
-		}
-var option= {
-		  powerSrc : editedPowerSourceObject,
-		}
-ajaxRequest("getPsObjectInfoWindow", dataAttributes, getPsObjectInfoWindowCallBack, option);
-globalPSrcList.set(psId,editedPowerSourceObject);
-
+	}
+	var editedPowerSourceObject= globalPSrcList.get(psId.toString()); 
+	editedPowerSourceObject.setOptions({strokeColor:psStatusColor,fillColor: black});
+	addEventActionToPsObject(psId,editedPowerSourceObject)
+	var dataAttributes= {
+			  psId : psId,
+			}
+	var option= {
+			  powerSrc : editedPowerSourceObject,
+			}
+	ajaxRequest("getPsObjectInfoWindow", dataAttributes, getPsObjectInfoWindowCallBack, option);
+	globalPSrcList.set(psId,editedPowerSourceObject);
 }
 
 
@@ -165,7 +156,6 @@ function getPowerSrcDetailCallBack(data, option) {
 	 $("#powerObjectActionState").val("Edit");
 	 $("#hoObjTitle").text("Edit Power Source");
 	 $("#hiddenPowerObjectId").val(powerSrcId);
-	 $("#holonManagerName").val(holonManagerName);
 	 $("#psStatus").empty();
 	 var selOptions= "<option value=1 selected>Yes</option><option value=0>No</option>"
 		 if(powerStatus=="No")
