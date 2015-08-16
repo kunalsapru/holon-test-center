@@ -168,6 +168,9 @@ public class PowerSourceAction  extends CommonUtilities{
 			Integer powerSrcId = getRequest().getParameter("powerSrcId")!=null?Integer.parseInt(getRequest().getParameter("powerSrcId")):0;
 			PowerSource pwSrc = getPowerSourceService().findById(powerSrcId); 
 			boolean pwOldStatus=pwSrc.getStatus();
+			int maxProd = pwSrc.getMaxProduction();
+			int minProd = pwSrc.getMinProduction();
+			int currentProd = pwSrc.getCurrentProduction();
 			boolean pwNewStatus=true;
 			Integer pwNewIntStatus=1;
 			if(pwOldStatus) {
@@ -191,6 +194,10 @@ public class PowerSourceAction  extends CommonUtilities{
 			respStr.append(CoHolonId+"!");
 			respStr.append(coHoLoc+"!");
 			respStr.append(pwNewIntStatus+"!");
+			respStr.append(maxProd+"!");
+			respStr.append(minProd+"!");
+			respStr.append(currentProd);
+			
 			//Calling the response function and setting the content type of response.
 			getResponse().setContentType("text/html");
 			getResponse().getWriter().write(respStr.toString());

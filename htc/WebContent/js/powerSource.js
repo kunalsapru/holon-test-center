@@ -283,24 +283,53 @@ function powerSourceOnOffCallBack(data, options)
 	var coHolonId = resp[0];
 	var coHoLocation = resp[1];
 	var newPowerSrcStatus = resp[2];
+	var maxProd = resp[3];
+	var minProd = resp[4];
+	var currentProd = resp[5];
 	
-	if(newPowerSrcStatus== 1)
-		{
-		//alert("Abhinav");
+	var powerStatusVal;
+	
+	if(newPowerSrcStatus== 1) {
 		powerSrc.setOptions({strokeColor:'#0B6121',fillColor: '#0B6121'});
-		var newContent=content.replace("Not Producing","Producing").replace("Power On","Power Off");
-		//alert("newSwitchStatus "+newSwitchStatus+" "+newContent);
-		infowindowPsObject.setContent(newContent);
-		infowindowPsObject.close();	
-	
-		}
-	else{
-		//alert("Abhinava");
+		powerStatusVal = "Producing";
+	} else {
 		powerSrc.setOptions({strokeColor:'#FF0000', fillColor: '#FF0000'});
-		var newContent=content.replace("Producing","Not Producing").replace("Power Off","Power On");
-		infowindowPsObject.setContent(newContent);
-		infowindowPsObject.close();		
+		powerStatusVal = "Not Producing";
 		}
+
+	var contentString=
+		"<div class='table'><table>"+
+		"<tr><td colspan='2' style='text-decoration: underline;'>Power Source Details</td></tr>"+
+		"<tr><td><b>PowerSource Id: "+powerSrcId +"</td>"+
+		"<td>Status: "+powerStatusVal+"</td></tr>"+
+		"<tr><td>Maximum Production Capacity: "+maxProd+"</td>"+
+		"<td>Current Production: "+currentProd+"</td></tr>";
+		if(coHolonId==0)
+		{
+			contentString=contentString.concat("<tr><td>Coordinator Id: Not Part of any Holon</td>");
+		}else
+		{
+			contentString=contentString.concat("<tr><td>Coordinator Id: <a href='#' id='CoHolonId'>"+coHolonId+"</a></td>");
+		}
+		
+		contentString=contentString.concat("<td>Minimum Production Capacity: "+minProd+"</td></tr>"+
+				"</table>"+
+				"<br /><hr>"+
+				"<table><tr><td colspan='2' style='text-align: center;'>");
+		if(newPowerSrcStatus == 1)
+			{
+			contentString=contentString.concat("<span class='button' id='powerOnOff' ><i class='fa fa-circle-o-notch'>&nbsp; Power Off </i></span>");
+			}else
+				{
+				contentString=contentString.concat("<span class='button' id='powerOnOff' ><i class='fa fa-circle-o-notch'>&nbsp; Power On </i></span>");	
+				}
+		
+		contentString=contentString.concat("&nbsp;&nbsp;&nbsp;&nbsp;<span class='button' id='editPowerSource' title='Edit Power Source'><i class='fa fa-pencil-square-o'>&nbsp; Edit Power Source</i></span>"+
+		"</td></tr></table><hr>");
+		
+		infowindowPsObject.setContent(contentString);
+		infowindowPsObject.close();	
+
 	infowindowPsObject.open(map,powerSrc);
 	$('#editPowerSource').click(function() {
 		editPowerSource(powerSrcId,infowindowPsObject);			
