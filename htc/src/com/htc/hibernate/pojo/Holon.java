@@ -1,4 +1,5 @@
 package com.htc.hibernate.pojo;
+// Generated 16 Aug, 2015 3:28:11 PM by Hibernate Tools 4.3.1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -10,11 +11,10 @@ public class Holon implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private int id;
-	private LatLng latLng;
 	private String name;
-	private Integer radius;
 	private String color;
 	private Set<?> holonCoordinators = new HashSet<Object>(0);
+	private Set<?> powerLines = new HashSet<Object>(0);
 
 	public Holon() {
 	}
@@ -23,14 +23,12 @@ public class Holon implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public Holon(int id, LatLng latLng, String name, Integer radius,
-			String color, Set<?> holonCoordinators) {
+	public Holon(int id, String name, String color, Set<?> holonCoordinators, Set<?> powerLines) {
 		this.id = id;
-		this.latLng = latLng;
 		this.name = name;
-		this.radius = radius;
 		this.color = color;
 		this.holonCoordinators = holonCoordinators;
+		this.setPowerLines(powerLines);
 	}
 
 	public int getId() {
@@ -41,28 +39,12 @@ public class Holon implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public LatLng getLatLng() {
-		return this.latLng;
-	}
-
-	public void setLatLng(LatLng latLng) {
-		this.latLng = latLng;
-	}
-
 	public String getName() {
 		return this.name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public Integer getRadius() {
-		return this.radius;
-	}
-
-	public void setRadius(Integer radius) {
-		this.radius = radius;
 	}
 
 	public String getColor() {
@@ -79,6 +61,14 @@ public class Holon implements java.io.Serializable {
 
 	public void setHolonCoordinators(Set<?> holonCoordinators) {
 		this.holonCoordinators = holonCoordinators;
+	}
+
+	public Set<?> getPowerLines() {
+		return powerLines;
+	}
+
+	public void setPowerLines(Set<?> powerLines) {
+		this.powerLines = powerLines;
 	}
 
 }

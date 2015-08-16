@@ -1,4 +1,6 @@
 package com.htc.hibernate.pojo;
+// Generated 16 Aug, 2015 3:28:11 PM by Hibernate Tools 4.3.1
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,18 +14,19 @@ public class HolonElementType implements java.io.Serializable {
 	private String name;
 	private Integer maxCapacity;
 	private Integer minCapacity;
-	private Boolean producer;
+	private boolean producer;
 	private Set<?> holonElements = new HashSet<Object>(0);
 
 	public HolonElementType() {
 	}
 
-	public HolonElementType(int id) {
+	public HolonElementType(int id, boolean producer) {
 		this.id = id;
+		this.producer = producer;
 	}
 
 	public HolonElementType(int id, String name, Integer maxCapacity,
-			Integer minCapacity, Set<?> holonElements,Boolean producer) {
+			Integer minCapacity, boolean producer, Set<?> holonElements) {
 		this.id = id;
 		this.name = name;
 		this.maxCapacity = maxCapacity;
@@ -64,20 +67,20 @@ public class HolonElementType implements java.io.Serializable {
 		this.minCapacity = minCapacity;
 	}
 
+	public Boolean getProducer() {
+		return producer;
+	}
+
+	public void setProducer(boolean producer) {
+		this.producer = producer;
+	}
+
 	public Set<?> getHolonElements() {
 		return this.holonElements;
 	}
 
 	public void setHolonElements(Set<?> holonElements) {
 		this.holonElements = holonElements;
-	}
-
-	public Boolean getProducer() {
-		return producer;
-	}
-
-	public void setProducer(Boolean producer) {
-		this.producer = producer;
 	}
 
 }

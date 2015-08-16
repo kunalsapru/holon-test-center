@@ -1,4 +1,5 @@
 package com.htc.hibernate.pojo;
+// Generated 16 Aug, 2015 3:28:11 PM by Hibernate Tools 4.3.1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -8,19 +9,18 @@ import java.util.Set;
  */
 public class PowerSource implements java.io.Serializable {
 
+	
 	private static final long serialVersionUID = 1L;
 	private int id;
+	private HolonCoordinator holonCoordinator;
+	private LatLng latLng;
 	private String name;
 	private Integer minProduction;
 	private Integer maxProduction;
 	private Integer currentProduction;
-	private LatLng centre;
-	private double radius;
-	private boolean status;
-	private HolonCoordinator holonCoordinator;
-	private PowerLine powerLine;
-	
-	private Set<?> powerLines = new HashSet<Object>(0);
+	private Double radius;
+	private Boolean status;
+	private Set powerLines = new HashSet(0);
 
 	public PowerSource() {
 	}
@@ -29,19 +29,19 @@ public class PowerSource implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public PowerSource(int id, String name, Integer minProduction, Integer maxProduction,boolean status,
-			Integer currentProduction, LatLng centre,double radius, HolonCoordinator holonCoordinator, PowerLine powerLine,
-			Set<?> powerLines) {
+	public PowerSource(int id, HolonCoordinator holonCoordinator,
+			LatLng latLng, String name, Integer minProduction,
+			Integer maxProduction, Integer currentProduction, Double radius,
+			Boolean status, Set powerLines) {
 		this.id = id;
+		this.holonCoordinator = holonCoordinator;
+		this.latLng = latLng;
 		this.name = name;
 		this.minProduction = minProduction;
 		this.maxProduction = maxProduction;
 		this.currentProduction = currentProduction;
-		this.centre = centre;
 		this.radius = radius;
-		this.status=status;
-		this.holonCoordinator = holonCoordinator;
-		this.powerLine = powerLine;
+		this.status = status;
 		this.powerLines = powerLines;
 	}
 
@@ -53,36 +53,28 @@ public class PowerSource implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public String getName() {
-		return this.name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public LatLng getCentre() {
-		return centre;
-	}
-
-	public void setCentre(LatLng centre) {
-		this.centre = centre;
-	}
-
 	public HolonCoordinator getHolonCoordinator() {
-		return holonCoordinator;
+		return this.holonCoordinator;
 	}
 
 	public void setHolonCoordinator(HolonCoordinator holonCoordinator) {
 		this.holonCoordinator = holonCoordinator;
 	}
 
-	public PowerLine getPowerLine() {
-		return powerLine;
+	public LatLng getLatLng() {
+		return this.latLng;
 	}
 
-	public void setPowerLine(PowerLine powerLine) {
-		this.powerLine = powerLine;
+	public void setLatLng(LatLng latLng) {
+		this.latLng = latLng;
+	}
+
+	public String getName() {
+		return this.name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public Integer getMinProduction() {
@@ -109,28 +101,28 @@ public class PowerSource implements java.io.Serializable {
 		this.currentProduction = currentProduction;
 	}
 
-	public Set<?> getPowerLines() {
-		return this.powerLines;
+	public Double getRadius() {
+		return this.radius;
 	}
 
-	public void setPowerLines(Set<?> powerLines) {
-		this.powerLines = powerLines;
-	}
-
-	public double getRadius() {
-		return radius;
-	}
-
-	public void setRadius(double radius) {
+	public void setRadius(Double radius) {
 		this.radius = radius;
 	}
 
-	public boolean isStatus() {
-		return status;
+	public Boolean getStatus() {
+		return this.status;
 	}
 
-	public void setStatus(boolean status) {
+	public void setStatus(Boolean status) {
 		this.status = status;
+	}
+
+	public Set getPowerLines() {
+		return this.powerLines;
+	}
+
+	public void setPowerLines(Set powerLines) {
+		this.powerLines = powerLines;
 	}
 
 }

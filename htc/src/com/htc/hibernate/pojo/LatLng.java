@@ -1,4 +1,5 @@
 package com.htc.hibernate.pojo;
+// Generated 16 Aug, 2015 3:28:11 PM by Hibernate Tools 4.3.1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -37,16 +38,14 @@ public class LatLng implements java.io.Serializable {
 			return false;
 		return true;
 	}
-
+	
 	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private double latitude;
 	private double longitude;
 	private Set<?> holonObjectsForNeLocation = new HashSet<Object>(0);
-	private Set<?> holons = new HashSet<Object>(0);
 	private Set<?> powerSources = new HashSet<Object>(0);
 	private Set<?> powerLinesForSource = new HashSet<Object>(0);
-	private Set<?> powerLineNodes = new HashSet<Object>(0);
 	private Set<?> holonObjectsForSwLocation = new HashSet<Object>(0);
 	private Set<?> powerLinesForDestination = new HashSet<Object>(0);
 	private Set<?> powerSwitches = new HashSet<Object>(0);
@@ -60,18 +59,14 @@ public class LatLng implements java.io.Serializable {
 	}
 
 	public LatLng(double latitude, double longitude,
-			Set<?> holonObjectsForNeLocation, 
-			Set<?> holons, Set<?> powerSources,
-			Set<?> powerLinesForSource, Set<?> powerLineNodes,
-			Set<?> holonObjectsForSwLocation, Set<?> powerLinesForDestination,
-			Set<?> powerSwitches) {
+			Set<?> holonObjectsForNeLocation, Set<?> powerSources,
+			Set<?> powerLinesForSource, Set<?> holonObjectsForSwLocation,
+			Set<?> powerLinesForDestination, Set<?> powerSwitches) {
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.holonObjectsForNeLocation = holonObjectsForNeLocation;
-		this.holons = holons;
 		this.powerSources = powerSources;
 		this.powerLinesForSource = powerLinesForSource;
-		this.powerLineNodes = powerLineNodes;
 		this.holonObjectsForSwLocation = holonObjectsForSwLocation;
 		this.powerLinesForDestination = powerLinesForDestination;
 		this.powerSwitches = powerSwitches;
@@ -109,14 +104,6 @@ public class LatLng implements java.io.Serializable {
 		this.holonObjectsForNeLocation = holonObjectsForNeLocation;
 	}
 
-	public Set<?> getHolons() {
-		return this.holons;
-	}
-
-	public void setHolons(Set<?> holons) {
-		this.holons = holons;
-	}
-
 	public Set<?> getPowerSources() {
 		return this.powerSources;
 	}
@@ -131,14 +118,6 @@ public class LatLng implements java.io.Serializable {
 
 	public void setPowerLinesForSource(Set<?> powerLinesForSource) {
 		this.powerLinesForSource = powerLinesForSource;
-	}
-
-	public Set<?> getPowerLineNodes() {
-		return this.powerLineNodes;
-	}
-
-	public void setPowerLineNodes(Set<?> powerLineNodes) {
-		this.powerLineNodes = powerLineNodes;
 	}
 
 	public Set<?> getHolonObjectsForSwLocation() {

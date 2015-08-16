@@ -1,4 +1,5 @@
 package com.htc.hibernate.pojo;
+// Generated 16 Aug, 2015 3:28:11 PM by Hibernate Tools 4.3.1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -10,30 +11,22 @@ public class PowerLine implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private Integer id;
+	private HolonObject holonObject;
 	private LatLng latLngBySource;
 	private LatLng latLngByDestination;
-	private PowerLine powerLine;
 	private PowerSource powerSource;
-	private HolonObject subLineHolonObject;
 	private String type;
+	private Holon holon;
 	private int currentCapacity;
 	private int maximumCapacity;
 	private boolean isConnected;
 	private String reasonDown;
-	private Set<?> powerLines = new HashSet<Object>(0);
-	private Set<?> holonObjects = new HashSet<Object>(0);
-	private Set<?> subHolonObjects = new HashSet<Object>(0);
-	private Set<?> powerSwitchesA = new HashSet<Object>(0);
-	private Set<?> powerSwitchesB = new HashSet<Object>(0);
-	private Set<?> powerSources = new HashSet<Object>(0);
+	private Set<?> powerSwitchesForPowerLineA = new HashSet<Object>(0);
+	private Set<?> powerSwitchesForPowerLineB = new HashSet<Object>(0);
 
 	public PowerLine() {
 	}
-	
-	public PowerLine(int id) {
-		this.id=id;
-	}
-	
+
 	public PowerLine(String type, int currentCapacity, int maximumCapacity,
 			boolean isConnected) {
 		this.type = type;
@@ -42,43 +35,23 @@ public class PowerLine implements java.io.Serializable {
 		this.isConnected = isConnected;
 	}
 
-	public PowerLine(LatLng latLngBySource, LatLng latLngByDestination,
-			PowerLine powerLine, PowerSource powerSource, String type,
-			int currentCapacity, int maximumCapacity, boolean isConnected, HolonObject subLineHolonObject,
-			String reasonDown, Set<?> powerLines, Set<?> holonObjects,
-			Set<?> powerSwitchesA,Set<?> powerSwitchesB,Set<?> subHolonObjects, Set<?> powerSources ) {
+	public PowerLine(HolonObject holonObject, LatLng latLngBySource,
+			LatLng latLngByDestination, PowerSource powerSource, String type, Holon holon,
+			int currentCapacity, int maximumCapacity, boolean isConnected,
+			String reasonDown, Set<?> powerSwitchesForPowerLineA,
+			Set<?> powerSwitchesForPowerLineB) {
+		this.holonObject = holonObject;
 		this.latLngBySource = latLngBySource;
 		this.latLngByDestination = latLngByDestination;
-		this.powerLine = powerLine;
 		this.powerSource = powerSource;
 		this.type = type;
+		this.setHolon(holon);
 		this.currentCapacity = currentCapacity;
 		this.maximumCapacity = maximumCapacity;
 		this.isConnected = isConnected;
 		this.reasonDown = reasonDown;
-		this.subLineHolonObject = subLineHolonObject;
-		this.powerLines = powerLines;
-		this.holonObjects = holonObjects;
-		this.powerSwitchesA = powerSwitchesA;
-		this.setPowerSwitchesB(powerSwitchesB);
-		this.setSubHolonObjects(subHolonObjects);
-		this.powerSources = powerSources;
-	}
-
-	public boolean isConnected() {
-		return isConnected;
-	}
-
-	public void setConnected(boolean isConnected) {
-		this.isConnected = isConnected;
-	}
-
-	public Set<?> getPowerSources() {
-		return powerSources;
-	}
-
-	public void setPowerSources(Set<?> powerSources) {
-		this.powerSources = powerSources;
+		this.powerSwitchesForPowerLineA = powerSwitchesForPowerLineA;
+		this.powerSwitchesForPowerLineB = powerSwitchesForPowerLineB;
 	}
 
 	public Integer getId() {
@@ -87,6 +60,14 @@ public class PowerLine implements java.io.Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public HolonObject getHolonObject() {
+		return this.holonObject;
+	}
+
+	public void setHolonObject(HolonObject holonObject) {
+		this.holonObject = holonObject;
 	}
 
 	public LatLng getLatLngBySource() {
@@ -103,14 +84,6 @@ public class PowerLine implements java.io.Serializable {
 
 	public void setLatLngByDestination(LatLng latLngByDestination) {
 		this.latLngByDestination = latLngByDestination;
-	}
-
-	public PowerLine getPowerLine() {
-		return this.powerLine;
-	}
-
-	public void setPowerLine(PowerLine powerLine) {
-		this.powerLine = powerLine;
 	}
 
 	public PowerSource getPowerSource() {
@@ -161,52 +134,28 @@ public class PowerLine implements java.io.Serializable {
 		this.reasonDown = reasonDown;
 	}
 
-	public Set<?> getPowerLines() {
-		return this.powerLines;
+	public Set<?> getPowerSwitchesForPowerLineA() {
+		return this.powerSwitchesForPowerLineA;
 	}
 
-	public void setPowerLines(Set<?> powerLines) {
-		this.powerLines = powerLines;
+	public void setPowerSwitchesForPowerLineA(Set<?> powerSwitchesForPowerLineA) {
+		this.powerSwitchesForPowerLineA = powerSwitchesForPowerLineA;
 	}
 
-	public Set<?> getHolonObjects() {
-		return this.holonObjects;
+	public Set<?> getPowerSwitchesForPowerLineB() {
+		return this.powerSwitchesForPowerLineB;
 	}
 
-	public void setHolonObjects(Set<?> holonObjects) {
-		this.holonObjects = holonObjects;
+	public void setPowerSwitchesForPowerLineB(Set<?> powerSwitchesForPowerLineB) {
+		this.powerSwitchesForPowerLineB = powerSwitchesForPowerLineB;
 	}
 
-	public Set<?> getPowerSwitchesA() {
-		return this.powerSwitchesA;
+	public Holon getHolon() {
+		return holon;
 	}
 
-	public void setPowerSwitchesA(Set<?> powerSwitchesA) {
-		this.powerSwitchesA = powerSwitchesA;
-	}
-
-	public Set<?> getPowerSwitchesB() {
-		return powerSwitchesB;
-	}
-
-	public void setPowerSwitchesB(Set<?> powerSwitchesB) {
-		this.powerSwitchesB = powerSwitchesB;
-	}
-
-	public Set<?> getSubHolonObjects() {
-		return subHolonObjects;
-	}
-
-	public void setSubHolonObjects(Set<?> subHolonObjects) {
-		this.subHolonObjects = subHolonObjects;
-	}
-
-	public HolonObject getSubLineHolonObject() {
-		return subLineHolonObject;
-	}
-
-	public void setSubLineHolonObject(HolonObject subLineHolonObject) {
-		this.subLineHolonObject = subLineHolonObject;
+	public void setHolon(Holon holon) {
+		this.holon = holon;
 	}
 
 }
