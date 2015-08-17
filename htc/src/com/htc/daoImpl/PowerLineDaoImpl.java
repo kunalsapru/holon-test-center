@@ -48,4 +48,10 @@ public class PowerLineDaoImpl implements PowerLineDao {
 		return powerLineHome.getAllPowerLine();
 	}
 
+	@Override
+	public ArrayList<PowerLine> getConnectedPowerLines(PowerLine powerLine) {
+		// TODO Auto-generated method stub
+		return powerLineHome.getConnectedPowerLines(powerLine);
+	}
+
 }

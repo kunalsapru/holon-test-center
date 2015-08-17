@@ -127,7 +127,12 @@ public class PowerLineAction extends CommonUtilities {
 		try {
 			Integer powerLineId = getRequest().getParameter("powerLineId")!=null?Integer.parseInt(getRequest().getParameter("powerLineId")):0;
 			PowerLine  powerLine = getPowerLineService().findById(powerLineId);
-			log.info("PowerLine Id: "+powerLine.getId());
+			ArrayList<PowerLine> connectedPowerLines = getPowerLineService().getConnectedPowerLines(powerLine);
+			StringBuffer powerLineIds = new StringBuffer();
+			for(PowerLine powerLine2 : connectedPowerLines) {
+				powerLineIds.append(powerLine2.getId()+"~");
+			}
+			powerLineIds = powerLineIds.deleteCharAt(powerLineIds.lastIndexOf("~"));
 			HolonObject subLineHolonObject = powerLine.getHolonObject();
 			PowerSource subLinePowerSrc=powerLine.getPowerSource();
 			Integer subLineHolonObjectId= 0;
@@ -149,7 +154,9 @@ public class PowerLineAction extends CommonUtilities {
 			respStr.append(powerLine.getLatLngBySource().getLatitude()+"~"+powerLine.getLatLngBySource().getLongitude()+"*");
 			respStr.append(powerLine.getLatLngByDestination().getLatitude()+"~"+powerLine.getLatLngByDestination().getLongitude()+"*");
 			respStr.append(subLineHolonObjectId+"*");
-			respStr.append(subLinePowerSrcId);
+			respStr.append(subLinePowerSrcId+"*");
+			respStr.append(powerLineIds);
+			
 			getResponse().setContentType("text/html");
 			getResponse().getWriter().write(respStr.toString());
 		} catch (Exception e) {
@@ -214,6 +221,12 @@ public class PowerLineAction extends CommonUtilities {
 			powerLine.setMaximumCapacity(maxCapacity);
 			powerLine.setCurrentCapacity(0);
 			getPowerLineService().merge(powerLine);
+			ArrayList<PowerLine> connectedPowerLines = getPowerLineService().getConnectedPowerLines(powerLine);
+			StringBuffer powerLineIds = new StringBuffer();
+			for(PowerLine powerLine2 : connectedPowerLines) {
+				powerLineIds.append(powerLine2.getId()+"~");
+			}
+			powerLineIds = powerLineIds.deleteCharAt(powerLineIds.lastIndexOf("~"));
 			String color=CommonUtilities.getLineColor(CommonUtilities.getPercent(powerLine.getCurrentCapacity(),powerLine.getMaximumCapacity()));
 			StringBuffer respStr= new StringBuffer("");
 			respStr.append(powerLine.isIsConnected()+"*");
@@ -228,7 +241,8 @@ public class PowerLineAction extends CommonUtilities {
 				holonObjectId = powerLine.getHolonObject().getId();
 			}
 			respStr.append(holonObjectId+"*");
-			respStr.append(color);
+			respStr.append(color+"*");
+			respStr.append(powerLineIds);
 		//Calling the response function and setting the content type of response.
 		getResponse().setContentType("text/html");
 		getResponse().getWriter().write(respStr.toString());

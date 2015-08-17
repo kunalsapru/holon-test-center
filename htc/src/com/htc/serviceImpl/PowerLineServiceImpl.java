@@ -38,4 +38,10 @@ public class PowerLineServiceImpl extends AbstractService implements PowerLineSe
 		return getPowerLineDao().getAllPowerLine();
 	}
 
+	@Override
+	public ArrayList<PowerLine> getConnectedPowerLines(PowerLine powerLine) {
+		// TODO Auto-generated method stub
+		return getPowerLineDao().getConnectedPowerLines(powerLine);
+	}
+
 }

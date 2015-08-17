@@ -290,21 +290,26 @@ function getLineInfoWindowContent(data){
 	"<td><b>Current Capacity: </b>"+currentCapacity+"</td></tr>"+
 	"<tr><td><b>PowerLine Type: </b>"+lineType+"</td>";
 	if(lineType==="SUBLINE"){
-		content = content.concat("<td><b>Connected Holon Object Id: </b>"+holonObjectIdForSubline+"</td></tr>"+
-				"<tr><td colspan='2' style='text-align: center;'>" +
-				"<span class='button' id='editPowerLineObject'><i class='fa fa-pencil-square-o'></i>&nbsp;&nbsp;Edit Power Line</span></td></tr>" +
-		"</div>");
+		content = content.concat("<td><b>Connected Holon Object Id: </b>"+holonObjectIdForSubline+"</td></tr></div>");
 	} else if(lineType==="POWERSUBLINE"){
-		content = content.concat("<td><b>Connected Power Source Id: </b>"+powerSrcIdForSubline+"</td></tr>"+
-				"<tr><td colspan='2' style='text-align: center;'>" +
-				"<span class='button' id='editPowerLineObject'><i class='fa fa-pencil-square-o'></i>&nbsp;&nbsp;Edit Power Line</span></td></tr>" +
-		"</div>");
+		content = content.concat("<td><b>Connected Power Source Id: </b>"+powerSrcIdForSubline+"</td></tr></div>");
 	} else{
-		content = content.concat("<td></td></td></tr>"+
-				"<tr><td colspan='2' style='text-align: center;'>" +
-				"<span class='button' id='editPowerLineObject'><i class='fa fa-pencil-square-o'></i>&nbsp;&nbsp;Edit Power Line</span></td></tr>" +
-		"</div>");
+		content = content.concat("<td></td></td></tr></div>");
 	}
+	content = content.concat("<div class = 'table'><table><tr><td colspan='2'>Connected Power Lines</td></tr>")
+	var powerLineIds = respStr[9];
+	var powerLineIdsArray = powerLineIds.split("~");
+	for(var i = 0; i < powerLineIdsArray.length; i+=2) {
+		content = content.concat("<tr><td>Power Line: "+powerLineIdsArray[i]+"</td>");
+		if(typeof powerLineIdsArray[i+1] != 'undefined') {
+			content = content.concat("<td>Power Line: "+powerLineIdsArray[i+1]+"</td></tr>");
+		} else {
+			content = content.concat("<td>&nbsp;</td></tr>");
+		}
+	}
+	content = content.concat("<tr><td colspan='2' style='text-align: center;'>" +
+			"<span class='button' id='editPowerLineObject'><i class='fa fa-pencil-square-o'></i>&nbsp;&nbsp;Edit Power Line</span></td></tr>" +
+			"</div>");
 	return content;
 }
 
