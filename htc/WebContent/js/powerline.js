@@ -225,7 +225,7 @@ function addMessageWindow(line,powerLineId){
 			connectToPowerSource(event.latLng,powerLineId.trim(),"PowerLine");
 		}else if(addSwitchonPowerLineMode==true){
 			createPowerSwitch(event.latLng,powerLineId.trim());
-		}else{		
+		}else{
 				var dataAttributes= {
 				powerLineId : powerLineId,
 			}
@@ -299,10 +299,19 @@ function getLineInfoWindowContent(data){
 	content = content.concat("<div class = 'table'><table><tr><td colspan='2'>Connected Power Lines</td></tr>")
 	var powerLineIds = respStr[9];
 	var powerLineIdsArray = powerLineIds.split("~");
+	var powerLineLocationLatitude;
+	var powerLineLocationLongitude;
+	var connectedPowerLineId;
 	for(var i = 0; i < powerLineIdsArray.length; i+=2) {
-		content = content.concat("<tr><td>Power Line: "+powerLineIdsArray[i]+"</td>");
+		connectedPowerLineId = powerLineIdsArray[i].split("!")[0];
+		powerLineLocationLatitude = powerLineIdsArray[i].split("!")[1].split("^")[0];
+		powerLineLocationLongitude = powerLineIdsArray[i].split("!")[1].split("^")[1];
+		content = content.concat("<tr><td>Power Line: <a href='#' onclick='zoomToPowerLine("+connectedPowerLineId+","+powerLineLocationLatitude+","+powerLineLocationLongitude+")' id='connectedPowerLineId_"+connectedPowerLineId+"'>"+connectedPowerLineId+"</a></td>");
 		if(typeof powerLineIdsArray[i+1] != 'undefined') {
-			content = content.concat("<td>Power Line: "+powerLineIdsArray[i+1]+"</td></tr>");
+			connectedPowerLineId = powerLineIdsArray[i+1].split("!")[0];
+			powerLineLocationLatitude = powerLineIdsArray[i+1].split("!")[1].split("^")[0];
+			powerLineLocationLongitude = powerLineIdsArray[i+1].split("!")[1].split("^")[1];
+			content = content.concat("<td>Power Line: <a href='#' onclick='zoomToPowerLine("+connectedPowerLineId+","+powerLineLocationLatitude+","+powerLineLocationLongitude+")' id='connectedPowerLineId_"+connectedPowerLineId+"'>"+connectedPowerLineId+"</a></td></tr>");
 		} else {
 			content = content.concat("<td>&nbsp;</td></tr>");
 		}
@@ -348,4 +357,19 @@ function updatePowerLineCallBack(data, options){
 	});
 	addMessageWindow(line,powerLineId);
 	globalPlList.set(powerLineId,line);
+}
+
+function zoomToPowerLine(powerLineId, powerLineLocationLatitude, powerLineLocationLongitude) {
+	var location = new google.maps.LatLng(powerLineLocationLatitude, powerLineLocationLongitude);
+	var dataAttributes= {
+			powerLineId : powerLineId,
+		}
+	var options= {
+			position:location,
+			powerLineId : powerLineId
+	}
+	ajaxRequest("getPowerLineInfo", dataAttributes, getPowerLineInfoCallBack, options);		
+	map.setCenter(location);
+	map.setZoom(18);
+	
 }

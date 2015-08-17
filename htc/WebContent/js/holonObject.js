@@ -305,7 +305,7 @@ function getHolonInfoWindowCallBack(data,options)
 
 function zoomToHolon(holonObjectId,neLoc, type)
 {
-	
+	alert(neLoc);
 	var location = new google.maps.LatLng(neLoc.split("~")[0], neLoc.split("~")[1]);
 	if(type=="Holon Object"){
 		

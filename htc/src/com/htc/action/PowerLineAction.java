@@ -129,8 +129,12 @@ public class PowerLineAction extends CommonUtilities {
 			PowerLine  powerLine = getPowerLineService().findById(powerLineId);
 			ArrayList<PowerLine> connectedPowerLines = getPowerLineService().getConnectedPowerLines(powerLine);
 			StringBuffer powerLineIds = new StringBuffer();
+			double middleLatitude = 0L;
+			double middleLongitude = 0L;
 			for(PowerLine powerLine2 : connectedPowerLines) {
-				powerLineIds.append(powerLine2.getId()+"~");
+				middleLatitude = (powerLine2.getLatLngBySource().getLatitude()+powerLine2.getLatLngByDestination().getLatitude())/2;
+				middleLongitude = (powerLine2.getLatLngBySource().getLongitude()+powerLine2.getLatLngByDestination().getLongitude())/2;
+				powerLineIds.append(powerLine2.getId()+"!"+middleLatitude+"^"+middleLongitude+"~");
 			}
 			powerLineIds = powerLineIds.deleteCharAt(powerLineIds.lastIndexOf("~"));
 			HolonObject subLineHolonObject = powerLine.getHolonObject();
