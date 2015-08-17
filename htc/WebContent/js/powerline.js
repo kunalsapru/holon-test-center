@@ -92,6 +92,7 @@ function savePowerLineObject()
 	var HolonObjectId = $("#powerLineHolonObjectIdHidden").text();
 	var powerLineForSubLine=$("#powerLineIdForSubLine").text();
 	var powerLineType=$("#powerLineType").text();
+	var holonForPowerLine = $("#holonForPowerLine option:selected").val();
 	$( "#lineObjectDetail" ).slideUp(100);
 	 $("#powerLineObjectActionState").text("ADD");
 	 $("#powerLineIdHidden").text("");
@@ -100,29 +101,28 @@ function savePowerLineObject()
 	 $("#powerLineHolonObjectIdHidden").text("");
 	 $("#powerLineIdForSubLine").text("");
 	var dataAttributes = {
-			powerLineType : powerLineType,
-			maxCapacity : maxCapacity,
-			latStart : startLat,
-			lngStart : startLng,
-			latEnd : endLat,
-			lngEnd : endLng,
-			isConnected :false,
-			reasonDown : "",
-			powerSourceId:1,
-			powerLineId:powerLineId,
-			HolonObjectId:HolonObjectId,
-			powerLineForSubLine:powerLineForSubLine,
-				};		    	
+		powerLineType : powerLineType,
+		maxCapacity : maxCapacity,
+		latStart : startLat,
+		lngStart : startLng,
+		latEnd : endLat,
+		lngEnd : endLng,
+		isConnected :false,
+		reasonDown : "",
+		powerLineId:powerLineId,
+		HolonObjectId:HolonObjectId,
+		powerLineForSubLine:powerLineForSubLine,
+		holonForPowerLine : holonForPowerLine
+	};		    	
 	var options = {
-			lineShape:createdPowerLineObject,
-			path:[new google.maps.LatLng(startLat, startLng),new google.maps.LatLng(endLat,endLng)],
-			};	
+		lineShape:createdPowerLineObject,
+		path:[new google.maps.LatLng(startLat, startLng),new google.maps.LatLng(endLat,endLng)],
+	};	
 	if(powerLineObjectActionState=="Edit"){
 		ajaxRequest("editPowerLine", dataAttributes, editPowerLineObjectCallBack,{});
-	}else
-		{
-		ajaxRequest("drawPowerLine", dataAttributes, drawPoweLineCallBack,options);
-		}
+	}else {
+			ajaxRequest("drawPowerLine", dataAttributes, drawPoweLineCallBack,options);
+	}
 }
 
 function editPowerLineObjectCallBack(data, options) {
