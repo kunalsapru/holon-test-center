@@ -191,9 +191,7 @@ function createHolonObjectCallBack(data, options) {
 	var holonColor= dataArray[4];
 	createdHolonObject.setOptions({strokeColor:holonColor,fillColor: holonColor});
 	 //When Rectangle is clicked
-	  google.maps.event.addListener(createdHolonObject, 'click', function(event) {
-		  addEventActionToObject(holonObjectId,event.latLng)
-		  });
+	 attachMessage(holonObjectId, createdHolonObject);
 		showHolonCoIcons();
 		globalHoList.set(holonObjectId,createdHolonObject);
 	}
