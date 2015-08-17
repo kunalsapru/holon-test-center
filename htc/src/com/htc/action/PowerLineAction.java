@@ -10,6 +10,7 @@ import com.htc.hibernate.pojo.HolonObject;
 import com.htc.hibernate.pojo.LatLng;
 import com.htc.hibernate.pojo.PowerLine;
 import com.htc.hibernate.pojo.PowerSource;
+import com.htc.hibernate.pojo.PowerSwitch;
 import com.htc.utilities.CommonUtilities;
 import com.htc.utilities.ConstantValues;
 
@@ -127,16 +128,21 @@ public class PowerLineAction extends CommonUtilities {
 		try {
 			Integer powerLineId = getRequest().getParameter("powerLineId")!=null?Integer.parseInt(getRequest().getParameter("powerLineId")):0;
 			PowerLine  powerLine = getPowerLineService().findById(powerLineId);
-			ArrayList<PowerLine> connectedPowerLines = getPowerLineService().getConnectedPowerLines(powerLine);
+			ArrayList<PowerLine> connectedPowerLines = connectedPowerLines(powerLine);
+			
 			StringBuffer powerLineIds = new StringBuffer();
 			double middleLatitude = 0L;
 			double middleLongitude = 0L;
+			System.out.println("Selected Power Line = "+powerLine.getId());
 			for(PowerLine powerLine2 : connectedPowerLines) {
+				System.out.println("Connected lines "+powerLine2.getId());
 				middleLatitude = (powerLine2.getLatLngBySource().getLatitude()+powerLine2.getLatLngByDestination().getLatitude())/2;
 				middleLongitude = (powerLine2.getLatLngBySource().getLongitude()+powerLine2.getLatLngByDestination().getLongitude())/2;
 				powerLineIds.append(powerLine2.getId()+"!"+middleLatitude+"^"+middleLongitude+"~");
 			}
-			powerLineIds = powerLineIds.deleteCharAt(powerLineIds.lastIndexOf("~"));
+			if(powerLineIds.length() > 0) {
+				powerLineIds = powerLineIds.deleteCharAt(powerLineIds.lastIndexOf("~"));
+			}
 			HolonObject subLineHolonObject = powerLine.getHolonObject();
 			PowerSource subLinePowerSrc=powerLine.getPowerSource();
 			Integer subLineHolonObjectId= 0;
@@ -255,4 +261,21 @@ public class PowerLineAction extends CommonUtilities {
 			e.printStackTrace();
 		}
 	}
+	
+	ArrayList<PowerLine> connectedPowerLines(PowerLine powerLine) {
+		ArrayList<PowerLine> connectedPowerLines = getPowerLineService().getConnectedPowerLines(powerLine);
+		PowerLine powerLine2 = null;
+		PowerSwitch powerSwitch = null;
+		for(int i =0; i< connectedPowerLines.size();i++) {
+			powerLine2 = connectedPowerLines.get(i);
+			powerSwitch = getPowerSwitchService().checkSwitchStatusBetweenPowerLines(powerLine, powerLine2);
+			if(powerSwitch != null){
+				if(!powerSwitch.getStatus()) {
+					connectedPowerLines.remove(i);
+				}
+			}
+		}
+		return connectedPowerLines;
+	}
+	
 }

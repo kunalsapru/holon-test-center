@@ -3,6 +3,7 @@ package com.htc.daoImpl;
 import java.util.ArrayList;
 
 import com.htc.dao.PowerSwitchDao;
+import com.htc.hibernate.pojo.PowerLine;
 import com.htc.hibernate.pojo.PowerSwitch;
 import com.htc.hibernate.utilities.PowerSwitchHome;
 
@@ -47,6 +48,13 @@ public class PowerSwitchDaoImpl implements PowerSwitchDao {
 		// TODO Auto-generated method stub
 		return powerSwitchHome.getAllPowerSwitch();
 
+	}
+
+	@Override
+	public PowerSwitch checkSwitchStatusBetweenPowerLines(PowerLine powerLineA,
+			PowerLine powerLineB) {
+		// TODO Auto-generated method stub
+		return powerSwitchHome.checkSwitchStatusBetweenPowerLines(powerLineA, powerLineB);
 	}
 
 }

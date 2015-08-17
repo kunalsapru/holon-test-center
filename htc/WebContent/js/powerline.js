@@ -298,7 +298,10 @@ function getLineInfoWindowContent(data){
 	}
 	content = content.concat("<div class = 'table'><table><tr><td colspan='2'>Connected Power Lines</td></tr>")
 	var powerLineIds = respStr[9];
-	var powerLineIdsArray = powerLineIds.split("~");
+	var powerLineIdsArray = [];
+	if(powerLineIds != "") {
+		powerLineIdsArray = powerLineIds.split("~");
+	}
 	var powerLineLocationLatitude;
 	var powerLineLocationLongitude;
 	var connectedPowerLineId;

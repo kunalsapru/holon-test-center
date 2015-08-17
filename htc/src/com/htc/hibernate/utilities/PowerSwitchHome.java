@@ -1,12 +1,12 @@
 package com.htc.hibernate.utilities;
 
 import java.util.ArrayList;
-
 import org.apache.log4j.Logger;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-
 import com.htc.hibernate.config.HibernateSessionFactory;
+import com.htc.hibernate.pojo.PowerLine;
 import com.htc.hibernate.pojo.PowerSwitch;
 
 /**
@@ -94,6 +94,25 @@ public class PowerSwitchHome {
 			System.out.println("get Power Switch list failed");
 		}
 		return listPowerSwitch;
+	}
+	
+	public PowerSwitch checkSwitchStatusBetweenPowerLines(PowerLine powerLineA, PowerLine powerLineB) {
+		Session session = null;
+		Transaction tx = null;
+		PowerSwitch powerSwitch = null;
+		try {
+			session = HibernateSessionFactory.getSessionFactory().getCurrentSession();
+			tx = session.beginTransaction();
+			Query query = session.createQuery("from PowerSwitch ps where (ps.powerLineByPowerLineA=:powerLineA or ps.powerLineByPowerLineA=:powerLineB) and "
+					+ "ps.powerLineByPowerLineB=:powerLineA or ps.powerLineByPowerLineB=:powerLineB");
+			query.setEntity("powerLineA", powerLineA);
+			query.setEntity("powerLineB", powerLineB);
+			powerSwitch =  (PowerSwitch) query.uniqueResult();
+			tx.commit();
+		} catch (RuntimeException re) {
+			System.out.println("checkSwitchStatusBetweenPowerLines failed");
+		}
+		return powerSwitch;
 	}
 
 }

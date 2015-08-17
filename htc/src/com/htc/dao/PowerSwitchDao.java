@@ -2,6 +2,7 @@ package com.htc.dao;
 
 import java.util.ArrayList;
 
+import com.htc.hibernate.pojo.PowerLine;
 import com.htc.hibernate.pojo.PowerSwitch;
 
 public interface PowerSwitchDao {
@@ -11,4 +12,5 @@ public interface PowerSwitchDao {
 	public PowerSwitch findById(int powerSwitchId);
 	public boolean delete(PowerSwitch persistentInstance);
 	public ArrayList<PowerSwitch> getAllPowerSwitch();
+	public PowerSwitch checkSwitchStatusBetweenPowerLines(PowerLine powerLineA, PowerLine powerLineB);
 }
