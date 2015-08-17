@@ -1,7 +1,6 @@
 package com.htc.utilities;
 
-import java.util.Random;
-
+/*import java.util.Random;*/
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;

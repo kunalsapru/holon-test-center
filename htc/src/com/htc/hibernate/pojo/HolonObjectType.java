@@ -16,12 +16,12 @@ public class HolonObjectType implements java.io.Serializable {
 	private Integer id;
 	private String name;
 	private Integer priority;
-	private Set holonObjects = new HashSet(0);
+	private Set<?> holonObjects = new HashSet<Object>(0);
 
 	public HolonObjectType() {
 	}
 
-	public HolonObjectType(String name, Integer priority, Set holonObjects) {
+	public HolonObjectType(String name, Integer priority, Set<?> holonObjects) {
 		this.name = name;
 		this.priority = priority;
 		this.holonObjects = holonObjects;
@@ -51,11 +51,11 @@ public class HolonObjectType implements java.io.Serializable {
 		this.priority = priority;
 	}
 
-	public Set getHolonObjects() {
+	public Set<?> getHolonObjects() {
 		return this.holonObjects;
 	}
 
-	public void setHolonObjects(Set holonObjects) {
+	public void setHolonObjects(Set<?> holonObjects) {
 		this.holonObjects = holonObjects;
 	}
 

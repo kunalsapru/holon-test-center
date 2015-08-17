@@ -14,7 +14,7 @@ public class EnergyState implements java.io.Serializable {
 	private int id;
 	private String state;
 	private String color;
-	private Set holonObjects = new HashSet(0);
+	private Set<?> holonObjects = new HashSet<Object>(0);
 
 	public EnergyState() {
 	}
@@ -23,7 +23,7 @@ public class EnergyState implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public EnergyState(int id, String state, String color, Set holonObjects) {
+	public EnergyState(int id, String state, String color, Set<?> holonObjects) {
 		this.id = id;
 		this.state = state;
 		this.color = color;
@@ -54,11 +54,11 @@ public class EnergyState implements java.io.Serializable {
 		this.color = color;
 	}
 
-	public Set getHolonObjects() {
+	public Set<?> getHolonObjects() {
 		return this.holonObjects;
 	}
 
-	public void setHolonObjects(Set holonObjects) {
+	public void setHolonObjects(Set<?> holonObjects) {
 		this.holonObjects = holonObjects;
 	}
 

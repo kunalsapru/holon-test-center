@@ -15,7 +15,7 @@ public class HolonElementState implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 	private int id;
 	private String name;
-	private Set holonElements = new HashSet(0);
+	private Set<?> holonElements = new HashSet<Object>(0);
 
 	public HolonElementState() {
 	}
@@ -24,7 +24,7 @@ public class HolonElementState implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public HolonElementState(int id, String name, Set holonElements) {
+	public HolonElementState(int id, String name, Set<?> holonElements) {
 		this.id = id;
 		this.name = name;
 		this.holonElements = holonElements;
@@ -46,11 +46,11 @@ public class HolonElementState implements java.io.Serializable {
 		this.name = name;
 	}
 
-	public Set getHolonElements() {
+	public Set<?> getHolonElements() {
 		return this.holonElements;
 	}
 
-	public void setHolonElements(Set holonElements) {
+	public void setHolonElements(Set<?> holonElements) {
 		this.holonElements = holonElements;
 	}
 
