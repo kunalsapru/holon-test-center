@@ -131,18 +131,17 @@ public class PowerLineAction extends CommonUtilities {
 			Integer powerLineId = getRequest().getParameter("powerLineId")!=null?Integer.parseInt(getRequest().getParameter("powerLineId")):0;
 			PowerLine  powerLine = getPowerLineService().findById(powerLineId);
 			log.info("PowerLine Id: "+powerLine.getId());
-			HolonObject subLineHolon=powerLine.getHolonObject();
+			HolonObject subLineHolonObject = powerLine.getHolonObject();
 			PowerSource subLinePowerSrc=powerLine.getPowerSource();
-			Integer subLineHolonId= 0;
+			Integer subLineHolonObjectId= 0;
 			Integer subLinePowerSrcId=0;
-			if(subLineHolon!=null) {
-				subLineHolonId=subLineHolon.getId();
+			if(subLineHolonObject!=null) {
+				subLineHolonObjectId = subLineHolonObject.getId();
 			}
 			
 			if(subLinePowerSrc!=null) {
 				subLinePowerSrcId=subLinePowerSrc.getId();
 			}
-			
 			//Calling the response function and setting the content type of response.
 			StringBuffer respStr= new StringBuffer("");
 			respStr.append(powerLine.isIsConnected()+"*");
@@ -152,8 +151,13 @@ public class PowerLineAction extends CommonUtilities {
 			respStr.append(powerLine.getType()+"*");
 			respStr.append(powerLine.getLatLngBySource().getLatitude()+"~"+powerLine.getLatLngBySource().getLongitude()+"*");
 			respStr.append(powerLine.getLatLngByDestination().getLatitude()+"~"+powerLine.getLatLngByDestination().getLongitude()+"*");
-			respStr.append(subLineHolonId+"*");
-			respStr.append(subLinePowerSrcId);
+			respStr.append(subLineHolonObjectId+"*");
+			respStr.append(subLinePowerSrcId+"*");
+			String holonInfo = "No Holon";
+			if(powerLine.getHolon() != null){
+				holonInfo = powerLine.getHolon().getName();
+			}
+			respStr.append(holonInfo);
 			getResponse().setContentType("text/html");
 			getResponse().getWriter().write(respStr.toString());
 		} catch (Exception e) {
@@ -238,8 +242,12 @@ public class PowerLineAction extends CommonUtilities {
 			respStr.append(powerLine.getLatLngBySource().getLatitude()+"~"+powerLine.getLatLngBySource().getLongitude()+"*");
 			respStr.append(powerLine.getLatLngByDestination().getLatitude()+"~"+powerLine.getLatLngByDestination().getLongitude()+"*");
 			respStr.append(powerLine.getHolonObject().getId()+"*");
-			respStr.append(color);
-		
+			respStr.append(color+"*");
+			String holonInfo = "No Holon";
+			if(powerLine.getHolon() != null){
+				holonInfo = powerLine.getHolon().getName();
+			}
+			respStr.append(holonInfo);
 		//Calling the response function and setting the content type of response.
 		getResponse().setContentType("text/html");
 		getResponse().getWriter().write(respStr.toString());
