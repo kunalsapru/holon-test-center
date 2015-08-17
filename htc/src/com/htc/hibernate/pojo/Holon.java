@@ -14,7 +14,6 @@ public class Holon implements java.io.Serializable {
 	private String name;
 	private String color;
 	private Set<?> holonCoordinators = new HashSet<Object>(0);
-	private Set<?> powerLines = new HashSet<Object>(0);
 
 	public Holon() {
 	}
@@ -23,12 +22,11 @@ public class Holon implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public Holon(int id, String name, String color, Set<?> holonCoordinators, Set<?> powerLines) {
+	public Holon(int id, String name, String color, Set<?> holonCoordinators) {
 		this.id = id;
 		this.name = name;
 		this.color = color;
 		this.holonCoordinators = holonCoordinators;
-		this.setPowerLines(powerLines);
 	}
 
 	public int getId() {
@@ -61,14 +59,6 @@ public class Holon implements java.io.Serializable {
 
 	public void setHolonCoordinators(Set<?> holonCoordinators) {
 		this.holonCoordinators = holonCoordinators;
-	}
-
-	public Set<?> getPowerLines() {
-		return powerLines;
-	}
-
-	public void setPowerLines(Set<?> powerLines) {
-		this.powerLines = powerLines;
 	}
 
 }

@@ -20,11 +20,5 @@
             </key>
             <one-to-many class="com.htc.hibernate.pojo.HolonCoordinator" />
         </set>
-        <set name="powerLines" table="power_line" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="holon" />
-            </key>
-            <one-to-many class="com.htc.hibernate.pojo.PowerLine" />
-        </set>
     </class>
 </hibernate-mapping>

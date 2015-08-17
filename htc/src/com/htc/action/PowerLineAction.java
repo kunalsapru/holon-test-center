@@ -3,17 +3,13 @@ package com.htc.action;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.apache.log4j.Logger;
-
-import com.htc.hibernate.pojo.Holon;
 import com.htc.hibernate.pojo.HolonObject;
 import com.htc.hibernate.pojo.LatLng;
 import com.htc.hibernate.pojo.PowerLine;
 import com.htc.hibernate.pojo.PowerSource;
 import com.htc.utilities.CommonUtilities;
 import com.htc.utilities.ConstantValues;
-
 
 public class PowerLineAction extends CommonUtilities {
 	/**
@@ -34,7 +30,6 @@ public class PowerLineAction extends CommonUtilities {
 			Double lngStart = getRequest().getParameter("lngStart")!=null?Double.parseDouble(getRequest().getParameter("lngStart")):0D;
 			Double latEnd = getRequest().getParameter("latEnd")!=null?Double.parseDouble(getRequest().getParameter("latEnd")):0D;
 			Double lngEnd = getRequest().getParameter("lngEnd")!=null?Double.parseDouble(getRequest().getParameter("lngEnd")):0D;
-			Integer holonForPowerLine = getRequest().getParameter("holonForPowerLine") != null ? Integer.parseInt(getRequest().getParameter("holonForPowerLine")):0;
 			Integer subLineHolonObjId=0;
 			
 			LatLng StartLatLng = new LatLng(latStart, lngStart);
@@ -45,7 +40,6 @@ public class PowerLineAction extends CommonUtilities {
 			
 			LatLng savedStartLatLng=getLatLngService().findById(newStartLatLngId);
 			LatLng savedEndLatLng=getLatLngService().findById(newEndLatLngId);
-			Holon holon = getHolonService().findById(holonForPowerLine);
 			int currentCapacity= 0;
 			PowerLine powerLine = new PowerLine();
 			powerLine.setCurrentCapacity(currentCapacity);
@@ -55,9 +49,6 @@ public class PowerLineAction extends CommonUtilities {
 			powerLine.setMaximumCapacity(maxCapacity);
 			powerLine.setReasonDown(reasonDown);
 			powerLine.setType(powerLineType);
-			if(holon!=null) {
-				powerLine.setHolon(holon);
-			}
 			if(powerLineType.equals(ConstantValues.SUBLINE)) {
 				subLineHolonObjId= getRequest().getParameter("HolonObjectId")!=null?Integer.parseInt(getRequest().getParameter("HolonObjectId")):0;
 				powerLine.setHolonObject(getHolonObjectService().findById(subLineHolonObjId));
@@ -152,12 +143,7 @@ public class PowerLineAction extends CommonUtilities {
 			respStr.append(powerLine.getLatLngBySource().getLatitude()+"~"+powerLine.getLatLngBySource().getLongitude()+"*");
 			respStr.append(powerLine.getLatLngByDestination().getLatitude()+"~"+powerLine.getLatLngByDestination().getLongitude()+"*");
 			respStr.append(subLineHolonObjectId+"*");
-			respStr.append(subLinePowerSrcId+"*");
-			String holonInfo = "No Holon";
-			if(powerLine.getHolon() != null){
-				holonInfo = powerLine.getHolon().getName();
-			}
-			respStr.append(holonInfo);
+			respStr.append(subLinePowerSrcId);
 			getResponse().setContentType("text/html");
 			getResponse().getWriter().write(respStr.toString());
 		} catch (Exception e) {
@@ -182,9 +168,6 @@ public class PowerLineAction extends CommonUtilities {
 		powerLineB.setReasonDown(powerLineA.getReasonDown());
 		powerLineB.setType(powerLineA.getType());
 		powerLineB.setPowerSource(powerLineA.getPowerSource());	
-		if(powerLineA.getHolon()!=null){
-			powerLineB.setHolon(powerLineA.getHolon());
-		}
 		getPowerLineService().persist(powerLineB);
 		//Update any switch connected to new Powerline
 		new PowerSwitchAction().setNewPowerLineForExistingSwitch(powerLineB);		
@@ -206,8 +189,8 @@ public class PowerLineAction extends CommonUtilities {
 			log.info("PowerLine Id: "+powerLine.getId());
 			startLocation = powerLine.getLatLngBySource().getLatitude()+"~"+powerLine.getLatLngBySource().getLongitude();
 			endLocation = powerLine.getLatLngByDestination().getLatitude()+"~"+powerLine.getLatLngByDestination().getLongitude();
-			color= CommonUtilities.getLineColor(CommonUtilities.getPercent(powerLine.getCurrentCapacity(),powerLine.getMaximumCapacity())); 				
-			String resp=startLocation+"^"+endLocation+"!"+color+"!"+powerLine.getId()+"!"+powerLine.getMaximumCapacity();			
+			color= CommonUtilities.getLineColor(CommonUtilities.getPercent(powerLine.getCurrentCapacity(),powerLine.getMaximumCapacity()));
+			String resp=startLocation+"^"+endLocation+"!"+color+"!"+powerLine.getId()+"!"+powerLine.getMaximumCapacity();
 			//Calling the response function and setting the content type of response.
 			getResponse().setContentType("text/html");
 			getResponse().getWriter().write(resp);
@@ -221,18 +204,11 @@ public class PowerLineAction extends CommonUtilities {
 		try {
 			Integer maxCapacity = getRequest().getParameter("maxCapacity")!=null?Integer.parseInt(getRequest().getParameter("maxCapacity")):0;
 			Integer powerLineId = getRequest().getParameter("powerLineId")!=null?Integer.parseInt(getRequest().getParameter("powerLineId")):0;
-			Integer holonForPowerLine = getRequest().getParameter("holonForPowerLine")!=null?Integer.parseInt(getRequest().getParameter("holonForPowerLine")):0;
-			Holon holon = getHolonService().findById(holonForPowerLine);
-			
 			PowerLine  powerLine =  getPowerLineService().findById(powerLineId);
 			powerLine.setMaximumCapacity(maxCapacity);
 			powerLine.setCurrentCapacity(0);
-			if(holon!=null){
-				powerLine.setHolon(holon);
-			}
 			getPowerLineService().merge(powerLine);
 			String color=CommonUtilities.getLineColor(CommonUtilities.getPercent(powerLine.getCurrentCapacity(),powerLine.getMaximumCapacity()));
-			
 			StringBuffer respStr= new StringBuffer("");
 			respStr.append(powerLine.isIsConnected()+"*");
 			respStr.append(powerLine.getId()+"*");
@@ -241,13 +217,12 @@ public class PowerLineAction extends CommonUtilities {
 			respStr.append(powerLine.getType()+"*");
 			respStr.append(powerLine.getLatLngBySource().getLatitude()+"~"+powerLine.getLatLngBySource().getLongitude()+"*");
 			respStr.append(powerLine.getLatLngByDestination().getLatitude()+"~"+powerLine.getLatLngByDestination().getLongitude()+"*");
-			respStr.append(powerLine.getHolonObject().getId()+"*");
-			respStr.append(color+"*");
-			String holonInfo = "No Holon";
-			if(powerLine.getHolon() != null){
-				holonInfo = powerLine.getHolon().getName();
+			int holonObjectId = 0;
+			if(powerLine.getHolonObject() != null){
+				holonObjectId = powerLine.getHolonObject().getId();
 			}
-			respStr.append(holonInfo);
+			respStr.append(holonObjectId+"*");
+			respStr.append(color);
 		//Calling the response function and setting the content type of response.
 		getResponse().setContentType("text/html");
 		getResponse().getWriter().write(respStr.toString());

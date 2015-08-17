@@ -268,34 +268,39 @@ function getPowerLineInfoCallBack(data,options){
 
 
 function getLineInfoWindowContent(data){
-	var respStr = data.split("*");
-	var isConnected = respStr[0];
-	var powerLineId = respStr[1];
-	var maximumCapacity = respStr[2];
-	var currentCapacity = respStr[3];
-	var lineType = respStr[4];
-	var source = respStr[5];
-	var dest = respStr[6];
-	var holonObjectIdForSubline = respStr[7];
-	var powerSrcIdForSubline = respStr[8];
-	var holonForLine = respStr[9];
+	var respStr= data.split("*");
+	var isConnected=respStr[0];
+	var powerLineId=respStr[1];
+	var maximumCapacity=respStr[2];
+	var currentCapacity=respStr[3];
+	var lineType=respStr[4];
+	var source=respStr[5];
+	var dest=respStr[6];
+	var holonObjectIdForSubline=respStr[7];
+	var powerSrcIdForSubline=respStr[8];
 	var content= "<div class='table'><table>"+
-	"<tr><td colspan='2' style='text-decoration: underline;'>Power Line Detail (Holon: "+holonForLine+")</td></tr>" +
+	"<tr><td colspan='2' style='text-decoration: underline;'>Power Line Detail</td></tr>" +
 	"<tr><td><b>PowerLine Id: </b>"+powerLineId +"</td>"+
 	"<td><b>Connected: </b>"+isConnected+"</td></tr>"+
 	"<tr><td><b>Maximum Capacity: </b>"+maximumCapacity+"</td>"+
 	"<td><b>Current Capacity: </b>"+currentCapacity+"</td></tr>"+
 	"<tr><td><b>PowerLine Type: </b>"+lineType+"</td>";
-	if(lineType == "SUBLINE"){
-		content = content.concat("<td><b>Connected Holon Object Id: </b>"+holonObjectIdForSubline+"</td></tr>");
-	} else if(lineType == "POWERSUBLINE"){
-		content = content.concat("<td><b>Connected Power Source Id: </b>"+powerSrcIdForSubline+"</td></tr>");
-	} else {
-		content = content.concat("<td></td></tr>");
-	}
-	content = content.concat("<tr><td colspan='2' style='text-align: center;'>" +
+	if(lineType==="SUBLINE"){
+		content = content.concat("<td><b>Connected Holon Object Id: </b>"+holonObjectIdForSubline+"</td></tr>"+
+				"<tr><td colspan='2' style='text-align: center;'>" +
 				"<span class='button' id='editPowerLineObject'><i class='fa fa-pencil-square-o'></i>&nbsp;&nbsp;Edit Power Line</span></td></tr>" +
 		"</div>");
+	} else if(lineType==="POWERSUBLINE"){
+		content = content.concat("<td><b>Connected Power Source Id: </b>"+powerSrcIdForSubline+"</td></tr>"+
+				"<tr><td colspan='2' style='text-align: center;'>" +
+				"<span class='button' id='editPowerLineObject'><i class='fa fa-pencil-square-o'></i>&nbsp;&nbsp;Edit Power Line</span></td></tr>" +
+		"</div>");
+	} else{
+		content = content.concat("<td></td></td></tr>"+
+				"<tr><td colspan='2' style='text-align: center;'>" +
+				"<span class='button' id='editPowerLineObject'><i class='fa fa-pencil-square-o'></i>&nbsp;&nbsp;Edit Power Line</span></td></tr>" +
+		"</div>");
+	}
 	return content;
 }
 
