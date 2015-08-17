@@ -57,7 +57,7 @@ public class PowerSwitchAction extends CommonUtilities {
 		Integer switchlocationId = new LatLngAction().saveLocation(switchLatLng);
 		LatLng switchLatLng2 = getLatLngService().findById(switchlocationId);
 		
-		Map<String, PowerLine> powerLineMap = new PowerLineAction().createPowerLinesUponSwitchAdd(powerLineId,switchLatLng2);
+		Map<String, PowerLine> powerLineMap = new PowerLineAction().splitPowerLineByLocation(powerLineId,switchLatLng2);
 		PowerLine powerLineA = powerLineMap.get("powerLineA");
 		PowerLine powerLineB = powerLineMap.get("powerLineB");
 		
@@ -108,77 +108,63 @@ public class PowerSwitchAction extends CommonUtilities {
 	}
 
 
-	public void getSwitchInfo()
-	{
-	
-	try{
-		Integer powerSwitchId= getRequest().getParameter("powerSwitchId")!=null?Integer.parseInt(getRequest().getParameter("powerSwitchId")):0;
-		PowerSwitch powerSwitch = getPowerSwitchService().findById(powerSwitchId);
-		Double switchLatitude= powerSwitch.getLatLng().getLatitude();
-		Double switchLongitude= powerSwitch.getLatLng().getLongitude();
-		Integer switchId = powerSwitch.getId();
-		Integer powerLineAId = powerSwitch.getPowerLineByPowerLineA().getId();
-		Integer powerLineBId = powerSwitch.getPowerLineByPowerLineB().getId();
-		boolean statusBool=powerSwitch.getStatus();
-		int status=0;
-		if(statusBool){
-			status=1;
+	public void getSwitchInfo() {
+	try {
+			Integer powerSwitchId= getRequest().getParameter("powerSwitchId")!=null?Integer.parseInt(getRequest().getParameter("powerSwitchId")):0;
+			PowerSwitch powerSwitch = getPowerSwitchService().findById(powerSwitchId);
+			Double switchLatitude= powerSwitch.getLatLng().getLatitude();
+			Double switchLongitude= powerSwitch.getLatLng().getLongitude();
+			Integer switchId = powerSwitch.getId();
+			Integer powerLineAId = powerSwitch.getPowerLineByPowerLineA().getId();
+			Integer powerLineBId = powerSwitch.getPowerLineByPowerLineB().getId();
+			boolean statusBool=powerSwitch.getStatus();
+			int status=0;
+			if(statusBool){
+				status=1;
 			}
-		String contentString=switchLatitude+"^"+switchLongitude+"^"+switchId+"^"+powerLineAId+"^"+powerLineBId+"^"+status;		
-		getResponse().setContentType("text/html");
-		getResponse().getWriter().write(contentString);
-	}
-	catch(Exception e){
+			String contentString=switchLatitude+"^"+switchLongitude+"^"+switchId+"^"+powerLineAId+"^"+powerLineBId+"^"+status;		
+			getResponse().setContentType("text/html");
+			getResponse().getWriter().write(contentString);
+		} catch(Exception e) {
 		log.info("Exception in getListPowerSwitch");
+			}
 	}
 	
-	}
-	
-	
-	public void powerSwitchOnOff(){
-		try{
-
-		Integer powerSwitchId= getRequest().getParameter("powerSwitchId")!=null?Integer.parseInt(getRequest().getParameter("powerSwitchId")):0;
-		PowerSwitch pwSw= getPowerSwitchService().findById(powerSwitchId); 
-		boolean psOldStatus=pwSw.getStatus();
-		boolean psNewStatus=true;
-		Integer psNewIntStatus=1;
-		if(psOldStatus)
-		{
-			psNewStatus=false;
-			psNewIntStatus=0;
-		}
-		pwSw.setStatus(psNewStatus);
-		getPowerSwitchService().merge(pwSw);
-		getResponse().setContentType("text/html");
-		getResponse().getWriter().write(psNewIntStatus.toString());
-		}
-		catch(Exception e){
-		log.info("Exception in powerSwitchOnOff ");
-		}
+	public void powerSwitchOnOff() {
+		try {
+			Integer powerSwitchId= getRequest().getParameter("powerSwitchId")!=null?Integer.parseInt(getRequest().getParameter("powerSwitchId")):0;
+			PowerSwitch pwSw= getPowerSwitchService().findById(powerSwitchId); 
+			boolean psOldStatus=pwSw.getStatus();
+			boolean psNewStatus=true;
+			Integer psNewIntStatus=1;
+			if(psOldStatus) {
+				psNewStatus=false;
+				psNewIntStatus=0;
+			}
+			pwSw.setStatus(psNewStatus);
+			getPowerSwitchService().merge(pwSw);
+			getResponse().setContentType("text/html");
+			getResponse().getWriter().write(psNewIntStatus.toString());
+			} catch(Exception e) {
+				log.info("Exception in powerSwitchOnOff ");
+				}
 	}
 
 	public void setNewPowerLineForExistingSwitch(PowerLine powerLineB) {
 		ArrayList<PowerSwitch> powerSwitchList = getPowerSwitchService().getAllPowerSwitch();
 		PowerSwitch powerSwitch= null;
-		
-		for(int i=0;i<powerSwitchList.size();i++)
-		{
+		for(int i=0;i<powerSwitchList.size();i++) {
 			PowerSwitch pSwitch=powerSwitchList.get(i);
 			LatLng switchLocation= pSwitch.getLatLng();
-			if(switchLocation.equals(powerLineB.getLatLngByDestination()))
-			{
+			if(switchLocation.equals(powerLineB.getLatLngByDestination())) {
 				powerSwitch =pSwitch;
 				break;
 			}				
 		}
-		
-		if(powerSwitch!=null)
-		{
+		if(powerSwitch!=null) {
 			powerSwitch.setPowerLineByPowerLineA(powerLineB);
 			getPowerSwitchService().merge(powerSwitch);
 		}
-		
 	}
-}
 
+}

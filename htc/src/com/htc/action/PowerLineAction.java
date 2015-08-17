@@ -3,7 +3,9 @@ package com.htc.action;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
 import org.apache.log4j.Logger;
+
 import com.htc.hibernate.pojo.HolonObject;
 import com.htc.hibernate.pojo.LatLng;
 import com.htc.hibernate.pojo.PowerLine;
@@ -30,6 +32,9 @@ public class PowerLineAction extends CommonUtilities {
 			Double lngStart = getRequest().getParameter("lngStart")!=null?Double.parseDouble(getRequest().getParameter("lngStart")):0D;
 			Double latEnd = getRequest().getParameter("latEnd")!=null?Double.parseDouble(getRequest().getParameter("latEnd")):0D;
 			Double lngEnd = getRequest().getParameter("lngEnd")!=null?Double.parseDouble(getRequest().getParameter("lngEnd")):0D;
+			Integer powerLineForSubLine = getRequest().getParameter("powerLineForSubLine")!=null?Integer.parseInt(getRequest().getParameter("powerLineForSubLine")):0;
+
+			System.out.println("powerLineForSubLine == "+powerLineForSubLine);
 			Integer subLineHolonObjId=0;
 			
 			LatLng StartLatLng = new LatLng(latStart, lngStart);
@@ -54,38 +59,28 @@ public class PowerLineAction extends CommonUtilities {
 				powerLine.setHolonObject(getHolonObjectService().findById(subLineHolonObjId));
 				/*This code is not required as per new DB changes. Recursive reference of power line has now been removed.
 				 * powerLine.setPowerLine(getPowerLineService().findById(powerLineIdForsubLine));*/
+				splitPowerLineByLocation(powerLineForSubLine,savedEndLatLng);
 			} else if(powerLineType.equals(ConstantValues.POWERSUBLINE)) //Saving Connector for power Source. Dont confuse because of the variable name .
 			{
 				subLineHolonObjId= getRequest().getParameter("HolonObjectId")!=null?Integer.parseInt(getRequest().getParameter("HolonObjectId")):0;
 				powerLine.setPowerSource(getPowerSourceService().findById(subLineHolonObjId));
 				/*This code is not required as per new DB changes. Recursive reference of power line has now been removed.
 				 * powerLine.setPowerLine(getPowerLineService().findById(powerLineIdForsubLine));*/
+				splitPowerLineByLocation(powerLineForSubLine,savedEndLatLng);
 			}
 			
 			Integer newPowerLineID = getPowerLineService().persist(powerLine);
-			
 			String color = CommonUtilities.getLineColor(CommonUtilities.getPercent(currentCapacity,maxCapacity));
-			
 			log.info("NewLy Generated powerLine  ID --> "+newPowerLineID);
-				
 			getResponse().setContentType("text/html");
 			StringBuffer plResponse = new StringBuffer();
 			plResponse.append(newPowerLineID+"!");
 			plResponse.append(color);				
 			getResponse().getWriter().write(plResponse.toString());	
-			
-			
-			
-			
-		}catch(Exception e)
-		{
+		}catch(Exception e) {
 			log.info("Exception "+e.getMessage()+" occurred in action drawPowerLine()");
 			e.printStackTrace();
-
 		}
-		
-		
-		
 	}
 	
 	public void showPowerLines(){
@@ -152,7 +147,7 @@ public class PowerLineAction extends CommonUtilities {
 		}
 	}
 	
-	public Map<String, PowerLine> createPowerLinesUponSwitchAdd(Integer powerLineId, LatLng switchLatLng2) {
+	public Map<String, PowerLine> splitPowerLineByLocation(Integer powerLineId, LatLng switchLatLng2) {
 		PowerLine powerLineA = getPowerLineService().findById(powerLineId);
 		LatLng powerLineAEnd=switchLatLng2;
 		LatLng powerLineBStart=switchLatLng2;
