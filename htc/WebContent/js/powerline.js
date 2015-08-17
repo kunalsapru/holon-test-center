@@ -43,7 +43,7 @@ $(document).ready(function(){
 				$("#powerLineEndLng").text(snappedEnd.lng());
 				$("#powerLineTitle").text("Add Power Line");
 				$("#powerLineType").text("MAINLINE");
-				getListHolonFromDatabase();
+				openDiv("lineObjectDetail");
 			});
 		} else {
 			$(this).css("background-color", "rgb(26, 26, 26)");
@@ -128,6 +128,12 @@ function drawPoweLineCallBack(data, options){
 	newLineShape.setOptions({strokeColor:color,path: path});
 	addMessageWindow(newLineShape,powerLineId)
 	globalPlList.set(powerLineId, newLineShape);
+	var powerLineAId = dataArray[2];
+	var powerLineBId = dataArray[3];
+	if(typeof powerLineAId != 'undefined' && typeof powerLineBId != 'undefined') {
+		updateGlobalPowerLineList(powerLineAId,true);
+		updateGlobalPowerLineList(powerLineBId,false);
+	}
 }
 
 function editPowerLine(powerLineId){

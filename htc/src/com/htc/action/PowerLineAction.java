@@ -32,7 +32,8 @@ public class PowerLineAction extends CommonUtilities {
 			Double lngStart = getRequest().getParameter("lngStart")!=null?Double.parseDouble(getRequest().getParameter("lngStart")):0D;
 			Double latEnd = getRequest().getParameter("latEnd")!=null?Double.parseDouble(getRequest().getParameter("latEnd")):0D;
 			Double lngEnd = getRequest().getParameter("lngEnd")!=null?Double.parseDouble(getRequest().getParameter("lngEnd")):0D;
-			Integer powerLineForSubLine = getRequest().getParameter("powerLineForSubLine")!=null?Integer.parseInt(getRequest().getParameter("powerLineForSubLine")):0;
+			Integer powerLineForSubLine = getRequest().getParameter("powerLineForSubLine")!=null && getRequest().getParameter("powerLineForSubLine")!=""?
+					Integer.parseInt(getRequest().getParameter("powerLineForSubLine")):0;
 
 			System.out.println("powerLineForSubLine == "+powerLineForSubLine);
 			Integer subLineHolonObjId=0;
@@ -54,19 +55,25 @@ public class PowerLineAction extends CommonUtilities {
 			powerLine.setMaximumCapacity(maxCapacity);
 			powerLine.setReasonDown(reasonDown);
 			powerLine.setType(powerLineType);
+			PowerLine powerLineA = null, powerLineB = null;
 			if(powerLineType.equals(ConstantValues.SUBLINE)) {
 				subLineHolonObjId= getRequest().getParameter("HolonObjectId")!=null?Integer.parseInt(getRequest().getParameter("HolonObjectId")):0;
 				powerLine.setHolonObject(getHolonObjectService().findById(subLineHolonObjId));
 				/*This code is not required as per new DB changes. Recursive reference of power line has now been removed.
 				 * powerLine.setPowerLine(getPowerLineService().findById(powerLineIdForsubLine));*/
-				splitPowerLineByLocation(powerLineForSubLine,savedEndLatLng);
+				Map<String, PowerLine> powerLineMap = splitPowerLineByLocation(powerLineForSubLine,savedEndLatLng);
+				powerLineA = powerLineMap.get("powerLineA");
+				powerLineB = powerLineMap.get("powerLineB");
 			} else if(powerLineType.equals(ConstantValues.POWERSUBLINE)) //Saving Connector for power Source. Dont confuse because of the variable name .
 			{
 				subLineHolonObjId= getRequest().getParameter("HolonObjectId")!=null?Integer.parseInt(getRequest().getParameter("HolonObjectId")):0;
 				powerLine.setPowerSource(getPowerSourceService().findById(subLineHolonObjId));
 				/*This code is not required as per new DB changes. Recursive reference of power line has now been removed.
 				 * powerLine.setPowerLine(getPowerLineService().findById(powerLineIdForsubLine));*/
-				splitPowerLineByLocation(powerLineForSubLine,savedEndLatLng);
+				Map<String, PowerLine> powerLineMap = splitPowerLineByLocation(powerLineForSubLine,savedEndLatLng);
+				powerLineA = powerLineMap.get("powerLineA");
+				powerLineB = powerLineMap.get("powerLineB");
+
 			}
 			
 			Integer newPowerLineID = getPowerLineService().persist(powerLine);
@@ -75,7 +82,11 @@ public class PowerLineAction extends CommonUtilities {
 			getResponse().setContentType("text/html");
 			StringBuffer plResponse = new StringBuffer();
 			plResponse.append(newPowerLineID+"!");
-			plResponse.append(color);				
+			plResponse.append(color);
+			if(powerLineA != null && powerLineB != null) {
+				plResponse.append("!"+powerLineA.getId()+"!");
+				plResponse.append(powerLineB.getId());
+			}
 			getResponse().getWriter().write(plResponse.toString());	
 		}catch(Exception e) {
 			log.info("Exception "+e.getMessage()+" occurred in action drawPowerLine()");
