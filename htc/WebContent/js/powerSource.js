@@ -111,7 +111,7 @@ function editPowerSourceObjectCallBack(data,options){
 		psStatusColor="#0B6121";
 	}
 	var editedPowerSourceObject= globalPSrcList.get(psId.toString()); 
-	editedPowerSourceObject.setOptions({strokeColor:psStatusColor,fillColor: "black"});
+	editedPowerSourceObject.setOptions({strokeColor:psStatusColor,fillColor: psStatusColor});
 	addEventActionToPsObject(psId,editedPowerSourceObject)
 	var dataAttributes= {
 			  psId : psId,
