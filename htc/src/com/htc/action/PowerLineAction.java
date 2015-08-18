@@ -132,14 +132,17 @@ public class PowerLineAction extends CommonUtilities {
 			Integer powerLineId = getRequest().getParameter("powerLineId")!=null?Integer.parseInt(getRequest().getParameter("powerLineId")):0;
 			PowerLine  powerLine = getPowerLineService().findById(powerLineId);
 			ArrayList<PowerLine> connectedPowerLines = connectedPowerLines(powerLineId);
-			int indexToRemove = 0;
+			int indexToRemove = -1;
 			for(int i=0; i < connectedPowerLines.size(); i++) {
 				if(connectedPowerLines.get(i).getId().equals(powerLineId)) {
 					indexToRemove = i;		
 				}
 			}
-			connectedPowerLines.remove(indexToRemove);//Removing self power line link
+			if(indexToRemove !=-1) {
+				connectedPowerLines.remove(indexToRemove);//Removing self power line link
+			}
 			StringBuffer powerLineIds = new StringBuffer();
+			powerLineIds.append("");
 			double middleLatitude = 0L;
 			double middleLongitude = 0L;
 			System.out.println("Selected Power Line = "+powerLine.getId());
