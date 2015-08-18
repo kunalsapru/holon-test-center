@@ -151,13 +151,10 @@
 					</tr>
 					<tr>
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;Maximum Production Capacity:&nbsp;&nbsp;&nbsp;&nbsp;<input id="psMaxProdCap" type="text"></td>	
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;Current Production:&nbsp;&nbsp;&nbsp;&nbsp;<input id="psCurrentPord" type="text"></td>						
-					</tr>
-					<tr>
-						<td colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;&nbsp;&nbsp;&nbsp;<select name="psStatus" id="psStatus">
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;&nbsp;&nbsp;&nbsp;<select name="psStatus" id="psStatus">
 							<option value=0>OFF</option>
 							<option value=1>ON</option>
-							</select></td>
+							</select></td>						
 					</tr>
 					</table><hr>
 					<table >
