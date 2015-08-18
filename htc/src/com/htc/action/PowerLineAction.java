@@ -134,7 +134,7 @@ public class PowerLineAction extends CommonUtilities {
 			Map<Integer, PowerLine> connectedPowerLineMap = connectedPowerLines(powerLineId);
 			connectedPowerLineMap.remove(powerLineId);//Removing Self link from Connected Power Line Map
 			for(Integer powerLineMapId : connectedPowerLineMap.keySet()) {
-				connectedPowerLines.add(getPowerLineService().findById(powerLineMapId));
+				connectedPowerLines.add(connectedPowerLineMap.get(powerLineMapId));
 			}
 			StringBuffer powerLineIds = new StringBuffer();
 			double middleLatitude = 0L;
