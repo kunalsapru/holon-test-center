@@ -22,6 +22,7 @@ public class PowerLineAction extends CommonUtilities {
 	private static final long serialVersionUID = 1L;
 	static Logger log = Logger.getLogger(HolonElementTypeAction.class);
 	private Map<Integer, PowerLine> listOfAllConnectedPowerLines = new TreeMap<Integer, PowerLine>();
+	ArrayList<PowerLine> listOfAllNeighbouringConnectedPowerLines = new ArrayList<PowerLine>();
 
 	public void drawPowerLine(){
 		
@@ -130,12 +131,14 @@ public class PowerLineAction extends CommonUtilities {
 		try {
 			Integer powerLineId = getRequest().getParameter("powerLineId")!=null?Integer.parseInt(getRequest().getParameter("powerLineId")):0;
 			PowerLine  powerLine = getPowerLineService().findById(powerLineId);
-			ArrayList<PowerLine> connectedPowerLines = new ArrayList<PowerLine>();
-			Map<Integer, PowerLine> connectedPowerLineMap = connectedPowerLines(powerLineId);
-			connectedPowerLineMap.remove(powerLineId);//Removing Self link from Connected Power Line Map
-			for(Integer powerLineMapId : connectedPowerLineMap.keySet()) {
-				connectedPowerLines.add(connectedPowerLineMap.get(powerLineMapId));
+			ArrayList<PowerLine> connectedPowerLines = connectedPowerLines(powerLineId);
+			int indexToRemove = 0;
+			for(int i=0; i < connectedPowerLines.size(); i++) {
+				if(connectedPowerLines.get(i).getId().equals(powerLineId)) {
+					indexToRemove = i;		
+				}
 			}
+			connectedPowerLines.remove(indexToRemove);//Removing self power line link
 			StringBuffer powerLineIds = new StringBuffer();
 			double middleLatitude = 0L;
 			double middleLongitude = 0L;
@@ -176,7 +179,7 @@ public class PowerLineAction extends CommonUtilities {
 			getResponse().setContentType("text/html");
 			getResponse().getWriter().write(respStr.toString());
 		} catch (Exception e) {
-			log.info("Exception "+e.getMessage()+" occurred in action showPowerLine()");
+			log.info("Exception "+e.getMessage()+" occurred in action getPowerLineInfo()");
 			e.printStackTrace();
 		}
 	}
@@ -268,7 +271,7 @@ public class PowerLineAction extends CommonUtilities {
 		}
 	}
 	
-	Map<Integer, PowerLine> connectedPowerLines(Integer powerLineId) {
+	ArrayList<PowerLine> connectedPowerLines(Integer powerLineId) {
 		PowerLine powerLine = getPowerLineService().findById(powerLineId);
 		ArrayList<PowerLine> connectedPowerLines = getPowerLineService().getConnectedPowerLines(powerLine);
 		log.info("Selected Power Line --> "+powerLineId);
@@ -290,17 +293,18 @@ public class PowerLineAction extends CommonUtilities {
 		for(PowerLine powerLine3 : connectedPowerLines) {
 			if(!(listOfAllConnectedPowerLines.containsKey(powerLine3.getId()))) {
 				listOfAllConnectedPowerLines.put(powerLine3.getId(), powerLine3);
+				listOfAllNeighbouringConnectedPowerLines.add(powerLine3);
 			}
 		}
 		for(PowerLine powerLine3 : connectedPowerLines) {
 			ArrayList<PowerLine> tempConnectedPowerLines = getPowerLineService().getConnectedPowerLines(powerLine3);
 			for(PowerLine powerLine4 : tempConnectedPowerLines) {
 				if(!(listOfAllConnectedPowerLines.containsKey(powerLine4.getId()))) {
-					connectedPowerLines(powerLine3.getId());//Recursive call
+					connectedPowerLines(powerLine3.getId());//Recursive call to get list of neighbors of neighbor
 				}
 			}
 		}
-		return listOfAllConnectedPowerLines;
+		return listOfAllNeighbouringConnectedPowerLines;
 	}
 	
 }
