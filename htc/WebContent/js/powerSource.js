@@ -292,9 +292,11 @@ function powerSourceOnOffCallBack(data, options)
 	if(newPowerSrcStatus== 1) {
 		powerSrc.setOptions({strokeColor:'#0B6121',fillColor: '#0B6121'});
 		powerStatusVal = "Producing";
+		currentProd = maxProd;
 	} else {
 		powerSrc.setOptions({strokeColor:'#FF0000', fillColor: '#FF0000'});
 		powerStatusVal = "Not Producing";
+		currentProd = 0;
 		}
 
 	var contentString=
