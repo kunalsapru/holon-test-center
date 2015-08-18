@@ -103,8 +103,8 @@ public class PowerSwitchHome {
 		try {
 			session = HibernateSessionFactory.getSessionFactory().getCurrentSession();
 			tx = session.beginTransaction();
-			Query query = session.createQuery("from PowerSwitch ps where (ps.powerLineByPowerLineA=:powerLineA or ps.powerLineByPowerLineA=:powerLineB) and "
-					+ "ps.powerLineByPowerLineB=:powerLineA or ps.powerLineByPowerLineB=:powerLineB");
+			Query query = session.createQuery("from PowerSwitch ps where (ps.powerLineByPowerLineA=:powerLineA and ps.powerLineByPowerLineB=:powerLineB) or "
+					+ "ps.powerLineByPowerLineA=:powerLineB and ps.powerLineByPowerLineB=:powerLineA");
 			query.setEntity("powerLineA", powerLineA);
 			query.setEntity("powerLineB", powerLineB);
 			powerSwitch =  (PowerSwitch) query.uniqueResult();
