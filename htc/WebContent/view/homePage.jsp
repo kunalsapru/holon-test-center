@@ -151,15 +151,11 @@
 					</tr>
 					<tr>
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;Maximum Production Capacity:&nbsp;&nbsp;&nbsp;&nbsp;<input id="psMaxProdCap" type="text"></td>	
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;&nbsp;&nbsp;&nbsp;<select name="psStatus" id="psStatus">
-							<option value=0>OFF</option>
-							<option value=1>ON</option>
-							</select></td>						
 					</tr>
 					</table><hr>
 					<table >
 					<tr>
-						<td colspan="2"><input id="cancelPowerObject" type='button' class="button"  value='Cancel' />&nbsp;&nbsp;&nbsp;&nbsp;
+						<td><input id="cancelPowerObject" type='button' class="button"  value='Cancel' />&nbsp;&nbsp;&nbsp;&nbsp;
 						<input id="savePowerObject" type='button' class="button"  value='Save Power Source' /></td>	
 					</tr>					
 					</table><hr>

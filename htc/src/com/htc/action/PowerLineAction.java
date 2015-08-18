@@ -244,11 +244,23 @@ public class PowerLineAction extends CommonUtilities {
 			powerLine.setCurrentCapacity(0);
 			getPowerLineService().merge(powerLine);
 			ArrayList<PowerLine> connectedPowerLines = getPowerLineService().getConnectedPowerLines(powerLine);
+			
 			StringBuffer powerLineIds = new StringBuffer();
+			powerLineIds.append("");
+			double middleLatitude = 0L;
+			double middleLongitude = 0L;
+			System.out.println("Selected Power Line = "+powerLine.getId());
 			for(PowerLine powerLine2 : connectedPowerLines) {
-				powerLineIds.append(powerLine2.getId()+"~");
+				System.out.println("Connected lines "+powerLine2.getId());
+				middleLatitude = (powerLine2.getLatLngBySource().getLatitude()+powerLine2.getLatLngByDestination().getLatitude())/2;
+				middleLongitude = (powerLine2.getLatLngBySource().getLongitude()+powerLine2.getLatLngByDestination().getLongitude())/2;
+				powerLineIds.append(powerLine2.getId()+"!"+middleLatitude+"^"+middleLongitude+"~");
 			}
-			powerLineIds = powerLineIds.deleteCharAt(powerLineIds.lastIndexOf("~"));
+			if(powerLineIds.length() > 0) {
+				powerLineIds = powerLineIds.deleteCharAt(powerLineIds.lastIndexOf("~"));
+			}
+
+			
 			String color=CommonUtilities.getLineColor(CommonUtilities.getPercent(powerLine.getCurrentCapacity(),powerLine.getMaximumCapacity()));
 			StringBuffer respStr= new StringBuffer("");
 			respStr.append(powerLine.isIsConnected()+"*");

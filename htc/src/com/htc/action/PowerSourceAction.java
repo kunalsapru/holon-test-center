@@ -70,6 +70,7 @@ public class PowerSourceAction  extends CommonUtilities{
 
 			pwSrcOld.setMaxProduction(psMaxProdCap);
 			pwSrcOld.setStatus((psStatus==1?true:false));
+			pwSrcOld.setCurrentProduction((psStatus==1?psMaxProdCap:0));
 			getPowerSourceService().merge(pwSrcOld);
 			PowerSource pwSrc2 = getPowerSourceService().findById(pSourceId);
 					

@@ -111,7 +111,7 @@ function editPowerSourceObjectCallBack(data,options){
 		psStatusColor="#0B6121";
 	}
 	var editedPowerSourceObject= globalPSrcList.get(psId.toString()); 
-	editedPowerSourceObject.setOptions({strokeColor:psStatusColor,fillColor: black});
+	editedPowerSourceObject.setOptions({strokeColor:psStatusColor,fillColor: "black"});
 	addEventActionToPsObject(psId,editedPowerSourceObject)
 	var dataAttributes= {
 			  psId : psId,
@@ -229,10 +229,10 @@ function getPsObjectInfoWindowCallBack(data,option)
 				"<table><tr><td colspan='2' style='text-align: center;'>");
 		if(powerStatus=="true")
 			{
-			contentString=contentString.concat("<span class='button' id='powerOnOff' ><i class='fa fa-circle-o-notch'>&nbsp; Power Off </i></span>");
+			contentString=contentString.concat("<span class='button' id='powerOnOff' ><i class='fa fa-circle-o-notch'>&nbsp; Turn Power Off </i></span>");
 			}else
 				{
-				contentString=contentString.concat("<span class='button' id='powerOnOff' ><i class='fa fa-circle-o-notch'>&nbsp; Power On </i></span>");	
+				contentString=contentString.concat("<span class='button' id='powerOnOff' ><i class='fa fa-circle-o-notch'>&nbsp; Turn Power On </i></span>");	
 				}
 		
 		contentString=contentString.concat("&nbsp;&nbsp;&nbsp;&nbsp;<span class='button' id='editPowerSource' title='Edit Power Source'><i class='fa fa-pencil-square-o'>&nbsp; Edit Power Source</i></span>"+
@@ -320,10 +320,10 @@ function powerSourceOnOffCallBack(data, options)
 				"<table><tr><td colspan='2' style='text-align: center;'>");
 		if(newPowerSrcStatus == 1)
 			{
-			contentString=contentString.concat("<span class='button' id='powerOnOff' ><i class='fa fa-circle-o-notch'>&nbsp; Power Off </i></span>");
+			contentString=contentString.concat("<span class='button' id='powerOnOff' ><i class='fa fa-circle-o-notch'>&nbsp; Turn Power Off </i></span>");
 			}else
 				{
-				contentString=contentString.concat("<span class='button' id='powerOnOff' ><i class='fa fa-circle-o-notch'>&nbsp; Power On </i></span>");	
+				contentString=contentString.concat("<span class='button' id='powerOnOff' ><i class='fa fa-circle-o-notch'>&nbsp; Turn Power On </i></span>");	
 				}
 		
 		contentString=contentString.concat("&nbsp;&nbsp;&nbsp;&nbsp;<span class='button' id='editPowerSource' title='Edit Power Source'><i class='fa fa-pencil-square-o'>&nbsp; Edit Power Source</i></span>"+
