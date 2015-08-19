@@ -113,16 +113,16 @@ public class CommonUtilities extends AbstractAction{
 		ArrayList<HolonElement> holonElementList= getHolonElementService().getHolonElements(holonObject);
 		for(HolonElement holonElement : holonElementList) {
 			if(holonElement.getHolonElementType().getProducer()) {
-				minimumEnergyRequired = minimumEnergyRequired+holonElement.getHolonElementType().getMinCapacity();
-				maximumEnergyRequired = maximumEnergyRequired+holonElement.getHolonElementType().getMaxCapacity();
+				minimumProductionCapacity = minimumProductionCapacity + holonElement.getHolonElementType().getMinCapacity();
+				maximumProductionCapacity = maximumProductionCapacity + holonElement.getHolonElementType().getMaxCapacity();
 				if(holonElement.getHolonElementState().getId()==1) {
 					currentProduction = currentProduction + holonElement.getCurrentCapacity();
 				}
 			} else {
-				minimumProductionCapacity = minimumProductionCapacity + holonElement.getHolonElementType().getMinCapacity();
-				maximumProductionCapacity = maximumProductionCapacity + holonElement.getHolonElementType().getMaxCapacity();
+				minimumEnergyRequired = minimumEnergyRequired+holonElement.getHolonElementType().getMinCapacity();
+				maximumEnergyRequired = maximumEnergyRequired+holonElement.getHolonElementType().getMaxCapacity();
 				if(holonElement.getHolonElementState().getId()==1) {
-					originalEnergyRequired=originalEnergyRequired+holonElement.getCurrentCapacity();
+					originalEnergyRequired = originalEnergyRequired+holonElement.getCurrentCapacity();
 				}
 			}
 		}
@@ -147,6 +147,8 @@ public class CommonUtilities extends AbstractAction{
 		holonObjectEnergyDetails.put("currentProduction", currentProduction);
 		holonObjectEnergyDetails.put("currentEnergyRequired", currentEnergyRequired);
 		holonObjectEnergyDetails.put("flexibility", flexibility);
+		holonObject.setFlexibility(flexibility);
+		getHolonObjectService().merge(holonObject);
 		
 		return holonObjectEnergyDetails;
 	}
@@ -154,7 +156,8 @@ public class CommonUtilities extends AbstractAction{
 	public Map<String, String> getHolonEnergyDetails(HolonCoordinator holonCoordinator) {
 
 		Map<String, String> holonEnergyDetails = new TreeMap<String, String>();
-		ArrayList<HolonObject> holonObjectListByCoordinator = getHolonObjectService().findByHCoordinator(holonCoordinator);
+		PowerLine powerLine = getPowerLineService().getPowerLineByHolonObject(holonCoordinator.getHolonObject());
+		ArrayList<HolonObject> holonObjectListByConnectedPowerLines = getHolonObjectListByConnectedPowerLines(powerLine);
 		HolonObject holonObjectOfCoordinator = holonCoordinator.getHolonObject();
 		Integer holonObjectOfCoordinatorId = holonObjectOfCoordinator.getId();
 		
@@ -169,9 +172,9 @@ public class CommonUtilities extends AbstractAction{
 		Integer currentEnergyRequiredHolon = 0;
 		Integer originalEnergyRequiredHolon = 0;
 		Integer flexibilityHolon = 0;
-		noOfHolonObjects = holonObjectListByCoordinator.size();
+		noOfHolonObjects = holonObjectListByConnectedPowerLines.size();
 		Map<String, Integer> holonObjectEnergyDetails = null;
-		for(HolonObject holonObject : holonObjectListByCoordinator) {
+		for(HolonObject holonObject : holonObjectListByConnectedPowerLines) {
 			hoObjectIdList.add(new Integer(holonObject.getId()).toString().concat("~").concat(holonObject.getHolonObjectType().getName()));
 			holonObjectEnergyDetails = getHolonObjectEnergyDetails(holonObject);
 			minimumProductionCapacityHolon = minimumProductionCapacityHolon + holonObjectEnergyDetails.get("minimumProductionCapacity");
@@ -181,9 +184,14 @@ public class CommonUtilities extends AbstractAction{
 			maximumEnergyRequiredHolon = maximumEnergyRequiredHolon + holonObjectEnergyDetails.get("maximumEnergyRequired");
 			currentEnergyRequiredHolon = currentEnergyRequiredHolon + holonObjectEnergyDetails.get("currentEnergyRequired");
 			originalEnergyRequiredHolon = originalEnergyRequiredHolon + holonObjectEnergyDetails.get("originalEnergyRequired");
-			flexibilityHolon = flexibilityHolon + holonObjectEnergyDetails.get("flexibility");
+			flexibilityHolon = flexibilityHolon + holonObject.getFlexibility();
 		}
-		
+
+/*		ArrayList<PowerSource> powerSourceListByHolonCoordinator = getPowerSourceService().findByHolonCoordinator(holonCoordinator);
+		for(PowerSource powerSource : powerSourceListByHolonCoordinator) {
+			//Include code for Power Source production and flexibility
+		}
+*/		
 		String holonObjectTypeName = holonObjectOfCoordinator.getHolonObjectType().getName();
 		hoObjectIdList.remove(holonObjectOfCoordinatorId.toString().concat("~").concat(holonObjectTypeName));
 		holonObjectList.append("<option value=\"Select Holon\" id= \"infoWinOpt\" selected>Select Holon Object</option>");
@@ -275,7 +283,16 @@ public class CommonUtilities extends AbstractAction{
 		return listOfAllNeighbouringConnectedPowerLines;
 	}
 	
-	
+	/*
+	 * This function can be called whenever:
+	 * 1 - Holon Object is added to a main line.
+	 * 2 - Power Source is added to a main line.
+	 * 3 - Switch is toggled.
+	 * 4 - Power source is toggled.
+	 * 5 - Power source is edited.
+	 * 6 - Holon Element is deleted from a holon object.
+	 * 7 - Holon Element is edited in such a way that its current capacity is less than the previous current capacity.
+	 * */	
 	public void updateHolonObjectsAndPowerSources(Integer powerLineId) {
 		PowerLine powerLine = getPowerLineService().findById(powerLineId);
 		String powerLineType = powerLine.getType();
@@ -355,4 +372,16 @@ public class CommonUtilities extends AbstractAction{
 		return (min + (int)(Math.random()*((max-min)+1)));
 	}
 	
+	public ArrayList<HolonObject> getHolonObjectListByConnectedPowerLines(PowerLine powerLine) {
+		ArrayList<HolonObject> connectedHolonObjects = new ArrayList<HolonObject>();
+		Integer powerLineId = powerLine.getId();
+		ArrayList<PowerLine> connectedPowerLines = connectedPowerLines(powerLineId);
+		for(PowerLine powerLine2 : connectedPowerLines) {
+			if(powerLine2.getType().equalsIgnoreCase(ConstantValues.SUBLINE)) {
+				connectedHolonObjects.add(powerLine2.getHolonObject());
+			}
+		}
+		return connectedHolonObjects;
+	}
+
 }

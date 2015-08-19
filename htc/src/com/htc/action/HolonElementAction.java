@@ -40,29 +40,27 @@ public class HolonElementAction extends CommonUtilities {
 			holonElement.setHolonElementState(holonElementState);
 			holonElement.setHolonElementType(holonElementType);
 			holonElement.setHolonObject(holonObject);
-			
-			
 			//Calling service method to save the Element in database and saving the auto-incremented ID in an integer
 			Integer newHolonElementID = getHolonElementService().persist(holonElement);
-			System.out.println("NewLy Generated Holon Element ID --> "+newHolonElementID);
-
+			log.info("NewLy Generated Holon Element ID --> "+newHolonElementID);
+			
+			getHolonObjectEnergyDetails(holonObject);//To set/update flexibility of holon object in Database.
+			
 			//Calling the response function and setting the content type of response.
 			getResponse().setContentType("text/html");
 			String dbResponse = "false";
 			if(newHolonElementID > 0 ) {
 				dbResponse = "true";
 			}
-			
 			String response = dbResponse+"*"+holonObjectId+"*"+hoCoObjIdOld;
-			
 			getResponse().getWriter().write(response);
 		} catch (Exception e) {
 			System.out.println("Exception "+e.getMessage()+" occurred in action createHolonElement()");
 			e.printStackTrace();
 		}
 	}
-	
-	
+
+
 
 	public void editHolonElement(){
 
@@ -81,14 +79,14 @@ public class HolonElementAction extends CommonUtilities {
 			Integer holonObjectId = holonElement.getHolonObject().getId();
 			HolonCoordinator hoc= getHolonObjectService().findById(holonObjectId).getHolonCoordinator();
 			Integer hoCoObjIdOld=0;
-			if(hoc!=null){
-			hoCoObjIdOld = getHolonObjectService().findById(holonObjectId).getHolonCoordinator().getHolonObject().getId();
+			if(hoc!=null) {
+				hoCoObjIdOld = getHolonObjectService().findById(holonObjectId).getHolonCoordinator().getHolonObject().getId();
 			}
 			holonElement.setCurrentCapacity(currentCapacity);
 			holonElement.setHolonElementState(holonElementState);
 			holonElement.setHolonElementType(holonElementType);
 			HolonElement holonElement2 = getHolonElementService().merge(holonElement);
-					
+			getHolonObjectEnergyDetails(holonElement2.getHolonObject());//To set/update flexibility of holon object in Database.
 			
 			String dbResponse = "false";
 			if(holonElement2 != null) {
@@ -105,7 +103,7 @@ public class HolonElementAction extends CommonUtilities {
 		}
 	}
 
-	public void showHolonElements() throws IOException{
+	public void showHolonElements() throws IOException {
 		try {
 			Integer holonObjectId = getRequest().getParameter("holonObjectId")!=null?Integer.parseInt(getRequest().getParameter("holonObjectId")):13;
 			HolonObject holonObject = getHolonObjectService().findById(holonObjectId);		 
@@ -152,6 +150,8 @@ public class HolonElementAction extends CommonUtilities {
 		Integer holonElementId = getRequest().getParameter("holonElementId")!=null?Integer.parseInt(getRequest().getParameter("holonElementId")):0;
 		HolonElement holonElement = getHolonElementService().findById(holonElementId);
 		Integer holonObjectId = holonElement.getHolonObject().getId();
+		// Since we are deleting this HE, we can't take the reference of HO from this. We need to take it from database.
+		HolonObject holonObject = getHolonObjectService().findById(holonObjectId); 
 		HolonCoordinator hoc= getHolonObjectService().findById(holonObjectId).getHolonCoordinator();
 		Integer hoCoObjIdOld=0;
 		if(hoc!=null)
@@ -161,7 +161,7 @@ public class HolonElementAction extends CommonUtilities {
 
 		//Editing holonElement object and saving in database 
 		boolean deleteStatus = getHolonElementService().delete(holonElement);
-
+		getHolonObjectEnergyDetails(holonObject);//To set/update flexibility of holon object in Database.
 		
 		//Calling the response function and setting the content type of response.
 		getResponse().setContentType("text/html");

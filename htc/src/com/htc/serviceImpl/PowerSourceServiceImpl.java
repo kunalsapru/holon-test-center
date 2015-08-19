@@ -35,9 +35,9 @@ public class PowerSourceServiceImpl extends AbstractService implements PowerSour
 	}
 
 	@Override
-	public ArrayList<PowerSource> findByHCoordinator(HolonCoordinator hoc) {
+	public ArrayList<PowerSource> findByHolonCoordinator(HolonCoordinator hoc) {
 		// TODO Auto-generated method stub
-		return getPowerSourceDao().findByHCoordinator(hoc);
+		return getPowerSourceDao().findByHolonCoordinator(hoc);
 	}
 
 }

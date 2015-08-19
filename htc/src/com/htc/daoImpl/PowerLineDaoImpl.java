@@ -3,6 +3,7 @@ package com.htc.daoImpl;
 import java.util.ArrayList;
 
 import com.htc.dao.PowerLineDao;
+import com.htc.hibernate.pojo.HolonObject;
 import com.htc.hibernate.pojo.PowerLine;
 import com.htc.hibernate.utilities.PowerLineHome;
 
@@ -52,6 +53,12 @@ public class PowerLineDaoImpl implements PowerLineDao {
 	public ArrayList<PowerLine> getConnectedPowerLines(PowerLine powerLine) {
 		// TODO Auto-generated method stub
 		return powerLineHome.getConnectedPowerLines(powerLine);
+	}
+
+	@Override
+	public PowerLine getPowerLineByHolonObject(HolonObject holonObject) {
+		// TODO Auto-generated method stub
+		return powerLineHome.getPowerLineByHolonObject(holonObject);
 	}
 
 }

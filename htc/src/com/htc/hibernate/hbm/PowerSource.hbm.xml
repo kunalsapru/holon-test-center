@@ -26,6 +26,9 @@
         <property name="currentProduction" type="java.lang.Integer">
             <column name="current_production" />
         </property>
+        <property name="flexibility" type="java.lang.Integer">
+            <column name="flexibility" />
+        </property>
         <property name="radius" type="java.lang.Double">
             <column name="radius" precision="22" scale="0" />
         </property>

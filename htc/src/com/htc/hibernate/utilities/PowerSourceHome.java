@@ -98,7 +98,7 @@ public class PowerSourceHome {
 	}
 
 	@SuppressWarnings("unchecked")
-	public ArrayList<PowerSource> findByHCoordinator(HolonCoordinator hoc) {
+	public ArrayList<PowerSource> findByHolonCoordinator(HolonCoordinator hoc) {
 		log.info("Abhinav holonCoordinator value --> "+hoc);
 		Session session = null;
 		Transaction tx = null;

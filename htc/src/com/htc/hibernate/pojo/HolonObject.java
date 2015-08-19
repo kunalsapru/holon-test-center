@@ -22,6 +22,7 @@ public class HolonObject implements java.io.Serializable, Comparable {
 	private Integer consumption;
 	private Boolean canCommunicate;
 	private Boolean createdFactory;
+	private Integer flexibility;
 	private Set<?> holonCoordinators = new HashSet<Object>(0);
 	private Set<HolonElement> holonElements = new HashSet<HolonElement>(0);
 	private Set<PowerLine> powerLines = new HashSet<PowerLine>(0);
@@ -37,7 +38,7 @@ public class HolonObject implements java.io.Serializable, Comparable {
 			HolonCoordinator holonCoordinator, HolonObjectType holonObjectType,
 			LatLng latLngByNeLocation, LatLng latLngBySwLocation,
 			Boolean lineConnectedState, Integer consumption,
-			Boolean canCommunicate, Boolean createdFactory,
+			Boolean canCommunicate, Boolean createdFactory, Integer flexibility,
 			Set<?> holonCoordinators, Set<HolonElement> holonElements, 
 			Set<PowerLine> powerLines) {
 		this.id = id;
@@ -50,6 +51,7 @@ public class HolonObject implements java.io.Serializable, Comparable {
 		this.consumption = consumption;
 		this.canCommunicate = canCommunicate;
 		this.createdFactory = createdFactory;
+		this.flexibility = flexibility;
 		this.holonCoordinators = holonCoordinators;
 		this.holonElements = holonElements;
 		this.setPowerLines(powerLines);
@@ -186,6 +188,14 @@ public class HolonObject implements java.io.Serializable, Comparable {
 			result = (getProducerCount(this) < getProducerCount(ho2) ) ? -1: (getProducerCount(this) > getProducerCount(ho2) ) ? 1:0 ;
 		}
 		return result;
+	}
+
+	public Integer getFlexibility() {
+		return flexibility;
+	}
+
+	public void setFlexibility(Integer flexibility) {
+		this.flexibility = flexibility;
 	}
 
 }

@@ -35,13 +35,16 @@
         <property name="createdFactory" type="java.lang.Boolean">
             <column name="created_factory" />
         </property>
+        <property name="flexibility" type="java.lang.Integer">
+            <column name="flexibility" />
+        </property>
         <set name="holonCoordinators" table="holon_coordinator" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="holon_object" />
             </key>
             <one-to-many class="com.htc.hibernate.pojo.HolonCoordinator" />
         </set>
-        <set name="holonElements" table="holon_element" inverse="true" lazy="true" fetch="select">
+        <set name="holonElements" table="holon_element" inverse="true" lazy="false" fetch="select">
             <key>
                 <column name="holon_object" />
             </key>

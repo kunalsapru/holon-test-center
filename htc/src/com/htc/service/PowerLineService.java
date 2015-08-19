@@ -2,6 +2,7 @@ package com.htc.service;
 
 import java.util.ArrayList;
 
+import com.htc.hibernate.pojo.HolonObject;
 import com.htc.hibernate.pojo.PowerLine;
 
 
@@ -12,4 +13,5 @@ public interface PowerLineService {
 	public boolean delete(PowerLine persistentInstance);
 	public ArrayList<PowerLine> getAllPowerLine();
 	public ArrayList<PowerLine> getConnectedPowerLines(PowerLine powerLine);
+	public PowerLine getPowerLineByHolonObject(HolonObject holonObject);
 }

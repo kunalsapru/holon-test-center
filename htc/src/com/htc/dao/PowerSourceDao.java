@@ -12,6 +12,6 @@ public interface PowerSourceDao {
 	public PowerSource findById(int powerSourceId);
 	public boolean delete(PowerSource persistentInstance);
 	public ArrayList<PowerSource> getAllPowerSource();
-	public ArrayList<PowerSource> findByHCoordinator(HolonCoordinator hoc);
+	public ArrayList<PowerSource> findByHolonCoordinator(HolonCoordinator hoc);
 
 }

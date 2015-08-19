@@ -1,12 +1,16 @@
 package com.htc.hibernate.utilities;
 
 import java.util.ArrayList;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
 import com.htc.hibernate.config.HibernateSessionFactory;
+import com.htc.hibernate.pojo.HolonObject;
 import com.htc.hibernate.pojo.LatLng;
 import com.htc.hibernate.pojo.PowerLine;
+import com.htc.utilities.ConstantValues;
 
 /**
  * Home object for domain model class PowerLine.
@@ -116,6 +120,25 @@ public class PowerLineHome {
 			System.out.println("get Connected Power Line list failed");
 		}
 		return connectedPowerLines;
+	}
+	
+	public PowerLine getPowerLineByHolonObject(HolonObject holonObject) {
+		Session session = null;
+		Transaction tx = null;
+		PowerLine powerLine = null;
+		String powerLineType = ConstantValues.SUBLINE;
+		try {
+			session = HibernateSessionFactory.getSessionFactory().getCurrentSession();
+			tx = session.beginTransaction();
+			Query query = session.createQuery("from PowerLine p where p.type=:powerLineType and p.holonObject =:holonObject");
+			query.setString("powerLineType", powerLineType);
+			query.setEntity("holonObject", holonObject);
+			powerLine =  (PowerLine)query.uniqueResult();
+			tx.commit();
+		} catch (RuntimeException re) {
+			System.out.println("getPowerLineByHolonObject failed");
+		}
+		return powerLine;
 	}
 
 }
