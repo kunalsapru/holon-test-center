@@ -130,7 +130,7 @@ function getSwitchInfoCallBack(data, options)
 							"<tr><td><b>Connected Power Line A: </b>"+powerLineAId+"</td>"+
 							"<td><b>Connected Power Line B : </b>"+powerLineBId+"</td></tr>"+
 							"<tr><td colspan='2' style='text-align: center;'>" +
-							"<span class='button' id='togglePowerSwitch'><i class='fa fa-circle-o-notch'></i>&nbsp;&nbsp;"+btnText+"</span></td></tr></table></div>";
+							"<span class='button' id='togglePowerSwitch'><i class='fa fa-circle-o-notch'></i>&nbsp;&nbsp;Turn "+btnText+"</span></td></tr></table></div>";
 
 	var position=options["position"];
 	var circleSwitch=options["circleSwitch"];
