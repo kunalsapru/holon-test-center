@@ -311,30 +311,24 @@ function getHolonInfoWindowCallBack(data,options)
 	currentInfoWindowObject=infowindowHolonObject;
 }
 
-function zoomToHolon(holonObjectId,neLoc, type)
-{
-	alert(neLoc);
+function zoomToHolon(holonObjectId,neLoc, type) {
 	var location = new google.maps.LatLng(neLoc.split("~")[0], neLoc.split("~")[1]);
-	if(type=="Holon Object"){
-		
-	var dataAttributes= {
-			  holonObjectId : holonObjectId,
-			};
-	 ajaxRequest("getHolonObjectInfoWindow", dataAttributes, getHolonInfoWindowCallBack, {});
-	}else
-		{
-		  var dataAttributes= {
+	if(type=="Holon Object") {
+		var dataAttributes= {
+				  holonObjectId : holonObjectId,
+				};
+		 ajaxRequest("getHolonObjectInfoWindow", dataAttributes, getHolonInfoWindowCallBack, {});
+	} else {
+		var dataAttributes= {
 				  psId : holonObjectId,
 				};
 		  var option= {
 				  powerSrc : globalPSrcList.get(holonObjectId.toString()),
 				};
-		  ajaxRequest("getPsObjectInfoWindow", dataAttributes, getPsObjectInfoWindowCallBack, option);			
-		
+		 ajaxRequest("getPsObjectInfoWindow", dataAttributes, getPsObjectInfoWindowCallBack, option);			
 		}
 	map.setCenter(location);
 	map.setZoom(18);
-	
 }
 
 function showHolonObjects() {

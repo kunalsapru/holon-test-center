@@ -105,7 +105,7 @@ public class PowerSourceAction  extends CommonUtilities{
 			Integer CoHolonId=0;
 			String coHoLoc="";
 			String CoHolonName="";
-			if(hc!=null) {
+			if(hc!=null && hc.getHolonObject() != null) {
 				CoHolonId=hc.getHolonObject().getId();
 				CoHolonName= hc.getName().concat("_"+hc.getHolon().getName());
 				coHoLoc=hc.getHolonObject().getLatLngByNeLocation().getLatitude()+"~"+hc.getHolonObject().getLatLngByNeLocation().getLongitude();

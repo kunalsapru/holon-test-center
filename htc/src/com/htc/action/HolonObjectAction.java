@@ -109,7 +109,7 @@ public class HolonObjectAction extends CommonUtilities {
 			Integer coordinatorHolonId=0;
 			HolonObject coOrdHolon=null;
 			String coOredNeLocation="";
-			if(hc!=null) {
+			if(hc!=null && hc.getHolonObject() != null) {
 				holonCoordinatorName_Holon = holonObject2.getHolonCoordinator().getName().concat("_"+holonObject2.getHolonCoordinator().getHolon().getName());
 				holonColor= holonObject2.getHolonCoordinator().getHolon().getColor();
 				coordinatorHolonId=holonObject2.getHolonCoordinator().getHolonObject().getId();

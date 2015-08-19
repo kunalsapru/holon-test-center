@@ -18,6 +18,7 @@ import com.htc.hibernate.pojo.HolonElement;
 import com.htc.hibernate.pojo.HolonObject;
 import com.htc.hibernate.pojo.LatLng;
 import com.htc.hibernate.pojo.PowerLine;
+import com.htc.hibernate.pojo.PowerSource;
 import com.htc.hibernate.pojo.PowerSwitch;
 import com.opensymphony.xwork2.ActionContext;
 
@@ -26,7 +27,6 @@ public class CommonUtilities extends AbstractAction{
 	private static final long serialVersionUID = 1L;
 	private Map<Integer, PowerLine> listOfAllConnectedPowerLines = new TreeMap<Integer, PowerLine>();
 	ArrayList<PowerLine> listOfAllNeighbouringConnectedPowerLines = new ArrayList<PowerLine>();
-
 	static Logger log = Logger.getLogger(CommonUtilities.class);
 	protected HttpServletResponse response;
 	protected HttpServletRequest request;
@@ -65,8 +65,7 @@ public class CommonUtilities extends AbstractAction{
 	}
 	
 	
-	public static int getPercent(int x, int y)
-	{
+	public static int getPercent(int x, int y) {
 		float xF=new Float(x);
 		float yF=new Float(y);
 		float perc= ((xF/yF)*100);
@@ -74,41 +73,28 @@ public class CommonUtilities extends AbstractAction{
 		log.info("y is "+y);
 		log.info("percent is "+perc);
 		return (int) perc;
-		
 	}
 	
-	public static String getLineColor(int percentCap)
-	{
+	public static String getLineColor(int percentCap) {
 		String color="brown";
-		
-		if(0<percentCap && percentCap<=20)
-		{
+		if(0<percentCap && percentCap<=20) {
 			color = "red";
-		}else if(20<percentCap && percentCap<=50)
-		{
+		} else if(20<percentCap && percentCap<=50) {
 			color = "yellow";
-		}else if(percentCap>50 && percentCap<100)
-		{
+		} else if(percentCap>50 && percentCap<100) {
 			color ="green";
-		}else if(percentCap==100)
-		{
+		} else if(percentCap==100) {
 			color ="black";
 		}
-		
 		return color;
 	}
 	
-/*	public static float randomCapGenerator(float maxCap)
-	{
+/*	public static float randomCapGenerator(float maxCap) {
 		float finalX=0.0f;
-		
 		float minX = 00.0f;
 		float maxX = maxCap;
-
 		Random rand = new Random();
-
-		 finalX = rand.nextFloat() * (maxX - minX) + minX;
-		
+		finalX = rand.nextFloat() * (maxX - minX) + minX;
 		return finalX;
 	}
 */	
@@ -184,10 +170,10 @@ public class CommonUtilities extends AbstractAction{
 		Integer originalEnergyRequiredHolon = 0;
 		Integer flexibilityHolon = 0;
 		noOfHolonObjects = holonObjectListByCoordinator.size();
-		
+		Map<String, Integer> holonObjectEnergyDetails = null;
 		for(HolonObject holonObject : holonObjectListByCoordinator) {
 			hoObjectIdList.add(new Integer(holonObject.getId()).toString().concat("~").concat(holonObject.getHolonObjectType().getName()));
-			Map<String, Integer> holonObjectEnergyDetails = getHolonObjectEnergyDetails(holonObject);
+			holonObjectEnergyDetails = getHolonObjectEnergyDetails(holonObject);
 			minimumProductionCapacityHolon = minimumProductionCapacityHolon + holonObjectEnergyDetails.get("minimumProductionCapacity");
 			maximumProductionCapacityHolon = maximumProductionCapacityHolon + holonObjectEnergyDetails.get("maximumProductionCapacity");
 			currentProductionHolon = currentProductionHolon + holonObjectEnergyDetails.get("currentProduction");
@@ -292,8 +278,81 @@ public class CommonUtilities extends AbstractAction{
 	
 	public void updateHolonObjectsAndPowerSources(Integer powerLineId) {
 		PowerLine powerLine = getPowerLineService().findById(powerLineId);
+		String powerLineType = powerLine.getType();
+		PowerSource immediatePowerSource = null;
+		HolonObject immediateHolonObject = null;
+		if(powerLineType.equals(ConstantValues.SUBLINE)) {
+			immediateHolonObject = powerLine.getHolonObject();
+		} else if(powerLineType.equals(ConstantValues.POWERSUBLINE)) {
+			immediatePowerSource = powerLine.getPowerSource();
+		}
+
 		ArrayList<PowerLine> connectedPowerLines = connectedPowerLines(powerLineId);
+		for(PowerLine powerLine2 : connectedPowerLines) {
+			powerLineType = powerLine2.getType();
+			if(powerLineType.equals(ConstantValues.SUBLINE)) {
+				
+				//Condition to set holon coordinator for the newly joined holon object
+				if(immediateHolonObject != null && immediateHolonObject.getHolonCoordinator() == null) {
+					if(powerLine2.getHolonObject().getHolonCoordinator() != null) {
+						immediateHolonObject.setHolonCoordinator(powerLine2.getHolonObject().getHolonCoordinator());
+						getHolonObjectService().merge(immediateHolonObject);
+					}
+				}
+				//Condition to set holon coordinator for the newly joined power source
+				if(immediatePowerSource != null && immediatePowerSource.getHolonCoordinator() == null) {
+					if(powerLine2.getHolonObject().getHolonCoordinator() != null) {
+						immediatePowerSource.setHolonCoordinator(powerLine2.getHolonObject().getHolonCoordinator());
+						getPowerSourceService().merge(immediatePowerSource);
+					}
+				}
+				
+			} else if(powerLineType.equals(ConstantValues.POWERSUBLINE)) {
+				
+				//Condition to set holon coordinator for the newly joined holon object
+				if(immediateHolonObject != null && immediateHolonObject.getHolonCoordinator() == null) {
+					if(powerLine2.getPowerSource().getHolonCoordinator() != null) {
+						immediateHolonObject.setHolonCoordinator(powerLine2.getPowerSource().getHolonCoordinator());
+						if(powerLine2.getPowerSource().getHolonCoordinator().getHolonObject() == null) {
+							powerLine2.getPowerSource().getHolonCoordinator().setHolonObject(immediateHolonObject);
+						}
+						getHolonObjectService().merge(immediateHolonObject);
+					}
+				}
+				//Condition to set holon coordinator for the newly joined power source
+				if(immediatePowerSource != null && immediatePowerSource.getHolonCoordinator() == null) {
+					if(powerLine2.getPowerSource().getHolonCoordinator() != null) {
+						immediatePowerSource.setHolonCoordinator(powerLine2.getPowerSource().getHolonCoordinator());
+						getPowerSourceService().merge(immediatePowerSource);
+					}
+				}
+				
+			}
+		}//End of parent for loop
 		
+		/*Checking whether a holon coordinator has been assigned to the newly joined holon object or not. 
+		 * If not, set a random holon and make this the new holon coordinator of that holon.*/
+		if(immediateHolonObject != null && immediateHolonObject.getHolonCoordinator() == null) {
+			Integer randomHolonCoordinatorId = randomNumber(1, 4);
+			HolonCoordinator randomHolonCoordinator = getHolonCoordinatorService().findById(randomHolonCoordinatorId);
+			immediateHolonObject.setHolonCoordinator(randomHolonCoordinator);
+			getHolonObjectService().merge(immediateHolonObject);
+			randomHolonCoordinator.setHolonObject(immediateHolonObject);
+			getHolonCoordinatorService().merge(randomHolonCoordinator);
+		}
+
+		/*Checking whether a holon coordinator has been assigned to the newly joined holon object or not. If not, set a random holon.*/
+		if(immediatePowerSource != null && immediatePowerSource.getHolonCoordinator() == null) {
+			Integer randomHolonCoordinatorId = randomNumber(1, 4);
+			HolonCoordinator randomHolonCoordinator = getHolonCoordinatorService().findById(randomHolonCoordinatorId);
+			immediatePowerSource.setHolonCoordinator(randomHolonCoordinator);
+			getPowerSourceService().merge(immediatePowerSource);
+		}
+
+	}
+
+	public int randomNumber(int min, int max) {
+		return (min + (int)(Math.random()*((max-min)+1)));
 	}
 	
 }
