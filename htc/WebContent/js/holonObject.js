@@ -253,8 +253,13 @@ function getHolonInfoWindowCallBack(data,options)
 			"<td>Maximum Production Capacity: "+maxEnergyProdObj+"</td></tr>"+
 			"<tr><td>Current Production: "+cuEnergyProdObj+"</td>" +
 			"<td>Can Communicate: "+canCommunicate+"</td></tr>"+
-			"<tr><td>Flexibility: "+flexibility+"</td>" +
-			"<td>Current Energy Required: "+currentEnergyRequired+"</td></tr>"+
+			"<tr><td>Flexibility: "+flexibility+"</td>");
+	if(currentEnergyRequired > 0) {
+		contentString = contentString.concat("<td style='color:red'>Current Energy Required: "+currentEnergyRequired+"</td></tr>");
+	} else {
+		contentString = contentString.concat("<td>Current Energy Required: "+currentEnergyRequired+"</td></tr>");
+	}
+	contentString = contentString.concat(
 			"<tr><td>Created from factory: "+createdFromFactory+"</td></tr>" +
 			"</table>"+
 			"<br /><hr>"+
@@ -273,8 +278,13 @@ function getHolonInfoWindowCallBack(data,options)
 				"<tr><td colspan='2' style='text-decoration: underline;'>Holon Details</td></tr>" +
 				"<tr><td>Number of Holon Objects: "+nOfHolonObj +"</td>"+
 				"<td>Minimum Energy Req:"+minEnergyHo +"</td></tr>"+
-				"<tr><td>Maximum Energy Req: "+maxEnergyHo +"</td>"+
-				"<td>Current Energy Req: "+cuEnergyHo +"</td></tr>"+
+				"<tr><td>Maximum Energy Req: "+maxEnergyHo +"</td>");
+		if(cuEnergyHo > 0) {
+			contentString = contentString.concat("<td style='color:red'>Current Energy Req: "+cuEnergyHo +"</td></tr>");
+		} else {
+			contentString = contentString.concat("<td>Current Energy Req: "+cuEnergyHo +"</td></tr>");
+		}
+		contentString = contentString.concat(
 				"<tr><td>Minimum Production capacity: "+minEnergyProd +"</td>"+
 				"<td>Maximum Production Capacity: "+maxEnergyProd +"</td></tr>"+
 				"<tr><td>Current Production: "+cuEnergyProd +"</td><td></td></tr>"+
