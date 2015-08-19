@@ -94,7 +94,7 @@ function savePowerLineObject(){
 			powerLineId:powerLineId,
 			HolonObjectId:HolonObjectId,
 			powerLineForSubLine:powerLineForSubLine
-	};		    	
+	};	
 	var options = {
 			lineShape:createdPowerLineObject,
 			path:[new google.maps.LatLng(startLat, startLng),new google.maps.LatLng(endLat,endLng)],
@@ -109,7 +109,7 @@ function savePowerLineObject(){
 function editPowerLineObjectCallBack(data, options){
 	var powerLineId =data.split("*")[1];
 	var content = getLineInfoWindowContent(data);
-	var color = data.split("*")[8];
+	var color = data.split("*")[9];
 	var newLineShape=globalPlList.get(powerLineId.toString());
 	newLineShape.setOptions({strokeColor:color});
 	currentLineInfoWindowObject.setContent(content);
@@ -297,7 +297,7 @@ function getLineInfoWindowContent(data){
 		content = content.concat("<td></td></td></tr></div>");
 	}
 	content = content.concat("<div class = 'table'><table><tr><td colspan='2'>Connected Power Lines</td></tr>")
-	var powerLineIds = respStr[9];
+	var powerLineIds = respStr[10];
 	var powerLineIdsArray = [];
 	if(powerLineIds != "") {
 		powerLineIdsArray = powerLineIds.split("~");

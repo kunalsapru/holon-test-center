@@ -132,6 +132,7 @@ public class PowerLineAction extends CommonUtilities {
 			Integer powerLineId = getRequest().getParameter("powerLineId")!=null?Integer.parseInt(getRequest().getParameter("powerLineId")):0;
 			PowerLine  powerLine = getPowerLineService().findById(powerLineId);
 			ArrayList<PowerLine> connectedPowerLines = connectedPowerLines(powerLineId);
+			
 			int indexToRemove = -1;
 			for(int i=0; i < connectedPowerLines.size(); i++) {
 				if(connectedPowerLines.get(i).getId().equals(powerLineId)) {
@@ -166,9 +167,11 @@ public class PowerLineAction extends CommonUtilities {
 			if(subLinePowerSrc!=null) {
 				subLinePowerSrcId=subLinePowerSrc.getId();
 			}
+			String color = CommonUtilities.getLineColor(CommonUtilities.getPercent(powerLine.getCurrentCapacity(),powerLine.getMaximumCapacity()));
+			boolean isConnectedToHolonOrPower=checkConnectedStatusForLine(connectedPowerLines,powerLine);
 			//Calling the response function and setting the content type of response.
 			StringBuffer respStr= new StringBuffer("");
-			respStr.append(powerLine.isIsConnected()+"*");
+			respStr.append(isConnectedToHolonOrPower+"*");
 			respStr.append(powerLine.getId()+"*");
 			respStr.append(powerLine.getMaximumCapacity()+"*");
 			respStr.append(powerLine.getCurrentCapacity()+"*");
@@ -177,6 +180,7 @@ public class PowerLineAction extends CommonUtilities {
 			respStr.append(powerLine.getLatLngByDestination().getLatitude()+"~"+powerLine.getLatLngByDestination().getLongitude()+"*");
 			respStr.append(subLineHolonObjectId+"*");
 			respStr.append(subLinePowerSrcId+"*");
+			respStr.append(color+"*");
 			respStr.append(powerLineIds);
 			
 			getResponse().setContentType("text/html");
@@ -243,8 +247,17 @@ public class PowerLineAction extends CommonUtilities {
 			powerLine.setMaximumCapacity(maxCapacity);
 			powerLine.setCurrentCapacity(0);
 			getPowerLineService().merge(powerLine);
-			ArrayList<PowerLine> connectedPowerLines = getPowerLineService().getConnectedPowerLines(powerLine);
+			ArrayList<PowerLine> connectedPowerLines = connectedPowerLines(powerLineId);
 			
+			int indexToRemove = -1;
+			for(int i=0; i < connectedPowerLines.size(); i++) {
+				if(connectedPowerLines.get(i).getId().equals(powerLineId)) {
+					indexToRemove = i;		
+				}
+			}
+			if(indexToRemove !=-1) {
+				connectedPowerLines.remove(indexToRemove);//Removing self power line link
+			}
 			StringBuffer powerLineIds = new StringBuffer();
 			powerLineIds.append("");
 			double middleLatitude = 0L;
@@ -259,11 +272,10 @@ public class PowerLineAction extends CommonUtilities {
 			if(powerLineIds.length() > 0) {
 				powerLineIds = powerLineIds.deleteCharAt(powerLineIds.lastIndexOf("~"));
 			}
-
-			
+			boolean isConnectedToHolonOrPower=checkConnectedStatusForLine(connectedPowerLines,powerLine);
 			String color=CommonUtilities.getLineColor(CommonUtilities.getPercent(powerLine.getCurrentCapacity(),powerLine.getMaximumCapacity()));
 			StringBuffer respStr= new StringBuffer("");
-			respStr.append(powerLine.isIsConnected()+"*");
+			respStr.append(isConnectedToHolonOrPower+"*");
 			respStr.append(powerLine.getId()+"*");
 			respStr.append(powerLine.getMaximumCapacity()+"*");
 			respStr.append(powerLine.getCurrentCapacity()+"*");
@@ -271,10 +283,15 @@ public class PowerLineAction extends CommonUtilities {
 			respStr.append(powerLine.getLatLngBySource().getLatitude()+"~"+powerLine.getLatLngBySource().getLongitude()+"*");
 			respStr.append(powerLine.getLatLngByDestination().getLatitude()+"~"+powerLine.getLatLngByDestination().getLongitude()+"*");
 			int holonObjectId = 0;
+			int powerSourceId= 0;
 			if(powerLine.getHolonObject() != null){
 				holonObjectId = powerLine.getHolonObject().getId();
 			}
+			if(powerLine.getPowerSource() != null){
+				powerSourceId = powerLine.getPowerSource().getId();
+			}
 			respStr.append(holonObjectId+"*");
+			respStr.append(powerSourceId+"*");
 			respStr.append(color+"*");
 			respStr.append(powerLineIds);
 		//Calling the response function and setting the content type of response.

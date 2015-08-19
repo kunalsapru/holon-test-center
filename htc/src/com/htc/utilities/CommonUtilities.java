@@ -16,6 +16,7 @@ import com.htc.action.AbstractAction;
 import com.htc.hibernate.pojo.HolonCoordinator;
 import com.htc.hibernate.pojo.HolonElement;
 import com.htc.hibernate.pojo.HolonObject;
+import com.htc.hibernate.pojo.PowerLine;
 import com.opensymphony.xwork2.ActionContext;
 
 public class CommonUtilities extends AbstractAction{
@@ -213,6 +214,22 @@ public class CommonUtilities extends AbstractAction{
 		
 		
 		return holonEnergyDetails;
+	}
+	
+	public boolean checkConnectedStatusForLine(ArrayList<PowerLine> connectedPowerLines,PowerLine powerLine )
+	{
+		if(powerLine.getType().equals(ConstantValues.SUBLINE) || powerLine.getType().equals(ConstantValues.POWERSUBLINE)){
+			return true;
+		}
+		else{
+		for(PowerLine powerLine2 : connectedPowerLines)
+		{
+			if(powerLine2.getType().equals(ConstantValues.SUBLINE) ||powerLine2.getType().equals(ConstantValues.POWERSUBLINE) ){
+				return true;
+			}
+		}
+		}
+		return false;
 	}
 	
 }
