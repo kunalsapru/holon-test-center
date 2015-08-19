@@ -216,18 +216,15 @@ public class CommonUtilities extends AbstractAction{
 		return holonEnergyDetails;
 	}
 	
-	public boolean checkConnectedStatusForLine(ArrayList<PowerLine> connectedPowerLines,PowerLine powerLine )
-	{
-		if(powerLine.getType().equals(ConstantValues.SUBLINE) || powerLine.getType().equals(ConstantValues.POWERSUBLINE)){
+	public boolean checkConnectedStatusForLine(ArrayList<PowerLine> connectedPowerLines, PowerLine powerLine) {
+		if(powerLine.getType().equals(ConstantValues.SUBLINE) || powerLine.getType().equals(ConstantValues.POWERSUBLINE)) {
 			return true;
-		}
-		else{
-		for(PowerLine powerLine2 : connectedPowerLines)
-		{
-			if(powerLine2.getType().equals(ConstantValues.SUBLINE) ||powerLine2.getType().equals(ConstantValues.POWERSUBLINE) ){
-				return true;
+		} else {
+			for(PowerLine powerLine2 : connectedPowerLines) {
+				if(powerLine2.getType().equals(ConstantValues.SUBLINE) ||powerLine2.getType().equals(ConstantValues.POWERSUBLINE) ) {
+					return true;
+				}
 			}
-		}
 		}
 		return false;
 	}
