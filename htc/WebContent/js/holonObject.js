@@ -208,23 +208,25 @@ function getHolonInfoWindowCallBack(data,options)
 	var holonColor= dataArray[6];
 	var coordHolonId= dataArray[7];
 	var nOfElmInHolon=dataArray[8];
-	var minEnergeyHoObj=dataArray[9];
-	var maxEnergeyHoObj=dataArray[10];
-	var cuEnergeyHoObj=dataArray[11];
-	var minEnergeyProdObj=dataArray[12];
-	var maxEnergeyProdObj=dataArray[13];
-	var cuEnergeyProdObj=dataArray[14];	
+	var minEnergyHoObj=dataArray[9];
+	var maxEnergyHoObj=dataArray[10];
+	var originalEnergyHoObj=dataArray[11];
+	var minEnergyProdObj=dataArray[12];
+	var maxEnergyProdObj=dataArray[13];
+	var cuEnergyProdObj=dataArray[14];	
 	var nOfHolonObj=dataArray[15];
-	var minEnergeyHo=dataArray[16];
-	var maxEnergeyHo=dataArray[17];
-	var cuEnergeyHo=dataArray[18];
-	var minEnergeyProd=dataArray[19];
-	var maxEnergeyProd=dataArray[20];
-	var cuEnergeyProd=dataArray[21];
+	var minEnergyHo=dataArray[16];
+	var maxEnergyHo=dataArray[17];
+	var cuEnergyHo=dataArray[18];
+	var minEnergyProd=dataArray[19];
+	var maxEnergyProd=dataArray[20];
+	var cuEnergyProd=dataArray[21];
 	var hoList=dataArray[22];
 	var canCommunicate=dataArray[23];
 	var coOrd_ne_location=dataArray[24];
 	var createdFromFactory = dataArray[25];
+	var currentEnergyRequired = dataArray[26];
+	var flexibility = dataArray[27];
 	var lat=ne_location.split("~");
 	//alert(holonColor);
 	var contentString=
@@ -242,13 +244,15 @@ function getHolonInfoWindowCallBack(data,options)
 		contentString=contentString.concat("<tr><td>Coordinator Id: <a href='#' id='hoCoId'>"+coordHolonId+"</a></td>");
 		}
 			
-	contentString=contentString.concat("<td>Minimum Energey Req: "+minEnergeyHoObj+"</td></tr>"+
-			"<tr><td>Maximum Energey Req: "+maxEnergeyHoObj+"</td>"+
-			"<td>Current Energey Req: "+cuEnergeyHoObj+"</td></tr>"+
-			"<tr><td>Minimum Production capacity: "+minEnergeyProdObj+"</td>"+
-			"<td>Maximum Production Capacity: "+maxEnergeyProdObj+"</td></tr>"+
-			"<tr><td>Current Production: "+cuEnergeyProdObj+"</td>" +
+	contentString=contentString.concat("<td>Minimum Energy Req: "+minEnergyHoObj+"</td></tr>"+
+			"<tr><td>Maximum Energy Req: "+maxEnergyHoObj+"</td>"+
+			"<td>Original Energy Req: "+originalEnergyHoObj+"</td></tr>"+
+			"<tr><td>Minimum Production capacity: "+minEnergyProdObj+"</td>"+
+			"<td>Maximum Production Capacity: "+maxEnergyProdObj+"</td></tr>"+
+			"<tr><td>Current Production: "+cuEnergyProdObj+"</td>" +
 			"<td>Can Communicate: "+canCommunicate+"</td></tr>"+
+			"<tr><td>Flexibility: "+flexibility+"</td>" +
+			"<td>Current Energy Required: "+currentEnergyRequired+"</td></tr>"+
 			"<tr><td>Created from factory: "+createdFromFactory+"</td></tr>" +
 			"</table>"+
 			"<br /><hr>"+
@@ -267,12 +271,12 @@ function getHolonInfoWindowCallBack(data,options)
 				"<table>"+
 				"<tr><td colspan='2' style='text-decoration: underline;'>Holon Details</td></tr>" +
 				"<tr><td>Number of Holon Objects: "+nOfHolonObj +"</td>"+
-				"<td>Minimum Energey Req:"+minEnergeyHo +"</td></tr>"+
-				"<tr><td>Maximum Energey Req: "+maxEnergeyHo +"</td>"+
-				"<td>Current Energey Req: "+cuEnergeyHo +"</td></tr>"+
-				"<tr><td>Minimum Production capacity: "+minEnergeyProd +"</td>"+
-				"<td>Maximum Production Capacity: "+maxEnergeyProd +"</td></tr>"+
-				"<tr><td>Current Production: "+cuEnergeyProd +"</td><td></td></tr></table>"+
+				"<td>Minimum Energy Req:"+minEnergyHo +"</td></tr>"+
+				"<tr><td>Maximum Energy Req: "+maxEnergyHo +"</td>"+
+				"<td>Current Energy Req: "+cuEnergyHo +"</td></tr>"+
+				"<tr><td>Minimum Production capacity: "+minEnergyProd +"</td>"+
+				"<td>Maximum Production Capacity: "+maxEnergyProd +"</td></tr>"+
+				"<tr><td>Current Production: "+cuEnergyProd +"</td><td></td></tr></table>"+
 				"<hr><table><tr><td colspan='2' style='text-align: center;'>Other Holon Objects:&nbsp;&nbsp;"+
 				"<select align = \"center\" name=\"infoWindowHolonList\" id=\"infoWindowHolonList\">"+hoList+"</select></td></tr>"+
 				"</table>"
