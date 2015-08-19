@@ -227,6 +227,8 @@ function getHolonInfoWindowCallBack(data,options)
 	var createdFromFactory = dataArray[25];
 	var currentEnergyRequired = dataArray[26];
 	var flexibility = dataArray[27];
+	var originalEnergyRequiredHolon = dataArray[28];
+	var flexibilityHolon = dataArray[29];
 	var lat=ne_location.split("~");
 	//alert(holonColor);
 	var contentString=
@@ -265,8 +267,7 @@ function getHolonInfoWindowCallBack(data,options)
 			"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
 			"<span class='button' id='showHolonElement' title='Show Holon Elements' onclick='showHolonElements("+holonObjectId+")'><i class='fa fa-info'>&nbspShow Holon Elements</i></span>" +
 			"</td></tr></table><hr>");
-	if(coordHolonId===holonObjectId)
-	{
+	if(coordHolonId===holonObjectId) {
 		contentString = contentString.concat(
 				"<table>"+
 				"<tr><td colspan='2' style='text-decoration: underline;'>Holon Details</td></tr>" +
@@ -276,7 +277,10 @@ function getHolonInfoWindowCallBack(data,options)
 				"<td>Current Energy Req: "+cuEnergyHo +"</td></tr>"+
 				"<tr><td>Minimum Production capacity: "+minEnergyProd +"</td>"+
 				"<td>Maximum Production Capacity: "+maxEnergyProd +"</td></tr>"+
-				"<tr><td>Current Production: "+cuEnergyProd +"</td><td></td></tr></table>"+
+				"<tr><td>Current Production: "+cuEnergyProd +"</td><td></td></tr>"+
+				"<tr><td>Original Energy Required: "+originalEnergyRequiredHolon +"</td>"+
+				"<td>Flexibility: "+flexibilityHolon +"</td></tr>"+
+				"</table>"+
 				"<hr><table><tr><td colspan='2' style='text-align: center;'>Other Holon Objects:&nbsp;&nbsp;"+
 				"<select align = \"center\" name=\"infoWindowHolonList\" id=\"infoWindowHolonList\">"+hoList+"</select></td></tr>"+
 				"</table>"

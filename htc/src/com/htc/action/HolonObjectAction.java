@@ -151,7 +151,9 @@ public class HolonObjectAction extends CommonUtilities {
 			String maximumEnergyRequiredHolon = "0";
 			String currentEnergyRequiredHolon = "0";
 			String holonObjectList = "";
-			
+			String originalEnergyRequiredHolon = "0";
+			String flexibilityHolon = "0";
+
 			if(hCoordinator != null && holonObjectId == hCoordinator.getHolonObject().getId()) {
 				Map<String, String> holonEnergyDetails = getHolonEnergyDetails(hCoordinator);
 				noOfHolonObjects = holonEnergyDetails.get("noOfHolonObjects");
@@ -161,6 +163,8 @@ public class HolonObjectAction extends CommonUtilities {
 				minimumEnergyRequiredHolon = holonEnergyDetails.get("minimumEnergyRequiredHolon");
 				maximumEnergyRequiredHolon = holonEnergyDetails.get("maximumEnergyRequiredHolon");
 				currentEnergyRequiredHolon = holonEnergyDetails.get("currentEnergyRequiredHolon");
+				originalEnergyRequiredHolon = holonEnergyDetails.get("originalEnergyRequiredHolon");
+				flexibilityHolon = holonEnergyDetails.get("flexibilityHolon");
 				holonObjectList = holonEnergyDetails.get("holonObjectList");
 			}
 			
@@ -199,7 +203,9 @@ public class HolonObjectAction extends CommonUtilities {
 				hoResponse.append("No!");
 			}
 			hoResponse.append(currentEnergyRequired+"!");
-			hoResponse.append(flexibility);
+			hoResponse.append(flexibility+"!");
+			hoResponse.append(originalEnergyRequiredHolon+"!");
+			hoResponse.append(flexibilityHolon);
 			System.out.println(hoResponse.toString());
 			getResponse().getWriter().write(hoResponse.toString());
 			

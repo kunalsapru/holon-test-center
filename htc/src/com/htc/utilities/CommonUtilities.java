@@ -207,7 +207,10 @@ public class CommonUtilities extends AbstractAction{
 		holonEnergyDetails.put("minimumEnergyRequiredHolon", minimumEnergyRequiredHolon.toString());
 		holonEnergyDetails.put("maximumEnergyRequiredHolon", maximumEnergyRequiredHolon.toString());
 		holonEnergyDetails.put("currentEnergyRequiredHolon", currentEnergyRequiredHolon.toString());
+		holonEnergyDetails.put("originalEnergyRequiredHolon", originalEnergyRequiredHolon.toString());
+		holonEnergyDetails.put("flexibilityHolon", flexibilityHolon.toString());
 		holonEnergyDetails.put("holonObjectList", holonObjectList.toString());
+		
 		
 		return holonEnergyDetails;
 	}
