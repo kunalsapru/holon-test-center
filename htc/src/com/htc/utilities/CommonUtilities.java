@@ -16,12 +16,17 @@ import com.htc.action.AbstractAction;
 import com.htc.hibernate.pojo.HolonCoordinator;
 import com.htc.hibernate.pojo.HolonElement;
 import com.htc.hibernate.pojo.HolonObject;
+import com.htc.hibernate.pojo.LatLng;
 import com.htc.hibernate.pojo.PowerLine;
+import com.htc.hibernate.pojo.PowerSwitch;
 import com.opensymphony.xwork2.ActionContext;
 
 public class CommonUtilities extends AbstractAction{
 
 	private static final long serialVersionUID = 1L;
+	private Map<Integer, PowerLine> listOfAllConnectedPowerLines = new TreeMap<Integer, PowerLine>();
+	ArrayList<PowerLine> listOfAllNeighbouringConnectedPowerLines = new ArrayList<PowerLine>();
+
 	static Logger log = Logger.getLogger(CommonUtilities.class);
 	protected HttpServletResponse response;
 	protected HttpServletRequest request;
@@ -161,12 +166,12 @@ public class CommonUtilities extends AbstractAction{
 	}
 	
 	public Map<String, String> getHolonEnergyDetails(HolonCoordinator holonCoordinator) {
+
 		Map<String, String> holonEnergyDetails = new TreeMap<String, String>();
 		ArrayList<HolonObject> holonObjectListByCoordinator = getHolonObjectService().findByHCoordinator(holonCoordinator);
 		HolonObject holonObjectOfCoordinator = holonCoordinator.getHolonObject();
 		Integer holonObjectOfCoordinatorId = holonObjectOfCoordinator.getId();
 		
-		//Variables to capture Holon Details
 		Integer noOfHolonObjects = 0;
 		ArrayList<String> hoObjectIdList = new ArrayList<String>();
 		StringBuffer holonObjectList=new StringBuffer("");
@@ -178,8 +183,8 @@ public class CommonUtilities extends AbstractAction{
 		Integer currentEnergyRequiredHolon = 0;
 		Integer originalEnergyRequiredHolon = 0;
 		Integer flexibilityHolon = 0;
-
 		noOfHolonObjects = holonObjectListByCoordinator.size();
+		
 		for(HolonObject holonObject : holonObjectListByCoordinator) {
 			hoObjectIdList.add(new Integer(holonObject.getId()).toString().concat("~").concat(holonObject.getHolonObjectType().getName()));
 			Map<String, Integer> holonObjectEnergyDetails = getHolonObjectEnergyDetails(holonObject);
@@ -192,9 +197,11 @@ public class CommonUtilities extends AbstractAction{
 			originalEnergyRequiredHolon = originalEnergyRequiredHolon + holonObjectEnergyDetails.get("originalEnergyRequired");
 			flexibilityHolon = flexibilityHolon + holonObjectEnergyDetails.get("flexibility");
 		}
+		
 		String holonObjectTypeName = holonObjectOfCoordinator.getHolonObjectType().getName();
 		hoObjectIdList.remove(holonObjectOfCoordinatorId.toString().concat("~").concat(holonObjectTypeName));
 		holonObjectList.append("<option value=\"Select Holon\" id= \"infoWinOpt\" selected>Select Holon Object</option>");
+		
 		for(String valueString : hoObjectIdList) {
 			String holonObjectId= valueString.split("~")[0];
 			String hoObjectType =valueString.split("~")[1];
@@ -212,7 +219,6 @@ public class CommonUtilities extends AbstractAction{
 		holonEnergyDetails.put("flexibilityHolon", flexibilityHolon.toString());
 		holonEnergyDetails.put("holonObjectList", holonObjectList.toString());
 		
-		
 		return holonEnergyDetails;
 	}
 	
@@ -227,6 +233,67 @@ public class CommonUtilities extends AbstractAction{
 			}
 		}
 		return false;
+	}
+
+	public Integer saveLocation(LatLng locationToSave) {
+		Integer locationid=0;
+		Double lat =locationToSave.getLatitude();
+		Double lng =locationToSave.getLongitude();
+		ArrayList<LatLng> locationList=getLatLngService().findByLocation(lat,lng);
+		log.info("Size of latLng Object list is "+locationList);
+	
+		if(locationList.size()==0) {
+			log.info("Location is not in database ");
+			locationid=getLatLngService().persist(locationToSave);
+		} else {
+			log.info("Location is already in database ");
+			LatLng location = locationList.get(0);
+			locationid=location.getId();
+		}
+		return locationid;
+	}
+
+	public ArrayList<PowerLine> connectedPowerLines(Integer powerLineId) {
+		PowerLine powerLine = getPowerLineService().findById(powerLineId);
+		ArrayList<PowerLine> connectedPowerLines = getPowerLineService().getConnectedPowerLines(powerLine);
+		log.info("Selected Power Line --> "+powerLineId);
+		for(PowerLine powerLine2 : connectedPowerLines) {
+			log.info("Connected Line --> "+powerLine2.getId());
+		}
+		PowerLine powerLine2 = null;
+		PowerSwitch powerSwitch = null;
+		for(int i =0; i< connectedPowerLines.size();i++) {
+			powerLine2 = connectedPowerLines.get(i);
+			powerSwitch = getPowerSwitchService().checkSwitchStatusBetweenPowerLines(powerLine, powerLine2);
+			if(powerSwitch != null){
+				if(!powerSwitch.getStatus()) {
+					log.info("Connected Line to be removed --> "+powerLine2.getId());
+					connectedPowerLines.remove(i);
+				}
+			}
+		}
+		for(PowerLine powerLine3 : connectedPowerLines) {
+			if(!(listOfAllConnectedPowerLines.containsKey(powerLine3.getId()))) {
+				listOfAllConnectedPowerLines.put(powerLine3.getId(), powerLine3);
+				listOfAllNeighbouringConnectedPowerLines.add(powerLine3);
+			}
+		}
+		for(PowerLine powerLine3 : connectedPowerLines) {
+			ArrayList<PowerLine> tempConnectedPowerLines = getPowerLineService().getConnectedPowerLines(powerLine3);
+			for(PowerLine powerLine4 : tempConnectedPowerLines) {
+				if(!(listOfAllConnectedPowerLines.containsKey(powerLine4.getId()))) {
+					connectedPowerLines(powerLine3.getId());//Recursive call to get list of neighbors of neighbor
+				}
+			}
+		}
+		return listOfAllNeighbouringConnectedPowerLines;
+	}
+	
+	
+	public void updateHolonObjectsAndPowerSources(Integer powerLineId) {
+		PowerLine powerLine = getPowerLineService().findById(powerLineId);
+		ArrayList<PowerLine> connectedPowerLines = connectedPowerLines(powerLineId);
+		
 	}
 	
 }

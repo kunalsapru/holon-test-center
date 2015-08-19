@@ -54,7 +54,7 @@ public class PowerSwitchAction extends CommonUtilities {
 		Double latSwitch = getRequest().getParameter("switchPositionLat")!=null?Double.parseDouble(getRequest().getParameter("switchPositionLat")):0D;
 		Double lngSwitch = getRequest().getParameter("switchPositionLng")!=null?Double.parseDouble(getRequest().getParameter("switchPositionLng")):0D;
 		LatLng switchLatLng = new LatLng(latSwitch, lngSwitch);
-		Integer switchlocationId = new LatLngAction().saveLocation(switchLatLng);
+		Integer switchlocationId = saveLocation(switchLatLng);
 		LatLng switchLatLng2 = getLatLngService().findById(switchlocationId);
 		
 		Map<String, PowerLine> powerLineMap = new PowerLineAction().splitPowerLineByLocation(powerLineId,switchLatLng2);

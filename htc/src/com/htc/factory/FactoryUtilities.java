@@ -2,7 +2,6 @@ package com.htc.factory;
 
 import java.util.Map;
 import java.util.TreeMap;
-import com.htc.action.LatLngAction;
 import com.htc.hibernate.pojo.HolonElement;
 import com.htc.hibernate.pojo.HolonElementState;
 import com.htc.hibernate.pojo.HolonElementType;
@@ -29,7 +28,6 @@ public class FactoryUtilities extends CommonUtilities{
 		Double lngSW = null;
 		LatLng NorthlatLng = null;
 		LatLng SouthlatLng = null;
-		LatLngAction latLngAct= null;
 		Integer NorthlocationId = null;
 		Integer SouthlocationId = null;
 		LatLng NorthlatLng2 = null;
@@ -50,9 +48,8 @@ public class FactoryUtilities extends CommonUtilities{
 				
 				NorthlatLng = new LatLng(latNE, lngNE);
 				SouthlatLng = new LatLng(latSW, lngSW);
-				latLngAct= new LatLngAction();
-				NorthlocationId = latLngAct.saveLocation(NorthlatLng);
-				SouthlocationId = latLngAct.saveLocation(SouthlatLng);
+				NorthlocationId = saveLocation(NorthlatLng);
+				SouthlocationId = saveLocation(SouthlatLng);
 				NorthlatLng2 = getLatLngService().findById(NorthlocationId);
 				SouthlatLng2 = getLatLngService().findById(SouthlocationId);
 

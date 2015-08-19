@@ -6,9 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import org.apache.log4j.Logger;
-
 import com.htc.hibernate.pojo.HolonCoordinator;
 import com.htc.hibernate.pojo.HolonElement;
 import com.htc.hibernate.pojo.HolonObject;
@@ -36,9 +34,8 @@ public class HolonObjectAction extends CommonUtilities {
 		
 		LatLng NorthlatLng = new LatLng(latNE, lngNE);
 		LatLng SouthlatLng = new LatLng(latSW, lngSW);
-		LatLngAction latLngAct= new LatLngAction();
-		Integer NorthlocationId = latLngAct.saveLocation(NorthlatLng);
-		Integer SouthlocationId = latLngAct.saveLocation(SouthlatLng);
+		Integer NorthlocationId = saveLocation(NorthlatLng);
+		Integer SouthlocationId = saveLocation(SouthlatLng);
 		LatLng NorthlatLng2 = getLatLngService().findById(NorthlocationId);
 		LatLng SouthlatLng2 = getLatLngService().findById(SouthlocationId);
 		HolonObject holonObject = new HolonObject(); // Creating HolonObject object to store values

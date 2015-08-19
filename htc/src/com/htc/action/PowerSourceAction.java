@@ -28,8 +28,7 @@ public class PowerSourceAction  extends CommonUtilities{
 		Double lngCenter = getRequest().getParameter("lngCenter")!=null?Double.parseDouble(getRequest().getParameter("lngCenter")):0D;
 				
 		LatLng centerLatLng = new LatLng(latCenter, lngCenter);
-		LatLngAction latLngAct= new LatLngAction();
-		Integer centerLatLngId = latLngAct.saveLocation(centerLatLng);
+		Integer centerLatLngId = saveLocation(centerLatLng);
 		PowerSource pwSrc = new PowerSource(); // Creating HolonObject object to store values
 
 		pwSrc.setCenter(getLatLngService().findById(centerLatLngId));
