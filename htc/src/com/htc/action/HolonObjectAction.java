@@ -492,6 +492,26 @@ public class HolonObjectAction extends CommonUtilities {
 		}
 		return currentPow;
 	}
+	
+	public void getConnectedStatusForHolons()
+	{
+		try{
+		Integer firstHolonObject = getRequest().getParameter("firstHolonObject")!=null?Integer.parseInt(getRequest().getParameter("firstHolonObject")):0;
+		Integer secondHolonObject = getRequest().getParameter("secondHolonObject")!=null?Integer.parseInt(getRequest().getParameter("secondHolonObject")):0;
+		HolonObject holonFirst = getHolonObjectService().findById(firstHolonObject);
+		HolonObject holonSecond = getHolonObjectService().findById(secondHolonObject);
+		boolean response = checkConnectivityBetweenHolonObjects(holonFirst,holonSecond);
+		String responseStr="Failure";
+		if(response)
+		{responseStr="Success"; }
+		getResponse().setContentType("text/html");
+		getResponse().getWriter().write(responseStr);
+		}
+		catch(Exception e)
+		{
+			System.out.println("Exception occured at getConnectedStatusForHolons");
+		}
+	}
 }
 
 

@@ -14,6 +14,7 @@ $(document)
 					window.calculateDistanceMode=false;
 					window.addSwitchonPowerLineMode=false;
 					window.connectToPowerSourceMode=false;
+					window.areConnectedMode=false;
 					window.addPowerSourceMode=false;
 					window.addPowerSourceToLineMode=false;
 					window.globalHoList=new Map(); //Holon Object

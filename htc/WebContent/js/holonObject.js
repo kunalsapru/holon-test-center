@@ -3,11 +3,26 @@
  */
 
 var holonEditOptions = {};
-
+var isConnectedFirst="";
+var isConnectedSecond="";
 var hoShape;
+
 $(document).ready(function() {
 
 	var holonDrawingManager;
+	
+	$('#areConnected').click(function(evt) {
+		if (areConnectedMode==false){
+			areConnectedMode=true;
+			$(this).css("background-color", "rgb(153,153,0)");
+		} else {
+			$(this).css("background-color", "rgb(26, 26, 26)");
+			areConnectedMode=false;
+			isConnectedFirst="";
+			isConnectedSecond="";
+		}
+	});
+	
 	$('#addHolonObject').click(function() {
 	if (drawHolonObjectMode==false) {
 			$(this).css("background-color", "rgb(153,153,0)");
@@ -490,15 +505,34 @@ function getDetailForPowerSourceIconCallBack(data,options)
 
 function attachMessage(holonObjectId, rectangleFromFactory) {
 	google.maps.event.addListener(rectangleFromFactory, 'click', function(event) {	
-			if(connectToPowerSourceMode==true)
+		if(connectToPowerSourceMode==true)
+		{
+		connectToPowerSource(event.latLng,holonObjectId,"HolonObject");
+		}else if(areConnectedMode == true){
+			if(isConnectedFirst=="" && isConnectedSecond=="")
 				{
-				connectToPowerSource(event.latLng,holonObjectId,"HolonObject");
-				}else{
-					var dataAttributes={
-							holonObjectId:holonObjectId	
-					};
-		  ajaxRequest("getHolonObjectInfoWindow", dataAttributes, getHolonInfoWindowCallBack, {});		
+				isConnectedFirst=holonObjectId;
 				}
+			else if(isConnectedFirst!="" && isConnectedSecond=="")
+				{
+				 isConnectedSecond=holonObjectId;
+				 areHolonObjectsConnected(isConnectedFirst,isConnectedSecond);
+				 isConnectedFirst="";
+				 isConnectedSecond="";
+				}
+			else 
+				{
+				alert("Please close the isConnected Mode" );
+				}
+			
+		}
+		
+		else{
+			var dataAttributes={
+					holonObjectId:holonObjectId	
+			};
+  ajaxRequest("getHolonObjectInfoWindow", dataAttributes, getHolonInfoWindowCallBack, {});		
+		}
 		
 	  });
 }

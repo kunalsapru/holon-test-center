@@ -42,8 +42,10 @@
 			method="deleteHolonObject" /> 
 		<action name="showHolonObjects" class="com.htc.action.HolonObjectAction"
 			method="showHolonObjects" />
-			<action name="getDataForSupplierDetails" class="com.htc.action.HolonObjectAction"
+		<action name="getDataForSupplierDetails" class="com.htc.action.HolonObjectAction"
 			method="getDataForSupplierDetails" />
+		<action name="getConnectedStatusForHolons" class="com.htc.action.HolonObjectAction"
+			method="getConnectedStatusForHolons" />
 			
 
 

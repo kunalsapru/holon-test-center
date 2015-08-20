@@ -27,6 +27,7 @@
 <script type="text/javascript" src="js/supplierDetails.js"></script>
 <script type="text/javascript" src="js/highcharts.js"></script>
 <script type="text/javascript" src="js/highcharts_exporting.js"></script>
+<script type="text/javascript" src="js/areConnected.js"></script>
 <script src="js/sweetalert.min.js"></script>
 </head>
 
@@ -44,6 +45,7 @@
     <ul>
         <li><a href="#" id="addHolonObject"><i class="fa fa-plus"></i>Add Holon Object</a></li>
         <li><a href="#" id="connectToPowerSource"><i class="fa fa-plug"></i>Connect to Main Line</a></li>
+    	<li><a href="#" id="areConnected"><i class="fa fa-exchange"></i>Are Connected ?</a></li>
     </ul>
       </li>
       <li><a href="#"><i class="fa  fa-certificate"></i>Power Source<i class="fa fa-caret-down"></i></a>
