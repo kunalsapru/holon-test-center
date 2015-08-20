@@ -107,9 +107,9 @@ public class CommonUtilities extends AbstractAction{
 		Integer minimumProductionCapacity = 0;
 		Integer maximumProductionCapacity = 0;
 		Integer currentProduction=0;
-		Integer flexibility = 0;
 		Integer currentEnergyRequired = 0;
-		
+		Integer flexibility = holonObject.getFlexibility();
+
 		ArrayList<HolonElement> holonElementList= getHolonElementService().getHolonElements(holonObject);
 		for(HolonElement holonElement : holonElementList) {
 			if(holonElement.getHolonElementType().getProducer()) {
@@ -127,14 +127,50 @@ public class CommonUtilities extends AbstractAction{
 			}
 		}
 		currentEnergyRequired = originalEnergyRequired;
-		flexibility = currentProduction;
 		if(originalEnergyRequired > 0) {
 			if(currentProduction > 0 && currentProduction <= originalEnergyRequired) {
 				currentEnergyRequired = originalEnergyRequired - currentProduction;
-				flexibility = 0;
 			} else if(currentProduction > 0 && currentProduction > originalEnergyRequired) {
 				currentEnergyRequired = 0;
-				flexibility = currentProduction - originalEnergyRequired;
+			}
+		}
+
+		//Code to update values of Holon Objects and Power Sources
+		PowerLine powerLine = getPowerLineService().getPowerLineByHolonObject(holonObject);
+		if(currentEnergyRequired > 0 && powerLine != null) {
+			ArrayList<PowerLine> connectedNeighbourPowerLines = connectedPowerLines(powerLine.getId());
+			for(PowerLine powerLine2 : connectedNeighbourPowerLines) {
+				if(powerLine2.getType().equalsIgnoreCase(ConstantValues.SUBLINE)) {
+					HolonObject holonObject2 = powerLine2.getHolonObject();
+					Integer tempFlexibility = holonObject2.getFlexibility();
+					if(tempFlexibility > 0) {
+						if(tempFlexibility <= currentEnergyRequired) {
+							currentEnergyRequired = currentEnergyRequired - tempFlexibility;
+							tempFlexibility = 0;
+						} else {
+							tempFlexibility = tempFlexibility - currentEnergyRequired;
+							currentEnergyRequired = 0;
+						}
+					}
+					//Saving new flexibility in holon object
+					holonObject2.setFlexibility(tempFlexibility);
+					getHolonObjectService().merge(holonObject2);
+				} else if (powerLine2.getType().equalsIgnoreCase(ConstantValues.POWERSUBLINE)) {
+					PowerSource powerSource = powerLine2.getPowerSource();
+					Integer tempFlexibility = powerSource.getFlexibility();
+					if(tempFlexibility > 0) {
+						if(tempFlexibility <= currentEnergyRequired) {
+							currentEnergyRequired = currentEnergyRequired - tempFlexibility;
+							tempFlexibility = 0;
+						} else {
+							tempFlexibility = tempFlexibility - currentEnergyRequired;
+							currentEnergyRequired = 0;
+						}
+					}
+					//Saving new flexibility in holon object
+					powerSource.setFlexibility(tempFlexibility);
+					getPowerSourceService().merge(powerSource);
+				}
 			}
 		}
 
@@ -147,8 +183,7 @@ public class CommonUtilities extends AbstractAction{
 		holonObjectEnergyDetails.put("currentProduction", currentProduction);
 		holonObjectEnergyDetails.put("currentEnergyRequired", currentEnergyRequired);
 		holonObjectEnergyDetails.put("flexibility", flexibility);
-		holonObject.setFlexibility(flexibility);
-		getHolonObjectService().merge(holonObject);
+		
 		
 		return holonObjectEnergyDetails;
 	}
@@ -172,6 +207,13 @@ public class CommonUtilities extends AbstractAction{
 		Integer currentEnergyRequiredHolon = 0;
 		Integer originalEnergyRequiredHolon = 0;
 		Integer flexibilityHolon = 0;
+		
+		Integer flexibilityPowerSource = 0;
+		Integer minimumProductionCapacityPowerSource = 0;
+		Integer maximumProductionCapacityPowerSource = 0;
+		Integer currentProductionPowerSource = 0;
+
+		
 		noOfHolonObjects = holonObjectListByConnectedPowerLines.size();
 		Map<String, Integer> holonObjectEnergyDetails = null;
 		for(HolonObject holonObject : holonObjectListByConnectedPowerLines) {
@@ -192,6 +234,7 @@ public class CommonUtilities extends AbstractAction{
 			//Include code for Power Source production and flexibility
 		}
 */		
+		
 		String holonObjectTypeName = holonObjectOfCoordinator.getHolonObjectType().getName();
 		hoObjectIdList.remove(holonObjectOfCoordinatorId.toString().concat("~").concat(holonObjectTypeName));
 		holonObjectList.append("<option value=\"Select Holon\" id= \"infoWinOpt\" selected>Select Holon Object</option>");
@@ -201,6 +244,21 @@ public class CommonUtilities extends AbstractAction{
 			String hoObjectType =valueString.split("~")[1];
 			holonObjectList.append("<option value="+holonObjectId+" id= \"infoWinOpt\">"+hoObjectType+" (Id:"+holonObjectId+")"+"</option>");
 		}
+		
+		//Code to get connecetd Power Sources
+		
+		ArrayList<PowerSource> listConnectedPowerSources = getPowerSourceListByConnectedPowerLines(powerLine);
+		for(PowerSource powerSource : listConnectedPowerSources) {
+			flexibilityPowerSource = flexibilityPowerSource + powerSource.getFlexibility();
+			minimumProductionCapacityPowerSource = minimumProductionCapacityPowerSource + powerSource.getMinProduction();
+			maximumProductionCapacityPowerSource = maximumProductionCapacityPowerSource + powerSource.getMaxProduction();
+			currentProductionPowerSource = currentProductionPowerSource + powerSource.getCurrentProduction();
+		}
+		//Adding power source details to the holon.
+		flexibilityHolon = flexibilityHolon + flexibilityPowerSource;
+		minimumProductionCapacityHolon = minimumProductionCapacityHolon + minimumProductionCapacityPowerSource;
+		maximumProductionCapacityHolon = maximumProductionCapacityHolon + maximumProductionCapacityPowerSource;
+		currentProductionHolon = currentProductionHolon + currentProductionPowerSource;
 		
 		holonEnergyDetails.put("noOfHolonObjects", noOfHolonObjects.toString());
 		holonEnergyDetails.put("minimumProductionCapacityHolon", minimumProductionCapacityHolon.toString());
@@ -346,11 +404,6 @@ public class CommonUtilities extends AbstractAction{
 				
 			} 
 			
-			//Code to update values of Holon Objects and Power Sources
-			if(powerLine2.getType().equalsIgnoreCase(ConstantValues.SUBLINE)) {//Update/Supply Energy to the connected Holon Object.
-				
-			}
-			
 		}//End of parent for loop
 		
 		/*Checking whether a holon coordinator has been assigned to the newly joined holon object or not. 
@@ -389,6 +442,19 @@ public class CommonUtilities extends AbstractAction{
 		}
 		return connectedHolonObjects;
 	}
+	
+	public ArrayList<PowerSource> getPowerSourceListByConnectedPowerLines(PowerLine powerLine) {
+		ArrayList<PowerSource> connectedPowerSources = new ArrayList<PowerSource>();
+		Integer powerLineId = powerLine.getId();
+		ArrayList<PowerLine> connectedPowerLines = connectedPowerLines(powerLineId);
+		for(PowerLine powerLine2 : connectedPowerLines) {
+			if(powerLine2.getType().equalsIgnoreCase(ConstantValues.POWERSUBLINE)) {
+				connectedPowerSources.add(powerLine2.getPowerSource());
+			}
+		}
+		return connectedPowerSources;
+	}
+	
 
 	public boolean checkConnectivityBetweenHolonObjects(HolonObject holonObjectA, HolonObject holonObjectB) {
 		Integer powerLineIdA = getPowerLineService().getPowerLineByHolonObject(holonObjectA).getId();
@@ -402,6 +468,32 @@ public class CommonUtilities extends AbstractAction{
 			}
 		}
 		return false;
+	}
+	
+	public void setFlexibilityOfHolonObject(HolonObject holonObject) {
+		Integer originalEnergyRequired = 0;
+		Integer currentProduction=0;
+		Integer flexibility = 0;
+		ArrayList<HolonElement> holonElementList= getHolonElementService().getHolonElements(holonObject);
+		for(HolonElement holonElement : holonElementList) {
+			if(holonElement.getHolonElementType().getProducer()) {
+				if(holonElement.getHolonElementState().getId()==1) {
+					currentProduction = currentProduction + holonElement.getCurrentCapacity();
+				}
+			} else {
+				if(holonElement.getHolonElementState().getId()==1) {
+					originalEnergyRequired = originalEnergyRequired+holonElement.getCurrentCapacity();
+				}
+			}
+		}
+		flexibility = currentProduction;
+		if(originalEnergyRequired > 0) {
+			if(currentProduction > 0 && currentProduction > originalEnergyRequired) {
+				flexibility = currentProduction - originalEnergyRequired;
+			}
+		}
+		holonObject.setFlexibility(flexibility);
+		getHolonObjectService().merge(holonObject);
 	}
 
 }

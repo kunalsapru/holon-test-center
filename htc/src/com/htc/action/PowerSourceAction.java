@@ -33,7 +33,7 @@ public class PowerSourceAction  extends CommonUtilities{
 		PowerSource pwSrc = new PowerSource(); // Creating HolonObject object to store values
 
 		pwSrc.setCenter(getLatLngService().findById(centerLatLngId));
-		pwSrc.setCurrentProduction(0);
+		pwSrc.setCurrentProduction(psMaxProdCap);
 		pwSrc.setRadius(radius);
 		pwSrc.setMaxProduction(psMaxProdCap);
 		pwSrc.setMinProduction(0);
@@ -109,6 +109,7 @@ public class PowerSourceAction  extends CommonUtilities{
 			Integer currProd=pwSrc.getCurrentProduction();
 			Integer minProd=pwSrc.getMinProduction();
 			Boolean status = pwSrc.getStatus();
+			Integer flexibility = pwSrc.getFlexibility();
 			double latCenter=pwSrc.getCenter().getLatitude();
 			double lngCenter=pwSrc.getCenter().getLongitude();
 			double pwSrcRad=pwSrc.getRadius();
@@ -136,6 +137,7 @@ public class PowerSourceAction  extends CommonUtilities{
 			psResponse.append(lngCenter+"!");
 			psResponse.append(pwSrcRad+"!");
 			psResponse.append(CoHolonName+"!");
+			psResponse.append(flexibility);
 			
 			log.info(psResponse.toString());
 			getResponse().getWriter().write(psResponse.toString());
@@ -182,6 +184,7 @@ public class PowerSourceAction  extends CommonUtilities{
 			int maxProd = pwSrc.getMaxProduction();
 			int minProd = pwSrc.getMinProduction();
 			int currentProd = pwSrc.getCurrentProduction();
+			Integer flexibility = pwSrc.getFlexibility();
 			boolean pwNewStatus=true;
 			Integer pwNewIntStatus=1;
 			if(pwOldStatus) {
@@ -207,7 +210,9 @@ public class PowerSourceAction  extends CommonUtilities{
 			respStr.append(pwNewIntStatus+"!");
 			respStr.append(maxProd+"!");
 			respStr.append(minProd+"!");
-			respStr.append(currentProd);
+			respStr.append(currentProd+"!");
+			respStr.append(flexibility);
+			
 			
 			//Calling the response function and setting the content type of response.
 			getResponse().setContentType("text/html");

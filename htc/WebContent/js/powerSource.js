@@ -201,6 +201,8 @@ function getPsObjectInfoWindowCallBack(data,option)
 	var minProd=resp[6];
 	var latCenter=resp[7];
 	var lngCenter=resp[8];
+	var flexibility = resp[11];
+	
 	var powerSrc=option['powerSrc'];
 	var powerStatusVal="Producing";
 	if(powerStatus=="false")
@@ -224,7 +226,8 @@ function getPsObjectInfoWindowCallBack(data,option)
 		}
 		
 		contentString=contentString.concat("<td>Minimum Production Capacity: "+minProd+"</td></tr>"+
-				"</table>"+
+		"<tr><td colspan='2'>Flexibility: "+flexibility+"</td></tr>"+
+		"</table>"+
 				"<br /><hr>"+
 				"<table><tr><td colspan='2' style='text-align: center;'>");
 		if(powerStatus=="true")

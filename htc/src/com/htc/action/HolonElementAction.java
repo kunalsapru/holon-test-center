@@ -44,7 +44,7 @@ public class HolonElementAction extends CommonUtilities {
 			Integer newHolonElementID = getHolonElementService().persist(holonElement);
 			log.info("NewLy Generated Holon Element ID --> "+newHolonElementID);
 			
-			getHolonObjectEnergyDetails(holonObject);//To set/update flexibility of holon object in Database.
+			setFlexibilityOfHolonObject(holonObject);//To set/update flexibility of holon object in Database.
 			
 			//Calling the response function and setting the content type of response.
 			getResponse().setContentType("text/html");
@@ -86,8 +86,7 @@ public class HolonElementAction extends CommonUtilities {
 			holonElement.setHolonElementState(holonElementState);
 			holonElement.setHolonElementType(holonElementType);
 			HolonElement holonElement2 = getHolonElementService().merge(holonElement);
-			getHolonObjectEnergyDetails(holonElement2.getHolonObject());//To set/update flexibility of holon object in Database.
-			
+			setFlexibilityOfHolonObject(holonElement.getHolonObject());//To set/update flexibility of holon object in Database.
 			String dbResponse = "false";
 			if(holonElement2 != null) {
 				dbResponse = "true";
@@ -161,7 +160,8 @@ public class HolonElementAction extends CommonUtilities {
 		boolean deleteStatus = getHolonElementService().delete(holonElement);
 
 		HolonObject holonObject = getHolonObjectService().findById(holonObjectId);
-		getHolonObjectEnergyDetails(holonObject);//To set/update flexibility of holon object in Database.
+		
+		setFlexibilityOfHolonObject(holonObject);//To set/update flexibility of holon object in Database.
 		
 		//Calling the response function and setting the content type of response.
 		getResponse().setContentType("text/html");
