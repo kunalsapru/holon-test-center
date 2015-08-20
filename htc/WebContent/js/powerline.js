@@ -120,7 +120,6 @@ function editPowerLineObjectCallBack(data, options){
 }
 
 function drawPoweLineCallBack(data, options){
-	alert(data);
 	var newLineShape = options["lineShape"];
 	var path = options["path"];
 	var dataArray = data.split("!");
