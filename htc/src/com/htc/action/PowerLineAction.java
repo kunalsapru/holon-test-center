@@ -26,8 +26,8 @@ public class PowerLineAction extends CommonUtilities {
 			Double latEnd = getRequest().getParameter("latEnd")!=null?Double.parseDouble(getRequest().getParameter("latEnd")):0D;
 			Double lngEnd = getRequest().getParameter("lngEnd")!=null?Double.parseDouble(getRequest().getParameter("lngEnd")):0D;
 			Integer powerLineForSubLine = getRequest().getParameter("powerLineForSubLine")!=null && getRequest().getParameter("powerLineForSubLine")!=""?
-					Integer.parseInt(getRequest().getParameter("powerLineForSubLine")):0;
-			Integer subLineHolonObjId=0;
+			Integer.parseInt(getRequest().getParameter("powerLineForSubLine")):0;
+			Integer subLineHolonObjId=getRequest().getParameter("holonObjectId")!=null?Integer.parseInt(getRequest().getParameter("holonObjectId")):0;
 			LatLng StartLatLng = new LatLng(latStart, lngStart);
 			LatLng EndLatLng = new LatLng(latEnd, lngEnd);
 			int newStartLatLngId = saveLocation(StartLatLng);
@@ -45,7 +45,6 @@ public class PowerLineAction extends CommonUtilities {
 			powerLine.setType(powerLineType);
 			PowerLine powerLineA = null, powerLineB = null;
 			if(powerLineType.equals(ConstantValues.SUBLINE)) {
-				subLineHolonObjId= getRequest().getParameter("HolonObjectId")!=null?Integer.parseInt(getRequest().getParameter("HolonObjectId")):0;
 				powerLine.setHolonObject(getHolonObjectService().findById(subLineHolonObjId));
 				/*This code is not required as per new DB changes. Recursive reference of power line has now been removed.
 				 * powerLine.setPowerLine(getPowerLineService().findById(powerLineIdForsubLine));*/
@@ -53,7 +52,6 @@ public class PowerLineAction extends CommonUtilities {
 				powerLineA = powerLineMap.get("powerLineA");
 				powerLineB = powerLineMap.get("powerLineB");
 			} else if(powerLineType.equals(ConstantValues.POWERSUBLINE)) {
-				subLineHolonObjId= getRequest().getParameter("HolonObjectId")!=null?Integer.parseInt(getRequest().getParameter("HolonObjectId")):0;
 				powerLine.setPowerSource(getPowerSourceService().findById(subLineHolonObjId));
 				/*This code is not required as per new DB changes. Recursive reference of power line has now been removed.
 				 * powerLine.setPowerLine(getPowerLineService().findById(powerLineIdForsubLine));*/
@@ -61,7 +59,6 @@ public class PowerLineAction extends CommonUtilities {
 				powerLineA = powerLineMap.get("powerLineA");
 				powerLineB = powerLineMap.get("powerLineB");
 			}
-			
 			Integer newPowerLineID = getPowerLineService().persist(powerLine);
 			String color = CommonUtilities.getLineColor(CommonUtilities.getPercent(currentCapacity,maxCapacity));
 			log.info("NewLy Generated powerLine  ID --> "+newPowerLineID);
@@ -78,6 +75,9 @@ public class PowerLineAction extends CommonUtilities {
 			if(powerLineType.equals(ConstantValues.SUBLINE) || powerLineType.equals(ConstantValues.POWERSUBLINE)) {
 				updateHolonObjectsAndPowerSources(newPowerLineID);
 			}
+			HolonObject holonObject = getHolonObjectService().findById(subLineHolonObjId);
+			String holonObjectColor= holonObject.getHolonCoordinator().getHolon().getColor();
+			plResponse.append("!"+holonObjectColor+"!"+subLineHolonObjId);
 			getResponse().getWriter().write(plResponse.toString());	
 		}catch(Exception e) {
 			log.info("Exception "+e.getMessage()+" occurred in action drawPowerLine()");

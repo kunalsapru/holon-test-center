@@ -72,7 +72,7 @@ function savePowerLineObject(){
 	var maxCapacity=$("#powerLineCapacity").val();
 	var powerLineObjectActionState = $("#powerLineObjectActionState").text();
 	var powerLineId = $("#powerLineIdHidden").text();
-	var HolonObjectId = $("#powerLineHolonObjectIdHidden").text();
+	var holonObjectId = $("#powerLineHolonObjectIdHidden").text();
 	var powerLineForSubLine=$("#powerLineIdForSubLine").text();
 	var powerLineType=$("#powerLineType").text();
 	$( "#lineObjectDetail" ).slideUp(100);
@@ -92,7 +92,7 @@ function savePowerLineObject(){
 			isConnected :false,
 			reasonDown : "",
 			powerLineId:powerLineId,
-			HolonObjectId:HolonObjectId,
+			holonObjectId:holonObjectId,
 			powerLineForSubLine:powerLineForSubLine
 	};	
 	var options = {
@@ -120,6 +120,7 @@ function editPowerLineObjectCallBack(data, options){
 }
 
 function drawPoweLineCallBack(data, options){
+	alert(data);
 	var newLineShape = options["lineShape"];
 	var path = options["path"];
 	var dataArray = data.split("!");
@@ -130,10 +131,14 @@ function drawPoweLineCallBack(data, options){
 	globalPlList.set(powerLineId, newLineShape);
 	var powerLineAId = dataArray[2];
 	var powerLineBId = dataArray[3];
+	var holonColor= dataArray[4];
+	var holonObjectId= dataArray[5];
 	if(typeof powerLineAId != 'undefined' && typeof powerLineBId != 'undefined') {
 		updateGlobalPowerLineList(powerLineAId,true);
 		updateGlobalPowerLineList(powerLineBId,false);
 	}
+	var rectangleHolonObject= globalHoList.get(holonObjectId);
+	rectangleHolonObject.setOptions({strokeColor:holonColor,fillColor: holonColor});
 }
 
 function editPowerLine(powerLineId){
