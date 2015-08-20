@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 
 import com.htc.hibernate.pojo.HolonCoordinator;
 import com.htc.hibernate.pojo.LatLng;
+import com.htc.hibernate.pojo.PowerLine;
 import com.htc.hibernate.pojo.PowerSource;
 import com.htc.utilities.CommonUtilities;
 
@@ -37,10 +38,15 @@ public class PowerSourceAction  extends CommonUtilities{
 		pwSrc.setMaxProduction(psMaxProdCap);
 		pwSrc.setMinProduction(0);
 		pwSrc.setStatus((psStatus==1?true:false));
+		pwSrc.setFlexibility(psMaxProdCap);
 		Integer newPsId = getPowerSourceService().persist(pwSrc);
 					
 		log.info("NewLy Generated Power Source ID --> "+newPsId);
 		PowerSource pwSrc2 = getPowerSourceService().findById(newPsId);
+
+		PowerLine powerLine = getPowerLineService().getPowerLineByPowerSource(pwSrc2);
+		//Update all holon objects
+		updateHolonObjectsAndPowerSources(powerLine.getId());
 				
 		//Calling the response function and setting the content type of response.
 		getResponse().setContentType("text/html");
@@ -70,9 +76,14 @@ public class PowerSourceAction  extends CommonUtilities{
 			pwSrcOld.setMaxProduction(psMaxProdCap);
 			pwSrcOld.setStatus((psStatus==1?true:false));
 			pwSrcOld.setCurrentProduction((psStatus==1?psMaxProdCap:0));
+			pwSrcOld.setFlexibility(psMaxProdCap);
 			getPowerSourceService().merge(pwSrcOld);
 			PowerSource pwSrc2 = getPowerSourceService().findById(pSourceId);
-					
+			
+			PowerLine powerLine = getPowerLineService().getPowerLineByPowerSource(pwSrc2);
+			//Update all holon objects
+			updateHolonObjectsAndPowerSources(powerLine.getId());
+			
 			//Calling the response function and setting the content type of response.
 			getResponse().setContentType("text/html");
 			StringBuffer psResponse = new StringBuffer();

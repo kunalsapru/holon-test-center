@@ -10,6 +10,7 @@ import com.htc.hibernate.config.HibernateSessionFactory;
 import com.htc.hibernate.pojo.HolonObject;
 import com.htc.hibernate.pojo.LatLng;
 import com.htc.hibernate.pojo.PowerLine;
+import com.htc.hibernate.pojo.PowerSource;
 import com.htc.utilities.ConstantValues;
 
 /**
@@ -137,6 +138,25 @@ public class PowerLineHome {
 			tx.commit();
 		} catch (RuntimeException re) {
 			System.out.println("getPowerLineByHolonObject failed");
+		}
+		return powerLine;
+	}
+	
+	public PowerLine getPowerLineByPowerSource(PowerSource powerSource) {
+		Session session = null;
+		Transaction tx = null;
+		PowerLine powerLine = null;
+		String powerLineType = ConstantValues.POWERSUBLINE;
+		try {
+			session = HibernateSessionFactory.getSessionFactory().getCurrentSession();
+			tx = session.beginTransaction();
+			Query query = session.createQuery("from PowerLine p where p.type=:powerLineType and p.powerSource =:powerSource");
+			query.setString("powerLineType", powerLineType);
+			query.setEntity("powerSource", powerSource);
+			powerLine =  (PowerLine)query.uniqueResult();
+			tx.commit();
+		} catch (RuntimeException re) {
+			System.out.println("getPowerLineByPowerSource failed");
 		}
 		return powerLine;
 	}

@@ -344,7 +344,13 @@ public class CommonUtilities extends AbstractAction{
 					}
 				}
 				
+			} 
+			
+			//Code to update values of Holon Objects and Power Sources
+			if(powerLine2.getType().equalsIgnoreCase(ConstantValues.SUBLINE)) {//Update/Supply Energy to the connected Holon Object.
+				
 			}
+			
 		}//End of parent for loop
 		
 		/*Checking whether a holon coordinator has been assigned to the newly joined holon object or not. 

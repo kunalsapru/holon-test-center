@@ -1,9 +1,9 @@
 package com.htc.dao;
 
 import java.util.ArrayList;
-
 import com.htc.hibernate.pojo.HolonObject;
 import com.htc.hibernate.pojo.PowerLine;
+import com.htc.hibernate.pojo.PowerSource;
 
 public interface PowerLineDao {
 	public Integer persist(PowerLine transientInstance);
@@ -13,4 +13,5 @@ public interface PowerLineDao {
 	public ArrayList<PowerLine> getAllPowerLine();
 	public ArrayList<PowerLine> getConnectedPowerLines(PowerLine powerLine);
 	public PowerLine getPowerLineByHolonObject(HolonObject holonObject);
+	public PowerLine getPowerLineByPowerSource(PowerSource powerSource);
 }
