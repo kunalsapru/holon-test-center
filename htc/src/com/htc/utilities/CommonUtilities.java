@@ -384,4 +384,18 @@ public class CommonUtilities extends AbstractAction{
 		return connectedHolonObjects;
 	}
 
+	public boolean checkConnectivityBetweenHolonObjects(HolonObject holonObjectA, HolonObject holonObjectB) {
+		Integer powerLineIdA = getPowerLineService().getPowerLineByHolonObject(holonObjectA).getId();
+		Integer holonObjectBId = holonObjectB.getId();
+		ArrayList<PowerLine> connectedPowerLines = connectedPowerLines(powerLineIdA);
+		for(PowerLine powerLine2 : connectedPowerLines) {
+			if(powerLine2.getType().equalsIgnoreCase(ConstantValues.SUBLINE)) {
+				if(holonObjectBId.equals(powerLine2.getHolonObject().getId())) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 }

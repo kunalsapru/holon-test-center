@@ -117,13 +117,13 @@
 							<option value=0>No</option>
 						</select></td>
 					</tr>
-					<tr>
+					<tr style="display: none;">
 						<td>Latitude NE:
 						<label id="holonObjectLatitudeNE"></label></td>
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;Longtitude NE:
 						<label id="holonObjectLongitudeNE"></label></td>
 					</tr>
-					<tr>
+					<tr style="display: none;">
 						<td>Latitude SW:
 						<label id="holonObjectLatitudeSW"></label></td>
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;Longtitude SW:

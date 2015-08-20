@@ -238,13 +238,13 @@ function getHolonInfoWindowCallBack(data,options)
 			"<td>Holon Object Type: "+holonObjectTypeName+"</td></tr>"+
 			"<tr><td colspan='2'>Line Connected State: "+lineConnectedState+"</td></tr>";
 	console.log(contentString);
-	if(coordHolonId==0)
-		{
+	if(coordHolonId==0) {
 		contentString=contentString.concat("<tr><td>Coordinator Id: No Coordinator</td>");
-		}else
-		{
+	} else if(coordHolonId==-1) {
+		contentString=contentString.concat("<tr><td style='color:red'>Coordinator Id: Not connected</td>");
+	} else {
 		contentString=contentString.concat("<tr><td>Coordinator Id: <a href='#' id='hoCoId'>"+coordHolonId+"</a></td>");
-		}
+	}
 			
 	contentString=contentString.concat("<td>Minimum Energy Req: "+minEnergyHoObj+"</td></tr>"+
 			"<tr><td>Maximum Energy Req: "+maxEnergyHoObj+"</td>"+

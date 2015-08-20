@@ -102,11 +102,15 @@ public class HolonObjectAction extends CommonUtilities {
 			HolonObject coOrdHolon=null;
 			String coOredNeLocation="";
 			if(hc!=null && hc.getHolonObject() != null) {
-				holonCoordinatorName_Holon = holonObject2.getHolonCoordinator().getName().concat("_"+holonObject2.getHolonCoordinator().getHolon().getName());
-				holonColor= holonObject2.getHolonCoordinator().getHolon().getColor();
-				coordinatorHolonId=holonObject2.getHolonCoordinator().getHolonObject().getId();
-				coOrdHolon= getHolonObjectService().findById(coordinatorHolonId);			
-				coOredNeLocation= coOrdHolon.getLatLngByNeLocation().getLatitude()+"~"+coOrdHolon.getLatLngByNeLocation().getLongitude();
+				if(checkConnectivityBetweenHolonObjects(holonObject2, hc.getHolonObject())) {
+					holonCoordinatorName_Holon = holonObject2.getHolonCoordinator().getName().concat("_"+holonObject2.getHolonCoordinator().getHolon().getName());
+					holonColor= holonObject2.getHolonCoordinator().getHolon().getColor();
+					coordinatorHolonId=holonObject2.getHolonCoordinator().getHolonObject().getId();
+					coOrdHolon= getHolonObjectService().findById(coordinatorHolonId);			
+					coOredNeLocation= coOrdHolon.getLatLngByNeLocation().getLatitude()+"~"+coOrdHolon.getLatLngByNeLocation().getLongitude();
+				} else {
+					coordinatorHolonId = -1;
+				}
 			}
 			String holonObjectTypeName = holonObject2.getHolonObjectType().getName();
 			String ne_location = holonObject2.getLatLngByNeLocation().getLatitude()+"~"+holonObject2.getLatLngByNeLocation().getLongitude();

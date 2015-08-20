@@ -185,7 +185,7 @@ public class PowerSourceAction  extends CommonUtilities{
 			HolonCoordinator hc= pwSrc.getHolonCoordinator();
 			Integer CoHolonId=0;
 			String coHoLoc="";
-			if(hc!=null) {
+			if(hc!=null && hc.getHolonObject() != null) {
 				CoHolonId=hc.getHolonObject().getId();
 				coHoLoc=hc.getHolonObject().getLatLngByNeLocation().getLatitude()+"~"+hc.getHolonObject().getLatLngByNeLocation().getLongitude();
 			}
