@@ -134,9 +134,9 @@ public class CommonUtilities extends AbstractAction{
 				currentEnergyRequired = 0;
 			}
 		}
-
+		setFlexibilityOfHolonObject(holonObject);
 		//Code to update values of Holon Objects and Power Sources
-		PowerLine powerLine = getPowerLineService().getPowerLineByHolonObject(holonObject);
+/*		PowerLine powerLine = getPowerLineService().getPowerLineByHolonObject(holonObject);
 		if(currentEnergyRequired > 0 && powerLine != null) {
 			ArrayList<PowerLine> connectedNeighbourPowerLines = connectedPowerLines(powerLine.getId());
 			for(PowerLine powerLine2 : connectedNeighbourPowerLines) {
@@ -173,7 +173,7 @@ public class CommonUtilities extends AbstractAction{
 				}
 			}
 		}
-
+*/
 		holonObjectEnergyDetails.put("noOfHolonElements", holonElementList.size());
 		holonObjectEnergyDetails.put("minimumEnergyRequired", minimumEnergyRequired);
 		holonObjectEnergyDetails.put("maximumEnergyRequired", maximumEnergyRequired);
