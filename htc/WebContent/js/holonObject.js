@@ -480,7 +480,7 @@ function getDetailForPowerSourceIconCallBack(data,options)
 								strokeWeight: 0,
 								scale: 1/100
 							},
-							custom_label: labelTxt
+							icon: iconImage
 						});
 						
 						//currntPC.setOptions({strokeColor:powerColor, fillColor:powerColor,center:new google.maps.LatLng(ne_location_lat, sw_location_lng)});
