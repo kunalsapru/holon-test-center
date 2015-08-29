@@ -192,7 +192,7 @@ public class CommonUtilities extends AbstractAction{
 
 		Map<String, String> holonEnergyDetails = new TreeMap<String, String>();
 		PowerLine powerLine = getPowerLineService().getPowerLineByHolonObject(holonCoordinator.getHolonObject());
-		ArrayList<HolonObject> holonObjectListByConnectedPowerLines = getHolonObjectListByConnectedPowerLines(powerLine);
+		ArrayList<HolonObject> holonObjectListByConnectedPowerLines = getHolonObjectListByConnectedPowerLines(powerLine, holonCoordinator);
 		
 		Integer noOfHolonObjects = 0;
 		StringBuffer holonObjectList=new StringBuffer("");
@@ -209,7 +209,6 @@ public class CommonUtilities extends AbstractAction{
 		Integer minimumProductionCapacityPowerSource = 0;
 		Integer maximumProductionCapacityPowerSource = 0;
 		Integer currentProductionPowerSource = 0;
-
 		
 		noOfHolonObjects = holonObjectListByConnectedPowerLines.size();
 		Map<String, Integer> holonObjectEnergyDetails = null;
@@ -242,7 +241,7 @@ public class CommonUtilities extends AbstractAction{
 		
 		//Code to get connected Power Sources
 		
-		ArrayList<PowerSource> listConnectedPowerSources = getPowerSourceListByConnectedPowerLines(powerLine);
+		ArrayList<PowerSource> listConnectedPowerSources = getPowerSourceListByConnectedPowerLines(powerLine, holonCoordinator);
 		for(PowerSource powerSource : listConnectedPowerSources) {
 			flexibilityPowerSource = flexibilityPowerSource + powerSource.getFlexibility();
 			minimumProductionCapacityPowerSource = minimumProductionCapacityPowerSource + powerSource.getMinProduction();
@@ -440,25 +439,30 @@ public class CommonUtilities extends AbstractAction{
 		return (min + (int)(Math.random()*((max-min)+1)));
 	}
 	
-	public ArrayList<HolonObject> getHolonObjectListByConnectedPowerLines(PowerLine powerLine) {
+	public ArrayList<HolonObject> getHolonObjectListByConnectedPowerLines(PowerLine powerLine, HolonCoordinator holonCoordinator) {
 		ArrayList<HolonObject> connectedHolonObjects = new ArrayList<HolonObject>();
 		Integer powerLineId = powerLine.getId();
 		ArrayList<PowerLine> connectedPowerLines = connectedPowerLines(powerLineId);
 		for(PowerLine powerLine2 : connectedPowerLines) {
 			if(powerLine2.getType().equalsIgnoreCase(ConstantValues.SUBLINE)) {
-				connectedHolonObjects.add(powerLine2.getHolonObject());
+				if(powerLine2.getHolonObject().getHolonCoordinator() != null && powerLine2.getHolonObject().getHolonCoordinator().getId() == holonCoordinator.getId()) {
+					connectedHolonObjects.add(powerLine2.getHolonObject());
+				}
 			}
 		}
 		return connectedHolonObjects;
 	}
 	
-	public ArrayList<PowerSource> getPowerSourceListByConnectedPowerLines(PowerLine powerLine) {
+	public ArrayList<PowerSource> getPowerSourceListByConnectedPowerLines(PowerLine powerLine, HolonCoordinator holonCoordinator) {
 		ArrayList<PowerSource> connectedPowerSources = new ArrayList<PowerSource>();
 		Integer powerLineId = powerLine.getId();
 		ArrayList<PowerLine> connectedPowerLines = connectedPowerLines(powerLineId);
 		for(PowerLine powerLine2 : connectedPowerLines) {
 			if(powerLine2.getType().equalsIgnoreCase(ConstantValues.POWERSUBLINE)) {
-				connectedPowerSources.add(powerLine2.getPowerSource());
+				
+				if(powerLine2.getPowerSource().getHolonCoordinator()!=null && powerLine2.getPowerSource().getHolonCoordinator().getId() == holonCoordinator.getId()) {
+					connectedPowerSources.add(powerLine2.getPowerSource());
+				}
 			}
 		}
 		return connectedPowerSources;

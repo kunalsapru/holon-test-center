@@ -299,10 +299,10 @@ new formattng --><!--table -->
 .table table tr {
 	width: 100%;
 }
-.table table tr td {
+/* .table table tr td {
 	width: 50%;
 }
-
+ */
 .table tr:last-child td:last-child {
 	-moz-border-radius-bottomright: 0px;
 	-webkit-border-bottom-right-radius: 0px;

@@ -244,7 +244,7 @@
 	 		<th>Min. Capacity</th>
 	 		<th>State</th>
 	 		<th>Current Usage/Production</th>
-	 		<th colspan="2" id="addHolonElementTableHeader"><i class="fa fa-plus-circle"></i>Add Holon Element</th>
+	 		<th colspan="3" id="addHolonElementTableHeader"><i class="fa fa-plus-circle"></i>Add Holon Element</th>
  		<tr>
  	</thead>
  	<tbody id="holonElementsListBody" ></tbody>
