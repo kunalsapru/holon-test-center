@@ -559,7 +559,20 @@ function getHoCoIconsCallBack(data,options)
 {
 	
 	var result=data.split("*");
-	var hoCoObIdBlue=result[0];
+	var holonObjectId="";
+	var holonObjectColor="";
+	var coordinatorLocation="";
+	var coordinatorIcon="";
+	for(var i=0;i<result.length;i++)
+		{
+			holonObjectId=globalHoList.get(result[i].split("~")[0]);
+			holonObjectColor=result[i].split("~")[1];
+			coordinatorLocation=holonObjectId.getBounds().getNorthEast();
+			coordinatorIcon=createCoIcon(coordinatorLocation);
+			globalHKList.set(holonObjectColor,coIcon);
+		}
+	
+	/*var hoCoObIdBlue=result[0];
 	var hoCoObIdGreen=result[1];
 	var hoCoObIdYellow=result[2];
 	var hoCoObIdRed=result[3];
@@ -591,7 +604,7 @@ function getHoCoIconsCallBack(data,options)
 		var coIcon= createCoIcon(cLocation);
 		globalHKList.set("red",coIcon);
 	}
-	
+*/	
 }
 
 function createCoIcon(cLocation)
