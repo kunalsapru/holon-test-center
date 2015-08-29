@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import org.apache.log4j.Logger;
 import com.htc.hibernate.pojo.HolonObject;
-import com.htc.hibernate.pojo.PowerLine;
 import com.htc.utilities.CommonUtilities;
 import com.htc.utilities.ConstantValues;
 
@@ -13,9 +12,9 @@ public class HolonCoordinatorAction extends CommonUtilities{
 	private static final long serialVersionUID = 1L;
 	static Logger log = Logger.getLogger(HolonCoordinatorAction.class);
 
-	public  void chooseCoordinator(Integer holonCoordinatorId) {
-		holonCoordinatorId = holonCoordinatorId !=null ? holonCoordinatorId : 1; 
-		HolonObject hCoordinator = getHolonObjectService().findById(holonCoordinatorId);
+	public  void chooseCoordinator(Integer holonId) {
+/*		holonId = holonId !=null ? holonId : 1; 
+		HolonObject hCoordinator =  getHolonObjectService().getHolonObjectService().findById(holonCoordinatorId);
 		PowerLine powerLine = getPowerLineService().getPowerLineByHolonObject(hCoordinator);
 		ArrayList<HolonObject> hoList= getHolonObjectListByConnectedPowerLines(powerLine, hCoordinator);
 		if(hoList != null) {
@@ -49,7 +48,7 @@ public class HolonCoordinatorAction extends CommonUtilities{
 			hCoordinator.setIsCoordinator(false);
 			getHolonObjectService().merge(hCoordinator);
 		}
-	}
+*/	}
 	
 	
 	public void updateCoordinator() {

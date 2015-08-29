@@ -124,7 +124,7 @@ public class HolonObjectHome {
 		try {
 			session = HibernateSessionFactory.getSessionFactory().getCurrentSession();
 			tx = session.beginTransaction();
-			Query qr= session.createQuery("from HolonObject h where h.isCoordinator=:1");
+			Query qr= session.createQuery("from HolonObject h where h.isCoordinator=1");
 			listHolonObject =  (ArrayList<HolonObject>) qr.list();
 			tx.commit();
 			return listHolonObject;

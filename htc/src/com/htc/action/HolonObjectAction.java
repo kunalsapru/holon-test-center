@@ -45,6 +45,7 @@ public class HolonObjectAction extends CommonUtilities {
 		holonObject.setLineConnectedState(false);
 		holonObject.setCanCommunicate(canCommunicate==1?true:false);
 		holonObject.setFlexibility(0);
+		holonObject.setIsCoordinator(false);
 		//Calling service method to save the object in database and saving the auto-incremented ID in an integer
 		Integer newHolonObjectID = getHolonObjectService().persist(holonObject);
 		new HolonCoordinatorAction().chooseCoordinatorValue();
@@ -243,7 +244,10 @@ public class HolonObjectAction extends CommonUtilities {
 				sw_location = holonObject.getLatLngBySwLocation().getLatitude()+"~"+holonObject.getLatLngBySwLocation().getLongitude();
 				holonColor ="black";
 				PowerLine powerLine = getPowerLineService().getPowerLineByHolonObject(holonObject);
-				HolonObject hco = findConnectedHolonCoordinatorByHolon(holonObject.getHolon(), powerLine);
+				HolonObject hco = null;
+				if(holonObject.getHolon() != null) {
+					hco = findConnectedHolonCoordinatorByHolon(holonObject.getHolon(), powerLine);
+				}
 				if(hco!=null) {
 					holonColor=hco.getHolon().getColor();
 				}

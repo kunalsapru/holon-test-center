@@ -300,8 +300,14 @@ public class CommonUtilities extends AbstractAction{
 	}
 
 	public ArrayList<PowerLine> connectedPowerLines(Integer powerLineId) {
-		PowerLine powerLine = getPowerLineService().findById(powerLineId);
-		ArrayList<PowerLine> connectedPowerLines = getPowerLineService().getConnectedPowerLines(powerLine);
+		PowerLine powerLine = null;
+		if(powerLineId.compareTo(0) > 0 ){
+			powerLine = getPowerLineService().findById(powerLineId);
+		}
+		ArrayList<PowerLine> connectedPowerLines = new ArrayList<PowerLine>();
+		if(powerLine != null) {
+			connectedPowerLines = getPowerLineService().getConnectedPowerLines(powerLine);
+		}
 		log.info("Selected Power Line --> "+powerLineId);
 		for(PowerLine powerLine2 : connectedPowerLines) {
 			log.info("Connected Line --> "+powerLine2.getId());
@@ -431,8 +437,12 @@ public class CommonUtilities extends AbstractAction{
 	
 	public ArrayList<HolonObject> getHolonObjectListByConnectedPowerLines(PowerLine powerLine, HolonObject holonCoordinator) {
 		ArrayList<HolonObject> connectedHolonObjects = new ArrayList<HolonObject>();
-		Integer powerLineId = powerLine.getId();
-		ArrayList<PowerLine> connectedPowerLines = connectedPowerLines(powerLineId);
+		Integer powerLineId = 0;
+		ArrayList<PowerLine> connectedPowerLines = null;
+		if(powerLine != null) {
+			powerLineId = powerLine.getId();
+			connectedPowerLines = connectedPowerLines(powerLineId);
+		}
 		for(PowerLine powerLine2 : connectedPowerLines) {
 			if(powerLine2.getType().equalsIgnoreCase(ConstantValues.SUBLINE)) {
 				if(powerLine2.getHolonObject() != null && powerLine2.getHolonObject().getHolon().getId() == holonCoordinator.getHolon().getId()) {
