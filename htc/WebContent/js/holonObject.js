@@ -429,30 +429,19 @@ function getDetailForPowerSourceIconCallBack(data,options)
 	var sw_location_lng=resp[3];
 	var holonObjectId = options["holonObjectId"];	
 	var powerColor = '#FF0000';
+	var iconImage="css/images/bolt_off.png";
 	//alert(hasPowerOn);
 	   if(hasPowerOn=='true')
 		   {
-		   powerColor = '#336600';
+		   powerColor = '#336600'; // Green
+		   iconImage = "css/images/bolt_on.png"
 		   }
-	 var labelTxt=  '<i style="color:'+powerColor+';" class="map-icon-electrician"></i>';
+   // var labelTxt=  '<i style="color:'+powerColor+';" class="map-icon-electrician"></i>';
 	var currecntPC=globalPCList.get(holonObjectId.toString());
 	if(typeof(currecntPC) === "undefined")
 		{
 		if(hasPower=="true")
-		 {
-			//alert("has power");
-			  
-			  /* currecntPC=new google.maps.Circle({
-					 strokeColor: powerColor,
-				     strokeOpacity: 1,
-				     strokeWeight: 1,
-				     fillColor: powerColor,
-				     fillOpacity: 0.35,
-				     map: map,
-				     center: new google.maps.LatLng(ne_location_lat, sw_location_lng),
-				     radius: 3
-				    });	*/  
-			    
+		 {    
 			    currecntPC = new Marker({
 					map: map,
 					title: 'Power Producer',
@@ -466,7 +455,7 @@ function getDetailForPowerSourceIconCallBack(data,options)
 						strokeWeight: 0,
 						scale: 1/100
 					},
-					custom_label: labelTxt
+					icon: iconImage
 				});
 			   
 			    }
@@ -618,7 +607,7 @@ function createCoIcon(cLocation)
 				strokeWeight: 0,
 				scale: 1/100
 			},
-			custom_label: '<i class="map-icon-lawyer"></i>'
+			icon : 'css/images/coordinator.png'
 		});
 	 
 	 return coOrdCircle;
