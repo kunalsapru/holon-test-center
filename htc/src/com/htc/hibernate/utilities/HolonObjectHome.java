@@ -1,14 +1,12 @@
 package com.htc.hibernate.utilities;
 
 import java.util.ArrayList;
-
 import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-
 import com.htc.hibernate.config.HibernateSessionFactory;
-import com.htc.hibernate.pojo.HolonCoordinator;
+import com.htc.hibernate.pojo.Holon;
 import com.htc.hibernate.pojo.HolonObject;
 
 /**
@@ -64,16 +62,15 @@ public class HolonObjectHome {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public ArrayList<HolonObject> findByHCoordinator(HolonCoordinator holonCoordinator) {
-		log.info("Abhinav holonCoordinator value --> "+holonCoordinator);
+	public ArrayList<HolonObject> findByHolon(Holon holon) {
 		Session session = null;
 		Transaction tx = null;
 		ArrayList<HolonObject> listHolonObject = null;
 		try {
 			session = HibernateSessionFactory.getSessionFactory().getCurrentSession();
 			tx = session.beginTransaction();
-			Query qr= session.createQuery("from HolonObject h where h.holonCoordinator=:holonCoordinator");
-			qr.setEntity("holonCoordinator", holonCoordinator);
+			Query qr= session.createQuery("from HolonObject h where h.holon=:holon");
+			qr.setEntity("holon", holon);
 			listHolonObject =  (ArrayList<HolonObject>) qr.list();
 			tx.commit();
 			return listHolonObject;
@@ -119,5 +116,23 @@ public class HolonObjectHome {
 		return listHolonObject;
 	}
 
+	@SuppressWarnings("unchecked")
+	public ArrayList<HolonObject> findAllHolonCoordinators() {
+		Session session = null;
+		Transaction tx = null;
+		ArrayList<HolonObject> listHolonObject = null;
+		try {
+			session = HibernateSessionFactory.getSessionFactory().getCurrentSession();
+			tx = session.beginTransaction();
+			Query qr= session.createQuery("from HolonObject h where h.isCoordinator=:1");
+			listHolonObject =  (ArrayList<HolonObject>) qr.list();
+			tx.commit();
+			return listHolonObject;
+		} catch (RuntimeException re) {
+			log.info("Exception --> "+re.getMessage());
+			re.printStackTrace();
+		}
+		return listHolonObject;
+	}
 	
 }

@@ -1,5 +1,4 @@
 package com.htc.hibernate.pojo;
-// Generated 16 Aug, 2015 3:28:11 PM by Hibernate Tools 4.3.1
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -14,7 +13,7 @@ public class HolonObject implements java.io.Serializable, Comparable {
 	private static final long serialVersionUID = 1L;
 	private int id;
 	private EnergyState energyState;
-	private HolonCoordinator holonCoordinator;
+	private Holon holon;
 	private HolonObjectType holonObjectType;
 	private LatLng latLngByNeLocation;
 	private LatLng latLngBySwLocation;
@@ -23,9 +22,10 @@ public class HolonObject implements java.io.Serializable, Comparable {
 	private Boolean canCommunicate;
 	private Boolean createdFactory;
 	private Integer flexibility;
-	private Set<?> holonCoordinators = new HashSet<Object>(0);
+	private Boolean isCoordinator;
 	private Set<HolonElement> holonElements = new HashSet<HolonElement>(0);
 	private Set<PowerLine> powerLines = new HashSet<PowerLine>(0);
+	private Set<PowerSource> powerSources = new HashSet<PowerSource>(0); 
 
 	public HolonObject() {
 	}
@@ -35,15 +35,15 @@ public class HolonObject implements java.io.Serializable, Comparable {
 	}
 
 	public HolonObject(int id, EnergyState energyState,
-			HolonCoordinator holonCoordinator, HolonObjectType holonObjectType,
+			Holon holon, HolonObjectType holonObjectType,
 			LatLng latLngByNeLocation, LatLng latLngBySwLocation,
 			Boolean lineConnectedState, Integer consumption,
-			Boolean canCommunicate, Boolean createdFactory, Integer flexibility,
+			Boolean canCommunicate, Boolean createdFactory, Integer flexibility, Boolean isCoordinator,
 			Set<?> holonCoordinators, Set<HolonElement> holonElements, 
-			Set<PowerLine> powerLines) {
+			Set<PowerLine> powerLines, Set<PowerSource> powerSources) {
 		this.id = id;
 		this.energyState = energyState;
-		this.holonCoordinator = holonCoordinator;
+		this.holon = holon;
 		this.holonObjectType = holonObjectType;
 		this.latLngByNeLocation = latLngByNeLocation;
 		this.latLngBySwLocation = latLngBySwLocation;
@@ -52,9 +52,34 @@ public class HolonObject implements java.io.Serializable, Comparable {
 		this.canCommunicate = canCommunicate;
 		this.createdFactory = createdFactory;
 		this.flexibility = flexibility;
-		this.holonCoordinators = holonCoordinators;
+		this.isCoordinator = isCoordinator;
 		this.holonElements = holonElements;
 		this.setPowerLines(powerLines);
+		this.setPowerSources(powerSources);
+	}
+
+	public Holon getHolon() {
+		return holon;
+	}
+
+	public void setHolon(Holon holon) {
+		this.holon = holon;
+	}
+
+	public Boolean getIsCoordinator() {
+		return isCoordinator;
+	}
+
+	public void setIsCoordinator(Boolean isCoordinator) {
+		this.isCoordinator = isCoordinator;
+	}
+
+	public Set<PowerSource> getPowerSources() {
+		return powerSources;
+	}
+
+	public void setPowerSources(Set<PowerSource> powerSources) {
+		this.powerSources = powerSources;
 	}
 
 	public int getId() {
@@ -71,14 +96,6 @@ public class HolonObject implements java.io.Serializable, Comparable {
 
 	public void setEnergyState(EnergyState energyState) {
 		this.energyState = energyState;
-	}
-
-	public HolonCoordinator getHolonCoordinator() {
-		return this.holonCoordinator;
-	}
-
-	public void setHolonCoordinator(HolonCoordinator holonCoordinator) {
-		this.holonCoordinator = holonCoordinator;
 	}
 
 	public HolonObjectType getHolonObjectType() {
@@ -135,14 +152,6 @@ public class HolonObject implements java.io.Serializable, Comparable {
 
 	public void setCreatedFactory(Boolean createdFactory) {
 		this.createdFactory = createdFactory;
-	}
-
-	public Set<?> getHolonCoordinators() {
-		return this.holonCoordinators;
-	}
-
-	public void setHolonCoordinators(Set<?> holonCoordinators) {
-		this.holonCoordinators = holonCoordinators;
 	}
 
 	public Set<HolonElement> getHolonElements() {

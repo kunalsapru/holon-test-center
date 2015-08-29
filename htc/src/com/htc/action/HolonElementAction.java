@@ -2,14 +2,12 @@ package com.htc.action;
 
 import java.io.IOException;
 import java.util.ArrayList;
-
 import org.apache.log4j.Logger;
-
-import com.htc.hibernate.pojo.HolonCoordinator;
 import com.htc.hibernate.pojo.HolonElement;
 import com.htc.hibernate.pojo.HolonElementState;
 import com.htc.hibernate.pojo.HolonElementType;
 import com.htc.hibernate.pojo.HolonObject;
+import com.htc.hibernate.pojo.PowerLine;
 import com.htc.utilities.CommonUtilities;
 
 public class HolonElementAction extends CommonUtilities {
@@ -30,9 +28,10 @@ public class HolonElementAction extends CommonUtilities {
 			HolonObject holonObject = getHolonObjectService().findById(holonObjectId);
 			HolonElementType holonElementType = getHolonElementTypeService().findById(holonElementTypeId);
 			Integer hoCoObjIdOld=0;
-			HolonCoordinator oldHC=holonObject.getHolonCoordinator();
-			if(oldHC!=null){
-			hoCoObjIdOld=holonObject.getHolonCoordinator().getHolonObject().getId();
+			PowerLine powerLine = getPowerLineService().getPowerLineByHolonObject(holonObject);
+			HolonObject oldHC = findConnectedHolonCoordinatorByHolon(holonObject.getHolon(), powerLine);
+			if(oldHC!=null) {
+				hoCoObjIdOld = holonObject.getId();
 			}
 			HolonElementState holonElementState = getHolonElementStateService().findById(holonElementStateId);
 			HolonElement holonElement = new HolonElement(); // Creating HolonElement Element to store values
@@ -77,10 +76,11 @@ public class HolonElementAction extends CommonUtilities {
 
 			HolonElement holonElement = getHolonElementService().findById(holonElementId);
 			Integer holonObjectId = holonElement.getHolonObject().getId();
-			HolonCoordinator hoc= getHolonObjectService().findById(holonObjectId).getHolonCoordinator();
+			PowerLine powerLine = getPowerLineService().getPowerLineByHolonObject(holonElement.getHolonObject());
+			HolonObject hoc=  findConnectedHolonCoordinatorByHolon(holonElement.getHolonObject().getHolon(), powerLine);
 			Integer hoCoObjIdOld=0;
 			if(hoc!=null) {
-				hoCoObjIdOld = getHolonObjectService().findById(holonObjectId).getHolonCoordinator().getHolonObject().getId();
+				hoCoObjIdOld = getHolonObjectService().findById(holonObjectId).getId();
 			}
 			holonElement.setCurrentCapacity(currentCapacity);
 			holonElement.setHolonElementState(holonElementState);
@@ -92,7 +92,6 @@ public class HolonElementAction extends CommonUtilities {
 				dbResponse = "true";
 			}
 			String response = dbResponse+"*"+holonObjectId+"*"+hoCoObjIdOld;;
-			
 			//Calling the response function and setting the content type of response.
 			getResponse().setContentType("text/html");
 			getResponse().getWriter().write(response);
@@ -149,19 +148,20 @@ public class HolonElementAction extends CommonUtilities {
 		HolonElement holonElement = getHolonElementService().findById(holonElementId);
 		Integer holonObjectId = holonElement.getHolonObject().getId();
 		// Since we are deleting this HE, we can't take the reference of HO from this. We need to take it from database.
-		HolonCoordinator hoc= getHolonObjectService().findById(holonObjectId).getHolonCoordinator();
+		HolonObject holonObject = getHolonObjectService().findById(holonObjectId);
+		PowerLine powerLine = getPowerLineService().getPowerLineByHolonObject(holonObject);
+		HolonObject hoc = findConnectedHolonCoordinatorByHolon(holonObject.getHolon(), powerLine);
 		Integer hoCoObjIdOld=0;
-		if(hoc!=null)
-		{
-			hoCoObjIdOld = hoc.getHolonObject().getId();
+		if(hoc!=null) {
+			hoCoObjIdOld = hoc.getId();
 		}
 
 		//Editing holonElement object and saving in database 
 		boolean deleteStatus = getHolonElementService().delete(holonElement);
 
-		HolonObject holonObject = getHolonObjectService().findById(holonObjectId);
+		HolonObject holonObject2 = getHolonObjectService().findById(holonObjectId);
 		
-		setFlexibilityOfHolonObject(holonObject);//To set/update flexibility of holon object in Database.
+		setFlexibilityOfHolonObject(holonObject2);//To set/update flexibility of holon object in Database.
 		
 		//Calling the response function and setting the content type of response.
 		getResponse().setContentType("text/html");

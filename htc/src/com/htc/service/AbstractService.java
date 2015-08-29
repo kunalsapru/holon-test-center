@@ -1,7 +1,6 @@
 package com.htc.service;
 
 import com.htc.dao.EnergyStateDao;
-import com.htc.dao.HolonCoordinatorDao;
 import com.htc.dao.HolonDao;
 import com.htc.dao.HolonElementDao;
 import com.htc.dao.HolonElementStateDao;
@@ -13,7 +12,6 @@ import com.htc.dao.PowerLineDao;
 import com.htc.dao.PowerSourceDao;
 import com.htc.dao.PowerSwitchDao;
 import com.htc.daoImpl.EnergyStateDaoImpl;
-import com.htc.daoImpl.HolonCoordinatorDaoImpl;
 import com.htc.daoImpl.HolonDaoImpl;
 import com.htc.daoImpl.HolonElementDaoImpl;
 import com.htc.daoImpl.HolonElementStateDaoImpl;
@@ -32,7 +30,6 @@ import com.htc.daoImpl.PowerSwitchDaoImpl;
 public class AbstractService {
 	
 	private HolonDao holonDao = new HolonDaoImpl();
-	private HolonCoordinatorDao holonCoordinatorDao = new HolonCoordinatorDaoImpl();
 	private HolonElementDao holonElementDao = new HolonElementDaoImpl();
 	private HolonElementStateDao holonElementStateDao = new HolonElementStateDaoImpl() ;
 	private HolonElementTypeDao holonElementTypeDao = new HolonElementTypeDaoImpl() ;
@@ -49,12 +46,6 @@ public class AbstractService {
 	}
 	public void setHolonDao(HolonDao holonDao) {
 		this.holonDao = holonDao;
-	}
-	public HolonCoordinatorDao getHolonCoordinatorDao() {
-		return holonCoordinatorDao;
-	}
-	public void setHolonCoordinatorDao(HolonCoordinatorDao holonCoordinatorDao) {
-		this.holonCoordinatorDao = holonCoordinatorDao;
 	}
 	public HolonElementDao getHolonElementDao() {
 		return holonElementDao;

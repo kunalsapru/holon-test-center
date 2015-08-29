@@ -1,5 +1,4 @@
 package com.htc.hibernate.pojo;
-// Generated 16 Aug, 2015 3:28:11 PM by Hibernate Tools 4.3.1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -13,7 +12,7 @@ public class Holon implements java.io.Serializable {
 	private int id;
 	private String name;
 	private String color;
-	private Set<?> holonCoordinators = new HashSet<Object>(0);
+	private Set<?> holonObjects = new HashSet<Object>(0);
 
 	public Holon() {
 	}
@@ -22,11 +21,11 @@ public class Holon implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public Holon(int id, String name, String color, Set<?> holonCoordinators) {
+	public Holon(int id, String name, String color, Set<?> holonObjects) {
 		this.id = id;
 		this.name = name;
 		this.color = color;
-		this.holonCoordinators = holonCoordinators;
+		this.holonObjects = holonObjects;
 	}
 
 	public int getId() {
@@ -53,12 +52,12 @@ public class Holon implements java.io.Serializable {
 		this.color = color;
 	}
 
-	public Set<?> getHolonCoordinators() {
-		return this.holonCoordinators;
+	public Set<?> getHolonObjects() {
+		return this.holonObjects;
 	}
 
-	public void setHolonCoordinators(Set<?> holonCoordinators) {
-		this.holonCoordinators = holonCoordinators;
+	public void setHolonObjects(Set<?> holonObjects) {
+		this.holonObjects = holonObjects;
 	}
 
 }

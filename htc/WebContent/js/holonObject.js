@@ -174,17 +174,6 @@ function editHolonObjectCallBack(data, options){
 	var resp=data.split("!");
 	var holonColor= resp[0];
 	var holonObjectId=resp[1];
-	var holonCoordinatorName_Holon= resp[2];	
-	var holonObjectTypeName= resp[3];
-	var ne_location= resp[4];
-	var sw_location= resp[5];
-	var lineConnectedState= resp[6];
-	var coordHolonId= resp[7];
-	var isCoord= resp[8];
-	var hc_ne= resp[9];
-	var canComunicate= resp[10];
-	var lat=ne_location.split("~");
-	var kc_lat=hc_ne.split("~");
 	
 	var dataAttributes= {
 			  holonObjectId : holonObjectId,
@@ -555,22 +544,19 @@ function showHolonCoIcons()
 
 }
 
-function getHoCoIconsCallBack(data,options)
-{
-	
+function getHoCoIconsCallBack(data,options) {
 	var result=data.split("*");
 	var holonObjectId="";
 	var holonObjectColor="";
 	var coordinatorLocation="";
 	var coordinatorIcon="";
-	for(var i=0;i<result.length;i++)
-		{
-			holonObjectId=globalHoList.get(result[i].split("~")[0]);
-			holonObjectColor=result[i].split("~")[1];
-			coordinatorLocation=holonObjectId.getBounds().getNorthEast();
-			coordinatorIcon=createCoIcon(coordinatorLocation);
-			globalHKList.set(holonObjectColor,coIcon);
-		}
+	for(var i=0;i<result.length;i++) {
+		holonObjectId=globalHoList.get(result[i].split("~")[0]);
+		holonObjectColor=result[i].split("~")[1];
+		coordinatorLocation=holonObjectId.getBounds().getNorthEast();
+		coordinatorIcon=createCoIcon(coordinatorLocation);
+		globalHKList.set(holonObjectColor,coIcon);
+	}
 	
 	/*var hoCoObIdBlue=result[0];
 	var hoCoObIdGreen=result[1];
@@ -607,8 +593,7 @@ function getHoCoIconsCallBack(data,options)
 */	
 }
 
-function createCoIcon(cLocation)
-{
+function createCoIcon(cLocation) {
 	 var coOrdCircle= new Marker({
 			map: map,
 			title: 'Holon Coordinator',

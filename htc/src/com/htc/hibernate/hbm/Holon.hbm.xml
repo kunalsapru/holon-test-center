@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 16 Aug, 2015 3:28:11 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="com.htc.hibernate.pojo.Holon" table="holon" catalog="htc" optimistic-lock="version">
         <id name="id" type="int">
@@ -14,11 +13,11 @@
         <property name="color" type="string">
             <column name="color" length="45" />
         </property>
-        <set name="holonCoordinators" table="holon_coordinator" inverse="true" lazy="true" fetch="select">
+        <set name="holonObjects" table="holon_object" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="holon" />
             </key>
-            <one-to-many class="com.htc.hibernate.pojo.HolonCoordinator" />
+            <one-to-many class="com.htc.hibernate.pojo.HolonObject" />
         </set>
     </class>
 </hibernate-mapping>

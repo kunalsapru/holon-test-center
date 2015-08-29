@@ -1,14 +1,12 @@
 package com.htc.hibernate.utilities;
 
 import java.util.ArrayList;
-
 import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-
 import com.htc.hibernate.config.HibernateSessionFactory;
-import com.htc.hibernate.pojo.HolonCoordinator;
+import com.htc.hibernate.pojo.HolonObject;
 import com.htc.hibernate.pojo.PowerSource;
 
 /**
@@ -98,8 +96,7 @@ public class PowerSourceHome {
 	}
 
 	@SuppressWarnings("unchecked")
-	public ArrayList<PowerSource> findByHolonCoordinator(HolonCoordinator hoc) {
-		log.info("Abhinav holonCoordinator value --> "+hoc);
+	public ArrayList<PowerSource> findByHolonCoordinator(HolonObject holonCoordinator) {
 		Session session = null;
 		Transaction tx = null;
 		ArrayList<PowerSource> listPSrcObject = null;
@@ -107,7 +104,7 @@ public class PowerSourceHome {
 			session = HibernateSessionFactory.getSessionFactory().getCurrentSession();
 			tx = session.beginTransaction();
 			Query qr= session.createQuery("from PowerSource p where p.holonCoordinator=:holonCoordinator");
-			qr.setEntity("holonCoordinator", hoc);
+			qr.setEntity("holonCoordinator", holonCoordinator);
 			listPSrcObject =  (ArrayList<PowerSource>) qr.list();
 			tx.commit();
 			return listPSrcObject;

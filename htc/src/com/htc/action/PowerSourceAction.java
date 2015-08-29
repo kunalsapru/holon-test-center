@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 
-import com.htc.hibernate.pojo.HolonCoordinator;
+import com.htc.hibernate.pojo.HolonObject;
 import com.htc.hibernate.pojo.LatLng;
 import com.htc.hibernate.pojo.PowerLine;
 import com.htc.hibernate.pojo.PowerSource;
@@ -113,14 +113,14 @@ public class PowerSourceAction  extends CommonUtilities{
 			double latCenter=pwSrc.getCenter().getLatitude();
 			double lngCenter=pwSrc.getCenter().getLongitude();
 			double pwSrcRad=pwSrc.getRadius();
-			HolonCoordinator hc= pwSrc.getHolonCoordinator();
+			HolonObject hc= pwSrc.getHolonCoordinator();
 			Integer CoHolonId=0;
 			String coHoLoc="";
 			String CoHolonName="";
-			if(hc!=null && hc.getHolonObject() != null) {
-				CoHolonId=hc.getHolonObject().getId();
-				CoHolonName= hc.getName().concat("_"+hc.getHolon().getName());
-				coHoLoc=hc.getHolonObject().getLatLngByNeLocation().getLatitude()+"~"+hc.getHolonObject().getLatLngByNeLocation().getLongitude();
+			if(hc!=null) {
+				CoHolonId=hc.getId();
+				CoHolonName= hc.getHolon().getName();
+				coHoLoc=hc.getLatLngByNeLocation().getLatitude()+"~"+hc.getLatLngByNeLocation().getLongitude();
 			}
 			
 			//Calling the response function and setting the content type of response.
@@ -196,12 +196,12 @@ public class PowerSourceAction  extends CommonUtilities{
 			}
 			pwSrc.setStatus(pwNewStatus);
 			getPowerSourceService().merge(pwSrc);
-			HolonCoordinator hc= pwSrc.getHolonCoordinator();
+			HolonObject hc= pwSrc.getHolonCoordinator();
 			Integer CoHolonId=0;
 			String coHoLoc="";
-			if(hc!=null && hc.getHolonObject() != null) {
-				CoHolonId=hc.getHolonObject().getId();
-				coHoLoc=hc.getHolonObject().getLatLngByNeLocation().getLatitude()+"~"+hc.getHolonObject().getLatLngByNeLocation().getLongitude();
+			if(hc!=null) {
+				CoHolonId=hc.getId();
+				coHoLoc=hc.getLatLngByNeLocation().getLatitude()+"~"+hc.getLatLngByNeLocation().getLongitude();
 			}
 			
 			StringBuffer respStr=new StringBuffer();

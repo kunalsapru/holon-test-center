@@ -11,11 +11,11 @@
         <many-to-one name="energyState" class="com.htc.hibernate.pojo.EnergyState" fetch="select" lazy="false">
             <column name="supply_state" />
         </many-to-one>
-        <many-to-one name="holonCoordinator" class="com.htc.hibernate.pojo.HolonCoordinator" fetch="select" lazy="false">
-            <column name="holon_coordinator" />
-        </many-to-one>
         <many-to-one name="holonObjectType" class="com.htc.hibernate.pojo.HolonObjectType" fetch="select" lazy="false">
             <column name="holon_object_type" />
+        </many-to-one>
+        <many-to-one name="holon" class="com.htc.hibernate.pojo.Holon" fetch="select" lazy="false">
+            <column name="holon" />
         </many-to-one>
         <many-to-one name="latLngByNeLocation" class="com.htc.hibernate.pojo.LatLng" fetch="select" lazy="false">
             <column name="ne_location" />
@@ -38,12 +38,9 @@
         <property name="flexibility" type="java.lang.Integer">
             <column name="flexibility" />
         </property>
-        <set name="holonCoordinators" table="holon_coordinator" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="holon_object" />
-            </key>
-            <one-to-many class="com.htc.hibernate.pojo.HolonCoordinator" />
-        </set>
+        <property name="isCoordinator" type="java.lang.Boolean">
+            <column name="is_coordinator" />
+        </property>
         <set name="holonElements" table="holon_element" inverse="true" lazy="false" fetch="select">
             <key>
                 <column name="holon_object" />
@@ -53,6 +50,12 @@
         <set name="powerLines" table="power_line" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="holon_object" />
+            </key>
+            <one-to-many class="com.htc.hibernate.pojo.PowerLine" />
+        </set>
+        <set name="powerSources" table="power_source" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="holon_coordinator" />
             </key>
             <one-to-many class="com.htc.hibernate.pojo.PowerLine" />
         </set>

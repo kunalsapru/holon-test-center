@@ -12,7 +12,7 @@ public class PowerSource implements java.io.Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	private int id;
-	private HolonCoordinator holonCoordinator;
+	private HolonObject holonCoordinator;
 	private LatLng center;
 	private String name;
 	private Integer minProduction;
@@ -30,7 +30,7 @@ public class PowerSource implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public PowerSource(int id, HolonCoordinator holonCoordinator,
+	public PowerSource(int id, HolonObject holonCoordinator,
 			LatLng center, String name, Integer minProduction,
 			Integer maxProduction, Integer currentProduction, Double radius,
 			Boolean status, Integer flexibility, Set<?> powerLines) {
@@ -55,11 +55,11 @@ public class PowerSource implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public HolonCoordinator getHolonCoordinator() {
+	public HolonObject getHolonCoordinator() {
 		return this.holonCoordinator;
 	}
 
-	public void setHolonCoordinator(HolonCoordinator holonCoordinator) {
+	public void setHolonCoordinator(HolonObject holonCoordinator) {
 		this.holonCoordinator = holonCoordinator;
 	}
 

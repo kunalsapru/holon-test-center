@@ -80,9 +80,8 @@ public class PowerLineAction extends CommonUtilities {
 				updateHolonObjectsAndPowerSources(newPowerLineID);
 			}
 			// Code to add color to holon object.
-			if(powerLineType.equals(ConstantValues.SUBLINE))
-			{
-				colorOfHolonObject= getHolonObjectService().findById(subLineHolonObjId).getHolonCoordinator().getHolon().getColor();
+			if(powerLineType.equals(ConstantValues.SUBLINE)) {
+				colorOfHolonObject= getHolonObjectService().findById(subLineHolonObjId).getHolon().getColor();
 				plResponse.append("!"+colorOfHolonObject+"!"+subLineHolonObjId);
 			}
 			getResponse().getWriter().write(plResponse.toString());	

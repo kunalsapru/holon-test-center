@@ -32,7 +32,6 @@
 
         <mapping resource="com/htc/hibernate/hbm/HolonElementState.hbm.xml" />
         <mapping resource="com/htc/hibernate/hbm/Holon.hbm.xml" />
-        <mapping resource="com/htc/hibernate/hbm/HolonCoordinator.hbm.xml" />
         <mapping resource="com/htc/hibernate/hbm/HolonElement.hbm.xml" />
         <mapping resource="com/htc/hibernate/hbm/HolonElementType.hbm.xml" />
         <mapping resource="com/htc/hibernate/hbm/HolonObject.hbm.xml" />

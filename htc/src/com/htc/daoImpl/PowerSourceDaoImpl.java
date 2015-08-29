@@ -1,9 +1,8 @@
 package com.htc.daoImpl;
 
 import java.util.ArrayList;
-
 import com.htc.dao.PowerSourceDao;
-import com.htc.hibernate.pojo.HolonCoordinator;
+import com.htc.hibernate.pojo.HolonObject;
 import com.htc.hibernate.pojo.PowerSource;
 import com.htc.hibernate.utilities.PowerSourceHome;
 
@@ -44,9 +43,9 @@ public class PowerSourceDaoImpl implements PowerSourceDao {
 	}
 
 	@Override
-	public ArrayList<PowerSource> findByHolonCoordinator(HolonCoordinator hoc) {
+	public ArrayList<PowerSource> findByHolonCoordinator(HolonObject holonCoordinator) {
 		// TODO Auto-generated method stub
-		return getPowerSourceHome().findByHolonCoordinator(hoc);
+		return getPowerSourceHome().findByHolonCoordinator(holonCoordinator);
 	}
 
 }

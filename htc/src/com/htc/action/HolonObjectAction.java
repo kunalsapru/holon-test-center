@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import org.apache.log4j.Logger;
-import com.htc.hibernate.pojo.HolonCoordinator;
 import com.htc.hibernate.pojo.HolonElement;
 import com.htc.hibernate.pojo.HolonObject;
 import com.htc.hibernate.pojo.HolonObjectType;
@@ -25,7 +24,6 @@ public class HolonObjectAction extends CommonUtilities {
 
 		try {
 		Integer holonObjectTypeId = getRequest().getParameter("holonObjectType")!=null?Integer.parseInt(getRequest().getParameter("holonObjectType")):0;
-		Integer holonCoordinatorId = getRequest().getParameter("holonCoordinatorId")!=null?Integer.parseInt(getRequest().getParameter("holonCoordinatorId")):0;
 		Integer canCommunicate = getRequest().getParameter("canCommunicate")!=null?Integer.parseInt(getRequest().getParameter("canCommunicate")):0;
 		Double latNE = getRequest().getParameter("latNE")!=null?Double.parseDouble(getRequest().getParameter("latNE")):0D;
 		Double lngNE = getRequest().getParameter("lngNE")!=null?Double.parseDouble(getRequest().getParameter("lngNE")):0D;
@@ -40,16 +38,9 @@ public class HolonObjectAction extends CommonUtilities {
 		LatLng SouthlatLng2 = getLatLngService().findById(SouthlocationId);
 		HolonObject holonObject = new HolonObject(); // Creating HolonObject object to store values
 
-		HolonCoordinator holonCoordinator = getHolonCoordinatorService().findById(holonCoordinatorId);
 		HolonObjectType holonObjectType = getHolonObjectTypeService().findById(holonObjectTypeId);
-		if(holonCoordinatorId!=0) {
-			new HolonCoordinatorAction().chooseCoordinator(holonCoordinatorId);				
-		}
 		holonObject.setLatLngByNeLocation(NorthlatLng2);
 		holonObject.setLatLngBySwLocation(SouthlatLng2);
-		if(holonCoordinatorId!=0) {
-			holonObject.setHolonCoordinator(holonCoordinator);
-		}
 		holonObject.setHolonObjectType(holonObjectType);
 		holonObject.setLineConnectedState(false);
 		holonObject.setCanCommunicate(canCommunicate==1?true:false);
@@ -59,20 +50,10 @@ public class HolonObjectAction extends CommonUtilities {
 		new HolonCoordinatorAction().chooseCoordinatorValue();
 		log.info("NewLy Generated Holon Object ID --> "+newHolonObjectID);
 		HolonObject holonObject2 = getHolonObjectService().findById(newHolonObjectID);
-		Integer coordHolonObjId=0;
 		String hc_ne_location="";
 		Integer noOfHolons=0;
 		String holonColor="black";
-		if(holonCoordinatorId!=0) {
-			coordHolonObjId=holonObject2.getHolonCoordinator().getHolonObject().getId();
-			hc_ne_location=holonObject2.getHolonCoordinator().getHolonObject().getLatLngByNeLocation().getLatitude()+"~"+holonObject2.getHolonCoordinator().getHolonObject().getLatLngByNeLocation().getLongitude();
-			noOfHolons=getHolonObjectService().findByHCoordinator(holonObject2.getHolonCoordinator()).size();
-			holonColor= holonObject2.getHolonCoordinator().getHolon().getColor();
-		}
 		boolean isCoord=false;
-		if(coordHolonObjId==holonObject2.getId()) {
-			isCoord=true;
-		}
 		//Calling the response function and setting the content type of response.
 		getResponse().setContentType("text/html");
 		StringBuffer hoResponse = new StringBuffer();
@@ -95,19 +76,23 @@ public class HolonObjectAction extends CommonUtilities {
 		try {
 			Integer holonObjectId = getRequest().getParameter("holonObjectId")!=null?Integer.parseInt(getRequest().getParameter("holonObjectId")):0;			
 			HolonObject holonObject2 = getHolonObjectService().findById(holonObjectId);
-			HolonCoordinator hc= holonObject2.getHolonCoordinator();
 			String holonCoordinatorName_Holon="Not Part of any Holon";
 			String holonColor="black";
+			
+			HolonObject hc = null;
+			if(holonObject2.getHolon() != null) {
+				PowerLine immediatePowerLine = getPowerLineService().getPowerLineByHolonObject(holonObject2); 
+				hc = findConnectedHolonCoordinatorByHolon (holonObject2.getHolon(), immediatePowerLine);
+			}
+			
 			Integer coordinatorHolonId=0;
-			HolonObject coOrdHolon=null;
 			String coOredNeLocation="";
-			if(hc!=null && hc.getHolonObject() != null) {
-				if(checkConnectivityBetweenHolonObjects(holonObject2, hc.getHolonObject())) {
-					holonCoordinatorName_Holon = holonObject2.getHolonCoordinator().getName().concat("_"+holonObject2.getHolonCoordinator().getHolon().getName());
-					holonColor= holonObject2.getHolonCoordinator().getHolon().getColor();
-					coordinatorHolonId=holonObject2.getHolonCoordinator().getHolonObject().getId();
-					coOrdHolon= getHolonObjectService().findById(coordinatorHolonId);			
-					coOredNeLocation= coOrdHolon.getLatLngByNeLocation().getLatitude()+"~"+coOrdHolon.getLatLngByNeLocation().getLongitude();
+			if(hc!=null) {
+				if(checkConnectivityBetweenHolonObjects(holonObject2, hc)) {
+					holonCoordinatorName_Holon = holonObject2.getHolon().getName();
+					holonColor = holonObject2.getHolon().getColor();
+					coordinatorHolonId = hc.getId();
+					coOredNeLocation= hc.getLatLngByNeLocation().getLatitude()+"~"+hc.getLatLngByNeLocation().getLongitude();
 				} else {
 					coordinatorHolonId = -1;
 				}
@@ -131,8 +116,6 @@ public class HolonObjectAction extends CommonUtilities {
 			Integer currentEnergyRequired = holonObjectEnergyDetails.get("currentEnergyRequired");
 			
 			
-			HolonObject hObject = getHolonObjectService().findById(holonObjectId);
-			HolonCoordinator hCoordinator =  hObject.getHolonCoordinator();
 			//Variables to capture Holon Details
 			String noOfHolonObjects = "0";
 			String minimumProductionCapacityHolon = "0";
@@ -145,8 +128,8 @@ public class HolonObjectAction extends CommonUtilities {
 			String originalEnergyRequiredHolon = "0";
 			String flexibilityHolon = "0";
 
-			if(hCoordinator != null && holonObjectId == hCoordinator.getHolonObject().getId()) {
-				Map<String, String> holonEnergyDetails = getHolonEnergyDetails(hCoordinator);
+			if(hc != null && holonObjectId == hc.getId()) {
+				Map<String, String> holonEnergyDetails = getHolonEnergyDetails(hc);
 				noOfHolonObjects = holonEnergyDetails.get("noOfHolonObjects");
 				minimumProductionCapacityHolon = holonEnergyDetails.get("minimumProductionCapacityHolon");
 				maximumProductionCapacityHolon = holonEnergyDetails.get("maximumProductionCapacityHolon");
@@ -211,62 +194,31 @@ public class HolonObjectAction extends CommonUtilities {
 	
 
 	public void editHolonObject(){
-
 		try {
 		Integer holonObjectTypeId = getRequest().getParameter("holonObjectType")!=null?Integer.parseInt(getRequest().getParameter("holonObjectType")):0;
 		Integer hiddenHolonObjectId = getRequest().getParameter("hiddenHolonObjectId")!=null?Integer.parseInt(getRequest().getParameter("hiddenHolonObjectId")):0;
-		Integer holonCoordinatorId = getRequest().getParameter("holonCoordinatorId")!=null?Integer.parseInt(getRequest().getParameter("holonCoordinatorId")):0;
+		//Integer holonCoordinatorId = getRequest().getParameter("holonCoordinatorId")!=null?Integer.parseInt(getRequest().getParameter("holonCoordinatorId")):0;
 		Integer canCommunicate = getRequest().getParameter("canCommunicate")!=null?Integer.parseInt(getRequest().getParameter("canCommunicate")):0;
-		
 		HolonObject holonObject = getHolonObjectService().findById(hiddenHolonObjectId);
-		HolonCoordinator holonCoordinator = getHolonCoordinatorService().findById(holonCoordinatorId);
 		HolonObjectType holonObjectType = getHolonObjectTypeService().findById(holonObjectTypeId);
-				
-		
-	
-		holonObject.setHolonCoordinator(holonCoordinator);
 		holonObject.setHolonObjectType(holonObjectType);
 		holonObject.setCanCommunicate(canCommunicate==1?true:false);
 		//Calling service method to save the object in database and saving the auto-incremented ID in an integer
 		getHolonObjectService().merge(holonObject);
-		
 		new HolonCoordinatorAction().chooseCoordinatorValue();
-		HolonObject updatedHolonObject=getHolonObjectService().findById(hiddenHolonObjectId);
-		
-		HolonCoordinator updatedHoCo=updatedHolonObject.getHolonCoordinator();
+		HolonObject updatedHolonObject = getHolonObjectService().findById(hiddenHolonObjectId);
+		PowerLine powerLine = getPowerLineService().getPowerLineByHolonObject(updatedHolonObject);
+		HolonObject updatedHoCo = findConnectedHolonCoordinatorByHolon(updatedHolonObject.getHolon(), powerLine);
 		String holonColor="black";
-		Integer coordinatorHolonId=0;
-		String hc_ne_location="";
 		if(updatedHoCo!=null) {
-			holonColor=updatedHolonObject.getHolonCoordinator().getHolon().getColor();
-			coordinatorHolonId=updatedHoCo.getHolonObject().getId();
-			hc_ne_location=updatedHoCo.getHolonObject().getLatLngByNeLocation().getLatitude()+"~"+updatedHoCo.getHolonObject().getLatLngByNeLocation().getLongitude();
-		}
-		String ne_location = updatedHolonObject.getLatLngByNeLocation().getLatitude()+"~"+holonObject.getLatLngByNeLocation().getLongitude();
-		String sw_location = updatedHolonObject.getLatLngBySwLocation().getLatitude()+"~"+holonObject.getLatLngBySwLocation().getLongitude();
-		Boolean lineConnectedState = updatedHolonObject.getLineConnectedState();		
-		String holonObjectTypeName = updatedHolonObject.getHolonObjectType().getName();
-		String canCommunicateVal=updatedHolonObject.getCanCommunicate()==true?"Yes":"No";
-		boolean isCoord=false;
-		if(coordinatorHolonId==updatedHolonObject.getId()) {
-			isCoord=true;
+			holonColor=updatedHoCo.getHolon().getColor();
 		}
 		StringBuffer hoResponse = new StringBuffer();
 		hoResponse.append(holonColor+"!");
-		hoResponse.append(holonObject.getId()+"!");
-		hoResponse.append(holonCoordinator+"!");
-		hoResponse.append(holonObjectTypeName+"!");
-		hoResponse.append(ne_location+"!");
-		hoResponse.append(sw_location+"!");
-		hoResponse.append(lineConnectedState+"!");
-		hoResponse.append(coordinatorHolonId+"!");
-		hoResponse.append(isCoord+"!");
-		hoResponse.append(hc_ne_location+"!");
-		hoResponse.append(canCommunicateVal);
+		hoResponse.append(holonObject.getId());
 		//Calling the response function and setting the content type of response.
 		getResponse().setContentType("text/html");		
 		getResponse().getWriter().write(hoResponse.toString());
-		
 		} catch (Exception e) {
 			log.debug("Exception "+e.getMessage()+" occurred in action HolonObject()");
 			e.printStackTrace();
@@ -286,26 +238,20 @@ public class HolonObjectAction extends CommonUtilities {
 				String sw_location;
 				String holonColor;
 				Integer holonObjectId;
-				Integer coordHolonObjectId=0;		
 			    holonObject = holonObjectList.get(i);
 				ne_location = holonObject.getLatLngByNeLocation().getLatitude()+"~"+holonObject.getLatLngByNeLocation().getLongitude();
 				sw_location = holonObject.getLatLngBySwLocation().getLatitude()+"~"+holonObject.getLatLngBySwLocation().getLongitude();
 				holonColor ="black";
-				HolonCoordinator hco=holonObject.getHolonCoordinator();
-				if(hco!=null)
-				{
+				PowerLine powerLine = getPowerLineService().getPowerLineByHolonObject(holonObject);
+				HolonObject hco = findConnectedHolonCoordinatorByHolon(holonObject.getHolon(), powerLine);
+				if(hco!=null) {
 					holonColor=hco.getHolon().getColor();
-					coordHolonObjectId=hco.getHolonObject().getId();
 				}
-				holonObjectId=holonObject.getId();
-				if(coordHolonObjectId==holonObjectId)
-				{
-					isCoord=true;
-				}
+				holonObjectId = holonObject.getId();
+				isCoord = holonObject.getIsCoordinator();
 				log.info("The Color of the Holon is "+holonColor);
 				hoListArray.add(holonObjectId+"#"+holonColor+"#"+ne_location+"^"+sw_location+"#"+isCoord+"*");
 			}
-			
 			//Calling the response function and setting the content type of response.
 			getResponse().setContentType("text/html");
 			getResponse().getWriter().write(hoListArray.toString());
@@ -320,13 +266,10 @@ public class HolonObjectAction extends CommonUtilities {
 		List<HolonElement> holonElementList = getHolonElementService().getHolonElements(getHolonObjectService().findById(holonObjectId));
 		boolean hasPower=false;
 		boolean hasPowerOn=false;
-		for(int i=0;i<holonElementList.size();i++)
-		{
-			if(holonElementList.get(i).getHolonElementType().getProducer())
-			{
+		for(int i=0;i<holonElementList.size();i++) {
+			if(holonElementList.get(i).getHolonElementType().getProducer()) {
 				hasPower=true;
-				if(hasPower)
-				{
+				if(hasPower) {
 					hasPowerOn=holonElementList.get(i).getHolonElementState().getId()==1?true:false;
 				}
 			}
@@ -336,16 +279,13 @@ public class HolonObjectAction extends CommonUtilities {
 		return productionDetails;
 	}
 
-	public void updateConnectedPowerLine(HolonObject holonObject,
-			PowerLine powerLine) {
+	public void updateConnectedPowerLine(HolonObject holonObject, PowerLine powerLine) {
 		powerLine.setHolonObject(holonObject);
 		getPowerLineService().merge(powerLine);
-		
 	}
 	
-	public void getDetailForPowerSourceIcon()
-	{
-		try{
+	public void getDetailForPowerSourceIcon() {
+		try {
 			Integer holonObjectId = getRequest().getParameter("holonObjectId")!=null?Integer.parseInt(getRequest().getParameter("holonObjectId")):0;
 			HolonObject hObject = getHolonObjectService().findById(holonObjectId);
 			Double neLocationLat= hObject.getLatLngByNeLocation().getLatitude();
@@ -358,105 +298,85 @@ public class HolonObjectAction extends CommonUtilities {
 			getResponse().setContentType("text/html");
 			getResponse().getWriter().write(responseVal.toString());
 			
-		} catch(Exception e)
-		{
+		} catch(Exception e) {
 			log.info("Exception "+e.getMessage()+" occurred in getDetailForPowerSourceIcon()");
 			e.printStackTrace();
 		}
 	}
 	
 	
-	public void getDataForSupplierDetails()
-	{
-		try{
+	public void getDataForSupplierDetails() {
+		try {
 			Integer holonObjectId = getRequest().getParameter("holonObjectId")!=null?Integer.parseInt(getRequest().getParameter("holonObjectId")):0;
 			HolonObject hObject = getHolonObjectService().findById(holonObjectId);
 			Integer powReqByHolon= getPowerRequiredByHolon(hObject);
 			Map<Integer,Integer> powProducedByPowSourceMap=new HashMap<Integer,Integer>();
 			Map<Integer,Integer> powProducedByHOProdMap=new HashMap<Integer,Integer>();
-			HolonCoordinator hoc= hObject.getHolonCoordinator();
+			PowerLine powerLine = getPowerLineService().getPowerLineByHolonObject(hObject);
+			HolonObject hoc= findConnectedHolonCoordinatorByHolon(hObject.getHolon(), powerLine);
 			ArrayList<PowerSource> pSrcList = new ArrayList<PowerSource>();
 			ArrayList<HolonObject> hoList = new ArrayList<HolonObject>();
-			if(hoc!=null)
-			{
+			if(hoc!=null) {
 				pSrcList=getPowerSourceService().findByHolonCoordinator(hoc);
-				hoList=getHolonObjectService().findByHCoordinator(hoc);
+				hoList=getHolonObjectService().findByHolon(hoc.getHolon());
 			}
-			 for(int i=0;i<pSrcList.size();i++)
-			 {
-				 PowerSource pSrc=pSrcList.get(i);
-				 if(pSrc.getStatus()==true)
-				 {
+			for(int i=0;i<pSrcList.size();i++) {
+				PowerSource pSrc=pSrcList.get(i);
+				 if(pSrc.getStatus()==true) {
 					 Integer powProduced=pSrc.getCurrentProduction();
-					 if(powProduced>0)
-					 {
-					 powProducedByPowSourceMap.put(pSrc.getId(), powProduced);
+					 if(powProduced>0) {
+						 powProducedByPowSourceMap.put(pSrc.getId(), powProduced);
 					 }
-					 
 				 }
 			 }
-			 
-			 for(int i=0;i<hoList.size();i++)
-			 {
+			 for(int i=0;i<hoList.size();i++) {
 				 HolonObject ho=hoList.get(i);
 				 Integer pwProdByHO= getPowerProducedByHolon(ho);
-				 if(pwProdByHO>0)
-				 {
-				 powProducedByHOProdMap.put(ho.getId(), pwProdByHO);
+				 if(pwProdByHO>0) {
+					 powProducedByHOProdMap.put(ho.getId(), pwProdByHO);
 				 }
 			 }
 			StringBuffer responseStr =new StringBuffer( hObject.getLatLngByNeLocation().getLatitude()+"~"+hObject.getLatLngByNeLocation().getLongitude()+"#");
 			Integer powReqValForItr= powReqByHolon;
 			Set<Integer> pSrcKeySet=powProducedByPowSourceMap.keySet();
 			Iterator<Integer> pSrcKeySetItr = pSrcKeySet.iterator();
-			while(pSrcKeySetItr.hasNext() && powReqValForItr>0)
-				{
-					Integer cuKey=pSrcKeySetItr.next();
-					Integer powerVal=powProducedByPowSourceMap.get(cuKey);
-					powReqValForItr=powReqValForItr-powerVal;
-					Integer powToAdd=0;
-					if((powReqValForItr)>0)
-					{
-						powToAdd= powerVal;
-					}
-					else
-					{
-						powToAdd= powReqValForItr+powerVal;
-					}
-					
-					PowerSource pSrcObj=getPowerSourceService().findById(cuKey);
-					double centreLat= pSrcObj.getCenter().getLatitude();
-					double centreLng=pSrcObj.getCenter().getLongitude();
-					responseStr.append(cuKey+"!"+powToAdd+"!"+centreLat+"!"+centreLng+"!"+"Power Source"+"*");
+			while(pSrcKeySetItr.hasNext() && powReqValForItr>0) {
+				Integer cuKey=pSrcKeySetItr.next();
+				Integer powerVal=powProducedByPowSourceMap.get(cuKey);
+				powReqValForItr=powReqValForItr-powerVal;
+				Integer powToAdd=0;
+				if((powReqValForItr)>0) {
+					powToAdd= powerVal;
+				} else {
+					powToAdd= powReqValForItr+powerVal;
 				}
+				PowerSource pSrcObj=getPowerSourceService().findById(cuKey);
+				double centreLat= pSrcObj.getCenter().getLatitude();
+				double centreLng=pSrcObj.getCenter().getLongitude();
+				responseStr.append(cuKey+"!"+powToAdd+"!"+centreLat+"!"+centreLng+"!"+"Power Source"+"*");
+			}
 			Set<Integer> hProdKeySet=powProducedByHOProdMap.keySet();
 			Iterator<Integer> hProdKeySetItr = hProdKeySet.iterator();
-			while(hProdKeySetItr.hasNext() && powReqValForItr>0)
-				{
-					Integer cuKey=hProdKeySetItr.next();
-					Integer powerVal=powProducedByHOProdMap.get(cuKey);
-					powReqValForItr=powReqValForItr-powerVal;					
-					Integer powToAdd=0;
-					if((powReqValForItr)>0)
-					{
-						powToAdd= powerVal;
-					}
-					else
-					{
-						powToAdd= powReqValForItr+powerVal;
-					}
-					HolonObject hoObj=getHolonObjectService().findById(cuKey);
-					double neLat= hoObj.getLatLngByNeLocation().getLatitude();
-					double neLng=hoObj.getLatLngByNeLocation().getLongitude();
-					responseStr.append(cuKey+"!"+powToAdd+"!"+neLat+"!"+neLng+"!"+"Holon Object"+"*");
-					
+			while(hProdKeySetItr.hasNext() && powReqValForItr>0) {
+				Integer cuKey=hProdKeySetItr.next();
+				Integer powerVal=powProducedByHOProdMap.get(cuKey);
+				powReqValForItr=powReqValForItr-powerVal;					
+				Integer powToAdd=0;
+				if((powReqValForItr)>0) {
+					powToAdd= powerVal;
+				} else {
+					powToAdd= powReqValForItr+powerVal;
+				}
+				HolonObject hoObj=getHolonObjectService().findById(cuKey);
+				double neLat= hoObj.getLatLngByNeLocation().getLatitude();
+				double neLng=hoObj.getLatLngByNeLocation().getLongitude();
+				responseStr.append(cuKey+"!"+powToAdd+"!"+neLat+"!"+neLng+"!"+"Holon Object"+"*");
 				}
 			System.out.println("The Abhinav Response Str for supplier Details is "+responseStr);
 			getResponse().setContentType("text/html");
 			getResponse().getWriter().write(responseStr.toString());
 			
-		} catch(Exception e)
-		{
+		} catch(Exception e) {
 			log.info("Exception "+e.getMessage()+" occurred in getDataForSupplierDetails()");
 			e.printStackTrace();
 		}
@@ -466,49 +386,43 @@ public class HolonObjectAction extends CommonUtilities {
 		ArrayList<HolonElement> heList= new ArrayList<HolonElement>();
 		heList= getHolonElementService().getHolonElements(ho);
 		Integer powProd=0;
-		for(int i=0;i<heList.size();i++)
-		{
+		for(int i=0;i<heList.size();i++) {
 			HolonElement helm=heList.get(i);
-			if(helm.getHolonElementState().getId()==1 && helm.getHolonElementType().getProducer() ==true)
-			{
+			if(helm.getHolonElementState().getId()==1 && helm.getHolonElementType().getProducer() ==true) {
 				powProd=powProd+helm.getCurrentCapacity();
 			}
 		}
 		return powProd;
-	
 	}
 
 	private Integer getPowerRequiredByHolon(HolonObject hObject) {
 		ArrayList<HolonElement> heList= new ArrayList<HolonElement>();
 		heList= getHolonElementService().getHolonElements(hObject);
 		Integer currentPow=0;
-		for(int i=0;i<heList.size();i++)
-		{
+		for(int i=0;i<heList.size();i++) {
 			HolonElement helm=heList.get(i);
-			if(helm.getHolonElementState().getId()==1 && helm.getHolonElementType().getProducer()!=true)
-			{
+			if(helm.getHolonElementState().getId()==1 && helm.getHolonElementType().getProducer()!=true) {
 				currentPow=currentPow+helm.getCurrentCapacity();
 			}
 		}
 		return currentPow;
 	}
 	
-	public void getConnectedStatusForHolons()
-	{
-		try{
-		Integer firstHolonObject = getRequest().getParameter("firstHolonObject")!=null?Integer.parseInt(getRequest().getParameter("firstHolonObject")):0;
-		Integer secondHolonObject = getRequest().getParameter("secondHolonObject")!=null?Integer.parseInt(getRequest().getParameter("secondHolonObject")):0;
-		HolonObject holonFirst = getHolonObjectService().findById(firstHolonObject);
-		HolonObject holonSecond = getHolonObjectService().findById(secondHolonObject);
-		boolean response = checkConnectivityBetweenHolonObjects(holonFirst,holonSecond);
-		String responseStr="Failure";
-		if(response)
-		{responseStr="Success"; }
-		getResponse().setContentType("text/html");
-		getResponse().getWriter().write(responseStr);
+	public void getConnectedStatusForHolons() {
+		try {
+			Integer firstHolonObject = getRequest().getParameter("firstHolonObject")!=null?Integer.parseInt(getRequest().getParameter("firstHolonObject")):0;
+			Integer secondHolonObject = getRequest().getParameter("secondHolonObject")!=null?Integer.parseInt(getRequest().getParameter("secondHolonObject")):0;
+			HolonObject holonFirst = getHolonObjectService().findById(firstHolonObject);
+			HolonObject holonSecond = getHolonObjectService().findById(secondHolonObject);
+			boolean response = checkConnectivityBetweenHolonObjects(holonFirst,holonSecond);
+			String responseStr="Failure";
+			if(response) {
+				responseStr="Success"; 
+			}
+			getResponse().setContentType("text/html");
+			getResponse().getWriter().write(responseStr);
 		}
-		catch(Exception e)
-		{
+		catch(Exception e) {
 			System.out.println("Exception occured at getConnectedStatusForHolons");
 		}
 	}

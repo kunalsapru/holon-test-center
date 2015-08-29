@@ -1,8 +1,7 @@
 package com.htc.service;
 
 import java.util.ArrayList;
-
-import com.htc.hibernate.pojo.HolonCoordinator;
+import com.htc.hibernate.pojo.HolonObject;
 import com.htc.hibernate.pojo.PowerSource;
 
 public interface PowerSourceService {
@@ -12,6 +11,6 @@ public interface PowerSourceService {
 	public PowerSource findById(int powerSourceId);
 	public boolean delete(PowerSource persistentInstance);
 	public ArrayList<PowerSource> getAllPowerSource();
-	public ArrayList<PowerSource> findByHolonCoordinator(HolonCoordinator hoc);
+	public ArrayList<PowerSource> findByHolonCoordinator(HolonObject holonCoordinator);
 
 }
