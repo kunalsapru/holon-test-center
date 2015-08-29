@@ -193,11 +193,8 @@ public class CommonUtilities extends AbstractAction{
 		Map<String, String> holonEnergyDetails = new TreeMap<String, String>();
 		PowerLine powerLine = getPowerLineService().getPowerLineByHolonObject(holonCoordinator.getHolonObject());
 		ArrayList<HolonObject> holonObjectListByConnectedPowerLines = getHolonObjectListByConnectedPowerLines(powerLine);
-		HolonObject holonObjectOfCoordinator = holonCoordinator.getHolonObject();
-		Integer holonObjectOfCoordinatorId = holonObjectOfCoordinator.getId();
 		
 		Integer noOfHolonObjects = 0;
-		ArrayList<String> hoObjectIdList = new ArrayList<String>();
 		StringBuffer holonObjectList=new StringBuffer("");
 		Integer minimumProductionCapacityHolon = 0;
 		Integer maximumProductionCapacityHolon = 0;
@@ -216,8 +213,8 @@ public class CommonUtilities extends AbstractAction{
 		
 		noOfHolonObjects = holonObjectListByConnectedPowerLines.size();
 		Map<String, Integer> holonObjectEnergyDetails = null;
+		holonObjectList.append("<option value=\"Select Holon\" id= \"infoWinOpt\" selected>Select Holon Object</option>");
 		for(HolonObject holonObject : holonObjectListByConnectedPowerLines) {
-			hoObjectIdList.add(new Integer(holonObject.getId()).toString().concat("~").concat(holonObject.getHolonObjectType().getName()));
 			holonObjectEnergyDetails = getHolonObjectEnergyDetails(holonObject);
 			minimumProductionCapacityHolon = minimumProductionCapacityHolon + holonObjectEnergyDetails.get("minimumProductionCapacity");
 			maximumProductionCapacityHolon = maximumProductionCapacityHolon + holonObjectEnergyDetails.get("maximumProductionCapacity");
@@ -225,6 +222,14 @@ public class CommonUtilities extends AbstractAction{
 			minimumEnergyRequiredHolon = minimumEnergyRequiredHolon + holonObjectEnergyDetails.get("minimumEnergyRequired");
 			maximumEnergyRequiredHolon = maximumEnergyRequiredHolon + holonObjectEnergyDetails.get("maximumEnergyRequired");
 			currentEnergyRequiredHolon = currentEnergyRequiredHolon + holonObjectEnergyDetails.get("currentEnergyRequired");
+			if(holonObjectEnergyDetails.get("currentEnergyRequired") > 0) {
+				holonObjectList.append("<option value="+holonObject.getId()+" id= \"infoWinOpt\">"+holonObject.getHolonObjectType().getName()+
+						" (Id:"+holonObject.getId()+") - Requires "+holonObjectEnergyDetails.get("currentEnergyRequired")+" energy</option>");
+			} else {
+				holonObjectList.append("<option value="+holonObject.getId()+" id= \"infoWinOpt\">"+holonObject.getHolonObjectType().getName()+
+						" (Id:"+holonObject.getId()+")"+"</option>");
+			}
+
 			originalEnergyRequiredHolon = originalEnergyRequiredHolon + holonObjectEnergyDetails.get("originalEnergyRequired");
 			flexibilityHolon = flexibilityHolon + holonObject.getFlexibility();
 		}
@@ -235,17 +240,7 @@ public class CommonUtilities extends AbstractAction{
 		}
 */		
 		
-		String holonObjectTypeName = holonObjectOfCoordinator.getHolonObjectType().getName();
-		hoObjectIdList.remove(holonObjectOfCoordinatorId.toString().concat("~").concat(holonObjectTypeName));
-		holonObjectList.append("<option value=\"Select Holon\" id= \"infoWinOpt\" selected>Select Holon Object</option>");
-		
-		for(String valueString : hoObjectIdList) {
-			String holonObjectId= valueString.split("~")[0];
-			String hoObjectType =valueString.split("~")[1];
-			holonObjectList.append("<option value="+holonObjectId+" id= \"infoWinOpt\">"+hoObjectType+" (Id:"+holonObjectId+")"+"</option>");
-		}
-		
-		//Code to get connecetd Power Sources
+		//Code to get connected Power Sources
 		
 		ArrayList<PowerSource> listConnectedPowerSources = getPowerSourceListByConnectedPowerLines(powerLine);
 		for(PowerSource powerSource : listConnectedPowerSources) {

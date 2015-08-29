@@ -290,7 +290,7 @@ function getHolonInfoWindowCallBack(data,options)
 	if(coordHolonId===holonObjectId) {
 		contentString = contentString.concat(
 				"<table>"+
-				"<tr><td colspan='2' style='text-decoration: underline;'>Holon Details</td></tr>" +
+				"<tr><td colspan='2' style='text-decoration: underline;'>Holon ("+holonColor+") Details</td></tr>" +
 				"<tr><td>Number of Holon Objects: "+nOfHolonObj +"</td>"+
 				"<td>Minimum Energy Req:"+minEnergyHo +"</td></tr>"+
 				"<tr><td>Maximum Energy Req: "+maxEnergyHo +"</td>");
@@ -306,7 +306,7 @@ function getHolonInfoWindowCallBack(data,options)
 				"<td>Original Energy Required: "+originalEnergyRequiredHolon +"</td></tr>"+
 				"<tr><td>Flexibility: "+flexibilityHolon +"</td><td></td></tr>"+
 				"</table>"+
-				"<hr><table><tr><td colspan='2' style='text-align: center;'>Other Holon Objects:&nbsp;&nbsp;"+
+				"<hr><table><tr><td colspan='2' style='text-align: center;'>Holon Objects in "+holonColor+" holon:&nbsp;&nbsp;"+
 				"<select align = \"center\" name=\"infoWindowHolonList\" id=\"infoWindowHolonList\">"+hoList+"</select></td></tr>"+
 				"</table>"
 		);
