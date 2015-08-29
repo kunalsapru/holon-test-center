@@ -49,7 +49,7 @@ function connectToPowerSource(latLng,objectId,objectType)
 		{
 			hoObjInd=true;
 		}
-		if(hoIdForSubline.toString().length==0)
+		if(hoIdForSubline.toString().length==0) 
 		{
 			hoIdForSubline=objectId;
 			hoLocationForSubline=latLng;
