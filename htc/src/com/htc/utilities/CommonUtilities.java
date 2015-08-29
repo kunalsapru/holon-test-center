@@ -332,6 +332,20 @@ public class CommonUtilities extends AbstractAction{
 		}
 		for(PowerLine powerLine3 : connectedPowerLines) {
 			ArrayList<PowerLine> tempConnectedPowerLines = getPowerLineService().getConnectedPowerLines(powerLine3);
+
+			PowerLine powerLineTemp = null;
+			PowerSwitch powerSwitchTemp = null;
+			for(int i =0; i< tempConnectedPowerLines.size();i++) {
+				powerLineTemp = tempConnectedPowerLines.get(i);
+				powerSwitchTemp = getPowerSwitchService().checkSwitchStatusBetweenPowerLines(powerLine, powerLine2);
+				if(powerSwitchTemp != null){
+					if(!powerSwitchTemp.getStatus()) {
+						log.info("Connected Line to be removed --> "+powerLineTemp.getId());
+						tempConnectedPowerLines.remove(i);
+					}
+				}
+			}
+			
 			for(PowerLine powerLine4 : tempConnectedPowerLines) {
 				if(!(listOfAllConnectedPowerLines.containsKey(powerLine4.getId()))) {
 					connectedPowerLines(powerLine3.getId());//Recursive call to get list of neighbors of neighbor
