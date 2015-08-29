@@ -9,6 +9,7 @@ $(document)
 					window.createdPowerLineObject=null;
 					window.createdSubLineObject=null;
 					window.createdPowerSourceObject=null;
+					window.showHolons=false;
 					window.drawPowerLineMode=false;
 					window.drawHolonObjectMode=false;
 					window.calculateDistanceMode=false;

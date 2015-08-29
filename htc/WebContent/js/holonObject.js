@@ -358,18 +358,19 @@ function zoomToHolon(holonObjectId,neLoc, type) {
 
 function showHolonObjects() {
 	if(loadHolon){
+	$("#showHolonObjects").css("background-color", "rgb(153,153,0)");
 	ajaxRequest("showHolonObjects", {}, showHolonObjectsCallBack, {});
 	showSavedPowerLines();
 	showSavedPowerSwitches();
 	showSavedPowerSources();
 	loadHolon=false;
 	}else{
-		
+		$("#showHolonObjects").css("background-color", "rgb(26, 26, 26)");
 		swal({
 			title : "Holon already loaded.",
 			text : "The Holon has already been loaded. Please clear the map first to reload it.",
 			type : "info",
-			confirmButtonText : "Sure!"
+			confirmButtonText : "Okay."
 		});
 		
 	}
@@ -408,6 +409,7 @@ function showHolonObjectsCallBack(data, options){
 	
 
 	 showHolonCoIcons();
+	 $("#showHolonObjects").css("background-color", "rgb(26, 26, 26)");
 }
 
 
