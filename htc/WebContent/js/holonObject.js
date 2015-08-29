@@ -251,33 +251,33 @@ function getHolonInfoWindowCallBack(data,options)
 			"<tr><td colspan='2' style='text-decoration: underline;'>Holon Object Details</td></tr>"+
 			"<tr><td><b>Holon Object Id: "+holonObjectId +"</td>"+
 			"<td>Holon Object Type: "+holonObjectTypeName+"</td></tr>"+
-			"<tr><td colspan='2'>Line Connected State: "+lineConnectedState+"</td></tr>";
+			"<tr><td>Line Connected State: "+lineConnectedState+"</td>";
 	console.log(contentString);
 	if(coordHolonId==0) {
-		contentString=contentString.concat("<tr><td>Coordinator Id: No Coordinator</td>");
+		contentString=contentString.concat("<td>Coordinator Id: No Coordinator</td></tr>");
 	} else if(coordHolonId==-1) {
-		contentString=contentString.concat("<tr><td style='color:red'>Coordinator Id: Not connected</td>");
+		contentString=contentString.concat("<td style='color:red'>Coordinator Id: Not connected</td></tr>");
 	} else {
-		contentString=contentString.concat("<tr><td>Coordinator Id: <a href='#' id='hoCoId'>"+coordHolonId+"</a></td>");
+		contentString=contentString.concat("<td>Coordinator Id: <a href='#' id='hoCoId'>"+coordHolonId+"</a></td><tr>");
 	}
 			
-	contentString=contentString.concat("<td>Minimum Energy Req: "+minEnergyHoObj+"</td></tr>"+
-			"<tr><td>Maximum Energy Req: "+maxEnergyHoObj+"</td>"+
-			"<td>Original Energy Req: "+originalEnergyHoObj+"</td></tr>"+
-			"<tr><td>Minimum Production capacity: "+minEnergyProdObj+"</td>"+
-			"<td>Maximum Production Capacity: "+maxEnergyProdObj+"</td></tr>"+
-			"<tr><td>Current Production: "+cuEnergyProdObj+"</td>" +
-			"<td>Can Communicate: "+canCommunicate+"</td></tr>"+
-			"<tr><td>Flexibility: "+flexibility+"</td>");
+	contentString=contentString.concat("<tr><td>Minimum Energy Req: "+minEnergyHoObj+"</td>"+
+			"<td>Maximum Energy Req: "+maxEnergyHoObj+"</td></tr>"+
+			"<tr><td>Original Energy Req: "+originalEnergyHoObj+"</td>"+
+			"<td>Minimum Production capacity: "+minEnergyProdObj+"</td></tr>"+
+			"<tr><td>Maximum Production Capacity: "+maxEnergyProdObj+"</td>"+
+			"<td>Current Production: "+cuEnergyProdObj+"</td></tr>" +
+			"<tr><td>Can Communicate: "+canCommunicate+"</td>"+
+			"<td>Flexibility: "+flexibility+"</td></tr>");
 	if(currentEnergyRequired > 0) {
-		contentString = contentString.concat("<td style='color:red'>Current Energy Required: "+currentEnergyRequired+"</td></tr>");
+		contentString = contentString.concat("<tr><td style='color:red'>Current Energy Required: "+currentEnergyRequired+"</td>");
 	} else {
-		contentString = contentString.concat("<td>Current Energy Required: "+currentEnergyRequired+"</td></tr>");
+		contentString = contentString.concat("<tr><td>Current Energy Required: "+currentEnergyRequired+"</td>");
 	}
 	contentString = contentString.concat(
-			"<tr><td>Created from factory: "+createdFromFactory+"</td></tr>" +
+			"<td>Created from factory: "+createdFromFactory+"</td></tr>" +
 			"</table>"+
-			"<br /><hr>"+
+			"<hr>"+
 			"<table><tr><td colspan='2' style='text-align: center;'>"+
 			"<span class='button' id='supplierDetails' title='Show Supplier Details' onclick='showSupplierDetails("+holonObjectId+")'><i class='fa fa-industry'>&nbspShow Supplier Details</i></span>"+
 			"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
@@ -302,9 +302,9 @@ function getHolonInfoWindowCallBack(data,options)
 		contentString = contentString.concat(
 				"<tr><td>Minimum Production capacity: "+minEnergyProd +"</td>"+
 				"<td>Maximum Production Capacity: "+maxEnergyProd +"</td></tr>"+
-				"<tr><td>Current Production: "+cuEnergyProd +"</td><td></td></tr>"+
-				"<tr><td>Original Energy Required: "+originalEnergyRequiredHolon +"</td>"+
-				"<td>Flexibility: "+flexibilityHolon +"</td></tr>"+
+				"<tr><td>Current Production: "+cuEnergyProd +"</td>"+
+				"<td>Original Energy Required: "+originalEnergyRequiredHolon +"</td></tr>"+
+				"<tr><td>Flexibility: "+flexibilityHolon +"</td><td></td></tr>"+
 				"</table>"+
 				"<hr><table><tr><td colspan='2' style='text-align: center;'>Other Holon Objects:&nbsp;&nbsp;"+
 				"<select align = \"center\" name=\"infoWindowHolonList\" id=\"infoWindowHolonList\">"+hoList+"</select></td></tr>"+
