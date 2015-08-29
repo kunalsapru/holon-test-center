@@ -130,10 +130,18 @@ function drawPoweLineCallBack(data, options){
 	globalPlList.set(powerLineId, newLineShape);
 	var powerLineAId = dataArray[2];
 	var powerLineBId = dataArray[3];
+	var holonObjectColor= dataArray[4];
+	var holonObjectId = dataArray[5];
 	if(typeof powerLineAId != 'undefined' && typeof powerLineBId != 'undefined') {
 		updateGlobalPowerLineList(powerLineAId,true);
 		updateGlobalPowerLineList(powerLineBId,false);
 	}
+	
+	if(typeof holonObjectColor != 'undefined' && typeof holonObjectId != 'undefined' )
+		{
+		 var holonObject= globalHoList.get(holonObjectId);
+		 holonObject.setOptions({strokeColor:holonObjectColor,fillColor:holonObjectColor });
+		}
 }
 
 function editPowerLine(powerLineId){

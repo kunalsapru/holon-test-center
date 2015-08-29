@@ -44,6 +44,7 @@ public class PowerLineAction extends CommonUtilities {
 			powerLine.setReasonDown(reasonDown);
 			powerLine.setType(powerLineType);
 			PowerLine powerLineA = null, powerLineB = null;
+			String colorOfHolonObject="";
 			if(powerLineType.equals(ConstantValues.SUBLINE)) {
 				subLineHolonObjId=getRequest().getParameter("holonObjectId")!=null?Integer.parseInt(getRequest().getParameter("holonObjectId")):0;
 				powerLine.setHolonObject(getHolonObjectService().findById(subLineHolonObjId));
@@ -52,8 +53,7 @@ public class PowerLineAction extends CommonUtilities {
 				Map<String, PowerLine> powerLineMap = splitPowerLineByLocation(powerLineForSubLine,savedEndLatLng);
 				powerLineA = powerLineMap.get("powerLineA");
 				powerLineB = powerLineMap.get("powerLineB");
-
-			
+						
 			} else if(powerLineType.equals(ConstantValues.POWERSUBLINE)) {
 				subLineHolonObjId=getRequest().getParameter("holonObjectId")!=null?Integer.parseInt(getRequest().getParameter("holonObjectId")):0;
 				powerLine.setPowerSource(getPowerSourceService().findById(subLineHolonObjId));
@@ -75,9 +75,15 @@ public class PowerLineAction extends CommonUtilities {
 				plResponse.append(powerLineB.getId());
 			}
 			
-			//Code to make the current flow on addition of Sub line or Power line
+			//Code to make the current flow on addition of Sub line or Power line and Assign Holon Coordinator
 			if(powerLineType.equals(ConstantValues.SUBLINE) || powerLineType.equals(ConstantValues.POWERSUBLINE)) {
 				updateHolonObjectsAndPowerSources(newPowerLineID);
+			}
+			// Code to add color to holon object.
+			if(powerLineType.equals(ConstantValues.SUBLINE))
+			{
+				colorOfHolonObject= getHolonObjectService().findById(subLineHolonObjId).getHolonCoordinator().getHolon().getColor();
+				plResponse.append("!"+colorOfHolonObject+"!"+subLineHolonObjId);
 			}
 			getResponse().getWriter().write(plResponse.toString());	
 		}catch(Exception e) {
