@@ -45,6 +45,7 @@ public class PowerLineAction extends CommonUtilities {
 			powerLine.setType(powerLineType);
 			PowerLine powerLineA = null, powerLineB = null;
 			String colorOfHolonObject="";
+			ArrayList<HolonObject> connectedHolonObjects= new ArrayList<HolonObject>();
 			if(powerLineType.equals(ConstantValues.SUBLINE)) {
 				subLineHolonObjId=getRequest().getParameter("holonObjectId")!=null?Integer.parseInt(getRequest().getParameter("holonObjectId")):0;
 				powerLine.setHolonObject(getHolonObjectService().findById(subLineHolonObjId));
@@ -83,6 +84,22 @@ public class PowerLineAction extends CommonUtilities {
 			if(powerLineType.equals(ConstantValues.SUBLINE)) {
 				colorOfHolonObject= getHolonObjectService().findById(subLineHolonObjId).getHolon().getColor();
 				plResponse.append("!"+colorOfHolonObject+"!"+subLineHolonObjId);
+				
+				HolonObject holonObject = getHolonObjectService().findById(subLineHolonObjId);
+				PowerLine powerLine2 = getPowerLineService().findById(newPowerLineID);
+				HolonObject holonCoordinator = findConnectedHolonCoordinatorByHolon(holonObject.getHolon(), powerLine2);
+				connectedHolonObjects =  getHolonObjectListByConnectedPowerLines(powerLine2,holonCoordinator);
+				
+				if(connectedHolonObjects != null){
+					System.out.println("Size---------"+connectedHolonObjects.size());
+					if(connectedHolonObjects.size()==0){
+						//It is the coordinator show icon on it
+						plResponse.append("!"+"Yes");
+					}else{
+						System.out.println("Startleadership Elections");
+					}
+				}
+				
 			}
 			getResponse().getWriter().write(plResponse.toString());	
 		}catch(Exception e) {

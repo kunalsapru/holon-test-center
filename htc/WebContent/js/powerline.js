@@ -132,16 +132,27 @@ function drawPoweLineCallBack(data, options){
 	var powerLineBId = dataArray[3];
 	var holonObjectColor= dataArray[4];
 	var holonObjectId = dataArray[5];
+	var isCoordinator = dataArray[6];
+	var coordinatorLocation="";
+	var coordinatorIcon="";
 	if(typeof powerLineAId != 'undefined' && typeof powerLineBId != 'undefined') {
 		updateGlobalPowerLineList(powerLineAId,true);
 		updateGlobalPowerLineList(powerLineBId,false);
 	}
 	
-	if(typeof holonObjectColor != 'undefined' && typeof holonObjectId != 'undefined' )
-		{
+	if(typeof holonObjectColor != 'undefined' && typeof holonObjectId != 'undefined' ){
 		 var holonObject= globalHoList.get(holonObjectId);
 		 holonObject.setOptions({strokeColor:holonObjectColor,fillColor:holonObjectColor });
 		}
+	if(typeof isCoordinator != 'undefined' && typeof holonObjectId != 'undefined'){
+		if(isCoordinator=="Yes"){
+			//set coordinator icon for holonObject
+			var holonObject = globalHoList.get(holonObjectId);
+			coordinatorLocation=holonObject.getBounds().getNorthEast();
+			coordinatorIcon=createCoIcon(coordinatorLocation);
+			globalHKList.set(holonObjectColor,coordinatorIcon);
+		}
+	}
 }
 
 function editPowerLine(powerLineId){
