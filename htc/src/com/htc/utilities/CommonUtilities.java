@@ -135,45 +135,6 @@ public class CommonUtilities extends AbstractAction{
 			}
 		}
 		flexibility = setFlexibilityOfHolonObject(holonObject);
-		//Code to update values of Holon Objects and Power Sources
-/*		PowerLine powerLine = getPowerLineService().getPowerLineByHolonObject(holonObject);
-		if(currentEnergyRequired > 0 && powerLine != null) {
-			ArrayList<PowerLine> connectedNeighbourPowerLines = connectedPowerLines(powerLine.getId());
-			for(PowerLine powerLine2 : connectedNeighbourPowerLines) {
-				if(powerLine2.getType().equalsIgnoreCase(ConstantValues.SUBLINE)) {
-					HolonObject holonObject2 = powerLine2.getHolonObject();
-					Integer tempFlexibility = holonObject2.getFlexibility();
-					if(tempFlexibility > 0) {
-						if(tempFlexibility <= currentEnergyRequired) {
-							currentEnergyRequired = currentEnergyRequired - tempFlexibility;
-							tempFlexibility = 0;
-						} else {
-							tempFlexibility = tempFlexibility - currentEnergyRequired;
-							currentEnergyRequired = 0;
-						}
-					}
-					//Saving new flexibility in holon object
-					holonObject2.setFlexibility(tempFlexibility);
-					getHolonObjectService().merge(holonObject2);
-				} else if (powerLine2.getType().equalsIgnoreCase(ConstantValues.POWERSUBLINE)) {
-					PowerSource powerSource = powerLine2.getPowerSource();
-					Integer tempFlexibility = powerSource.getFlexibility();
-					if(tempFlexibility > 0) {
-						if(tempFlexibility <= currentEnergyRequired) {
-							currentEnergyRequired = currentEnergyRequired - tempFlexibility;
-							tempFlexibility = 0;
-						} else {
-							tempFlexibility = tempFlexibility - currentEnergyRequired;
-							currentEnergyRequired = 0;
-						}
-					}
-					//Saving new flexibility in holon object
-					powerSource.setFlexibility(tempFlexibility);
-					getPowerSourceService().merge(powerSource);
-				}
-			}
-		}
-*/
 		holonObjectEnergyDetails.put("noOfHolonElements", holonElementList.size());
 		holonObjectEnergyDetails.put("minimumEnergyRequired", minimumEnergyRequired);
 		holonObjectEnergyDetails.put("maximumEnergyRequired", maximumEnergyRequired);
@@ -192,7 +153,6 @@ public class CommonUtilities extends AbstractAction{
 		Map<String, String> holonEnergyDetails = new TreeMap<String, String>();
 		PowerLine powerLine = getPowerLineService().getPowerLineByHolonObject(holonCoordinator);
 		ArrayList<HolonObject> holonObjectListByConnectedPowerLines = getHolonObjectListByConnectedPowerLines(powerLine, holonCoordinator);
-		
 		Integer noOfHolonObjects = 0;
 		StringBuffer holonObjectList=new StringBuffer("");
 		Integer minimumProductionCapacityHolon = 0;
@@ -203,7 +163,6 @@ public class CommonUtilities extends AbstractAction{
 		Integer currentEnergyRequiredHolon = 0;
 		Integer originalEnergyRequiredHolon = 0;
 		Integer flexibilityHolon = 0;
-		
 		Integer flexibilityPowerSource = 0;
 		Integer minimumProductionCapacityPowerSource = 0;
 		Integer maximumProductionCapacityPowerSource = 0;
