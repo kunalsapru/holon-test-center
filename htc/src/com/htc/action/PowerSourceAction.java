@@ -153,17 +153,19 @@ public class PowerSourceAction  extends CommonUtilities{
 			PowerSource pwSrc = null;
 				
 			ArrayList<PowerSource> psObjectList = getPowerSourceService().getAllPowerSource();
-			for(int i=0; i<psObjectList.size();i++){
-				boolean status=false;
-				String center;
-				double radius;
-				Integer psObjectId;
-				pwSrc = psObjectList.get(i);
-				center = pwSrc.getCenter().getLatitude()+"~"+pwSrc.getCenter().getLongitude();
-				radius = pwSrc.getRadius();
-				status=pwSrc.getStatus();
-				psObjectId=pwSrc.getId();
-				psListArray.add(psObjectId+"#"+radius+"#"+center+"#"+status+"*");
+			if(psObjectList != null) {
+				for(int i=0; i<psObjectList.size();i++) {
+					boolean status=false;
+					String center;
+					double radius;
+					Integer psObjectId;
+					pwSrc = psObjectList.get(i);
+					center = pwSrc.getCenter().getLatitude()+"~"+pwSrc.getCenter().getLongitude();
+					radius = pwSrc.getRadius();
+					status=pwSrc.getStatus();
+					psObjectId=pwSrc.getId();
+					psListArray.add(psObjectId+"#"+radius+"#"+center+"#"+status+"*");
+				}
 			}
 			
 			//Calling the response function and setting the content type of response.
