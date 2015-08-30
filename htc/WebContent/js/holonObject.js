@@ -563,9 +563,12 @@ function getHoCoIconsCallBack(data,options) {
 	for(var i=0;i<result.length;i++) {
 		holonObjectId=globalHoList.get(result[i].split("~")[0]);
 		holonObjectColor=result[i].split("~")[1];
-		coordinatorLocation=holonObjectId.getBounds().getNorthEast();
-		coordinatorIcon=createCoIcon(coordinatorLocation);
-		globalHKList.set(holonObjectColor,coordinatorIcon);
+		if(holonObjectId!= null && holonObjectId.getBounds() != null ){
+			coordinatorLocation=holonObjectId.getBounds().getNorthEast();
+			coordinatorIcon=createCoIcon(coordinatorLocation);
+			globalHKList.set(holonObjectColor,coordinatorIcon);
+		}
+		
 	}
 	
 	/*var hoCoObIdBlue=result[0];
