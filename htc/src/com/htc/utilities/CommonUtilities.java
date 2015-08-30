@@ -445,7 +445,8 @@ public class CommonUtilities extends AbstractAction{
 		}
 		for(PowerLine powerLine2 : connectedPowerLines) {
 			if(powerLine2.getType().equalsIgnoreCase(ConstantValues.SUBLINE)) {
-				if(powerLine2.getHolonObject() != null && powerLine2.getHolonObject().getHolon().getId() == holonCoordinator.getHolon().getId()) {
+				if(powerLine2.getHolonObject() != null && powerLine2.getHolonObject().getHolon()!= null && powerLine2.getHolonObject().getHolon().getId() 
+						== holonCoordinator.getHolon().getId()) {
 					connectedHolonObjects.add(powerLine2.getHolonObject());
 				}
 			}
@@ -516,7 +517,8 @@ public class CommonUtilities extends AbstractAction{
 		for(PowerLine powerLine2 : connectedPowerLines) {
 			if(powerLine2.getType().equalsIgnoreCase(ConstantValues.SUBLINE)) {
 				HolonObject tempHolonObject = powerLine2.getHolonObject();
-				if(tempHolonObject != null && tempHolonObject.getHolon().getId() == holon.getId() && tempHolonObject.getIsCoordinator() == true ) {
+				if(tempHolonObject != null && tempHolonObject.getHolon() != null && tempHolonObject.getHolon().getId() == holon.getId() 
+						&& tempHolonObject.getIsCoordinator() == true ) {
 					holonCoordinator = tempHolonObject;
 					return holonCoordinator;
 				}
