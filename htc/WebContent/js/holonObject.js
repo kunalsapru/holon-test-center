@@ -256,8 +256,13 @@ function getHolonInfoWindowCallBack(data,options)
 			"<td>Minimum Production capacity: "+minEnergyProdObj+"</td></tr>"+
 			"<tr><td>Maximum Production Capacity: "+maxEnergyProdObj+"</td>"+
 			"<td>Current Production: "+cuEnergyProdObj+"</td></tr>" +
-			"<tr><td>Can Communicate: "+canCommunicate+"</td>"+
-			"<td>Flexibility: "+flexibility+"</td></tr>");
+			"<tr><td>Can Communicate: "+canCommunicate+"</td>");
+	if(flexibility > 0) {
+		contentString = contentString.concat("<td style='color:green'>Flexibility: "+flexibility+"</td></tr>");
+	} else {
+		contentString = contentString.concat("<td>Flexibility: "+flexibility+"</td></tr>");
+	}
+			
 	if(currentEnergyRequired > 0) {
 		contentString = contentString.concat("<tr><td style='color:red'>Current Energy Required: "+currentEnergyRequired+"</td>");
 	} else {
@@ -292,12 +297,17 @@ function getHolonInfoWindowCallBack(data,options)
 				"<tr><td>Minimum Production capacity: "+minEnergyProd +"</td>"+
 				"<td>Maximum Production Capacity: "+maxEnergyProd +"</td></tr>"+
 				"<tr><td>Current Production: "+cuEnergyProd +"</td>"+
-				"<td>Original Energy Required: "+originalEnergyRequiredHolon +"</td></tr>"+
-				"<tr><td>Flexibility: "+flexibilityHolon +"</td><td></td></tr>"+
-				"</table>"+
-				"<hr><table><tr><td colspan='2' style='text-align: center;'>Holon Objects in "+holonColor+" holon:&nbsp;&nbsp;"+
-				"<select align = \"center\" name=\"infoWindowHolonList\" id=\"infoWindowHolonList\">"+hoList+"</select></td></tr>"+
-				"</table>"
+				"<td>Original Energy Required: "+originalEnergyRequiredHolon +"</td></tr>");
+		if(flexibilityHolon > 0) {
+			contentString = contentString.concat("<tr><td style='color:green'>Flexibility: "+flexibilityHolon +"</td><td></td></tr>");
+		} else {
+			contentString = contentString.concat("<tr><td>Flexibility: "+flexibilityHolon +"</td><td></td></tr>");
+		}
+		
+		contentString = contentString.concat("</table>"+
+		"<hr><table><tr><td colspan='2' style='text-align: center;'>Holon Objects in "+holonColor+" holon:&nbsp;&nbsp;"+
+		"<select align = \"center\" name=\"infoWindowHolonList\" id=\"infoWindowHolonList\">"+hoList+"</select></td></tr>"+
+		"</table>"
 		);
 	}
 	contentString.concat("</div>");

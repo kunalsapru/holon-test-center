@@ -377,14 +377,11 @@ public class CommonUtilities extends AbstractAction{
 		} else if(powerLineType.equals(ConstantValues.POWERSUBLINE)) {
 			immediatePowerSource = powerLine.getPowerSource();
 		}
-
 		ArrayList<PowerLine> connectedPowerLines = connectedPowerLines(powerLineId);
 		for(PowerLine powerLine2 : connectedPowerLines) {
 			powerLineType = powerLine2.getType();
 			if(powerLineType.equals(ConstantValues.SUBLINE)) {
-				
 				//Condition to set holon coordinator for the newly joined holon object
-				System.out.println("immediateHolonObject.getIsCoordinator() = "+immediateHolonObject.getIsCoordinator());
 				if(immediateHolonObject != null && immediateHolonObject.getIsCoordinator() == false) {
 					if(powerLine2.getHolonObject().getIsCoordinator().booleanValue() == true) {
 						immediateHolonObject.setIsCoordinator(false);
@@ -401,7 +398,6 @@ public class CommonUtilities extends AbstractAction{
 				}
 				
 			} else if(powerLineType.equals(ConstantValues.POWERSUBLINE)) {
-				
 				//Condition to set holon coordinator for the newly joined holon object
 				if(immediateHolonObject != null && immediateHolonObject.getIsCoordinator().booleanValue() == false) {
 					if(powerLine2.getPowerSource().getHolonCoordinator() != null) {
