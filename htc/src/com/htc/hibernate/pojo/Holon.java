@@ -21,13 +21,6 @@ public class Holon implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public Holon(int id, String name, String color, Set<?> holonObjects) {
-		this.id = id;
-		this.name = name;
-		this.color = color;
-		this.holonObjects = holonObjects;
-	}
-
 	public int getId() {
 		return this.id;
 	}

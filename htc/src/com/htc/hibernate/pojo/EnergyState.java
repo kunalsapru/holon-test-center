@@ -23,13 +23,6 @@ public class EnergyState implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public EnergyState(int id, String state, String color, Set<?> holonObjects) {
-		this.id = id;
-		this.state = state;
-		this.color = color;
-		this.holonObjects = holonObjects;
-	}
-
 	public int getId() {
 		return this.id;
 	}

@@ -34,24 +34,6 @@ public class PowerLine implements java.io.Serializable {
 		this.isConnected = isConnected;
 	}
 
-	public PowerLine(HolonObject holonObject, LatLng latLngBySource,
-			LatLng latLngByDestination, PowerSource powerSource, String type,
-			int currentCapacity, int maximumCapacity, boolean isConnected,
-			String reasonDown, Set<?> powerSwitchesForPowerLineA,
-			Set<?> powerSwitchesForPowerLineB) {
-		this.holonObject = holonObject;
-		this.latLngBySource = latLngBySource;
-		this.latLngByDestination = latLngByDestination;
-		this.powerSource = powerSource;
-		this.type = type;
-		this.currentCapacity = currentCapacity;
-		this.maximumCapacity = maximumCapacity;
-		this.isConnected = isConnected;
-		this.reasonDown = reasonDown;
-		this.powerSwitchesForPowerLineA = powerSwitchesForPowerLineA;
-		this.powerSwitchesForPowerLineB = powerSwitchesForPowerLineB;
-	}
-
 	public Integer getId() {
 		return this.id;
 	}

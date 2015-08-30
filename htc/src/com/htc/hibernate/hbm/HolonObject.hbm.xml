@@ -41,6 +41,12 @@
         <property name="isCoordinator" type="java.lang.Boolean">
             <column name="is_coordinator" />
         </property>
+        <property name="coordinatorCompetency" type="big_decimal">
+            <column name="coordinator_competency" precision="2" scale="1"/>
+        </property>
+        <property name="trustValue" type="big_decimal">
+            <column name="trust_value" precision="2" scale="1"/>
+        </property>
         <set name="holonElements" table="holon_element" inverse="true" lazy="false" fetch="select">
             <key>
                 <column name="holon_object" />

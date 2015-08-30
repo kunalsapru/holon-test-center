@@ -31,24 +31,6 @@ public class PowerSource implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public PowerSource(int id, HolonObject holonCoordinator,
-			LatLng center, String name, Integer minProduction,
-			Integer maxProduction, Integer currentProduction, Double radius,
-			Boolean status, Integer flexibility, Set<?> powerLines, Set<?> suppliers) {
-		this.id = id;
-		this.holonCoordinator = holonCoordinator;
-		this.setCenter(center);
-		this.name = name;
-		this.minProduction = minProduction;
-		this.maxProduction = maxProduction;
-		this.currentProduction = currentProduction;
-		this.radius = radius;
-		this.status = status;
-		this.flexibility = flexibility;
-		this.powerLines = powerLines;
-		this.setSuppliers(suppliers);
-	}
-
 	public int getId() {
 		return this.id;
 	}

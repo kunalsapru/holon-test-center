@@ -58,20 +58,6 @@ public class LatLng implements java.io.Serializable {
 		this.longitude = longitude;
 	}
 
-	public LatLng(double latitude, double longitude,
-			Set<?> holonObjectsForNeLocation, Set<?> powerSources,
-			Set<?> powerLinesForSource, Set<?> holonObjectsForSwLocation,
-			Set<?> powerLinesForDestination, Set<?> powerSwitches) {
-		this.latitude = latitude;
-		this.longitude = longitude;
-		this.holonObjectsForNeLocation = holonObjectsForNeLocation;
-		this.powerSources = powerSources;
-		this.powerLinesForSource = powerLinesForSource;
-		this.holonObjectsForSwLocation = holonObjectsForSwLocation;
-		this.powerLinesForDestination = powerLinesForDestination;
-		this.powerSwitches = powerSwitches;
-	}
-
 	public Integer getId() {
 		return this.id;
 	}

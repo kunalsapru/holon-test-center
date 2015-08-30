@@ -1,5 +1,6 @@
 package com.htc.hibernate.pojo;
 
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -26,38 +27,14 @@ public class HolonObject implements java.io.Serializable, Comparable {
 	private Set<PowerSource> powerSources = new HashSet<PowerSource>(0); 
 	private Set<Supplier> supplierProducers = new HashSet<Supplier>(0);
 	private Set<Supplier> supplierConsumers = new HashSet<Supplier>(0);
+	private BigDecimal coordinatorCompetency;
+	private BigDecimal trustValue;
 	
 	public HolonObject() {
 	}
 
 	public HolonObject(int id) {
 		this.id = id;
-	}
-
-	public HolonObject(int id, EnergyState energyState,
-			Holon holon, HolonObjectType holonObjectType,
-			LatLng latLngByNeLocation, LatLng latLngBySwLocation,
-			Boolean lineConnectedState, Integer consumption,
-			Boolean canCommunicate, Boolean createdFactory, Integer flexibility, Boolean isCoordinator,
-			Set<?> holonCoordinators, Set<HolonElement> holonElements, 
-			Set<PowerLine> powerLines, Set<PowerSource> powerSources, Set<Supplier> supplierProducers, Set<Supplier> supplierConsumers) {
-		this.id = id;
-		this.energyState = energyState;
-		this.holon = holon;
-		this.holonObjectType = holonObjectType;
-		this.latLngByNeLocation = latLngByNeLocation;
-		this.latLngBySwLocation = latLngBySwLocation;
-		this.lineConnectedState = lineConnectedState;
-		this.consumption = consumption;
-		this.canCommunicate = canCommunicate;
-		this.createdFactory = createdFactory;
-		this.flexibility = flexibility;
-		this.isCoordinator = isCoordinator;
-		this.holonElements = holonElements;
-		this.setPowerLines(powerLines);
-		this.setPowerSources(powerSources);
-		this.setSupplierProducers(supplierProducers);
-		this.setSupplierConsumers(supplierConsumers);
 	}
 
 	public Set<Supplier> getSupplierProducers() {
@@ -223,6 +200,21 @@ public class HolonObject implements java.io.Serializable, Comparable {
 
 	public void setFlexibility(Integer flexibility) {
 		this.flexibility = flexibility;
+	}
+	public BigDecimal getCoordinatorCompetency() {
+		return coordinatorCompetency;
+	}
+
+	public void setCoordinatorCompetency(BigDecimal coordinatorCompetency) {
+		this.coordinatorCompetency = coordinatorCompetency;
+	}
+
+	public BigDecimal getTrustValue() {
+		return trustValue;
+	}
+
+	public void setTrustValue(BigDecimal trustValue) {
+		this.trustValue = trustValue;
 	}
 
 }
