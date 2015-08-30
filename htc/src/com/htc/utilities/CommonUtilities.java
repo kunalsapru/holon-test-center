@@ -108,7 +108,7 @@ public class CommonUtilities extends AbstractAction{
 		Integer maximumProductionCapacity = 0;
 		Integer currentProduction=0;
 		Integer currentEnergyRequired = 0;
-		Integer flexibility = holonObject.getFlexibility();
+		Integer flexibility = 0;
 
 		ArrayList<HolonElement> holonElementList= getHolonElementService().getHolonElements(holonObject);
 		for(HolonElement holonElement : holonElementList) {
@@ -134,7 +134,7 @@ public class CommonUtilities extends AbstractAction{
 				currentEnergyRequired = 0;
 			}
 		}
-		setFlexibilityOfHolonObject(holonObject);
+		flexibility = setFlexibilityOfHolonObject(holonObject);
 		//Code to update values of Holon Objects and Power Sources
 /*		PowerLine powerLine = getPowerLineService().getPowerLineByHolonObject(holonObject);
 		if(currentEnergyRequired > 0 && powerLine != null) {
@@ -183,7 +183,6 @@ public class CommonUtilities extends AbstractAction{
 		holonObjectEnergyDetails.put("currentProduction", currentProduction);
 		holonObjectEnergyDetails.put("currentEnergyRequired", currentEnergyRequired);
 		holonObjectEnergyDetails.put("flexibility", flexibility);
-		
 		
 		return holonObjectEnergyDetails;
 	}
@@ -484,7 +483,7 @@ public class CommonUtilities extends AbstractAction{
 		return false;
 	}
 	
-	public void setFlexibilityOfHolonObject(HolonObject holonObject) {
+	public Integer setFlexibilityOfHolonObject(HolonObject holonObject) {
 		Integer originalEnergyRequired = 0;
 		Integer currentProduction=0;
 		Integer flexibility = 0;
@@ -504,10 +503,14 @@ public class CommonUtilities extends AbstractAction{
 		if(originalEnergyRequired > 0) {
 			if(currentProduction > 0 && currentProduction > originalEnergyRequired) {
 				flexibility = currentProduction - originalEnergyRequired;
+			} else if (currentProduction > 0 && currentProduction <= originalEnergyRequired) {
+				flexibility = 0;
 			}
 		}
 		holonObject.setFlexibility(flexibility);
 		getHolonObjectService().merge(holonObject);
+		
+		return flexibility;
 	}
 
 	public HolonObject findConnectedHolonCoordinatorByHolon(Holon holon, PowerLine powerLine) {
