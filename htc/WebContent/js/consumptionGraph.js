@@ -108,24 +108,29 @@ function showGraphForHolonTypes(id,currentConsumption,holonType)
 	                return data1; 
 	            }())
 	        }],
+	        lang: {
+	            some_key: 'Close Chart',
+	            key:'Download Chart'
+	        },
 	        exporting: {
 	            buttons: {
-	            	contextButton: {
+	                contextButton: {
 	                    enabled: false
 	                },
+	                exportButton: {
+	                    text: 'Download',
+	                    _titleKey: 'key',
+	                    // Use only the download related menu items from the default context button
+	                    menuItems: Highcharts.getOptions().exporting.buttons.contextButton.menuItems.splice(2)
+	                },
 	                closeButton: {
-	                    text: 'Close',
+	                    text: 'Close Chart',
+	                    _titleKey: 'some_key',
 	                    onclick: function () {
 	                    	closeDiv('consumptionGraphBody');
 	                    	clearInterval(intervalTimeConsumptionGraph);
 	                    }
-	                },
-	                exportButton: {
-	                    text: 'Download',
-	                    // Use only the download related menu items from the default context button
-	                    menuItems: Highcharts.getOptions().exporting.buttons.contextButton.menuItems.splice(2)
 	                }
-	                
 	            }
 	        }
 	    });

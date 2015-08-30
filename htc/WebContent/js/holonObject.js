@@ -555,7 +555,7 @@ function getHoCoIconsCallBack(data,options) {
 		holonObjectColor=result[i].split("~")[1];
 		coordinatorLocation=holonObjectId.getBounds().getNorthEast();
 		coordinatorIcon=createCoIcon(coordinatorLocation);
-		globalHKList.set(holonObjectColor,coIcon);
+		globalHKList.set(holonObjectColor,coordinatorIcon);
 	}
 	
 	/*var hoCoObIdBlue=result[0];
