@@ -370,8 +370,10 @@ public class CommonUtilities extends AbstractAction{
 		String powerLineType = powerLine.getType();
 		PowerSource immediatePowerSource = null;
 		HolonObject immediateHolonObject = null;
+		Integer immediateHolonObjectId = 0;
 		if(powerLineType.equals(ConstantValues.SUBLINE)) {
 			immediateHolonObject = powerLine.getHolonObject();
+			immediateHolonObjectId = immediateHolonObject.getId();
 		} else if(powerLineType.equals(ConstantValues.POWERSUBLINE)) {
 			immediatePowerSource = powerLine.getPowerSource();
 		}
@@ -382,8 +384,9 @@ public class CommonUtilities extends AbstractAction{
 			if(powerLineType.equals(ConstantValues.SUBLINE)) {
 				
 				//Condition to set holon coordinator for the newly joined holon object
+				System.out.println("immediateHolonObject.getIsCoordinator() = "+immediateHolonObject.getIsCoordinator());
 				if(immediateHolonObject != null && immediateHolonObject.getIsCoordinator() == false) {
-					if(powerLine2.getHolonObject().getIsCoordinator() == true) {
+					if(powerLine2.getHolonObject().getIsCoordinator().booleanValue() == true) {
 						immediateHolonObject.setIsCoordinator(false);
 						immediateHolonObject.setHolon(powerLine2.getHolonObject().getHolon());
 						getHolonObjectService().merge(immediateHolonObject);
@@ -391,7 +394,7 @@ public class CommonUtilities extends AbstractAction{
 				}
 				//Condition to set holon coordinator for the newly joined power source
 				if(immediatePowerSource != null && immediatePowerSource.getHolonCoordinator() == null) {
-					if(powerLine2.getHolonObject().getIsCoordinator() == true) {
+					if(powerLine2.getHolonObject().getIsCoordinator().booleanValue() == true) {
 						immediatePowerSource.setHolonCoordinator(powerLine2.getHolonObject());
 						getPowerSourceService().merge(immediatePowerSource);
 					}
@@ -400,7 +403,7 @@ public class CommonUtilities extends AbstractAction{
 			} else if(powerLineType.equals(ConstantValues.POWERSUBLINE)) {
 				
 				//Condition to set holon coordinator for the newly joined holon object
-				if(immediateHolonObject != null && immediateHolonObject.getIsCoordinator() == false) {
+				if(immediateHolonObject != null && immediateHolonObject.getIsCoordinator().booleanValue() == false) {
 					if(powerLine2.getPowerSource().getHolonCoordinator() != null) {
 						immediateHolonObject.setIsCoordinator(false);
 						immediateHolonObject.setHolon(powerLine2.getPowerSource().getHolonCoordinator().getHolon());
@@ -419,9 +422,10 @@ public class CommonUtilities extends AbstractAction{
 			
 		}//End of parent for loop
 		
+		immediateHolonObject = getHolonObjectService().findById(immediateHolonObjectId);
 		/*Checking whether a holon coordinator has been assigned to the newly joined holon object or not. 
 		 * If not, set a random holon and make this the new holon coordinator of that holon.*/
-		if(immediateHolonObject != null && immediateHolonObject.getIsCoordinator() == false) {
+		if(immediateHolonObject != null && immediateHolonObject.getHolon() == null) {
 			Integer randomHolonId = randomNumber(1, 4);
 			Holon randomHolon = getHolonService().findById(randomHolonId);
 			immediateHolonObject.setHolon(randomHolon);
