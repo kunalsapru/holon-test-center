@@ -38,5 +38,11 @@
             </key>
             <one-to-many class="com.htc.hibernate.pojo.PowerLine" />
         </set>
+        <set name="suppliers" table="supplier" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="power_source" />
+            </key>
+            <one-to-many class="com.htc.hibernate.pojo.Supplier" />
+        </set>
     </class>
 </hibernate-mapping>

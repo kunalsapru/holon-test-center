@@ -57,7 +57,19 @@
             <key>
                 <column name="holon_coordinator" />
             </key>
-            <one-to-many class="com.htc.hibernate.pojo.PowerLine" />
+            <one-to-many class="com.htc.hibernate.pojo.PowerSource" />
+        </set>
+        <set name="supplierProducers" table="supplier" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="holon_object_producer" />
+            </key>
+            <one-to-many class="com.htc.hibernate.pojo.Supplier" />
+        </set>
+        <set name="supplierConsumers" table="supplier" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="holon_object_consumer" />
+            </key>
+            <one-to-many class="com.htc.hibernate.pojo.Supplier" />
         </set>
 
     </class>

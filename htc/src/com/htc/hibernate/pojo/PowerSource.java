@@ -22,6 +22,7 @@ public class PowerSource implements java.io.Serializable {
 	private Boolean status;
 	private Integer flexibility;
 	private Set<?> powerLines = new HashSet<Object>(0);
+	private Set<?> suppliers = new HashSet<Object>(0);
 
 	public PowerSource() {
 	}
@@ -33,7 +34,7 @@ public class PowerSource implements java.io.Serializable {
 	public PowerSource(int id, HolonObject holonCoordinator,
 			LatLng center, String name, Integer minProduction,
 			Integer maxProduction, Integer currentProduction, Double radius,
-			Boolean status, Integer flexibility, Set<?> powerLines) {
+			Boolean status, Integer flexibility, Set<?> powerLines, Set<?> suppliers) {
 		this.id = id;
 		this.holonCoordinator = holonCoordinator;
 		this.setCenter(center);
@@ -45,6 +46,7 @@ public class PowerSource implements java.io.Serializable {
 		this.status = status;
 		this.flexibility = flexibility;
 		this.powerLines = powerLines;
+		this.setSuppliers(suppliers);
 	}
 
 	public int getId() {
@@ -133,6 +135,14 @@ public class PowerSource implements java.io.Serializable {
 
 	public void setFlexibility(Integer flexibility) {
 		this.flexibility = flexibility;
+	}
+
+	public Set<?> getSuppliers() {
+		return suppliers;
+	}
+
+	public void setSuppliers(Set<?> suppliers) {
+		this.suppliers = suppliers;
 	}
 
 }

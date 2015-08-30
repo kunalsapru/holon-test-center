@@ -258,18 +258,19 @@
  	<div id="supplierDetailsBody"  class='table'>
  	<table>
  	<tr>
-	<td id='pwSuppTitle' colspan="3" style="text-decoration: underline;width: 33%; "></td>
+	<td id='pwSuppTitle' colspan="4" style="text-decoration: underline;width: 33%; "></td>
 	</tr>
 	<tr>
-	 		<td style="text-decoration: underline;font-weight:bold;text-align:center;width: 33%;">Type of Supplier</td>
-	 		<td style="text-decoration: underline;font-weight:bold;text-align: center;width: 33%;">Id of Supplier</td>
-	 		<td style="text-decoration: underline;font-weight:bold;text-align: center;width: 33%;">Power Supplied</td>	 		
+	 		<td style="text-decoration: underline;font-weight:bold;text-align:center;width: 30%;">Type of Supplier</td>
+	 		<td style="text-decoration: underline;font-weight:bold;text-align: center;width: 20%;">Id of Supplier</td>
+	 		<td style="text-decoration: underline;font-weight:bold;text-align: center;width: 25%;">Power Supplied</td>
+	 		<td style="text-decoration: underline;font-weight:bold;text-align: center;width: 25%;">Connected</td>
  		<tr>
   	<tbody id="suppLierDetailList"></tbody>
  	</table><hr>
  	<table>	
  	<tr>
-	<td colspan="3" style="text-align: center;width: 33%;"><input id="cancelShowSupply" type='button' class="button"  value='Close' />
+	<td colspan="4" style="text-align: center;width: 33%;"><input id="cancelShowSupply" type='button' class="button"  value='Close' />
 	</td>
 	</tr>
 	</table><hr> 	

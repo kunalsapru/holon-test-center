@@ -264,7 +264,8 @@ function getHolonInfoWindowCallBack(data,options)
 	}
 			
 	if(currentEnergyRequired > 0) {
-		contentString = contentString.concat("<tr><td style='color:red'>Current Energy Required: "+currentEnergyRequired+"</td>");
+		contentString = contentString.concat("<tr><td style='color:red'>Current Energy Required: "+currentEnergyRequired+
+				"&nbsp;&nbsp;&nbsp;&nbsp;<img src='css/images/coordinator.png' onclick='receiveEnergyFromPeers("+holonObjectId+","+currentEnergyRequired+")' /></td>");
 	} else {
 		contentString = contentString.concat("<tr><td>Current Energy Required: "+currentEnergyRequired+"</td>");
 	}
@@ -625,6 +626,10 @@ function createCoIcon(cLocation) {
 	 
 	 return coOrdCircle;
 
+}
+
+function receiveEnergyFromPeers(holonObjectId, currentEnergyRequired) {
+	alert(holonObjectId+" currentEnergyRequired = "+currentEnergyRequired);
 }
 function deleteHolonObject(holonObjectId) {
 	
