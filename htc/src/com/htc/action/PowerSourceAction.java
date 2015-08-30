@@ -191,8 +191,10 @@ public class PowerSourceAction  extends CommonUtilities{
 				pwNewStatus=false;
 				pwNewIntStatus=0;
 				pwSrc.setCurrentProduction(0);
+				pwSrc.setFlexibility(0);
 			} else {
 				pwSrc.setCurrentProduction(pwSrc.getMaxProduction());
+				pwSrc.setFlexibility(pwSrc.getMaxProduction());
 			}
 			pwSrc.setStatus(pwNewStatus);
 			getPowerSourceService().merge(pwSrc);

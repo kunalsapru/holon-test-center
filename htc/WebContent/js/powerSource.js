@@ -1,7 +1,6 @@
 /**
  * This code in this file creates a power source
  */
-
 $(document).ready(function() {
 	var psDrawingManager;
 	$('#addPowerSource').click(function(evt) {
@@ -20,7 +19,6 @@ $(document).ready(function() {
 				},
 			});
 			psDrawingManager.setMap(map);
-			
 		google.maps.event.addListener(psDrawingManager, 'overlaycomplete', function(event) {
 				var psShape = event.overlay; // Object
 				psShape.type = event.type;	
@@ -35,18 +33,15 @@ $(document).ready(function() {
 		    	 getHolonCoordinatorFromDatabase("","pwholonCoordinatorId","powerObjectDetail");
 		   
 		});
-			
 		} else {
 			$(this).css("background-color", "rgb(26, 26, 26)");
 			psDrawingManager.setMap(null);
 			addPowerSourceMode=false;
 		}
 	})
-
 	$("#savePowerObject").click(function(event){
 		savePowerObject();						
 	});
-	
 	$("#cancelPowerObject").click(function(event){
 		if(createdPowerSourceObject!=null && typeof createdPowerSourceObject != 'undefined')
 			{
@@ -56,8 +51,7 @@ $(document).ready(function() {
 	});
 })
 
-function savePowerObject()
-{
+function savePowerObject() {
 	var psMaxProdCap=$("#psMaxProdCap").val();
 	var psStatus=$("#psStatus option:selected").val();
 	var radius=$("#hiddenPowerObjectRad").val();
@@ -79,7 +73,7 @@ function savePowerObject()
 			latCenter : latCenter,
 			lngCenter : lngCenter,
 			};
-	if(psActionState == "Edit"){
+	if(psActionState == "Edit") {
 		ajaxRequest("editPowerSourceObject", dataAttributes, editPowerSourceObjectCallBack, {});
 	} else {
 		ajaxRequest("createPowerSourceObject", dataAttributes, createPowerSourceObjectCallBack, {});							
@@ -93,16 +87,15 @@ function createPowerSourceObjectCallBack(data,options) {
 	var rad=options.radius;
 	var centerLoc= new google.maps.LatLng(options.latCenter,options.lngCenter)
 	var psStatusColor="#FF0000";
-	if(status==1)
-		{
+	if(status==1) {
 		psStatusColor="#0B6121";
-		}
+	}
 	createdPowerSourceObject.setOptions({strokeColor:psStatusColor,fillColor: psStatusColor});
 	addEventActionToPsObject(psId,createdPowerSourceObject)
 	globalPSrcList.set(psId,createdPowerSourceObject);
 }
 
-function editPowerSourceObjectCallBack(data,options){
+function editPowerSourceObjectCallBack(data,options) {
 	var resp = data.split("!");
 	var psId=resp[0];
 	var status=resp[1];
@@ -122,8 +115,6 @@ function editPowerSourceObjectCallBack(data,options){
 	ajaxRequest("getPsObjectInfoWindow", dataAttributes, getPsObjectInfoWindowCallBack, option);
 	globalPSrcList.set(psId,editedPowerSourceObject);
 }
-
-
 
 function editPowerSource(powerSrcId,infowindowPsObject) {
 	var dataAttributes= {
@@ -166,31 +157,23 @@ function getPowerSrcDetailCallBack(data, option) {
 	getHolonCoordinatorFromDatabase(coName,"pwholonCoordinatorId","powerObjectDetail");	
 }
 
-
-
-
-function addEventActionToPsObject(psId,createdPowerSourceObject)
-{
+function addEventActionToPsObject(psId,createdPowerSourceObject) {
 	google.maps.event.addListener(createdPowerSourceObject, 'click', function(event) {
-		if(addPowerSourceToLineMode==true)
-		{
+		if(addPowerSourceToLineMode==true) {
 			connectToPowerSource(event.latLng,psId,"PSObject");
-		}else{
-	  var dataAttributes= {
+		} else {
+			var dataAttributes= {
 			  psId : psId,
 			}
-	  var option= {
+			var option= {
 			  powerSrc : createdPowerSourceObject,
 			}
-	  ajaxRequest("getPsObjectInfoWindow", dataAttributes, getPsObjectInfoWindowCallBack, option);
+			ajaxRequest("getPsObjectInfoWindow", dataAttributes, getPsObjectInfoWindowCallBack, option);
 		}
 	  });
-	
-	 
 }
 
-function getPsObjectInfoWindowCallBack(data,option)
-{
+function getPsObjectInfoWindowCallBack(data,option) {
 	var resp =data.split("!");
 	var powerSrcId=resp[0];
 	var maxProd=resp[1];
@@ -202,14 +185,11 @@ function getPsObjectInfoWindowCallBack(data,option)
 	var latCenter=resp[7];
 	var lngCenter=resp[8];
 	var flexibility = resp[11];
-	
 	var powerSrc=option['powerSrc'];
 	var powerStatusVal="Producing";
-	if(powerStatus=="false")
-		{
+	if(powerStatus=="false") {
 		powerStatusVal="Not Producing";
-		}
-	
+	}
 	var contentString=
 		"<div class='table'><table>"+
 		"<tr><td colspan='2' style='text-decoration: underline;'>Power Source Details</td></tr>"+
@@ -217,29 +197,28 @@ function getPsObjectInfoWindowCallBack(data,option)
 		"<td>Status: "+powerStatusVal+"</td></tr>"+
 		"<tr><td>Maximum Production Capacity: "+maxProd+"</td>"+
 		"<td>Current Production: "+currProd+"</td></tr>";
-		if(CoHolonId==0)
-		{
+		if(CoHolonId==0) {
 			contentString=contentString.concat("<tr><td>Coordinator Id: Not Part of any Holon</td>");
-		}else
-		{
+		} else {
 			contentString=contentString.concat("<tr><td>Coordinator Id: <a href='#' id='CoHolonId'>"+CoHolonId+"</a></td>");
 		}
+		contentString=contentString.concat("<td>Minimum Production Capacity: "+minProd+"</td></tr>");
+		if(flexibility > 0) {
+			contentString = contentString.concat("<tr><td colspan='2' style='color:green'>Flexibility: "+flexibility+"</td></tr>");
+		} else {
+			contentString = contentString.concat("<tr><td colspan='2'>Flexibility: "+flexibility+"</td></tr>");
+		}
 		
-		contentString=contentString.concat("<td>Minimum Production Capacity: "+minProd+"</td></tr>"+
-		"<tr><td colspan='2'>Flexibility: "+flexibility+"</td></tr>"+
-		"</table>"+
+		contentString = contentString.concat("</table>"+
 				"<br /><hr>"+
 				"<table><tr><td colspan='2' style='text-align: center;'>");
-		if(powerStatus=="true")
-			{
-			contentString=contentString.concat("<span class='button' id='powerOnOff' ><i class='fa fa-circle-o-notch'>&nbsp; Turn Power Off </i></span>");
-			}else
-				{
-				contentString=contentString.concat("<span class='button' id='powerOnOff' ><i class='fa fa-circle-o-notch'>&nbsp; Turn Power On </i></span>");	
-				}
-		
-		contentString=contentString.concat("&nbsp;&nbsp;&nbsp;&nbsp;<span class='button' id='editPowerSource' title='Edit Power Source'><i class='fa fa-pencil-square-o'>&nbsp; Edit Power Source</i></span>"+
-		"</td></tr></table><hr>");
+		if(powerStatus=="true") {
+			contentString = contentString.concat("<span class='button' id='powerOnOff' ><i class='fa fa-circle-o-notch'>&nbsp; Turn Power Off </i></span>");
+		} else {
+				contentString = contentString.concat("<span class='button' id='powerOnOff' ><i class='fa fa-circle-o-notch'>&nbsp; Turn Power On </i></span>");	
+		}
+		contentString = contentString.concat("&nbsp;&nbsp;&nbsp;&nbsp;<span class='button' id='editPowerSource' title='Edit Power Source'>"+
+				"<i class='fa fa-pencil-square-o'>&nbsp; Edit Power Source</i></span></td></tr></table><hr>");
 		closeOtherInfoWindows();
 		var infowindowPsObject = new google.maps.InfoWindow({
 		      content: contentString,
@@ -260,12 +239,10 @@ function getPsObjectInfoWindowCallBack(data,option)
 		currentPsInfoWindowObject=infowindowPsObject;
 }
 
-function powerSourceOnOff(powerSrc,powerSrcId,infowindowPsObject)
-{
+function powerSourceOnOff(powerSrc,powerSrcId,infowindowPsObject) {
 	var	dataAttributes = {
 					powerSrcId:powerSrcId,
 	    			};
-		
 		var options = {
 			powerSrc:powerSrc,
 			infowindowPsObject:infowindowPsObject,
@@ -273,11 +250,9 @@ function powerSourceOnOff(powerSrc,powerSrcId,infowindowPsObject)
 			};
 		ajaxRequest("powerSourceOnOff", dataAttributes, powerSourceOnOffCallBack, options);
 		globalPSrcList.set(powerSrcId,powerSrc);
-		
 }
 
-function powerSourceOnOffCallBack(data, options)
-{
+function powerSourceOnOffCallBack(data, options) {
 	var powerSrc = options["powerSrc"];
 	var infowindowPsObject = options["infowindowPsObject"];
 	var powerSrcId = options["powerSrcId"];
@@ -289,18 +264,19 @@ function powerSourceOnOffCallBack(data, options)
 	var maxProd = resp[3];
 	var minProd = resp[4];
 	var currentProd = resp[5];
-	
+	var flexibility = resp[6];
 	var powerStatusVal;
-	
 	if(newPowerSrcStatus== 1) {
 		powerSrc.setOptions({strokeColor:'#0B6121',fillColor: '#0B6121'});
 		powerStatusVal = "Producing";
 		currentProd = maxProd;
+		flexibility = maxProd;
 	} else {
 		powerSrc.setOptions({strokeColor:'#FF0000', fillColor: '#FF0000'});
 		powerStatusVal = "Not Producing";
 		currentProd = 0;
-		}
+		flexibility = 0;
+	}
 
 	var contentString=
 		"<div class='table'><table>"+
@@ -309,58 +285,50 @@ function powerSourceOnOffCallBack(data, options)
 		"<td>Status: "+powerStatusVal+"</td></tr>"+
 		"<tr><td>Maximum Production Capacity: "+maxProd+"</td>"+
 		"<td>Current Production: "+currentProd+"</td></tr>";
-		if(coHolonId==0)
-		{
+		if(coHolonId==0) {
 			contentString=contentString.concat("<tr><td>Coordinator Id: Not Part of any Holon</td>");
-		}else
-		{
+		} else {
 			contentString=contentString.concat("<tr><td>Coordinator Id: <a href='#' id='CoHolonId'>"+coHolonId+"</a></td>");
 		}
 		
-		contentString=contentString.concat("<td>Minimum Production Capacity: "+minProd+"</td></tr>"+
-				"</table>"+
+		contentString = contentString.concat("<td>Minimum Production Capacity: "+minProd+"</td></tr>");
+		if(flexibility > 0) {
+			contentString = contentString.concat("<tr><td style='color:green'>Flexibility: "+flexibility+"</td><td></td></tr>");
+		} else {
+			contentString = contentString.concat("<tr><td>Flexibility: "+flexibility+"</td><td></td></tr>");
+		}
+		contentString =  contentString.concat("</table>"+
 				"<br /><hr>"+
 				"<table><tr><td colspan='2' style='text-align: center;'>");
-		if(newPowerSrcStatus == 1)
-			{
-			contentString=contentString.concat("<span class='button' id='powerOnOff' ><i class='fa fa-circle-o-notch'>&nbsp; Turn Power Off </i></span>");
-			}else
-				{
-				contentString=contentString.concat("<span class='button' id='powerOnOff' ><i class='fa fa-circle-o-notch'>&nbsp; Turn Power On </i></span>");	
-				}
-		
-		contentString=contentString.concat("&nbsp;&nbsp;&nbsp;&nbsp;<span class='button' id='editPowerSource' title='Edit Power Source'><i class='fa fa-pencil-square-o'>&nbsp; Edit Power Source</i></span>"+
+		if(newPowerSrcStatus == 1) {
+			contentString = contentString.concat("<span class='button' id='powerOnOff' ><i class='fa fa-circle-o-notch'>&nbsp; Turn Power Off </i></span>");
+			} else {
+				contentString = contentString.concat("<span class='button' id='powerOnOff' ><i class='fa fa-circle-o-notch'>&nbsp; Turn Power On </i></span>");	
+			}
+		contentString = contentString.concat("&nbsp;&nbsp;&nbsp;&nbsp;<span class='button' id='editPowerSource' title='Edit Power Source'><i class='fa fa-pencil-square-o'>&nbsp; Edit Power Source</i></span>"+
 		"</td></tr></table><hr>");
-		
 		infowindowPsObject.setContent(contentString);
 		infowindowPsObject.close();	
-
 	infowindowPsObject.open(map,powerSrc);
 	$('#editPowerSource').click(function() {
 		editPowerSource(powerSrcId,infowindowPsObject);			
 	})
-	
 	$('#powerOnOff').click(function() {
 		powerSourceOnOff(powerSrc,powerSrcId,infowindowPsObject);			
 	})
-		$('#CoHolonId').click(function() {
-			zoomToHolon(coHolonId,coHoLocation,"Holon Object");			
+	$('#CoHolonId').click(function() {
+		zoomToHolon(coHolonId,coHoLocation,"Holon Object");			
 	})
-			
 	currentPsInfoWindowObject=infowindowPsObject;
-	
 }
 
 
 
-function showSavedPowerSources()
-{
+function showSavedPowerSources() {
 	ajaxRequest("showPowerSources", {}, showPowerSourcesCallBack, {});
-
 }
 
-function showPowerSourcesCallBack(data,option)
-{
+function showPowerSourcesCallBack(data,option) {
 	var res = data.replace("[", "").replace("]", "").split(',').join("");
 	//alert(res);
 	var psObjectsList = res.split("*");
@@ -395,8 +363,7 @@ function showPowerSourcesCallBack(data,option)
 	
 }
 
-function createPowerSource(event)
-{
+function createPowerSource(event) {
 	var pSource = new google.maps.Circle({
 		 strokeColor:'#FF0000',
 	     strokeOpacity: 0.8,
@@ -407,6 +374,4 @@ function createPowerSource(event)
 	     center: event.latlng,
 	     radius: 3
 	});
-	
-	
 }
