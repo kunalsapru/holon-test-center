@@ -29,7 +29,10 @@ public class HolonElementAction extends CommonUtilities {
 			HolonElementType holonElementType = getHolonElementTypeService().findById(holonElementTypeId);
 			Integer hoCoObjIdOld=0;
 			PowerLine powerLine = getPowerLineService().getPowerLineByHolonObject(holonObject);
-			HolonObject oldHC = findConnectedHolonCoordinatorByHolon(holonObject.getHolon(), powerLine);
+			HolonObject oldHC = null;
+			if(holonObject.getHolon() != null) {
+				oldHC = findConnectedHolonCoordinatorByHolon(holonObject.getHolon(), powerLine);
+			}
 			if(oldHC!=null) {
 				hoCoObjIdOld = holonObject.getId();
 			}
