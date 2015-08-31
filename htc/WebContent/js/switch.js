@@ -41,6 +41,7 @@ function createPowerSwitch(latLng,powerLineId){
 
 function createPowerSwitchCallBack(data,options)
 {
+	alert("Switch.js::"+data);
 	var respData=data.split("*");
 	var powerSwitchId=respData[0].trim();	
 	var powerLineAId=respData[1].trim();

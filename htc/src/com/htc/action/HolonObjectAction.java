@@ -1,9 +1,12 @@
 package com.htc.action;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
 import org.apache.log4j.Logger;
+
 import com.htc.hibernate.pojo.HolonElement;
 import com.htc.hibernate.pojo.HolonObject;
 import com.htc.hibernate.pojo.HolonObjectType;
@@ -24,6 +27,9 @@ public class HolonObjectAction extends CommonUtilities {
 		Double lngNE = getRequest().getParameter("lngNE")!=null?Double.parseDouble(getRequest().getParameter("lngNE")):0D;
 		Double latSW = getRequest().getParameter("latSW")!=null?Double.parseDouble(getRequest().getParameter("latSW")):0D;
 		Double lngSW = getRequest().getParameter("lngSW")!=null?Double.parseDouble(getRequest().getParameter("lngSW")):0D;
+		BigDecimal coordinatorCompetency = new BigDecimal(Math.random());
+		BigDecimal trustValue= new BigDecimal(Math.random());
+		
 		
 		LatLng NorthlatLng = new LatLng(latNE, lngNE);
 		LatLng SouthlatLng = new LatLng(latSW, lngSW);
@@ -41,6 +47,8 @@ public class HolonObjectAction extends CommonUtilities {
 		holonObject.setCanCommunicate(canCommunicate==1?true:false);
 		holonObject.setFlexibility(0);
 		holonObject.setIsCoordinator(false);
+		holonObject.setCoordinatorCompetency(coordinatorCompetency);
+		holonObject.setTrustValue(trustValue);
 		//Calling service method to save the object in database and saving the auto-incremented ID in an integer
 		Integer newHolonObjectID = getHolonObjectService().persist(holonObject);
 		new HolonCoordinatorAction().chooseCoordinatorValue();
@@ -61,6 +69,7 @@ public class HolonObjectAction extends CommonUtilities {
 		
 		log.info(hoResponse.toString());
 		getResponse().getWriter().write(hoResponse.toString());
+		System.out.println("Values are------>"+coordinatorCompetency+"*********"+trustValue);
 		
 		} catch (Exception e) {
 			System.out.println("Exception "+e.getMessage()+" occurred in action createHolonObject()");

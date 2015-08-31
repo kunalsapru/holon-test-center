@@ -93,13 +93,18 @@ public class PowerLineAction extends CommonUtilities {
 				if(connectedHolonObjects != null){
 					System.out.println("Size---------"+connectedHolonObjects.size());
 					if(connectedHolonObjects.size()==0){
-						//It is the coordinator show icon on it
+						//It is coordinator, show icon on it
 						plResponse.append("!"+"Yes");
 					}else{
-						System.out.println("Startleadership Elections");
+						System.out.println("Start leadership Elections");
+						HolonObject newCoordinator= getHolonCoordinatorByElectionUsingPowerLineId(powerLine2, holonObject);
+						plResponse.append("!YesCoordinator"+"!"+newCoordinator.getId()+"!"+holonCoordinator.getId());
 					}
 				}
 				
+			}
+			if(powerLineType.equals(ConstantValues.MAINLINE)){
+				// Check whether there are two coordinators, If yes, start leadership Election
 			}
 			getResponse().getWriter().write(plResponse.toString());	
 		}catch(Exception e) {

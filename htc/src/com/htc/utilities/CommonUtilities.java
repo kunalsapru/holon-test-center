@@ -1,6 +1,8 @@
 package com.htc.utilities;
 
 /*import java.util.Random;*/
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
@@ -401,7 +403,7 @@ public class CommonUtilities extends AbstractAction{
 		return (min + (int)(Math.random()*((max-min)+1)));
 	}
 	
-	public ArrayList<HolonObject> getHolonObjectListByConnectedPowerLines(PowerLine powerLine, HolonObject holonCoordinator) {
+	public ArrayList<HolonObject> getHolonObjectListByConnectedPowerLines(PowerLine powerLine, HolonObject holonObject) {
 		ArrayList<HolonObject> connectedHolonObjects = new ArrayList<HolonObject>();
 		Integer powerLineId = 0;
 		ArrayList<PowerLine> connectedPowerLines = null;
@@ -411,8 +413,8 @@ public class CommonUtilities extends AbstractAction{
 		}
 		for(PowerLine powerLine2 : connectedPowerLines) {
 			if(powerLine2.getType().equalsIgnoreCase(ConstantValues.SUBLINE)) {
-				if(powerLine2.getHolonObject() != null && powerLine2.getHolonObject().getHolon()!= null && powerLine2.getHolonObject().getHolon().getId() 
-						== holonCoordinator.getHolon().getId()) {
+				if(powerLine2.getHolonObject() != null && powerLine2.getHolonObject().getHolon()!= null && holonObject.getHolon() != null &&
+						powerLine2.getHolonObject().getHolon().getId() == holonObject.getHolon().getId()) {
 					connectedHolonObjects.add(powerLine2.getHolonObject());
 				}
 			}
@@ -420,15 +422,15 @@ public class CommonUtilities extends AbstractAction{
 		return connectedHolonObjects;
 	}
 	
-	public ArrayList<PowerSource> getPowerSourceListByConnectedPowerLines(PowerLine powerLine, HolonObject holonCoordinator) {
+	public ArrayList<PowerSource> getPowerSourceListByConnectedPowerLines(PowerLine powerLine, HolonObject holonObject) {
 		ArrayList<PowerSource> connectedPowerSources = new ArrayList<PowerSource>();
 		Integer powerLineId = powerLine.getId();
 		ArrayList<PowerLine> connectedPowerLines = connectedPowerLines(powerLineId);
 		for(PowerLine powerLine2 : connectedPowerLines) {
 			if(powerLine2.getType().equalsIgnoreCase(ConstantValues.POWERSUBLINE)) {
 				if(powerLine2.getPowerSource().getStatus() && powerLine2.getPowerSource().getHolonCoordinator()!=null && powerLine2.getPowerSource().
-						getHolonCoordinator().getHolon() != null && powerLine2.getPowerSource().getHolonCoordinator().getHolon().getId()
-						== holonCoordinator.getHolon().getId()) {
+						getHolonCoordinator().getHolon() != null && holonObject.getHolon() != null && powerLine2.getPowerSource().getHolonCoordinator().getHolon().getId()
+						== holonObject.getHolon().getId()) {
 					connectedPowerSources.add(powerLine2.getPowerSource());
 				}
 			}
@@ -496,6 +498,51 @@ public class CommonUtilities extends AbstractAction{
 			}
 		}
 		return holonCoordinator;
+	}
+	
+	public HolonObject getHolonCoordinatorByElectionUsingPowerLineId(PowerLine powerLine, HolonObject holonObject){
+		ArrayList<HolonObject> connectedholonObject = new ArrayList<HolonObject>();
+		HolonObject newCoordinator= null;
+		BigDecimal coordinatorCompetency;
+		BigDecimal trustValue;
+		BigDecimal maxValue = new BigDecimal(0.00);
+		BigDecimal currentValue ;
+		MathContext mc = new MathContext(2);
+		connectedholonObject = getHolonObjectListByConnectedPowerLines(powerLine, holonObject);
+		
+		for(int j=0;j<connectedholonObject.size();j++)
+		{
+			if(connectedholonObject.size() > 0){
+				coordinatorCompetency= connectedholonObject.get(j).getCoordinatorCompetency();
+				trustValue=connectedholonObject.get(j).getTrustValue();
+				currentValue=coordinatorCompetency.multiply(trustValue,mc);
+				if(maxValue.compareTo(currentValue) == -1){
+					// -1 means 2nd value is greater
+					maxValue=currentValue;
+					newCoordinator= connectedholonObject.get(j);
+				}
+			}
+			
+		}
+		
+		for(int k=0;k<connectedholonObject.size();k++){
+			
+			if(connectedholonObject.size() > 0){
+				if(connectedholonObject.get(k).getId()== newCoordinator.getId()){
+					//Set isCoordinator true 
+					newCoordinator.setIsCoordinator(true);
+					getHolonObjectService().merge(newCoordinator);
+				}
+				else{
+					HolonObject tempHolonObject = connectedholonObject.get(k);
+					//Set is coordinator to false
+					tempHolonObject.setIsCoordinator(false);
+					getHolonObjectService().merge(tempHolonObject);
+				}
+			}
+			
+		}
+		return newCoordinator;
 	}
 
 }

@@ -45,7 +45,6 @@ public class PowerSwitchAction extends CommonUtilities {
 	}
 	
 	public void createPowerSwitch(){
-		
 	try{
 		
 		PowerSwitch powerSwitch= new PowerSwitch();
@@ -69,9 +68,31 @@ public class PowerSwitchAction extends CommonUtilities {
 		String resp= newPowerSwitchId.toString()+"*"+powerLineA.getId().toString()+"*"+powerLineB.getId();
 		
 		System.out.println("---------------------->>>"+newPowerSwitchId);
+		PowerLine newPowerLineA = getPowerLineService().findById(powerLineA.getId());
+		PowerLine newPowerLineB = getPowerLineService().findById(powerLineB.getId());
+		// get holon Objects from two new powerLines and make coordinator
+		if(newPowerLineA!= null && newPowerLineB!= null){
+				ArrayList<PowerLine> connectedPowerLineFromA= connectedPowerLines(newPowerLineA.getId());
+				ArrayList<PowerLine> connectedPowerLineFromB=connectedPowerLines(newPowerLineB.getId());
+				
+				for(PowerLine powerLine : connectedPowerLineFromA) {
+					System.out.println("Conn A --> "+powerLine.getId());
+				}
+				for(PowerLine powerLine : connectedPowerLineFromB) {
+					System.out.println("Conn B --> "+powerLine.getId());
+				}
+/*				HolonObject coordinatorA= getHolonCoordinatorByElectionUsingPowerLineId(connectedPowerLineFromA);
+				System.out.println("--------------------------------------------------------------------------");
+				HolonObject coordinatorB= getHolonCoordinatorByElectionUsingPowerLineId(connectedPowerLineFromB);
+				int holoncoordinatorA=coordinatorA.getId();
+				int holoncoordinatorB=coordinatorB.getId();
+				//resp=resp+"*"+holoncoordinatorA+"*"+holoncoordinatorB;
+				System.out.println("Coordinator------->"+holoncoordinatorA+"**********"+holoncoordinatorB);
+*/		}
+		
+		
 		getResponse().setContentType("text/html");
 		getResponse().getWriter().write(resp);
-		
 		
 	}
 	catch(Exception e){

@@ -120,6 +120,7 @@ function editPowerLineObjectCallBack(data, options){
 }
 
 function drawPoweLineCallBack(data, options){
+	alert(data);
 	var newLineShape = options["lineShape"];
 	var path = options["path"];
 	var dataArray = data.split("!");
@@ -151,6 +152,36 @@ function drawPoweLineCallBack(data, options){
 			coordinatorLocation=holonObject.getBounds().getNorthEast();
 			coordinatorIcon=createCoIcon(coordinatorLocation);
 			globalHKList.set(holonObjectColor,coordinatorIcon);
+		}
+		else{
+			var newCoordinatorId=dataArray[7];
+			var oldCoordinatorId= dataArray[8];
+			var holonObject = globalHoList.get(newcoordinatorId);
+			coordinatorLocation=holonObject.getBounds().getNorthEast();
+			coordinatorIcon=createCoIcon(coordinatorLocation);
+			globalHKList.set(holonObjectColor,coordinatorIcon);
+			//Remove symbol from Global List
+			//delete globalHKList.holonObjectId;
+			if(oldCoordinatorId!= null || typeof oldCoordinatorId != 'undefined'){
+				var oldCoordinatorObject= globalHoList.get(oldCoordinatorId);
+				var oldCoordinatorLocation= oldCoordinatorObject.getBounds().getNorthEast();
+				var oldCoordinatorIcon= new Marker({
+					map: map,
+					title: 'Holon Coordinator',
+					position: oldCoordinatorLocation,
+					zIndex: 9,
+					icon: {
+						path: ROUTE,
+						fillColor: '#0E77E9',
+						fillOpacity: 0,
+						strokeColor: '',
+						strokeWeight: 0,
+						scale: 1/100
+					}
+				});
+				oldCoordinatorIcon.setMap(null);
+				
+			}
 		}
 	}
 }
