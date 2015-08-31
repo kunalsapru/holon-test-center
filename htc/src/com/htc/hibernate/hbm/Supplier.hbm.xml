@@ -19,5 +19,9 @@
         <property name="powerSupplied" type="int">
             <column name="power_supplied" not-null="true" />
         </property>
+        <property name="messageStatus" type="string">
+            <column name="message_status" length="255" />
+        </property>
+        
     </class>
 </hibernate-mapping>

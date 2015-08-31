@@ -418,8 +418,9 @@ public class CommonUtilities extends AbstractAction{
 		ArrayList<PowerLine> connectedPowerLines = connectedPowerLines(powerLineId);
 		for(PowerLine powerLine2 : connectedPowerLines) {
 			if(powerLine2.getType().equalsIgnoreCase(ConstantValues.POWERSUBLINE)) {
-				if(powerLine2.getPowerSource().getHolonCoordinator()!=null && powerLine2.getPowerSource().
-						getHolonCoordinator().getHolon().getId() == holonCoordinator.getHolon().getId()) {
+				if(powerLine2.getPowerSource().getStatus() && powerLine2.getPowerSource().getHolonCoordinator()!=null && powerLine2.getPowerSource().
+						getHolonCoordinator().getHolon() != null && powerLine2.getPowerSource().getHolonCoordinator().getHolon().getId()
+						== holonCoordinator.getHolon().getId()) {
 					connectedPowerSources.add(powerLine2.getPowerSource());
 				}
 			}

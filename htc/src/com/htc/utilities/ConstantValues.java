@@ -10,4 +10,10 @@ public class ConstantValues {
 	public static final Integer HOLON_CO_BLUE = 3;
 	public static final Integer HOLON_CO_GREEN = 4;
 	public static final String POWERSUBLINE = "POWERSUBLINE";
+	public static final String ACCEPTED = "ACCEPTED"; //Request was accepted by holon object(Producer)
+	public static final String REJECTED = "REJECTED"; //Request was rejected by holon object(Producer)
+	public static final String PENDING = "PENDING"; //Request is pending with holon object(Producer)
+	/*This means message request was processed by some other holon object (Producer) or Holon Coordinator*/
+	public static final String PROCESSED = "PROCESSED";
+	
 }

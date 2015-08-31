@@ -265,7 +265,8 @@ function getHolonInfoWindowCallBack(data,options)
 			
 	if(currentEnergyRequired > 0) {
 		contentString = contentString.concat("<tr><td style='color:red'>Current Energy Required: "+currentEnergyRequired+
-				"&nbsp;&nbsp;&nbsp;&nbsp;<img src='css/images/coordinator.png' onclick='receiveEnergyFromPeers("+holonObjectId+","+currentEnergyRequired+")' /></td>");
+				"&nbsp;&nbsp;&nbsp;&nbsp;<span class = 'button' id = 'sendMessageToAllProducers' title='Send message to peers'>"+
+				"<img src='css/images/inbox.png' /></span></td>");
 	} else {
 		contentString = contentString.concat("<tr><td>Current Energy Required: "+currentEnergyRequired+"</td>");
 	}
@@ -274,13 +275,15 @@ function getHolonInfoWindowCallBack(data,options)
 			"</table>"+
 			"<hr>"+
 			"<table><tr><td colspan='2' style='text-align: center;'>"+
-			"<span class='button' id='supplierDetails' title='Show Supplier Details' onclick='showSupplierDetails("+holonObjectId+")'><i class='fa fa-industry'>&nbspShow Supplier Details</i></span>"+
-			"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
-			"<span class='button' id='consumptionGraph' title='Show Consumption' onclick='showConsumptionGraph("+holonObjectId+","+holonObjectId+","+'"ho"'+")'><i class='fa fa-line-chart'>&nbspShow Consumption</i></span>"+
-			"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
-			"<span class='button' id='editHolonObject' title='Edit Holon Object'><i class='fa fa-pencil-square-o'>&nbspEdit Holon Object</i></span>"+
-			"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
-			"<span class='button' id='showHolonElement' title='Show Holon Elements' onclick='showHolonElements("+holonObjectId+")'><i class='fa fa-info'>&nbspShow Holon Elements</i></span>" +
+			"<span class='button' id='supplierDetails' title='Show Supplier Details' onclick='showSupplierDetails("+holonObjectId+")'><i class='fa fa-bolt'>&nbsp;Supplier Details</i></span>"+
+			"&nbsp;&nbsp;&nbsp;&nbsp;"+
+			"<span class='button' id='consumptionGraph' title='Show Consumption' onclick='showConsumptionGraph("+holonObjectId+","+holonObjectId+","+'"ho"'+")'><i class='fa fa-line-chart'>&nbsp;Consumption</i></span>"+
+			"&nbsp;&nbsp;&nbsp;&nbsp;"+
+			"<span class='button' id='editHolonObject' title='Edit Holon Object'><i class='fa fa-pencil-square-o'>&nbsp;Edit Holon Object</i></span>"+
+			"&nbsp;&nbsp;&nbsp;&nbsp;"+
+			"<span class='button' id='showHolonElement' title='Show Holon Elements' onclick='showHolonElements("+holonObjectId+")'><i class='fa fa-info'>&nbsp;Holon Elements</i></span>" +
+			"&nbsp;&nbsp;&nbsp;&nbsp;"+
+			"<span class='button' id='checkInbox' title='Inbox'><i class='fa fa-list'>&nbsp;Inbox</i></span>"+
 			"</td></tr></table><hr>");
 	if(coordHolonId===holonObjectId) {
 		contentString = contentString.concat(
@@ -322,10 +325,15 @@ function getHolonInfoWindowCallBack(data,options)
 	$('#editHolonObject').click(function() {
 		editHolonObject(holonObjectId,infowindowHolonObject);			
 	})
-		$('#hoCoId').click(function() {
+	$('#hoCoId').click(function() {
 			zoomToHolon(coordHolonId,coOrd_ne_location,"Holon Object");			
 	})
-	
+	$('#checkInbox').click(function() {
+		checkInbox(holonObjectId);
+	})
+	$('#sendMessageToAllProducers').click(function() {
+		receiveEnergyFromPeers(holonObjectId,currentEnergyRequired);
+	})
 	$('#infoWindowHolonList').change(function(){
       if(jQuery("#infoWindowHolonList option:selected").val()!='Select Holon')
     	  {
@@ -641,4 +649,8 @@ function closeDiv(id) {
 
 function openDiv(id) {
 	$("#"+id).slideDown(100);
+}
+
+function checkInbox(holonObjectId) {
+	alert(holonObjectId);
 }
