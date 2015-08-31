@@ -509,7 +509,8 @@ public class CommonUtilities extends AbstractAction{
 		BigDecimal currentValue ;
 		MathContext mc = new MathContext(2);
 		connectedholonObject = getHolonObjectListByConnectedPowerLines(powerLine, holonObject);
-		
+		//Adding own holon object to connected list for leadership election
+		connectedholonObject.add(holonObject);
 		for(int j=0;j<connectedholonObject.size();j++)
 		{
 			if(connectedholonObject.size() > 0){
@@ -528,7 +529,7 @@ public class CommonUtilities extends AbstractAction{
 		for(int k=0;k<connectedholonObject.size();k++){
 			
 			if(connectedholonObject.size() > 0){
-				if(connectedholonObject.get(k).getId()== newCoordinator.getId()){
+				if(connectedholonObject.get(k).getId() == newCoordinator.getId()){
 					//Set isCoordinator true 
 					newCoordinator.setIsCoordinator(true);
 					getHolonObjectService().merge(newCoordinator);
