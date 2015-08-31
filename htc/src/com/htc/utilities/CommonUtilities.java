@@ -263,6 +263,9 @@ public class CommonUtilities extends AbstractAction{
 			powerLine = getPowerLineService().findById(powerLineId);
 		}
 		ArrayList<PowerLine> connectedPowerLines = new ArrayList<PowerLine>();
+		ArrayList<PowerLine> removeIndexListA = new ArrayList<PowerLine>();
+		ArrayList<PowerLine> removeIndexListB = new ArrayList<PowerLine>();
+		
 		if(powerLine != null) {
 			connectedPowerLines = getPowerLineService().getConnectedPowerLines(powerLine);
 		}
@@ -278,9 +281,12 @@ public class CommonUtilities extends AbstractAction{
 			if(powerSwitch != null){
 				if(!powerSwitch.getStatus()) {
 					log.info("Connected Line to be removed --> "+powerLine2.getId());
-					connectedPowerLines.remove(i);
+					removeIndexListA.add(powerLine2);
 				}
 			}
+		}
+		for(int i=0; i<removeIndexListA.size();i++) {
+			connectedPowerLines.remove(removeIndexListA.get(i));
 		}
 		for(PowerLine powerLine3 : connectedPowerLines) {
 			if(!(listOfAllConnectedPowerLines.containsKey(powerLine3.getId()))) {
@@ -295,15 +301,17 @@ public class CommonUtilities extends AbstractAction{
 			PowerSwitch powerSwitchTemp = null;
 			for(int i =0; i< tempConnectedPowerLines.size();i++) {
 				powerLineTemp = tempConnectedPowerLines.get(i);
-				powerSwitchTemp = getPowerSwitchService().checkSwitchStatusBetweenPowerLines(powerLine, powerLine2);
+				powerSwitchTemp = getPowerSwitchService().checkSwitchStatusBetweenPowerLines(powerLine, powerLineTemp);
 				if(powerSwitchTemp != null){
 					if(!powerSwitchTemp.getStatus()) {
 						log.info("Connected Line to be removed --> "+powerLineTemp.getId());
-						tempConnectedPowerLines.remove(i);
+						removeIndexListB.add(powerLineTemp);
 					}
 				}
 			}
-			
+			for(int i=0; i<removeIndexListB.size();i++) {
+				tempConnectedPowerLines.remove(removeIndexListB.get(i));
+			}
 			for(PowerLine powerLine4 : tempConnectedPowerLines) {
 				if(!(listOfAllConnectedPowerLines.containsKey(powerLine4.getId()))) {
 					connectedPowerLines(powerLine3.getId());//Recursive call to get list of neighbors of neighbor
