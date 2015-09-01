@@ -22,3 +22,26 @@ function getDataForSupplierDetailsCallBack(data,options) {
 	closeDiv('consumptionGraphBody');
 	openDiv("supplierDetailsBody");
 }
+
+function sendMessageToAllProducers(holonObjectId, currentEnergyRequired) {
+	var dataAttributes= {
+			holonObjectId : holonObjectId,
+			currentEnergyRequired : currentEnergyRequired
+	}
+	ajaxRequest("sendMessageToAllProducers", dataAttributes, sendMessageToAllProducersCallBack, {});
+}
+
+function sendMessageToAllProducersCallBack(data, options) {
+	alert(data);
+}
+
+function checkInbox(holonObjectId) {
+	var dataAttributes= {
+			holonObjectId : holonObjectId
+	}
+	ajaxRequest("checkInbox", dataAttributes, checkInboxCallBack, {});
+}
+
+function checkInboxCallBack(data, options) {
+	alert(data);
+}

@@ -182,6 +182,9 @@
 			method="showPowerSources" />
 			<action name="powerSourceOnOff" class="com.htc.action.PowerSourceAction"
 			method="powerSourceOnOff" />
+			
+		<!-- Messaging System related actions -->
+		<action name="sendMessageToAllProducers" class="com.htc.action.HolonObjectAction" method="sendMessageToAllProducers" />
 
 	</package>
 

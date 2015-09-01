@@ -100,6 +100,8 @@ public class HolonObjectAction extends CommonUtilities {
 					coordinatorHolonId = -1;
 				}
 			}
+			String coordinatorCompetency = holonObject2.getCoordinatorCompetency().toPlainString();
+			String trustValue = holonObject2.getTrustValue().toPlainString();
 			String holonObjectTypeName = holonObject2.getHolonObjectType().getName();
 			String ne_location = holonObject2.getLatLngByNeLocation().getLatitude()+"~"+holonObject2.getLatLngByNeLocation().getLongitude();
 			String sw_location = holonObject2.getLatLngBySwLocation().getLatitude()+"~"+holonObject2.getLatLngBySwLocation().getLongitude();			
@@ -177,7 +179,9 @@ public class HolonObjectAction extends CommonUtilities {
 			hoResponse.append(currentEnergyRequired+"!");
 			hoResponse.append(flexibility+"!");
 			hoResponse.append(originalEnergyRequiredHolon+"!");
-			hoResponse.append(flexibilityHolon);
+			hoResponse.append(flexibilityHolon+"!");
+			hoResponse.append(coordinatorCompetency+"!");
+			hoResponse.append(trustValue);
 			getResponse().getWriter().write(hoResponse.toString());
 			} catch (Exception e) {
 				log.info("Exception "+e.getMessage()+" occurred in action createHolonObject()");

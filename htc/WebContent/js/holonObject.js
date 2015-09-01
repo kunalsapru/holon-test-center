@@ -234,6 +234,8 @@ function getHolonInfoWindowCallBack(data,options)
 	var originalEnergyRequiredHolon = dataArray[28];
 	var flexibilityHolon = dataArray[29];
 	var lat=ne_location.split("~");
+	var coordinatorCompetency = dataArray[30];
+	var trustValue = dataArray[31];
 	//alert(holonColor);
 	var contentString=
 			"<div class='table'><table>"+
@@ -249,8 +251,8 @@ function getHolonInfoWindowCallBack(data,options)
 	} else {
 		contentString=contentString.concat("<td>Coordinator Id: <a href='#' id='hoCoId'>"+coordHolonId+"</a></td><tr>");
 	}
-			
-	contentString=contentString.concat("<tr><td>Minimum Energy Req: "+minEnergyHoObj+"</td>"+
+	contentString = contentString.concat("<tr><td>Coordinator Competency: "+coordinatorCompetency+"</td><td>Trust Value: "+trustValue+"</td></tr>");
+	contentString = contentString.concat("<tr><td>Minimum Energy Req: "+minEnergyHoObj+"</td>"+
 			"<td>Maximum Energy Req: "+maxEnergyHoObj+"</td></tr>"+
 			"<tr><td>Original Energy Req: "+originalEnergyHoObj+"</td>"+
 			"<td>Minimum Production capacity: "+minEnergyProdObj+"</td></tr>"+
@@ -332,7 +334,7 @@ function getHolonInfoWindowCallBack(data,options)
 		checkInbox(holonObjectId);
 	})
 	$('#sendMessageToAllProducers').click(function() {
-		receiveEnergyFromPeers(holonObjectId,currentEnergyRequired);
+		sendMessageToAllProducers(holonObjectId,currentEnergyRequired);
 	})
 	$('#infoWindowHolonList').change(function(){
       if(jQuery("#infoWindowHolonList option:selected").val()!='Select Holon')
@@ -636,9 +638,6 @@ function createCoIcon(cLocation) {
 
 }
 
-function receiveEnergyFromPeers(holonObjectId, currentEnergyRequired) {
-	alert(holonObjectId+" currentEnergyRequired = "+currentEnergyRequired);
-}
 function deleteHolonObject(holonObjectId) {
 	
 }
@@ -649,8 +648,4 @@ function closeDiv(id) {
 
 function openDiv(id) {
 	$("#"+id).slideDown(100);
-}
-
-function checkInbox(holonObjectId) {
-	alert(holonObjectId);
 }
