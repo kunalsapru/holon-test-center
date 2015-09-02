@@ -48,5 +48,10 @@ public class SupplierServiceImpl extends AbstractService implements  SupplierSer
 	public ArrayList<Supplier> getListOfSimilarRequests(Integer requestId) {
 		return getSupplierDao().getListOfSimilarRequests(requestId);
 	}
+
+	@Override
+	public ArrayList<Supplier> getSupplierListForProducerOrderByConsumerPriority(HolonObject holonObject) {
+		return getSupplierDao().getSupplierListForProducerOrderByConsumerPriority(holonObject);
+	}
 	
 }

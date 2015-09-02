@@ -51,4 +51,9 @@ public class SupplierDaoImpl implements SupplierDao {
 		return supplierHome.getListOfSimilarRequests(requestId);
 	}
 
+	@Override
+	public ArrayList<Supplier> getSupplierListForProducerOrderByConsumerPriority(HolonObject holonObject) {
+		return supplierHome.getSupplierListForProducerOrderByConsumerPriority(holonObject);
+	}
+
 }

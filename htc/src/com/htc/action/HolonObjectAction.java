@@ -401,7 +401,7 @@ public class HolonObjectAction extends CommonUtilities {
 			Integer holonObjectId = getRequest().getParameter("holonObjectId")!=null?Integer.parseInt(getRequest().getParameter("holonObjectId")):0;
 			String takeAction = getRequest().getParameter("takeAction")!=null?getRequest().getParameter("takeAction"):"";
 			HolonObject holonObject = getHolonObjectService().findById(holonObjectId);
-			ArrayList<Supplier> producerList = getSupplierService().getSupplierListForProducer(holonObject);
+			ArrayList<Supplier> producerList = getSupplierService().getSupplierListForProducerOrderByConsumerPriority(holonObject);
 			Integer producerFlexibility = getHolonObjectEnergyDetails(holonObject).get("flexibility");
 			Integer currentEnergyRequired = 0;
 			Boolean canCommunicate = holonObject.getCanCommunicate();
@@ -480,8 +480,6 @@ public class HolonObjectAction extends CommonUtilities {
 				responseStr.append(supplier.getPowerRequested()+"~");
 				responseStr.append(supplier.getPowerGranted()+"~");
 				responseStr.append(supplier.getMessageStatus()+"~");
-				System.out.println("Connectivity b/w HO "+supplier.getHolonObjectProducer().getId()+" and "+supplier.getHolonObjectConsumer().getId()+" -- >"+
-						checkConnectivityBetweenHolonObjects(supplier.getHolonObjectProducer(), supplier.getHolonObjectConsumer()));
 				responseStr.append(checkConnectivityBetweenHolonObjects(supplier.getHolonObjectProducer(), supplier.getHolonObjectConsumer())+"~");
 				responseStr.append(supplier.getRequestId()+"~");
 				responseStr.append(responseMessage+"!");
@@ -492,7 +490,7 @@ public class HolonObjectAction extends CommonUtilities {
 			getResponse().setContentType("text/html");
 			getResponse().getWriter().write(responseStr.toString());
 		} catch(Exception e) {
-			log.info("Exception "+e.getMessage()+" occurred in getDataForSupplierDetails()");
+			log.info("Exception "+e.getMessage()+" occurred in checkInbox()");
 			e.printStackTrace();
 		}
 	}
