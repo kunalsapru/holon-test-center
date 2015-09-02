@@ -200,8 +200,7 @@ function createHolonObjectCallBack(data, options) {
 		globalHoList.set(holonObjectId,createdHolonObject);
 	}
 
-function getHolonInfoWindowCallBack(data,options)
-{
+function getHolonInfoWindowCallBack(data,options) {
 	var dataArray = data.split("!");
 	var holonObjectId = dataArray[0];
 	var holonCoordinatorName_Holon= dataArray[1];	
@@ -334,7 +333,7 @@ function getHolonInfoWindowCallBack(data,options)
 		checkInbox(holonObjectId);
 	})
 	$('#sendMessageToAllProducers').click(function() {
-		sendMessageToAllProducers(holonObjectId,currentEnergyRequired);
+		sendMessageToAllProducers(holonObjectId);
 	})
 	$('#infoWindowHolonList').change(function(){
       if(jQuery("#infoWindowHolonList option:selected").val()!='Select Holon')
@@ -350,7 +349,7 @@ function zoomToHolon(holonObjectId,neLoc, type) {
 	var location = new google.maps.LatLng(neLoc.split("~")[0], neLoc.split("~")[1]);
 	if(type=="Holon Object") {
 		var dataAttributes= {
-				  holonObjectId : holonObjectId,
+				  holonObjectId : holonObjectId
 				};
 		 ajaxRequest("getHolonObjectInfoWindow", dataAttributes, getHolonInfoWindowCallBack, {});
 	} else {

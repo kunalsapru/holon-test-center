@@ -46,22 +46,6 @@
 			method="getDataForSupplierDetails" />
 		<action name="getConnectedStatusForHolons" class="com.htc.action.HolonObjectAction"
 			method="getConnectedStatusForHolons" />
-			
-
-
-		<!-- 
-		<action name="showElementsInHolonObject" class="com.htc.action.HolonObjectAction"
-			method="showElementsInHolonObject" />
-		<action name="addElementToHolonObject" class="com.htc.action.HolonObjectAction"
-			method="addElementToHolonObject" />
-		<action name="editElementInHolonObject" class="com.htc.action.HolonObjectAction"
-			method="editElementInHolonObject" />
-		<action name="deleteElementFromHolonObject" class="com.htc.action.HolonObjectAction"
-			method="deleteElementFromHolonObject" /> 
-		<action name="showHolonObjectDetails" class="com.htc.action.HolonObjectAction"
-			method="showHolonObjectDetails" />
-			-->
-	
 
 		<action name="showHolonObjectConsumption" class="com.htc.action.ConsumptionGraphAction"
 			method="showConsumptionGraph" />
@@ -71,7 +55,6 @@
 			method="updateCoordinator" />
 		<action name="getHoCoIcons" class="com.htc.action.HolonCoordinatorAction"
 			method="getHoCoIcons" />
-
 
 		<!--SWITCH LEVEL -->
 		<action name="createPowerSwitch" class="com.htc.action.PowerSwitchAction"
@@ -157,7 +140,6 @@
 		<action name="showHolonElements" class="com.htc.action.HolonElementAction"
 			method="showHolonElements" />
 
-
 		<!-- End of Actions for master tables -->
 
 		<action name="createHolonCoordinator" class="com.htc.action.HolonCoordinatorAction"
@@ -168,7 +150,6 @@
 			method="deleteHolonCoordinator" />
 		<action name="getListHolonCoordinator" class="com.htc.action.HolonCoordinatorAction"
 			method="getListHolonCoordinator" />
-
 		
 		<!-- Power Source Related Actions  -->
 		
@@ -185,6 +166,7 @@
 			
 		<!-- Messaging System related actions -->
 		<action name="sendMessageToAllProducers" class="com.htc.action.HolonObjectAction" method="sendMessageToAllProducers" />
+		<action name="checkInbox" class="com.htc.action.HolonObjectAction" method="checkInbox" />
 
 	</package>
 

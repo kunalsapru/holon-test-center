@@ -7,19 +7,11 @@ public class Supplier implements java.io.Serializable {
 	private HolonObject holonObjectProducer;
 	private HolonObject holonObjectConsumer;
 	private PowerSource powerSource;
-	private int powerSupplied;
+	private int powerRequested;
+	private int powerGranted;
 	private String messageStatus;
 
 	public Supplier() {}
-
-	public Supplier(HolonObject holonObjectProducer, HolonObject holonObjectConsumer, PowerSource powerSource,
-			int powerSupplied, String messageStatus) {
-		this.holonObjectProducer = holonObjectProducer;
-		this.holonObjectConsumer = holonObjectConsumer;
-		this.powerSource = powerSource;
-		this.powerSupplied = powerSupplied;
-		this.setMessageStatus(messageStatus);
-	}
 
 	public Integer getId() {
 		return id;
@@ -53,12 +45,20 @@ public class Supplier implements java.io.Serializable {
 		this.powerSource = powerSource;
 	}
 
-	public int getPowerSupplied() {
-		return powerSupplied;
+	public int getPowerRequested() {
+		return powerRequested;
 	}
 
-	public void setPowerSupplied(int powerSupplied) {
-		this.powerSupplied = powerSupplied;
+	public void setPowerRequested(int powerRequested) {
+		this.powerRequested = powerRequested;
+	}
+
+	public int getPowerGranted() {
+		return powerGranted;
+	}
+
+	public void setPowerGranted(int powerGranted) {
+		this.powerGranted = powerGranted;
 	}
 
 	public String getMessageStatus() {

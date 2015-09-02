@@ -12,7 +12,9 @@ import com.htc.hibernate.pojo.HolonObject;
 import com.htc.hibernate.pojo.HolonObjectType;
 import com.htc.hibernate.pojo.LatLng;
 import com.htc.hibernate.pojo.PowerLine;
+import com.htc.hibernate.pojo.Supplier;
 import com.htc.utilities.CommonUtilities;
+import com.htc.utilities.ConstantValues;
 
 public class HolonObjectAction extends CommonUtilities {
 
@@ -307,7 +309,7 @@ public class HolonObjectAction extends CommonUtilities {
 		try {
 			Integer holonObjectId = getRequest().getParameter("holonObjectId")!=null?Integer.parseInt(getRequest().getParameter("holonObjectId")):0;
 			HolonObject holonObject = getHolonObjectService().findById(holonObjectId);
-			StringBuffer responseStr =new StringBuffer(holonObject.getLatLngByNeLocation().getLatitude()+"~"+holonObject.getLatLngByNeLocation().getLongitude()+"#");
+			StringBuffer responseStr = new StringBuffer();
 
 			getResponse().setContentType("text/html");
 			getResponse().getWriter().write(responseStr.toString());
@@ -317,6 +319,124 @@ public class HolonObjectAction extends CommonUtilities {
 		}
 	}
 
+	public void sendMessageToAllProducers() {
+		try {
+			Integer holonObjectId = getRequest().getParameter("holonObjectId")!=null?Integer.parseInt(getRequest().getParameter("holonObjectId")):0;
+			HolonObject holonObjectConsumer = getHolonObjectService().findById(holonObjectId);
+			Integer currentEnergyRequired = getHolonObjectEnergyDetails(holonObjectConsumer).get("currentEnergyRequired");
+			
+			PowerLine powerLine = getPowerLineService().getPowerLineByHolonObject(holonObjectConsumer);
+			ArrayList<HolonObject> connectedHolonObjects = getHolonObjectListByConnectedPowerLines(powerLine, holonObjectConsumer);
+			Boolean statusDuplicateMessage = false;
+			ArrayList<Supplier> checkDuplicateMessageList = getSupplierService().getAllSupplier();
+			//Sending energy requirement message to all producers
+			for(HolonObject holonObjectProducer : connectedHolonObjects) {
+				for(Supplier supplier : checkDuplicateMessageList) {
+					if(supplier.getHolonObjectProducer().getId() == holonObjectProducer.getId() 
+							&& supplier.getHolonObjectConsumer().getId() == holonObjectConsumer.getId() 
+							&& supplier.getMessageStatus().equalsIgnoreCase(ConstantValues.PENDING)) {
+						statusDuplicateMessage = true;
+					}
+				}
+				if(!statusDuplicateMessage) {
+					Integer flexibility = getHolonObjectEnergyDetails(holonObjectProducer).get("flexibility");
+					if(flexibility > 0) {
+						holonObjectProducer.setFlexibility(flexibility);
+						getHolonObjectService().merge(holonObjectProducer);
+						Supplier supplier = new Supplier();
+						supplier.setHolonObjectConsumer(holonObjectConsumer);
+						supplier.setHolonObjectProducer(holonObjectProducer);
+						supplier.setMessageStatus(ConstantValues.PENDING);
+						supplier.setPowerSource(null);
+						supplier.setPowerRequested(currentEnergyRequired);
+						supplier.setPowerGranted(0);
+						getSupplierService().persist(supplier);
+					}
+				}
+				statusDuplicateMessage = false;
+			}
+			getResponse().setContentType("text/html");
+			getResponse().getWriter().write("Message sent successfully!");
+		} catch(Exception e) {
+			log.info("Exception "+e.getMessage()+" occurred in getDataForSupplierDetails()");
+			e.printStackTrace();
+		}
+	}
+	public void checkInbox() {
+		try {
+			Integer holonObjectId = getRequest().getParameter("holonObjectId")!=null?Integer.parseInt(getRequest().getParameter("holonObjectId")):0;
+			String takeAction = getRequest().getParameter("takeAction")!=null?getRequest().getParameter("takeAction"):"";
+			HolonObject holonObject = getHolonObjectService().findById(holonObjectId);
+			ArrayList<Supplier> producerList = getSupplierService().getSupplierListForProducer(holonObject);
+			Integer producerFlexibility = getHolonObjectEnergyDetails(holonObject).get("flexibility");
+			Integer currentEnergyRequired = 0;
+			if(takeAction.equalsIgnoreCase("yes")) {
+				for(Supplier supplier : producerList) {
+					if(checkConnectivityBetweenHolonObjects(supplier.getHolonObjectProducer(), supplier.getHolonObjectConsumer())
+							&& supplier.getMessageStatus().equalsIgnoreCase(ConstantValues.PENDING)) {
+						currentEnergyRequired = getHolonObjectEnergyDetails(supplier.getHolonObjectConsumer()).get("currentEnergyRequired");
+						if(producerFlexibility >= supplier.getPowerRequested()) {
+							if(currentEnergyRequired <= supplier.getPowerRequested()) {
+								producerFlexibility = producerFlexibility - currentEnergyRequired;
+								supplier.setPowerGranted(currentEnergyRequired);
+								if(currentEnergyRequired == 0) {
+									supplier.setMessageStatus(ConstantValues.PROCESSED);
+								} else {
+									supplier.setMessageStatus(ConstantValues.ACCEPTED);
+								}
+								getSupplierService().merge(supplier);
+							} else {
+								producerFlexibility = producerFlexibility - supplier.getPowerRequested();
+								supplier.setPowerGranted(supplier.getPowerRequested());
+								supplier.setMessageStatus(ConstantValues.ACCEPTED);
+								getSupplierService().merge(supplier);
+							}
+						} else if(producerFlexibility > 0 && producerFlexibility < supplier.getPowerRequested()){
+							if(producerFlexibility <= currentEnergyRequired ) {
+								supplier.setPowerGranted(producerFlexibility);
+								supplier.setMessageStatus(ConstantValues.ACCEPTED);
+								getSupplierService().merge(supplier);
+								producerFlexibility = 0;
+							} else {
+								producerFlexibility = producerFlexibility - currentEnergyRequired;
+								supplier.setPowerGranted(currentEnergyRequired);
+								if(currentEnergyRequired == 0) {
+									supplier.setMessageStatus(ConstantValues.PROCESSED);
+								} else {
+									supplier.setMessageStatus(ConstantValues.ACCEPTED);
+								}
+								getSupplierService().merge(supplier);
+							}
+						} else {
+							supplier.setMessageStatus(ConstantValues.REJECTED);
+							getSupplierService().merge(supplier);
+						}
+					}
+				}
+			}
+			StringBuffer responseStr =new StringBuffer("");
+			ArrayList<Supplier> updatedProducerList = getSupplierService().getSupplierListForProducer(holonObject);
+			for(Supplier supplier : updatedProducerList) {
+				responseStr.append(supplier.getHolonObjectConsumer().getId()+"~");
+				responseStr.append(supplier.getHolonObjectConsumer().getHolonObjectType().getName());
+				responseStr.append("("+supplier.getHolonObjectConsumer().getHolonObjectType().getPriority()+")~");
+				responseStr.append(supplier.getPowerRequested()+"~");
+				responseStr.append(supplier.getPowerGranted()+"~");
+				responseStr.append(supplier.getMessageStatus()+"~");
+				System.out.println("Connectivity b/w HO "+supplier.getHolonObjectProducer().getId()+" and "+supplier.getHolonObjectConsumer().getId()+" -- >"+
+						checkConnectivityBetweenHolonObjects(supplier.getHolonObjectProducer(), supplier.getHolonObjectConsumer()));
+				responseStr.append(checkConnectivityBetweenHolonObjects(supplier.getHolonObjectProducer(), supplier.getHolonObjectConsumer())+"!");
+			}
+			if(responseStr.length() > 0) {
+				responseStr = responseStr.deleteCharAt(responseStr.lastIndexOf("!"));
+			}
+			getResponse().setContentType("text/html");
+			getResponse().getWriter().write(responseStr.toString());
+		} catch(Exception e) {
+			log.info("Exception "+e.getMessage()+" occurred in getDataForSupplierDetails()");
+			e.printStackTrace();
+		}
+	}
 	public void getConnectedStatusForHolons() {
 		try {
 			Integer firstHolonObject = getRequest().getParameter("firstHolonObject")!=null?Integer.parseInt(getRequest().getParameter("firstHolonObject")):0;
@@ -335,4 +455,6 @@ public class HolonObjectAction extends CommonUtilities {
 			System.out.println("Exception occured at getConnectedStatusForHolons");
 		}
 	}
+	
+	
 }

@@ -16,8 +16,11 @@
         <many-to-one name="holonObjectConsumer" class="com.htc.hibernate.pojo.HolonObject" fetch="select" lazy="false">
             <column name="holon_object_consumer" />
         </many-to-one>
-        <property name="powerSupplied" type="int">
-            <column name="power_supplied" not-null="true" />
+        <property name="powerRequested" type="int">
+            <column name="power_requested" not-null="true" />
+        </property>
+        <property name="powerGranted" type="int">
+            <column name="power_granted" not-null="true" />
         </property>
         <property name="messageStatus" type="string">
             <column name="message_status" length="255" />

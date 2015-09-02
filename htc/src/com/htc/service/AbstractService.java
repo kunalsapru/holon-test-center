@@ -11,6 +11,7 @@ import com.htc.dao.LatLngDao;
 import com.htc.dao.PowerLineDao;
 import com.htc.dao.PowerSourceDao;
 import com.htc.dao.PowerSwitchDao;
+import com.htc.dao.SupplierDao;
 import com.htc.daoImpl.EnergyStateDaoImpl;
 import com.htc.daoImpl.HolonDaoImpl;
 import com.htc.daoImpl.HolonElementDaoImpl;
@@ -22,6 +23,7 @@ import com.htc.daoImpl.LatLngDaoImpl;
 import com.htc.daoImpl.PowerLineDaoImpl;
 import com.htc.daoImpl.PowerSourceDaoImpl;
 import com.htc.daoImpl.PowerSwitchDaoImpl;
+import com.htc.daoImpl.SupplierDaoImpl;
 
 /**
  * The Class AbstractService.
@@ -39,7 +41,8 @@ public class AbstractService {
 	private PowerLineDao powerLineDao = new PowerLineDaoImpl();
 	private PowerSwitchDao powerSwitchDao = new PowerSwitchDaoImpl();
 	private PowerSourceDao powerSourceDao = new PowerSourceDaoImpl();
-	private EnergyStateDao energyStateDao =new EnergyStateDaoImpl();
+	private EnergyStateDao energyStateDao = new EnergyStateDaoImpl();
+	private SupplierDao supplierDao = new SupplierDaoImpl();
 
 	public HolonDao getHolonDao() {
 		return holonDao;
@@ -106,6 +109,12 @@ public class AbstractService {
 	}
 	public void setEnergyStateDao(EnergyStateDao energyStateDao) {
 		this.energyStateDao = energyStateDao;
+	}
+	public SupplierDao getSupplierDao() {
+		return supplierDao;
+	}
+	public void setSupplierDao(SupplierDao supplierDao) {
+		this.supplierDao = supplierDao;
 	}
 	
 }

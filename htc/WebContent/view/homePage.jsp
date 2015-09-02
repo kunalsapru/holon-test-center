@@ -261,20 +261,35 @@
 	<td id='pwSuppTitle' colspan="4" style="text-decoration: underline;width: 33%; "></td>
 	</tr>
 	<tr>
-	 		<td style="text-decoration: underline;font-weight:bold;text-align:center;width: 30%;">Type of Supplier</td>
-	 		<td style="text-decoration: underline;font-weight:bold;text-align: center;width: 20%;">Id of Supplier</td>
-	 		<td style="text-decoration: underline;font-weight:bold;text-align: center;width: 25%;">Power Supplied</td>
-	 		<td style="text-decoration: underline;font-weight:bold;text-align: center;width: 25%;">Connected</td>
- 		<tr>
+		<td style="text-decoration: underline;font-weight:bold;text-align:center;width: 30%;">Type of Supplier</td>
+		<td style="text-decoration: underline;font-weight:bold;text-align: center;width: 20%;">Id of Supplier</td>
+		<td style="text-decoration: underline;font-weight:bold;text-align: center;width: 25%;">Power Supplied</td>
+		<td style="text-decoration: underline;font-weight:bold;text-align: center;width: 25%;">Message Status</td>
+	<tr>
   	<tbody id="suppLierDetailList"></tbody>
  	</table><hr>
  	<table>	
  	<tr>
-	<td colspan="4" style="text-align: center;width: 33%;"><input id="cancelShowSupply" type='button' class="button"  value='Close' />
+	<td colspan="4" style="text-align: center;width: 33%;"><input id="closeShowSupply" type='button' class="button"  value='Close' />
 	</td>
 	</tr>
 	</table><hr> 	
  	</div>
+ 	<div id="producerInboxId"  class="table">
+ 	<table id="producerInboxList">
+ 	</table>
+ 	<table>	
+ 	<tr>
+	<td colspan="6" style="text-align: center;">
+	<input id="takeActionProducerInbox" type='button' class="button"  value='Take action' title="Take action based on priority of holon object." />
+	<input type="hidden" id="hiddenSupplierProducerId" value="" />
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input id="closeProducerInbox" type='button' class="button"  value='Close' />
+	</td>
+	</tr>
+	</table> 	
+ 	</div>
+ 	
 </div>
 <script type="text/javascript" src="js/trigger.js"></script>
 </body>

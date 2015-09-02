@@ -11,14 +11,6 @@ public class PowerSwitchDaoImpl implements PowerSwitchDao {
 
 	private PowerSwitchHome powerSwitchHome = new PowerSwitchHome();
 	
-	public PowerSwitchHome getPowerSwitchHome() {
-		return powerSwitchHome;
-	}
-
-	public void setPowerSwitchHome(PowerSwitchHome powerSwitchHome) {
-		this.powerSwitchHome = powerSwitchHome;
-	}
-	
 	@Override
 	public Integer persist(PowerSwitch transientInstance) {
 		// TODO Auto-generated method stub

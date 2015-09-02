@@ -22,6 +22,7 @@ import com.htc.hibernate.pojo.LatLng;
 import com.htc.hibernate.pojo.PowerLine;
 import com.htc.hibernate.pojo.PowerSource;
 import com.htc.hibernate.pojo.PowerSwitch;
+import com.htc.hibernate.pojo.Supplier;
 import com.opensymphony.xwork2.ActionContext;
 
 public class CommonUtilities extends AbstractAction{
@@ -136,7 +137,10 @@ public class CommonUtilities extends AbstractAction{
 				currentEnergyRequired = 0;
 			}
 		}
-		flexibility = setFlexibilityOfHolonObject(holonObject);
+		Map<String, Integer> flexibilityAndCurrentRequirement = getFlexibilityAndCurrentEnergyRequirementOfHolonObject(holonObject, currentEnergyRequired);
+		currentEnergyRequired = flexibilityAndCurrentRequirement.get("currentEnergyRequired");
+		flexibility = flexibilityAndCurrentRequirement.get("flexibility");
+		
 		holonObjectEnergyDetails.put("noOfHolonElements", holonElementList.size());
 		holonObjectEnergyDetails.put("minimumEnergyRequired", minimumEnergyRequired);
 		holonObjectEnergyDetails.put("maximumEnergyRequired", maximumEnergyRequired);
@@ -271,10 +275,6 @@ public class CommonUtilities extends AbstractAction{
 		if(powerLine != null) {
 			connectedPowerLines = getPowerLineService().getConnectedPowerLines(powerLine);
 		}
-		log.info("Selected Power Line --> "+powerLineId);
-		for(PowerLine powerLine2 : connectedPowerLines) {
-			log.info("Connected Line --> "+powerLine2.getId());
-		}
 		PowerLine powerLine2 = null;
 		PowerSwitch powerSwitch = null;
 		for(int i =0; i< connectedPowerLines.size();i++) {
@@ -282,7 +282,6 @@ public class CommonUtilities extends AbstractAction{
 			powerSwitch = getPowerSwitchService().checkSwitchStatusBetweenPowerLines(powerLine, powerLine2);
 			if(powerSwitch != null){
 				if(!powerSwitch.getStatus()) {
-					log.info("Connected Line to be removed --> "+powerLine2.getId());
 					removeIndexListA.add(powerLine2);
 				}
 			}
@@ -306,7 +305,6 @@ public class CommonUtilities extends AbstractAction{
 				powerSwitchTemp = getPowerSwitchService().checkSwitchStatusBetweenPowerLines(powerLine, powerLineTemp);
 				if(powerSwitchTemp != null){
 					if(!powerSwitchTemp.getStatus()) {
-						log.info("Connected Line to be removed --> "+powerLineTemp.getId());
 						removeIndexListB.add(powerLineTemp);
 					}
 				}
@@ -409,9 +407,10 @@ public class CommonUtilities extends AbstractAction{
 		ArrayList<PowerLine> connectedPowerLines = null;
 		if(powerLine != null) {
 			powerLineId = powerLine.getId();
-			connectedPowerLines = connectedPowerLines(powerLineId);
+			connectedPowerLines = new CommonUtilities().connectedPowerLines(powerLineId);
 		}
 		for(PowerLine powerLine2 : connectedPowerLines) {
+			System.out.println("Connected Lines --> "+powerLine2.getId());
 			if(powerLine2.getType().equalsIgnoreCase(ConstantValues.SUBLINE)) {
 				if(powerLine2.getHolonObject() != null && powerLine2.getHolonObject().getHolon()!= null && holonObject.getHolon() != null &&
 						powerLine2.getHolonObject().getHolon().getId() == holonObject.getHolon().getId()) {
@@ -453,7 +452,9 @@ public class CommonUtilities extends AbstractAction{
 		return false;
 	}
 	
-	public Integer setFlexibilityOfHolonObject(HolonObject holonObject) {
+	public Map<String, Integer> getFlexibilityAndCurrentEnergyRequirementOfHolonObject(HolonObject holonObject, Integer currentEnergyRequired) {
+		Map<String, Integer> flexibilityAndCurrentEnergyRequiredMap = new TreeMap<String, Integer>();
+		
 		Integer originalEnergyRequired = 0;
 		Integer currentProduction=0;
 		Integer flexibility = 0;
@@ -477,10 +478,47 @@ public class CommonUtilities extends AbstractAction{
 				flexibility = 0;
 			}
 		}
+
+		//Scenario from producer's perspective
+		ArrayList<Supplier> supplierListForProducer = getSupplierService().getSupplierListForProducer(holonObject);
+		for(Supplier supplier : supplierListForProducer) {
+			if(checkConnectivityBetweenHolonObjects(holonObject, supplier.getHolonObjectConsumer())) {
+				if(supplier.getMessageStatus().equalsIgnoreCase(ConstantValues.ACCEPTED)) {
+					if(flexibility >= supplier.getPowerGranted()) {
+						flexibility = flexibility - supplier.getPowerGranted();
+					} else {
+						flexibility = 0;
+					}
+				}
+			}
+		}
+		
+		//Scenario from consumer's perspective
+		ArrayList<Supplier> supplierListForConsumer = getSupplierService().getSupplierListForConsumer(holonObject);
+		for(Supplier supplier : supplierListForConsumer) {
+			System.out.println("CURRENT ENERGY --> "+currentEnergyRequired);
+			System.out.println("CONNECTIVITY b/w HO "+supplier.getHolonObjectProducer().getId()+" and "+holonObject.getId()
+			+" --> "+checkConnectivityBetweenHolonObjects(supplier.getHolonObjectProducer(), holonObject));
+			if(checkConnectivityBetweenHolonObjects(supplier.getHolonObjectProducer(), holonObject)) {
+				if(supplier.getMessageStatus().equalsIgnoreCase(ConstantValues.ACCEPTED)) {
+					if(currentEnergyRequired >= supplier.getPowerGranted()) {
+						currentEnergyRequired = currentEnergyRequired - supplier.getPowerGranted();
+					} else {
+						currentEnergyRequired = 0;
+					}
+				}
+			} else {
+				if(supplier.getMessageStatus().equalsIgnoreCase(ConstantValues.ACCEPTED)) {
+					currentEnergyRequired = currentEnergyRequired + supplier.getPowerGranted();
+				}
+			}
+		}
+		
 		holonObject.setFlexibility(flexibility);
 		getHolonObjectService().merge(holonObject);
-		
-		return flexibility;
+		flexibilityAndCurrentEnergyRequiredMap.put("flexibility", flexibility);
+		flexibilityAndCurrentEnergyRequiredMap.put("currentEnergyRequired", currentEnergyRequired);
+		return flexibilityAndCurrentEnergyRequiredMap;
 	}
 
 	public HolonObject findConnectedHolonCoordinatorByHolon(Holon holon, PowerLine powerLine) {
