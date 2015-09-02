@@ -496,20 +496,13 @@ public class CommonUtilities extends AbstractAction{
 		//Scenario from consumer's perspective
 		ArrayList<Supplier> supplierListForConsumer = getSupplierService().getSupplierListForConsumer(holonObject);
 		for(Supplier supplier : supplierListForConsumer) {
-			System.out.println("CURRENT ENERGY --> "+currentEnergyRequired);
-			System.out.println("CONNECTIVITY b/w HO "+supplier.getHolonObjectProducer().getId()+" and "+holonObject.getId()
-			+" --> "+checkConnectivityBetweenHolonObjects(supplier.getHolonObjectProducer(), holonObject));
-			if(checkConnectivityBetweenHolonObjects(supplier.getHolonObjectProducer(), holonObject)) {
+			if(checkConnectivityBetweenHolonObjects(holonObject, supplier.getHolonObjectProducer())) {
 				if(supplier.getMessageStatus().equalsIgnoreCase(ConstantValues.ACCEPTED)) {
 					if(currentEnergyRequired >= supplier.getPowerGranted()) {
 						currentEnergyRequired = currentEnergyRequired - supplier.getPowerGranted();
 					} else {
 						currentEnergyRequired = 0;
 					}
-				}
-			} else {
-				if(supplier.getMessageStatus().equalsIgnoreCase(ConstantValues.ACCEPTED)) {
-					currentEnergyRequired = currentEnergyRequired + supplier.getPowerGranted();
 				}
 			}
 		}
