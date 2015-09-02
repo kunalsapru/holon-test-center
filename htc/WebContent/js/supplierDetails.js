@@ -55,7 +55,15 @@ function getDataForSupplierDetailsCallBack(data,options) {
 			requestId = supplierColumn[6];
 		}
 		contentString = contentString.concat("<tr><td>"+requestId+"</td><td>"+typeSupplier+"</td><td>"+idSupplier+"</td><td>"+
-				powerRequested+"</td><td>"+powerGranted+"</td><td>"+messageStatus+"</td><td>"+isConnected+"</td></tr>");
+				powerRequested+"</td><td>"+powerGranted+"</td>");
+		if(messageStatus == "ACCEPTED") {
+			contentString = contentString.concat("<td style='color:green'>"+messageStatus+"</td>")
+		} else if(messageStatus == "REJECTED" || messageStatus == "CONNECTION RESET") {
+			contentString = contentString.concat("<td style='color:red'>"+messageStatus+"</td>")
+		} else {
+			contentString = contentString.concat("<td>"+messageStatus+"</td>")
+		}
+		contentString = contentString.concat("<td>"+isConnected+"</td></tr>");
 	}
 	if(contentString == "") {
 		contentString = "<tr><td colspan='7' style='text-align: center;'>No Power is being supplied.</td></tr>";
@@ -144,7 +152,16 @@ function checkInboxCallBack(data, options) {
 			canCommunicate = inboxColumn[7];
 		}
 		contentString = contentString.concat("<tr><td>"+requestId+"</td><td>"+consumerId+"</td><td>"+requestorTypePriority+"</td><td>"+
-				powerRequested+"</td><td>"+powerGranted+"</td><td>"+messageStatus+"</td><td>"+isConnected+"</td></tr>");
+				powerRequested+"</td><td>"+powerGranted+"</td>");
+		if(messageStatus == "ACCEPTED") {
+			contentString = contentString.concat("<td style='color:green'>"+messageStatus+"</td>");
+		} else if(messageStatus == "REJECTED" || messageStatus == "CONNECTION RESET") {
+			contentString = contentString.concat("<td style='color:red'>"+messageStatus+"</td>");
+		} else {
+			contentString = contentString.concat("<td>"+messageStatus+"</td>");
+		}
+		
+		contentString = contentString.concat("<td>"+isConnected+"</td></tr>");
 	}
 	if(inboxColumn == "") {
 		contentString = contentString.concat("<tr><td>"+consumerId+"</td><td>"+requestorTypePriority+"</td><td>"+
