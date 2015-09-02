@@ -46,4 +46,9 @@ public class SupplierDaoImpl implements SupplierDao {
 		return supplierHome.getSupplierListForConsumer(holonObject);
 	}
 
+	@Override
+	public ArrayList<Supplier> getListOfSimilarRequests(Integer requestId) {
+		return supplierHome.getListOfSimilarRequests(requestId);
+	}
+
 }

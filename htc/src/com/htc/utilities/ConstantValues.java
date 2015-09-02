@@ -15,5 +15,6 @@ public class ConstantValues {
 	public static final String PENDING = "PENDING"; //Request is pending with holon object(Producer)
 	/*This means message request was processed by some other holon object (Producer) or Holon Coordinator*/
 	public static final String PROCESSED = "PROCESSED BY SOME OTHER PRODUCER";
+	public static final String CONNECTION_RESET = "CONNECTION RESET";
 	
 }

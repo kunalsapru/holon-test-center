@@ -14,5 +14,6 @@ public interface SupplierService {
 	public ArrayList<Supplier> getAllSupplier();
 	public ArrayList<Supplier> getSupplierListForProducer(HolonObject holonObject);
 	public ArrayList<Supplier> getSupplierListForConsumer(HolonObject holonObject);
+	public ArrayList<Supplier> getListOfSimilarRequests(Integer requestId);
 	
 }

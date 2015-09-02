@@ -482,6 +482,11 @@ public class CommonUtilities extends AbstractAction{
 		//Scenario from producer's perspective
 		ArrayList<Supplier> supplierListForProducer = getSupplierService().getSupplierListForProducer(holonObject);
 		for(Supplier supplier : supplierListForProducer) {
+			if(!checkConnectivityBetweenHolonObjects(holonObject, supplier.getHolonObjectConsumer()) 
+					&& supplier.getMessageStatus().equals(ConstantValues.ACCEPTED)) {
+				supplier.setMessageStatus(ConstantValues.CONNECTION_RESET);
+				getSupplierService().merge(supplier);
+			}
 			if(checkConnectivityBetweenHolonObjects(holonObject, supplier.getHolonObjectConsumer())) {
 				if(supplier.getMessageStatus().equalsIgnoreCase(ConstantValues.ACCEPTED)) {
 					if(flexibility >= supplier.getPowerGranted()) {
@@ -496,6 +501,11 @@ public class CommonUtilities extends AbstractAction{
 		//Scenario from consumer's perspective
 		ArrayList<Supplier> supplierListForConsumer = getSupplierService().getSupplierListForConsumer(holonObject);
 		for(Supplier supplier : supplierListForConsumer) {
+			if(!checkConnectivityBetweenHolonObjects(holonObject, supplier.getHolonObjectProducer()) 
+					&& supplier.getMessageStatus().equals(ConstantValues.ACCEPTED)) {
+				supplier.setMessageStatus(ConstantValues.CONNECTION_RESET);
+				getSupplierService().merge(supplier);
+			}
 			if(checkConnectivityBetweenHolonObjects(holonObject, supplier.getHolonObjectProducer())) {
 				if(supplier.getMessageStatus().equalsIgnoreCase(ConstantValues.ACCEPTED)) {
 					if(currentEnergyRequired >= supplier.getPowerGranted()) {

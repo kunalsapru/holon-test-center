@@ -25,6 +25,8 @@
         <property name="messageStatus" type="string">
             <column name="message_status" length="255" />
         </property>
-        
+        <property name="requestId" type="int">
+            <column name="request_id" not-null="true" />
+        </property>
     </class>
 </hibernate-mapping>

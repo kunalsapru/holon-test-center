@@ -309,8 +309,28 @@ public class HolonObjectAction extends CommonUtilities {
 		try {
 			Integer holonObjectId = getRequest().getParameter("holonObjectId")!=null?Integer.parseInt(getRequest().getParameter("holonObjectId")):0;
 			HolonObject holonObject = getHolonObjectService().findById(holonObjectId);
+			ArrayList<Supplier> listConsumer = getSupplierService().getSupplierListForConsumer(holonObject);
 			StringBuffer responseStr = new StringBuffer();
-
+			for(Supplier supplier : listConsumer) {
+					if(supplier.getMessageStatus().equalsIgnoreCase(ConstantValues.ACCEPTED) 
+							|| supplier.getMessageStatus().equalsIgnoreCase(ConstantValues.CONNECTION_RESET)) {
+						if(supplier.getPowerSource() != null) {
+							responseStr.append("Power Source~");
+							responseStr.append(supplier.getPowerSource().getId()+"~");
+						} else if(supplier.getHolonObjectProducer() != null) {
+							responseStr.append("Holon Object~");
+							responseStr.append(supplier.getHolonObjectProducer().getId()+"~");
+						}
+						responseStr.append(supplier.getPowerRequested()+"~");
+						responseStr.append(supplier.getPowerGranted()+"~");
+						responseStr.append(supplier.getMessageStatus()+"~");
+						responseStr.append(checkConnectivityBetweenHolonObjects(holonObject, supplier.getHolonObjectProducer())+"~");
+						responseStr.append(supplier.getRequestId()+"!");
+					}
+			}
+			if(responseStr.length() > 0) {
+				responseStr = responseStr.deleteCharAt(responseStr.lastIndexOf("!"));
+			}
 			getResponse().setContentType("text/html");
 			getResponse().getWriter().write(responseStr.toString());
 		} catch(Exception e) {
@@ -324,7 +344,8 @@ public class HolonObjectAction extends CommonUtilities {
 			Integer holonObjectId = getRequest().getParameter("holonObjectId")!=null?Integer.parseInt(getRequest().getParameter("holonObjectId")):0;
 			HolonObject holonObjectConsumer = getHolonObjectService().findById(holonObjectId);
 			Integer currentEnergyRequired = getHolonObjectEnergyDetails(holonObjectConsumer).get("currentEnergyRequired");
-			
+			int requestId = 0;
+			Integer newSupplierId = 0;
 			PowerLine powerLine = getPowerLineService().getPowerLineByHolonObject(holonObjectConsumer);
 			ArrayList<HolonObject> connectedHolonObjects = getHolonObjectListByConnectedPowerLines(powerLine, holonObjectConsumer);
 			Boolean statusDuplicateMessage = false;
@@ -350,7 +371,14 @@ public class HolonObjectAction extends CommonUtilities {
 						supplier.setPowerSource(null);
 						supplier.setPowerRequested(currentEnergyRequired);
 						supplier.setPowerGranted(0);
-						getSupplierService().persist(supplier);
+						supplier.setRequestId(requestId);
+						newSupplierId = getSupplierService().persist(supplier);
+						if(requestId == 0) {
+							requestId  = newSupplierId;
+						}
+						Supplier tempSupplier = getSupplierService().findById(newSupplierId);
+						tempSupplier.setRequestId(requestId);
+						getSupplierService().merge(tempSupplier);
 					}
 				}
 				statusDuplicateMessage = false;
@@ -358,7 +386,7 @@ public class HolonObjectAction extends CommonUtilities {
 			getResponse().setContentType("text/html");
 			getResponse().getWriter().write("Message sent successfully!");
 		} catch(Exception e) {
-			log.info("Exception "+e.getMessage()+" occurred in getDataForSupplierDetails()");
+			log.info("Exception "+e.getMessage()+" occurred in sendMessageToAllProducers()");
 			e.printStackTrace();
 		}
 	}
@@ -374,6 +402,8 @@ public class HolonObjectAction extends CommonUtilities {
 				for(Supplier supplier : producerList) {
 					if(checkConnectivityBetweenHolonObjects(supplier.getHolonObjectProducer(), supplier.getHolonObjectConsumer())
 							&& supplier.getMessageStatus().equalsIgnoreCase(ConstantValues.PENDING)) {
+						ArrayList<Supplier> similarRequests = getSupplierService().getListOfSimilarRequests(supplier.getRequestId());
+						
 						currentEnergyRequired = getHolonObjectEnergyDetails(supplier.getHolonObjectConsumer()).get("currentEnergyRequired");
 						if(producerFlexibility >= supplier.getPowerRequested()) {
 							if(currentEnergyRequired <= supplier.getPowerRequested()) {
@@ -382,18 +412,30 @@ public class HolonObjectAction extends CommonUtilities {
 								if(currentEnergyRequired == 0) {
 									supplier.setMessageStatus(ConstantValues.PROCESSED);
 								} else {
+									for(Supplier supplier2 : similarRequests) {
+											supplier2.setMessageStatus(ConstantValues.PROCESSED);
+											getSupplierService().merge(supplier2);
+									}
 									supplier.setMessageStatus(ConstantValues.ACCEPTED);
 								}
 								getSupplierService().merge(supplier);
 							} else {
 								producerFlexibility = producerFlexibility - supplier.getPowerRequested();
 								supplier.setPowerGranted(supplier.getPowerRequested());
+								for(Supplier supplier2 : similarRequests) {
+									supplier2.setMessageStatus(ConstantValues.PROCESSED);
+									getSupplierService().merge(supplier2);
+								}
 								supplier.setMessageStatus(ConstantValues.ACCEPTED);
 								getSupplierService().merge(supplier);
 							}
 						} else if(producerFlexibility > 0 && producerFlexibility < supplier.getPowerRequested()){
 							if(producerFlexibility <= currentEnergyRequired ) {
 								supplier.setPowerGranted(producerFlexibility);
+								for(Supplier supplier2 : similarRequests) {
+									supplier2.setMessageStatus(ConstantValues.PROCESSED);
+									getSupplierService().merge(supplier2);
+								}
 								supplier.setMessageStatus(ConstantValues.ACCEPTED);
 								getSupplierService().merge(supplier);
 								producerFlexibility = 0;
@@ -403,6 +445,10 @@ public class HolonObjectAction extends CommonUtilities {
 								if(currentEnergyRequired == 0) {
 									supplier.setMessageStatus(ConstantValues.PROCESSED);
 								} else {
+									for(Supplier supplier2 : similarRequests) {
+										supplier2.setMessageStatus(ConstantValues.PROCESSED);
+										getSupplierService().merge(supplier2);
+									}
 									supplier.setMessageStatus(ConstantValues.ACCEPTED);
 								}
 								getSupplierService().merge(supplier);
@@ -419,13 +465,14 @@ public class HolonObjectAction extends CommonUtilities {
 			for(Supplier supplier : updatedProducerList) {
 				responseStr.append(supplier.getHolonObjectConsumer().getId()+"~");
 				responseStr.append(supplier.getHolonObjectConsumer().getHolonObjectType().getName());
-				responseStr.append("("+supplier.getHolonObjectConsumer().getHolonObjectType().getPriority()+")~");
+				responseStr.append(" ("+supplier.getHolonObjectConsumer().getHolonObjectType().getPriority()+")~");
 				responseStr.append(supplier.getPowerRequested()+"~");
 				responseStr.append(supplier.getPowerGranted()+"~");
 				responseStr.append(supplier.getMessageStatus()+"~");
 				System.out.println("Connectivity b/w HO "+supplier.getHolonObjectProducer().getId()+" and "+supplier.getHolonObjectConsumer().getId()+" -- >"+
 						checkConnectivityBetweenHolonObjects(supplier.getHolonObjectProducer(), supplier.getHolonObjectConsumer()));
-				responseStr.append(checkConnectivityBetweenHolonObjects(supplier.getHolonObjectProducer(), supplier.getHolonObjectConsumer())+"!");
+				responseStr.append(checkConnectivityBetweenHolonObjects(supplier.getHolonObjectProducer(), supplier.getHolonObjectConsumer())+"~");
+				responseStr.append(supplier.getRequestId()+"!");
 			}
 			if(responseStr.length() > 0) {
 				responseStr = responseStr.deleteCharAt(responseStr.lastIndexOf("!"));

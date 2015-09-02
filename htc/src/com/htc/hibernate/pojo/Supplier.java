@@ -10,6 +10,7 @@ public class Supplier implements java.io.Serializable {
 	private int powerRequested;
 	private int powerGranted;
 	private String messageStatus;
+	private Integer requestId;
 
 	public Supplier() {}
 
@@ -67,6 +68,14 @@ public class Supplier implements java.io.Serializable {
 
 	public void setMessageStatus(String messageStatus) {
 		this.messageStatus = messageStatus;
+	}
+
+	public Integer getRequestId() {
+		return requestId;
+	}
+
+	public void setRequestId(Integer requestId) {
+		this.requestId = requestId;
 	}
 
 }

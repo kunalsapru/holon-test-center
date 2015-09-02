@@ -135,5 +135,24 @@ public class SupplierHome {
 		}
 		return listSupplier;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public ArrayList<Supplier> getListOfSimilarRequests(Integer requestId) {
+		Session session = null;
+		Transaction tx = null;
+		ArrayList<Supplier> listSupplier = null;
+		try {
+			session = HibernateSessionFactory.getSessionFactory().getCurrentSession();
+			tx = session.beginTransaction();
+			Query query = session.createQuery("from Supplier s where s.requestId=:requestId");
+			query.setInteger("requestId", requestId);
+			listSupplier = (ArrayList<Supplier>) query.list();
+			tx.commit();
+			return listSupplier;
+		} catch (RuntimeException re) {
+			System.out.println("getSupplierListForConsumer failed");
+		}
+		return listSupplier;
+	}
 
 }
