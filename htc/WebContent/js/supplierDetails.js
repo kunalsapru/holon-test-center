@@ -73,7 +73,11 @@ function sendMessageToAllProducers(holonObjectId) {
 }
 
 function sendMessageToAllProducersCallBack(data, options) {
-	swal("Message sent", "Message has been sent to all connected producers", "info");
+	if(data == "SUCCESS") {
+		swal("Message sent", "Message has been sent to all connected producers", "info");
+	} else if (data == "FAILURE") {
+		swal("Cannot communicate!", "Message has not been sent. Set the 'Can Communicate' field to 'Yes' to enable communication.", "info");
+	}
 }
 
 function checkInbox(holonObjectId) {
@@ -123,6 +127,7 @@ function checkInboxCallBack(data, options) {
 	var messageStatus = "N/A";
 	var isConnected = "N/A";
 	var requestId = "N/A";
+	var canCommunicate = "SUCCESS";
 	
 	for(var i = 0; i<inboxRow.length;i++) {
 		if(inboxRow != "") {
@@ -136,6 +141,7 @@ function checkInboxCallBack(data, options) {
 			messageStatus = inboxColumn[4];
 			isConnected = inboxColumn[5];
 			requestId = inboxColumn[6];
+			canCommunicate = inboxColumn[7];
 		}
 		contentString = contentString.concat("<tr><td>"+requestId+"</td><td>"+consumerId+"</td><td>"+requestorTypePriority+"</td><td>"+
 				powerRequested+"</td><td>"+powerGranted+"</td><td>"+messageStatus+"</td><td>"+isConnected+"</td></tr>");
@@ -146,4 +152,8 @@ function checkInboxCallBack(data, options) {
 	}
 	$("#producerInboxList").html(contentString);
 	openDiv("producerInboxId");
+	if(canCommunicate == "FAILURE") {
+		swal("Cannot communicate!", "Necessary action can not be taken. Set the 'Can Communicate' field to 'Yes' to continue" +
+				" taking actions on pending requests.", "info");
+	}
 }

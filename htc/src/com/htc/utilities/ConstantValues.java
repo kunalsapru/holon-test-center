@@ -16,5 +16,7 @@ public class ConstantValues {
 	/*This means message request was processed by some other holon object (Producer) or Holon Coordinator*/
 	public static final String PROCESSED = "PROCESSED BY SOME OTHER PRODUCER";
 	public static final String CONNECTION_RESET = "CONNECTION RESET";
+	public static final String SUCCESS = "SUCCESS";
+	public static final String FAILURE = "FAILURE";
 	
 }
