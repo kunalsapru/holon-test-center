@@ -102,7 +102,7 @@ function sendMessageToAllProducersCallBack(data, options) {
 }
 
 function distributeEnergyAmongHolonObjectsFlexibilityZero() {
-	swal("Flexibility insufficient.", "Holon does not have any energy to distribute.", "info");
+	swal("Flexibility insufficient.", "Holon does not has any energy to distribute.", "info");
 }
 
 function checkInbox(holonObjectId) {
