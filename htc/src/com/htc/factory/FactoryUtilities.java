@@ -1,7 +1,9 @@
 package com.htc.factory;
 
+import java.math.BigDecimal;
 import java.util.Map;
 import java.util.TreeMap;
+
 import com.htc.hibernate.pojo.HolonElement;
 import com.htc.hibernate.pojo.HolonElementState;
 import com.htc.hibernate.pojo.HolonElementType;
@@ -66,6 +68,10 @@ public class FactoryUtilities extends CommonUtilities{
 				holonObject.setLineConnectedState(false);
 				holonObject.setCanCommunicate(true);
 				holonObject.setCreatedFactory(true);
+				holonObject.setIsCoordinator(false);
+				holonObject.setFlexibility(0);
+				holonObject.setCoordinatorCompetency(new BigDecimal(Math.random()));
+				holonObject.setTrustValue(new BigDecimal(Math.random()));
 				//Calling service method to save the object in database and saving the auto-incremented ID in an integer
 				newHolonObjectId = getHolonObjectService().persist(holonObject);
 				System.out.println("New HolonObject ID = "+newHolonObjectId);

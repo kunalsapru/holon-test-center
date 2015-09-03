@@ -43,7 +43,7 @@ public class FactoryDataGeneratorAction extends CommonUtilities {
 			
 			
 			getResponse().setContentType("text/html");
-			getResponse().getWriter().write("Holon Objects creation in progress...");
+			getResponse().getWriter().write("Holon Objects created successfully from factory.");
 			
 		} catch (Exception e) {
 			e.printStackTrace();
