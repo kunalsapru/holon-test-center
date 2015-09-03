@@ -3,7 +3,10 @@ package com.htc.action;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
 import org.apache.log4j.Logger;
+
+import com.htc.hibernate.pojo.Holon;
 import com.htc.hibernate.pojo.HolonObject;
 import com.htc.hibernate.pojo.LatLng;
 import com.htc.hibernate.pojo.PowerLine;
@@ -104,8 +107,15 @@ public class PowerLineAction extends CommonUtilities {
 				
 			}
 			if(powerLineType.equals(ConstantValues.MAINLINE)){
-				// Check whether there are two coordinators, If yes, start leadership Election
+				ArrayList<PowerLine> connectedToMainLine=connectedPowerLines(powerLine.getId());
+				if(connectedToMainLine.size()>0){
+					ArrayList<HolonObject> responseArray= getHolonCoordinatorByElectionUsingForMainLineAndSwitch(powerLine, "common");
+					if(responseArray.size()>0 && responseArray.get(0)!=null && responseArray.size() > 1 &&responseArray.get(1)!=null){
+						plResponse.append("!0!0!null!null"+"!YesCoordinatoorMainLine"+"!"+responseArray.get(0).getId()+"!"+responseArray.get(1).getId());
+					}
+				}
 			}
+			
 			getResponse().getWriter().write(plResponse.toString());	
 		}catch(Exception e) {
 			log.info("Exception "+e.getMessage()+" occurred in action drawPowerLine()");
@@ -244,7 +254,35 @@ public class PowerLineAction extends CommonUtilities {
 			startLocation = powerLine.getLatLngBySource().getLatitude()+"~"+powerLine.getLatLngBySource().getLongitude();
 			endLocation = powerLine.getLatLngByDestination().getLatitude()+"~"+powerLine.getLatLngByDestination().getLongitude();
 			color= CommonUtilities.getLineColor(CommonUtilities.getPercent(powerLine.getCurrentCapacity(),powerLine.getMaximumCapacity()));
-			String resp=startLocation+"^"+endLocation+"!"+color+"!"+powerLine.getId()+"!"+powerLine.getMaximumCapacity();
+			ArrayList<HolonObject> connHolonObjects = new ArrayList<HolonObject>();
+			System.out.println("Power Line id in PowerLineAction Update::"+powerLine.getId());
+			/*Boolean flag= false;
+			ArrayList<PowerLine>connectedPowerLinesA  = connectedPowerLines(powerLine.getId());
+			if(connectedPowerLinesA.size() > 0){
+				for(PowerLine powerLine2 : connectedPowerLinesA){
+					if(powerLine2.getType()!=null){
+						if(powerLine2.getType().equalsIgnoreCase(ConstantValues.SUBLINE) && powerLine2.getHolonObject()!=null && powerLine2.getHolonObject().getIsCoordinator()==true){
+							flag=true;
+						}
+					}
+				}
+			}
+			if(flag){
+				 connHolonObjects = getHolonCoordinatorByElectionUsingForMainLineAndSwitch(powerLine);
+			}
+			else{
+				updateHolonObjectsAndPowerSources(powerLine.getId());
+				connHolonObjects = getHolonCoordinatorByElectionUsingForMainLineAndSwitch(powerLine);
+			}
+			*/
+/*			ArrayList<HolonObject> connectedHolonObjects= new ArrayList<HolonObject>();
+			connectedHolonObjects=getHolonCoordinatorByElectionUsingForMainLineAndSwitch(powerLine);
+			if(connectedHolonObjects.size()>0){
+				for(HolonObject holonObject :connHolonObjects){
+					System.out.println("Power Line Action:::"+"Connected-------->"+holonObject.getId());
+				}
+			}
+*/			String resp=startLocation+"^"+endLocation+"!"+color+"!"+powerLine.getId()+"!"+powerLine.getMaximumCapacity();
 			//Calling the response function and setting the content type of response.
 			getResponse().setContentType("text/html");
 			getResponse().getWriter().write(resp);

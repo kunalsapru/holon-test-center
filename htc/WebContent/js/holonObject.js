@@ -587,44 +587,10 @@ function getHoCoIconsCallBack(data,options) {
 		if(holonObjectId!= null && holonObjectId.getBounds() != null ){
 			coordinatorLocation=holonObjectId.getBounds().getNorthEast();
 			coordinatorIcon=createCoIcon(coordinatorLocation);
-			globalHKList.set(holonObjectColor,coordinatorIcon);
+			globalHKList.set(result[i].split("~")[0],coordinatorIcon);
 		}
 		
 	}
-	
-	/*var hoCoObIdBlue=result[0];
-	var hoCoObIdGreen=result[1];
-	var hoCoObIdYellow=result[2];
-	var hoCoObIdRed=result[3];
-	if(hoCoObIdBlue!=0)
-	{		
-		var hoObj=globalHoList.get(hoCoObIdBlue.toString());
-		var cLocation=hoObj.getBounds().getNorthEast();
-		var coIcon= createCoIcon(cLocation);
-		globalHKList.set("blue",coIcon);
-	}
-	if(hoCoObIdGreen!=0)
-	{		
-		var hoObj=globalHoList.get(hoCoObIdGreen.toString());
-		var cLocation=hoObj.getBounds().getNorthEast();
-		var coIcon= createCoIcon(cLocation);
-		globalHKList.set("green",coIcon);
-	}
-	if(hoCoObIdYellow!=0)
-	{		
-		var hoObj=globalHoList.get(hoCoObIdYellow.toString());
-		var cLocation=hoObj.getBounds().getNorthEast();
-		var coIcon= createCoIcon(cLocation);
-		globalHKList.set("yellow",coIcon);
-	}
-	if(hoCoObIdRed!=0)
-	{		
-		var hoObj=globalHoList.get(hoCoObIdRed.toString());
-		var cLocation=hoObj.getBounds().getNorthEast();
-		var coIcon= createCoIcon(cLocation);
-		globalHKList.set("red",coIcon);
-	}
-*/	
 }
 
 function createCoIcon(cLocation) {

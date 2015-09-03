@@ -120,6 +120,7 @@ function editPowerLineObjectCallBack(data, options){
 }
 
 function drawPoweLineCallBack(data, options){
+	
 	var newLineShape = options["lineShape"];
 	var path = options["path"];
 	var dataArray = data.split("!");
@@ -135,52 +136,61 @@ function drawPoweLineCallBack(data, options){
 	var isCoordinator = dataArray[6];
 	var coordinatorLocation="";
 	var coordinatorIcon="";
-	if(typeof powerLineAId != 'undefined' && typeof powerLineBId != 'undefined') {
+	if(typeof powerLineAId != 'undefined' && typeof powerLineBId != 'undefined' && powerLineAId!= 0) {
+		
 		updateGlobalPowerLineList(powerLineAId,true);
 		updateGlobalPowerLineList(powerLineBId,false);
 	}
 	
-	if(typeof holonObjectColor != 'undefined' && typeof holonObjectId != 'undefined' ){
+	if(typeof holonObjectColor != 'undefined' && typeof holonObjectId != 'undefined' && holonObjectId != "null" ){
 		 var holonObject= globalHoList.get(holonObjectId);
 		 holonObject.setOptions({strokeColor:holonObjectColor,fillColor:holonObjectColor });
 		}
 	if(typeof isCoordinator != 'undefined' && typeof holonObjectId != 'undefined'){
 		if(isCoordinator=="Yes"){
 			//set coordinator icon for holonObject
+			//First HolonObject
 			var holonObject = globalHoList.get(holonObjectId);
 			coordinatorLocation=holonObject.getBounds().getNorthEast();
+			//Returns marker of the image
 			coordinatorIcon=createCoIcon(coordinatorLocation);
-			globalHKList.set(holonObjectColor,coordinatorIcon);
+			globalHKList.set(holonObjectId,coordinatorIcon);
+			console.log("Set id:"+holonObjectId+" in globalHKList");
+			console.log("getting value for id"+holonObjectId+":"+globalHKList.get(holonObjectId));
 		}
 		else{
 			var newCoordinatorId=dataArray[7];
 			var oldCoordinatorId= dataArray[8];
-			var holonObject = globalHoList.get(newcoordinatorId);
-			coordinatorLocation=holonObject.getBounds().getNorthEast();
-			coordinatorIcon=createCoIcon(coordinatorLocation);
-			globalHKList.set(holonObjectColor,coordinatorIcon);
-			//Remove symbol from Global List
-			//delete globalHKList.holonObjectId;
-			if(oldCoordinatorId!= null || typeof oldCoordinatorId != 'undefined'){
-				var oldCoordinatorObject= globalHoList.get(oldCoordinatorId);
-				var oldCoordinatorLocation= oldCoordinatorObject.getBounds().getNorthEast();
-				var oldCoordinatorIcon= new Marker({
-					map: map,
-					title: 'Holon Coordinator',
-					position: oldCoordinatorLocation,
-					zIndex: 9,
-					icon: {
-						path: ROUTE,
-						fillColor: '#0E77E9',
-						fillOpacity: 0,
-						strokeColor: '',
-						strokeWeight: 0,
-						scale: 1/100
-					}
-				});
-				oldCoordinatorIcon.setMap(null);
+			
+			if(newCoordinatorId != undefined && oldCoordinatorId != undefined)
+				{
 				
-			}
+				 if(newCoordinatorId==oldCoordinatorId) {
+					 // Marker already present . Do nothing...
+				 }  
+				 else{
+					 var newCoordinatorObject = globalHoList.get(newCoordinatorId);
+					 var newCoordinatorLocation=newCoordinatorObject.getBounds().getNorthEast();
+					 if(globalHKList.get(newCoordinatorId) != null){
+						 // No need of icon
+					 }else{
+						 coordinatorIcon=createCoIcon(newCoordinatorLocation);
+						 globalHKList.set(newCoordinatorId,coordinatorIcon);
+						 console.log("Set new coordinator id:"+newCoordinatorId+" in globalHKList");
+					 }
+					 var oldCoordinatorObject= globalHoList.get(oldCoordinatorId);
+					 var oldCoordinatorIconMarker = globalHKList.get(oldCoordinatorId);
+					 console.log("old coordinator id:: "+oldCoordinatorId);
+						if(oldCoordinatorIconMarker != null){
+							console.log("old coordinator ");
+							oldCoordinatorIconMarker.setIcon("css/images/no_coordinator.png");
+							oldCoordinatorIconMarker.setMap(null);
+							oldCoordinatorIconMarker=null;
+							
+						}
+				 }
+				}
+			
 		}
 	}
 }

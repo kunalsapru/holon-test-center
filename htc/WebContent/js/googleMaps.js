@@ -24,6 +24,7 @@ $(document)
 					window.globalHKList=new Map(); //Holon Coordinator
 					window.globalPCList=new Map(); //Power Circle
 					window.globalPSrcList=new Map(); //Power Source
+					window.globalHKIconList= new Map(); //Coordinator Icon
 					window.currentInfoWindowObject=null;
 					window.currentLineInfoWindowObject=null;
 					window.currentSwitchInfoWindow=null;

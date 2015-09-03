@@ -51,7 +51,8 @@ function createPowerSwitchCallBack(data,options)
 	addSwitchInfo(circleSwitch, powerSwitchId);
 	//globalPsList[powerSwitchId]=circleSwitch;
 	globalPsList.set(powerSwitchId,circleSwitch);
-}
+	
+} 
 
 function showSavedPowerSwitches(){
 	
@@ -171,6 +172,8 @@ function powerSwitchOnOffCallBack(data,options){
 	var powerSwitchId = options["powerSwitchId"];
 	var content = infowindowHolonObject.getContent();
 	var newSwitchStatus = data;
+/*	var hk1=data.split("*")[1];
+	var hk2= data.split("*")[2];*/
 	
 	if(newSwitchStatus== 1)
 		{
@@ -189,6 +192,25 @@ function powerSwitchOnOffCallBack(data,options){
 		infowindowHolonObject.setContent(newContent);
 		infowindowHolonObject.close();		
 		}
+	
+	/*if(hk1 != undefined ){
+		var holonObject = globalHoList.get(hk1);
+		var coordinatorLocation=holonObject.getBounds().getNorthEast();
+		//Returns marker of the image
+		var coordinatorIcon=createCoIcon(coordinatorLocation);
+		globalHKList.set(hk1,coordinatorIcon);
+		
+	}
+	
+	if(hk2 != undefined ){
+		var holonObject = globalHoList.get(hk2);
+		var coordinatorLocation=holonObject.getBounds().getNorthEast();
+		//Returns marker of the image
+		var coordinatorIcon=createCoIcon(coordinatorLocation);
+		globalHKList.set(hk2,coordinatorIcon);
+		
+		
+	}*/
 	infowindowHolonObject.open(map,circleSwitch);
 	$('#togglePowerSwitch').click(function() {
 		SwitchOnOff(circleSwitch,powerSwitchId,infowindowHolonObject);			
