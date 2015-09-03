@@ -205,7 +205,7 @@ public class SupplierHome {
 		try {
 			session = HibernateSessionFactory.getSessionFactory().getCurrentSession();
 			tx = session.beginTransaction();
-			Query query = session.createQuery("from Supplier s where s.holonObjectConsumer.holon=:holon and s.communicationMode=:communicationMode");
+			Query query = session.createQuery("from Supplier s where s.holonObjectConsumer.holon=:holon and s.communicationMode=:communicationMode order by s.id DESC");
 			query.setEntity("holon", holon);
 			query.setString("communicationMode", ConstantValues.COMMUNICATION_MODE_COORDINATOR);
 			listSupplier = (ArrayList<Supplier>) query.list();

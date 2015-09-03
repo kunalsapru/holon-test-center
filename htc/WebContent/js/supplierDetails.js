@@ -208,7 +208,11 @@ function distributeEnergyViaCoordinator() {
 
 function distributeEnergyViaCoordinatorCallBack(data, options) {
 	closeDiv("distributeEnergyAmongHolonObjectsDiv");
-	swal("Energy distributed successfully!", "Energy has been distributed to the required holon objects. Please check their supplier details for more information.", "info");
+	if(data == "") {
+		swal("Energy not required!", "Energy is not required by any holon object.", "info");
+	} else {
+		swal("Energy distributed successfully!", "Energy has been distributed to the required holon objects. Please check their supplier details for more information.", "info");
+	}
 }
 function distributeEnergyAmongHolonObjectsCallBack(data, options) {
 	var holonCoordinatorId = options["holonObjectId"];
