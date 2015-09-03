@@ -204,7 +204,7 @@
 	position: absolute;
 	bottom: 25%;
 	left: 40%;
-	right: 15%;
+	right: 1%;
 	width: auto;
 	height: auto;
 	max-width: 70%;
@@ -219,7 +219,7 @@
 	position: absolute;
 	bottom: 25%;
 	left: 40%;
-	right: 10%;
+	right: 1%;
 	width: auto;
 	height: auto;
 	max-width: 70%;
@@ -254,7 +254,7 @@
 	width: auto;
 	height: auto;
 	max-width: 80%;
-	max-height: 70%;
+	max-height: 80%;
 	margin: -100px 0 0 -250px;
 	background: #E2E4DD;
 	border: 5px solid rgb(128, 128, 128);
