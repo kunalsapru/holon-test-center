@@ -361,7 +361,7 @@ public class HolonObjectAction extends CommonUtilities {
 				//Sending energy requirement message to all producers
 				for(HolonObject holonObjectProducer : connectedHolonObjects) {
 					for(Supplier supplier : checkDuplicateMessageList) {
-						if(supplier.getHolonObjectProducer().getId() == holonObjectProducer.getId() 
+						if(supplier.getHolonObjectProducer() != null && supplier.getHolonObjectProducer().getId() == holonObjectProducer.getId() 
 								&& supplier.getHolonObjectConsumer().getId() == holonObjectConsumer.getId() 
 								&& supplier.getMessageStatus().equalsIgnoreCase(ConstantValues.PENDING)) {
 							statusDuplicateMessage = true;
