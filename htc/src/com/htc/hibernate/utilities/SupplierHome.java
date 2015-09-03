@@ -92,7 +92,7 @@ public class SupplierHome {
 		try {
 			session = HibernateSessionFactory.getSessionFactory().getCurrentSession();
 			tx = session.beginTransaction();
-			listSupplier = (ArrayList<Supplier>) session.createQuery("from Supplier s").list();
+			listSupplier = (ArrayList<Supplier>) session.createQuery("from Supplier s order by s.id DESC").list();
 			tx.commit();
 			return listSupplier;
 		} catch (RuntimeException re) {
@@ -109,7 +109,7 @@ public class SupplierHome {
 		try {
 			session = HibernateSessionFactory.getSessionFactory().getCurrentSession();
 			tx = session.beginTransaction();
-			Query query = session.createQuery("from Supplier s where s.holonObjectProducer=:holonObject");
+			Query query = session.createQuery("from Supplier s where s.holonObjectProducer=:holonObject order by s.id DESC");
 			query.setEntity("holonObject", holonObject);
 			listSupplier = (ArrayList<Supplier>) query.list();
 			tx.commit();
@@ -128,7 +128,7 @@ public class SupplierHome {
 		try {
 			session = HibernateSessionFactory.getSessionFactory().getCurrentSession();
 			tx = session.beginTransaction();
-			Query query = session.createQuery("from Supplier s where s.powerSource=:powerSource");
+			Query query = session.createQuery("from Supplier s where s.powerSource=:powerSource order by s.id DESC");
 			query.setEntity("powerSource", powerSource);
 			listSupplier = (ArrayList<Supplier>) query.list();
 			tx.commit();
@@ -167,7 +167,7 @@ public class SupplierHome {
 		try {
 			session = HibernateSessionFactory.getSessionFactory().getCurrentSession();
 			tx = session.beginTransaction();
-			Query query = session.createQuery("from Supplier s where s.holonObjectConsumer=:holonObject");
+			Query query = session.createQuery("from Supplier s where s.holonObjectConsumer=:holonObject order by s.id DESC");
 			query.setEntity("holonObject", holonObject);
 			listSupplier = (ArrayList<Supplier>) query.list();
 			tx.commit();

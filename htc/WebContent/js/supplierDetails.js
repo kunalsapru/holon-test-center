@@ -101,6 +101,10 @@ function sendMessageToAllProducersCallBack(data, options) {
 	}
 }
 
+function distributeEnergyAmongHolonObjectsFlexibilityZero() {
+	swal("Flexibility insufficient.", "Holon does not have any energy to distribute.", "info");
+}
+
 function checkInbox(holonObjectId) {
 	var dataAttributes= {
 			holonObjectId : holonObjectId
@@ -121,6 +125,7 @@ function takeActionProducerInbox() {
 
 function checkInboxCallBack(data, options) {
 	var supplierProducerHolonObjectId = options["holonObjectId"];
+	updateCoordinator(supplierProducerHolonObjectId);
 	$("#hiddenSupplierProducerId").val(supplierProducerHolonObjectId);
 	var inboxRow = "";
 	if(data != "") {
@@ -208,11 +213,8 @@ function distributeEnergyViaCoordinator() {
 
 function distributeEnergyViaCoordinatorCallBack(data, options) {
 	closeDiv("distributeEnergyAmongHolonObjectsDiv");
-	if(data == "") {
-		swal("Energy not required!", "Energy is not required by any holon object.", "info");
-	} else {
-		swal("Energy distributed successfully!", "Energy has been distributed to the required holon objects. Please check their supplier details for more information.", "info");
-	}
+	updateCoordinator(options["holonObjectId"]);	
+	swal("Energy distributed successfully!", "Energy has been distributed to the required holon objects. Please check their supplier details for more information.", "info");
 }
 function distributeEnergyAmongHolonObjectsCallBack(data, options) {
 	var holonCoordinatorId = options["holonObjectId"];

@@ -231,6 +231,15 @@ public class PowerSourceAction  extends CommonUtilities{
 			respStr.append(currentProd+"!");
 			respStr.append(flexibility);
 			
+			if(!pwSrc.getStatus()) {
+				ArrayList<Supplier> supplierPowerSource = getSupplierService().getSupplierListForProducerPowerSource(pwSrc);
+				for(Supplier supplier : supplierPowerSource) {
+					if(supplier.getMessageStatus().equalsIgnoreCase(ConstantValues.ACCEPTED)) {
+						supplier.setMessageStatus(ConstantValues.CONNECTION_RESET);
+						getSupplierService().merge(supplier);
+					}
+				}
+			}
 			
 			//Calling the response function and setting the content type of response.
 			getResponse().setContentType("text/html");

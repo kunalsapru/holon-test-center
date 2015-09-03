@@ -2,13 +2,17 @@ package com.htc.action;
 
 import java.io.IOException;
 import java.util.ArrayList;
+
 import org.apache.log4j.Logger;
+
 import com.htc.hibernate.pojo.HolonElement;
 import com.htc.hibernate.pojo.HolonElementState;
 import com.htc.hibernate.pojo.HolonElementType;
 import com.htc.hibernate.pojo.HolonObject;
 import com.htc.hibernate.pojo.PowerLine;
+import com.htc.hibernate.pojo.Supplier;
 import com.htc.utilities.CommonUtilities;
+import com.htc.utilities.ConstantValues;
 
 public class HolonElementAction extends CommonUtilities {
 
@@ -53,6 +57,16 @@ public class HolonElementAction extends CommonUtilities {
 				dbResponse = "true";
 			}
 			String response = dbResponse+"*"+holonObjectId+"*"+hoCoObjIdOld;
+			if(holonElementType.getProducer()) {
+				//On addition of a producer holon element, reset connection in Supplier table for consumer.
+				ArrayList<Supplier> listConsumer = getSupplierService().getSupplierListForConsumer(holonObject);
+				for(Supplier supplier : listConsumer) {
+					if(supplier.getMessageStatus().equalsIgnoreCase(ConstantValues.ACCEPTED)) {
+						supplier.setMessageStatus(ConstantValues.CONNECTION_RESET);
+						getSupplierService().merge(supplier);
+					}
+				}
+			}
 			getResponse().getWriter().write(response);
 		} catch (Exception e) {
 			System.out.println("Exception "+e.getMessage()+" occurred in action createHolonElement()");
@@ -78,7 +92,11 @@ public class HolonElementAction extends CommonUtilities {
 			HolonElement holonElement = getHolonElementService().findById(holonElementId);
 			Integer holonObjectId = holonElement.getHolonObject().getId();
 			PowerLine powerLine = getPowerLineService().getPowerLineByHolonObject(holonElement.getHolonObject());
-			HolonObject hoc=  findConnectedHolonCoordinatorByHolon(holonElement.getHolonObject().getHolon(), powerLine);
+			HolonObject hoc=  null;
+			if(powerLine != null) {
+				hoc=  findConnectedHolonCoordinatorByHolon(holonElement.getHolonObject().getHolon(), powerLine);
+				
+			}
 			Integer hoCoObjIdOld=0;
 			if(hoc!=null) {
 				hoCoObjIdOld = getHolonObjectService().findById(holonObjectId).getId();
@@ -91,7 +109,26 @@ public class HolonElementAction extends CommonUtilities {
 			if(holonElement2 != null) {
 				dbResponse = "true";
 			}
-			String response = dbResponse+"*"+holonObjectId+"*"+hoCoObjIdOld;;
+			String response = dbResponse+"*"+holonObjectId+"*"+hoCoObjIdOld;
+			HolonObject holonObject = holonElement2.getHolonObject();
+			if(holonElementType.getProducer()) {
+				//On editing of a producer holon element, reset connection in Supplier table for consumer and producer.
+				ArrayList<Supplier> listConsumer = getSupplierService().getSupplierListForConsumer(holonObject);
+				for(Supplier supplier : listConsumer) {
+					if(supplier.getMessageStatus().equalsIgnoreCase(ConstantValues.ACCEPTED)) {
+						supplier.setMessageStatus(ConstantValues.CONNECTION_RESET);
+						getSupplierService().merge(supplier);
+					}
+				}
+				ArrayList<Supplier> listProducer = getSupplierService().getSupplierListForProducer(holonObject);
+				for(Supplier supplier : listProducer) {
+					if(supplier.getMessageStatus().equalsIgnoreCase(ConstantValues.ACCEPTED)) {
+						supplier.setMessageStatus(ConstantValues.CONNECTION_RESET);
+						getSupplierService().merge(supplier);
+					}
+				}
+			}
+
 			//Calling the response function and setting the content type of response.
 			getResponse().setContentType("text/html");
 			getResponse().getWriter().write(response);
@@ -146,6 +183,7 @@ public class HolonElementAction extends CommonUtilities {
 	public void deleteHolonElement(){
 		Integer holonElementId = getRequest().getParameter("holonElementId")!=null?Integer.parseInt(getRequest().getParameter("holonElementId")):0;
 		HolonElement holonElement = getHolonElementService().findById(holonElementId);
+		Integer holonElementTypeId = holonElement.getHolonElementType().getId();
 		Integer holonObjectId = holonElement.getHolonObject().getId();
 		// Since we are deleting this HE, we can't take the reference of HO from this. We need to take it from database.
 		HolonObject holonObject = getHolonObjectService().findById(holonObjectId);
@@ -156,8 +194,28 @@ public class HolonElementAction extends CommonUtilities {
 			hoCoObjIdOld = hoc.getId();
 		}
 
-		//Editing holonElement object and saving in database 
+		//Deleting holonElement object
 		boolean deleteStatus = getHolonElementService().delete(holonElement);
+
+		HolonElementType holonElementType = getHolonElementTypeService().findById(holonElementTypeId);
+		if(holonElementType.getProducer()) {
+			//On deletion of a producer holon element, reset connection in Supplier table for consumer and producer.
+			ArrayList<Supplier> listConsumer = getSupplierService().getSupplierListForConsumer(holonObject);
+			for(Supplier supplier : listConsumer) {
+				if(supplier.getMessageStatus().equalsIgnoreCase(ConstantValues.ACCEPTED)) {
+					supplier.setMessageStatus(ConstantValues.CONNECTION_RESET);
+					getSupplierService().merge(supplier);
+				}
+			}
+			ArrayList<Supplier> listProducer = getSupplierService().getSupplierListForProducer(holonObject);
+			for(Supplier supplier : listProducer) {
+				if(supplier.getMessageStatus().equalsIgnoreCase(ConstantValues.ACCEPTED)) {
+					supplier.setMessageStatus(ConstantValues.CONNECTION_RESET);
+					getSupplierService().merge(supplier);
+				}
+			}
+		}
+
 		
 		//Calling the response function and setting the content type of response.
 		getResponse().setContentType("text/html");

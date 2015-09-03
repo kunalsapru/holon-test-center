@@ -311,7 +311,12 @@ function getHolonInfoWindowCallBack(data,options) {
 				"title='History of Holon energy distribution among holon objects'><img src='css/images/history.png'/><b>&nbsp;&nbsp;History</b></span></td>");
 			contentString = contentString.concat("</tr>");
 		} else {
-			contentString = contentString.concat("<tr><td>Flexibility: "+flexibilityHolon +"</td><td></td></tr>");
+			contentString = contentString.concat("<tr><td>Flexibility: "+flexibilityHolon +"</td>");
+			contentString = contentString.concat("<td><span class='button' id='distributeEnergyAmongHolonObjectsFlexibilityZero' " +
+					"title='Distribute Holon energy among holon objects'><img src='css/images/distribute_energy.png'/><b>&nbsp;&nbsp;Distribute Energy</b></span>" +
+					"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class='button' id='historyDistributeEnergyAmongHolonObjects' " +
+					"title='History of Holon energy distribution among holon objects'><img src='css/images/history.png'/><b>&nbsp;&nbsp;History</b></span></td>");
+				contentString = contentString.concat("</tr>");
 		}
 		
 		contentString = contentString.concat("</table>"+
@@ -340,6 +345,10 @@ function getHolonInfoWindowCallBack(data,options) {
 	$("#distributeEnergyAmongHolonObjects").click(function(){
 		distributeEnergyAmongHolonObjects(holonObjectId);
 	});
+	$("#distributeEnergyAmongHolonObjectsFlexibilityZero").click(function(){
+		distributeEnergyAmongHolonObjectsFlexibilityZero();
+	});
+	
 	$("#historyDistributeEnergyAmongHolonObjects").click(function(){
 		historyDistributeEnergyAmongHolonObjects(holonObjectId);
 	});
