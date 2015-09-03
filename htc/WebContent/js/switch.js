@@ -215,6 +215,7 @@ function powerSwitchOnOffCallBack(data,options){
 	$('#togglePowerSwitch').click(function() {
 		SwitchOnOff(circleSwitch,powerSwitchId,infowindowHolonObject);			
 	})
+	showHolonCoIcons();
 }
 
 
