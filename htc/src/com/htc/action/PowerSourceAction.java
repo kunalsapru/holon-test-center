@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 
+import com.htc.hibernate.pojo.Holon;
 import com.htc.hibernate.pojo.HolonObject;
 import com.htc.hibernate.pojo.LatLng;
 import com.htc.hibernate.pojo.PowerLine;
@@ -127,7 +128,19 @@ public class PowerSourceAction  extends CommonUtilities{
 			double latCenter=pwSrc.getCenter().getLatitude();
 			double lngCenter=pwSrc.getCenter().getLongitude();
 			double pwSrcRad=pwSrc.getRadius();
-			HolonObject hc= pwSrc.getHolonCoordinator();
+			HolonObject hc= null;
+			Holon holon = null;
+			PowerLine powerLine = getPowerLineService().getPowerLineByPowerSource(powerSource);
+			if(powerSource.getHolonCoordinator() != null && powerSource.getHolonCoordinator().getHolon() != null) {
+				holon = powerSource.getHolonCoordinator().getHolon();
+			}
+			if(powerLine != null && holon != null) {
+				hc = findConnectedHolonCoordinatorByHolon(holon, powerLine);
+			}
+			powerSource.setHolonCoordinator(hc);
+			getPowerSourceService().merge(powerSource);
+
+			
 			Integer CoHolonId=0;
 			String coHoLoc="";
 			String CoHolonName="";
@@ -195,26 +208,36 @@ public class PowerSourceAction  extends CommonUtilities{
 	{
 		try {			
 			Integer powerSrcId = getRequest().getParameter("powerSrcId")!=null?Integer.parseInt(getRequest().getParameter("powerSrcId")):0;
-			PowerSource pwSrc = getPowerSourceService().findById(powerSrcId); 
-			boolean pwOldStatus=pwSrc.getStatus();
-			int maxProd = pwSrc.getMaxProduction();
-			int minProd = pwSrc.getMinProduction();
-			int currentProd = pwSrc.getCurrentProduction();
-			Integer flexibility = pwSrc.getFlexibility();
+			PowerSource powerSource = getPowerSourceService().findById(powerSrcId); 
+			boolean pwOldStatus=powerSource.getStatus();
+			int maxProd = powerSource.getMaxProduction();
+			int minProd = powerSource.getMinProduction();
+			int currentProd = powerSource.getCurrentProduction();
+			Integer flexibility = powerSource.getFlexibility();
 			boolean pwNewStatus=true;
 			Integer pwNewIntStatus=1;
 			if(pwOldStatus) {
 				pwNewStatus=false;
 				pwNewIntStatus=0;
-				pwSrc.setCurrentProduction(0);
-				pwSrc.setFlexibility(0);
+				powerSource.setCurrentProduction(0);
+				powerSource.setFlexibility(0);
 			} else {
-				pwSrc.setCurrentProduction(pwSrc.getMaxProduction());
-				pwSrc.setFlexibility(pwSrc.getMaxProduction());
+				powerSource.setCurrentProduction(powerSource.getMaxProduction());
+				powerSource.setFlexibility(powerSource.getMaxProduction());
 			}
-			pwSrc.setStatus(pwNewStatus);
-			getPowerSourceService().merge(pwSrc);
-			HolonObject hc= pwSrc.getHolonCoordinator();
+			powerSource.setStatus(pwNewStatus);
+			HolonObject hc= null;
+			Holon holon = null;
+			PowerLine powerLine = getPowerLineService().getPowerLineByPowerSource(powerSource);
+			if(powerSource.getHolonCoordinator() != null && powerSource.getHolonCoordinator().getHolon() != null) {
+				holon = powerSource.getHolonCoordinator().getHolon();
+			}
+			if(powerLine != null && holon != null) {
+				hc = findConnectedHolonCoordinatorByHolon(holon, powerLine);
+			}
+			powerSource.setHolonCoordinator(hc);
+			getPowerSourceService().merge(powerSource);
+
 			Integer CoHolonId=0;
 			String coHoLoc="";
 			if(hc!=null) {
@@ -231,8 +254,8 @@ public class PowerSourceAction  extends CommonUtilities{
 			respStr.append(currentProd+"!");
 			respStr.append(flexibility);
 			
-			if(!pwSrc.getStatus()) {
-				ArrayList<Supplier> supplierPowerSource = getSupplierService().getSupplierListForProducerPowerSource(pwSrc);
+			if(!powerSource.getStatus()) {
+				ArrayList<Supplier> supplierPowerSource = getSupplierService().getSupplierListForProducerPowerSource(powerSource);
 				for(Supplier supplier : supplierPowerSource) {
 					if(supplier.getMessageStatus().equalsIgnoreCase(ConstantValues.ACCEPTED)) {
 						supplier.setMessageStatus(ConstantValues.CONNECTION_RESET);
