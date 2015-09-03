@@ -8,8 +8,11 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.htc.hibernate.config.HibernateSessionFactory;
+import com.htc.hibernate.pojo.Holon;
 import com.htc.hibernate.pojo.HolonObject;
+import com.htc.hibernate.pojo.PowerSource;
 import com.htc.hibernate.pojo.Supplier;
+import com.htc.utilities.ConstantValues;
 
 /**
  * Home object for domain model class Supplier.
@@ -116,6 +119,26 @@ public class SupplierHome {
 		}
 		return listSupplier;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public ArrayList<Supplier> getSupplierListForProducerPowerSource(PowerSource powerSource) {
+		Session session = null;
+		Transaction tx = null;
+		ArrayList<Supplier> listSupplier = null;
+		try {
+			session = HibernateSessionFactory.getSessionFactory().getCurrentSession();
+			tx = session.beginTransaction();
+			Query query = session.createQuery("from Supplier s where s.powerSource=:powerSource");
+			query.setEntity("powerSource", powerSource);
+			listSupplier = (ArrayList<Supplier>) query.list();
+			tx.commit();
+			return listSupplier;
+		} catch (RuntimeException re) {
+			System.out.println("getSupplierListForProducerPowerSource failed");
+		}
+		return listSupplier;
+	}
+	
 
 	@SuppressWarnings("unchecked")
 	public ArrayList<Supplier> getSupplierListForProducerOrderByConsumerPriority(HolonObject holonObject) {
@@ -173,5 +196,26 @@ public class SupplierHome {
 		}
 		return listSupplier;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public ArrayList<Supplier> getSupplierListHolonCoordinator(Holon holon) {
+		Session session = null;
+		Transaction tx = null;
+		ArrayList<Supplier> listSupplier = null;
+		try {
+			session = HibernateSessionFactory.getSessionFactory().getCurrentSession();
+			tx = session.beginTransaction();
+			Query query = session.createQuery("from Supplier s where s.holonObjectConsumer.holon=:holon and s.communicationMode=:communicationMode");
+			query.setEntity("holon", holon);
+			query.setString("communicationMode", ConstantValues.COMMUNICATION_MODE_COORDINATOR);
+			listSupplier = (ArrayList<Supplier>) query.list();
+			tx.commit();
+			return listSupplier;
+		} catch (RuntimeException re) {
+			System.out.println("getSupplierListForConsumer failed");
+		}
+		return listSupplier;
+	}
+	
 
 }

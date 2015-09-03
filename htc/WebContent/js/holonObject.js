@@ -304,7 +304,12 @@ function getHolonInfoWindowCallBack(data,options) {
 				"<tr><td>Current Production: "+cuEnergyProd +"</td>"+
 				"<td>Original Energy Required: "+originalEnergyRequiredHolon +"</td></tr>");
 		if(flexibilityHolon > 0) {
-			contentString = contentString.concat("<tr><td style='color:green'>Flexibility: "+flexibilityHolon +"</td><td></td></tr>");
+			contentString = contentString.concat("<tr><td style='color:green'>Flexibility: "+flexibilityHolon +"</td>");
+			contentString = contentString.concat("<td><span class='button' id='distributeEnergyAmongHolonObjects' " +
+				"title='Distribute Holon energy among holon objects'><img src='css/images/distribute_energy.png'/><b>&nbsp;&nbsp;Distribute Energy</b></span>" +
+				"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class='button' id='historyDistributeEnergyAmongHolonObjects' " +
+				"title='History of Holon energy distribution among holon objects'><img src='css/images/history.png'/><b>&nbsp;&nbsp;History</b></span></td>");
+			contentString = contentString.concat("</tr>");
 		} else {
 			contentString = contentString.concat("<tr><td>Flexibility: "+flexibilityHolon +"</td><td></td></tr>");
 		}
@@ -325,16 +330,22 @@ function getHolonInfoWindowCallBack(data,options) {
 	infowindowHolonObject.open(map,map);
 	$('#editHolonObject').click(function() {
 		editHolonObject(holonObjectId,infowindowHolonObject);			
-	})
+	});
 	$('#hoCoId').click(function() {
 			zoomToHolon(coordHolonId,coOrd_ne_location,"Holon Object");			
-	})
+	});
 	$('#checkInbox').click(function() {
 		checkInbox(holonObjectId);
-	})
+	});
+	$("#distributeEnergyAmongHolonObjects").click(function(){
+		distributeEnergyAmongHolonObjects(holonObjectId);
+	});
+	$("#historyDistributeEnergyAmongHolonObjects").click(function(){
+		historyDistributeEnergyAmongHolonObjects(holonObjectId);
+	});
 	$('#sendMessageToAllProducers').click(function() {
 		sendMessageToAllProducers(holonObjectId);
-	})
+	});
 	$('#infoWindowHolonList').change(function(){
       if(jQuery("#infoWindowHolonList option:selected").val()!='Select Holon')
     	  {

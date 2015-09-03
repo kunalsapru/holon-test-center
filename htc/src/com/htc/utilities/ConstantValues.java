@@ -18,5 +18,7 @@ public class ConstantValues {
 	public static final String CONNECTION_RESET = "CONNECTION RESET";
 	public static final String SUCCESS = "SUCCESS";
 	public static final String FAILURE = "FAILURE";
+	public static final String COMMUNICATION_MODE_DIRECT = "DIRECT via PEER";
+	public static final String COMMUNICATION_MODE_COORDINATOR = "via HOLON COORDINATOR";
 	
 }

@@ -260,7 +260,7 @@
  	</table>
  	<table>	
  	<tr>
-	<td colspan="7" style="text-align: center;">
+	<td colspan="8" style="text-align: center;">
 	<input id="closeShowSupply" type='button' class="button"  value='Close' title="Close supplier details window." />
 	</td>
 	</tr>
@@ -271,11 +271,37 @@
  	</table>
  	<table>	
  	<tr>
-	<td colspan="7" style="text-align: center;">
+	<td colspan="8" style="text-align: center;">
 	<input id="takeActionProducerInbox" type='button' class="button"  value='Take action' title="Take action based on priority of holon object." />
 	<input type="hidden" id="hiddenSupplierProducerId" value="" />
 	&nbsp;&nbsp;&nbsp;&nbsp;
 	<input id="closeProducerInbox" type='button' class="button"  value='Close' />
+	</td>
+	</tr>
+	</table> 	
+ 	</div>
+ 	<div id="distributeEnergyAmongHolonObjectsDiv"  class="table">
+ 	<table id="distributeEnergyAmongHolonObjectsList">
+ 	</table>
+ 	<table>	
+ 	<tr>
+	<td colspan="9" style="text-align: center;">
+	<input id="distributeEnergyViaCoordinator" type='button' class="button"  value='Distribute Energy' 
+		title="This will distribute energy among holon objects automatically based on priority of the respective holon object." />
+	<input type="hidden" id="hiddenSupplierCoordinatorId" value="" />
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input id="closeDistributeEnergyAmongHolonObjectsDiv" type='button' class="button"  value='Close' />
+	</td>
+	</tr>
+	</table> 	
+ 	</div>
+ 	<div id="historyDistributeEnergyAmongHolonObjectsDiv"  class="table">
+ 	<table id="historyDistributeEnergyAmongHolonObjectsList">
+ 	</table>
+ 	<table>	
+ 	<tr>
+	<td colspan="9" style="text-align: center;">
+	<input id="closeHistoryDistributeEnergyAmongHolonObjectsDiv" type='button' class="button"  value='Close' />
 	</td>
 	</tr>
 	</table> 	

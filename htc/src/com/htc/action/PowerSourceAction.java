@@ -8,7 +8,9 @@ import com.htc.hibernate.pojo.HolonObject;
 import com.htc.hibernate.pojo.LatLng;
 import com.htc.hibernate.pojo.PowerLine;
 import com.htc.hibernate.pojo.PowerSource;
+import com.htc.hibernate.pojo.Supplier;
 import com.htc.utilities.CommonUtilities;
+import com.htc.utilities.ConstantValues;
 
 public class PowerSourceAction  extends CommonUtilities{
 
@@ -99,10 +101,22 @@ public class PowerSourceAction  extends CommonUtilities{
 	}
 	
 	
-	public void getPsObjectInfoWindow()
-	{
+	public void getPsObjectInfoWindow() {
 		try {
 			Integer psId = getRequest().getParameter("psId")!=null?Integer.parseInt(getRequest().getParameter("psId")):0;
+			PowerSource powerSource = getPowerSourceService().findById(psId);
+			
+			ArrayList<Supplier> listOfProducerPowerSource = getSupplierService().getSupplierListForProducerPowerSource(powerSource);
+			for(Supplier supplier : listOfProducerPowerSource) {
+				if(!checkConnectivityBetweenHolonObjectAndPowerSource(supplier.getHolonObjectConsumer(), powerSource)
+						&& supplier.getMessageStatus().equals(ConstantValues.ACCEPTED)) {
+					supplier.setMessageStatus(ConstantValues.CONNECTION_RESET);
+					getSupplierService().merge(supplier);
+					powerSource.setFlexibility(powerSource.getFlexibility() + supplier.getPowerGranted());
+					getPowerSourceService().merge(powerSource);
+				}
+			}
+			
 			PowerSource pwSrc = getPowerSourceService().findById(psId); 
 			
 			Integer MaxProdCap=pwSrc.getMaxProduction();

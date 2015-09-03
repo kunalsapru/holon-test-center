@@ -3,7 +3,9 @@ package com.htc.daoImpl;
 import java.util.ArrayList;
 
 import com.htc.dao.SupplierDao;
+import com.htc.hibernate.pojo.Holon;
 import com.htc.hibernate.pojo.HolonObject;
+import com.htc.hibernate.pojo.PowerSource;
 import com.htc.hibernate.pojo.Supplier;
 import com.htc.hibernate.utilities.SupplierHome;
 
@@ -54,6 +56,16 @@ public class SupplierDaoImpl implements SupplierDao {
 	@Override
 	public ArrayList<Supplier> getSupplierListForProducerOrderByConsumerPriority(HolonObject holonObject) {
 		return supplierHome.getSupplierListForProducerOrderByConsumerPriority(holonObject);
+	}
+
+	@Override
+	public ArrayList<Supplier> getSupplierListForProducerPowerSource(PowerSource powerSource) {
+		return supplierHome.getSupplierListForProducerPowerSource(powerSource);
+	}
+
+	@Override
+	public ArrayList<Supplier> getSupplierListHolonCoordinator(Holon holon) {
+		return supplierHome.getSupplierListHolonCoordinator(holon);
 	}
 
 }

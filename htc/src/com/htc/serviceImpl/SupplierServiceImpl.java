@@ -2,7 +2,9 @@ package com.htc.serviceImpl;
 
 import java.util.ArrayList;
 
+import com.htc.hibernate.pojo.Holon;
 import com.htc.hibernate.pojo.HolonObject;
+import com.htc.hibernate.pojo.PowerSource;
 import com.htc.hibernate.pojo.Supplier;
 import com.htc.service.AbstractService;
 import com.htc.service.SupplierService;
@@ -52,6 +54,16 @@ public class SupplierServiceImpl extends AbstractService implements  SupplierSer
 	@Override
 	public ArrayList<Supplier> getSupplierListForProducerOrderByConsumerPriority(HolonObject holonObject) {
 		return getSupplierDao().getSupplierListForProducerOrderByConsumerPriority(holonObject);
+	}
+
+	@Override
+	public ArrayList<Supplier> getSupplierListForProducerPowerSource(PowerSource powerSource) {
+		return getSupplierDao().getSupplierListForProducerPowerSource(powerSource);
+	}
+
+	@Override
+	public ArrayList<Supplier> getSupplierListHolonCoordinator(Holon holon) {
+		return getSupplierDao().getSupplierListHolonCoordinator(holon);
 	}
 	
 }

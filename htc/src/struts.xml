@@ -167,7 +167,8 @@
 		<!-- Messaging System related actions -->
 		<action name="sendMessageToAllProducers" class="com.htc.action.HolonObjectAction" method="sendMessageToAllProducers" />
 		<action name="checkInbox" class="com.htc.action.HolonObjectAction" method="checkInbox" />
-
+		<action name="distributeEnergyAmongHolonObjects" class="com.htc.action.HolonObjectAction" method="distributeEnergyAmongHolonObjects" />
+		<action name="historyDistributeEnergyAmongHolonObjects" class="com.htc.action.HolonObjectAction" method="historyDistributeEnergyAmongHolonObjects" />
 	</package>
 
 </struts>

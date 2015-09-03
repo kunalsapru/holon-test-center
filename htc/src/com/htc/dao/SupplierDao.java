@@ -2,7 +2,9 @@ package com.htc.dao;
 
 import java.util.ArrayList;
 
+import com.htc.hibernate.pojo.Holon;
 import com.htc.hibernate.pojo.HolonObject;
+import com.htc.hibernate.pojo.PowerSource;
 import com.htc.hibernate.pojo.Supplier;
 
 public interface SupplierDao {
@@ -16,5 +18,6 @@ public interface SupplierDao {
 	public ArrayList<Supplier> getSupplierListForConsumer(HolonObject holonObject);
 	public ArrayList<Supplier> getListOfSimilarRequests(Integer requestId);
 	public ArrayList<Supplier> getSupplierListForProducerOrderByConsumerPriority(HolonObject holonObject);
-	
+	public ArrayList<Supplier> getSupplierListForProducerPowerSource(PowerSource powerSource);
+	public ArrayList<Supplier> getSupplierListHolonCoordinator(Holon holon);
 }

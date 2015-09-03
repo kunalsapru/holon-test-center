@@ -28,5 +28,8 @@
         <property name="requestId" type="int">
             <column name="request_id" not-null="true" />
         </property>
+        <property name="communicationMode" type="string">
+            <column name="communication_mode" length="255" />
+        </property>
     </class>
 </hibernate-mapping>

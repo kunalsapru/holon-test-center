@@ -9,9 +9,19 @@ $(document).ready(function() {
 		closeDiv("producerInboxId");
 	});
 	$("#takeActionProducerInbox").click(function(event){
-		closeDiv("producerInboxId");
 		takeActionProducerInbox();
 	});
+	$("#closeDistributeEnergyAmongHolonObjectsDiv").click(function(event){
+		closeDiv("distributeEnergyAmongHolonObjectsDiv");
+	});
+	$("#distributeEnergyViaCoordinator").click(function(event){
+		distributeEnergyViaCoordinator();
+	});
+	$("#closeHistoryDistributeEnergyAmongHolonObjectsDiv").click(function(event){
+		closeDiv("historyDistributeEnergyAmongHolonObjectsDiv");
+	});
+	
+	
 })
 
 function showSupplierDetails(holonObjectId) {
@@ -22,7 +32,7 @@ function showSupplierDetails(holonObjectId) {
 }
 
 function getDataForSupplierDetailsCallBack(data,options) {
-	var contentString = "<tr><td colspan='7' style='text-decoration: underline;'>Power Supply Details for Holon Object Id: "+options.holonObjectId+"</td></tr>"+
+	var contentString = "<tr><td colspan='8' style='text-decoration: underline;'>Power Supply Details for Holon Object Id: "+options.holonObjectId+"</td></tr>"+
 	"<tr>"+
 		"<td>Request#ID</td>"+
 		"<td>Type of Supplier</td>"+
@@ -31,6 +41,7 @@ function getDataForSupplierDetailsCallBack(data,options) {
 		"<td>Power Granted</td>"+
 		"<td>Message Status</td>"+
 		"<td>Connected</td>"+
+		"<td>Communication Mode</td>"
 	"<tr>";
 	var supplierRow = data.split("!");
 	var supplierColumn = "";
@@ -41,6 +52,7 @@ function getDataForSupplierDetailsCallBack(data,options) {
 	var powerGranted = "N/A";
 	var messageStatus = "N/A";
 	var isConnected = "N/A";
+	var communicationMode = "N/A";
 	for(var i = 0; i<supplierRow.length;i++) {
 		if(supplierRow != "") {
 			supplierColumn = supplierRow[i].split("~");
@@ -53,6 +65,7 @@ function getDataForSupplierDetailsCallBack(data,options) {
 			messageStatus = supplierColumn[4]
 			isConnected = supplierColumn[5];
 			requestId = supplierColumn[6];
+			communicationMode = supplierColumn[7];
 		}
 		contentString = contentString.concat("<tr><td>"+requestId+"</td><td>"+typeSupplier+"</td><td>"+idSupplier+"</td><td>"+
 				powerRequested+"</td><td>"+powerGranted+"</td>");
@@ -63,10 +76,10 @@ function getDataForSupplierDetailsCallBack(data,options) {
 		} else {
 			contentString = contentString.concat("<td>"+messageStatus+"</td>")
 		}
-		contentString = contentString.concat("<td>"+isConnected+"</td></tr>");
+		contentString = contentString.concat("<td>"+isConnected+"</td><td>"+communicationMode+"</td></tr>");
 	}
 	if(contentString == "") {
-		contentString = "<tr><td colspan='7' style='text-align: center;'>No Power is being supplied.</td></tr>";
+		contentString = "<tr><td colspan='8' style='text-align: center;'>No Power is being supplied.</td></tr>";
 	}
 	$("#suppLierDetailList").html(contentString);
 	closeDiv('consumptionGraphBody');
@@ -108,16 +121,12 @@ function takeActionProducerInbox() {
 
 function checkInboxCallBack(data, options) {
 	var supplierProducerHolonObjectId = options["holonObjectId"];
-	var dataAttributes= {
-			  holonObjectId : supplierProducerHolonObjectId
-			};
-	ajaxRequest("getHolonObjectInfoWindow", dataAttributes, getHolonInfoWindowCallBack, {});
 	$("#hiddenSupplierProducerId").val(supplierProducerHolonObjectId);
 	var inboxRow = "";
 	if(data != "") {
 		inboxRow = data.split("!");
 	}
-	var contentString = "<tr><td colspan='7' style='text-decoration: underline;'>Messages Received</td></tr>"+
+	var contentString = "<tr><td colspan='8' style='text-decoration: underline;'>Messages Received</td></tr>"+
 		"<tr>"+
 		"<td>Request#ID</td>"+
 		"<td>Consumer ID</td>"+
@@ -126,6 +135,7 @@ function checkInboxCallBack(data, options) {
 		"<td>Power Granted</td>"+
 		"<td>Message Status</td>"+
 		"<td>Connected</td>"+
+		"<td>Communication Mode</td>"+
 		"<tr>";
 	var inboxColumn = "";
 	var consumerId = "N/A";
@@ -136,6 +146,7 @@ function checkInboxCallBack(data, options) {
 	var isConnected = "N/A";
 	var requestId = "N/A";
 	var canCommunicate = "SUCCESS";
+	var communicationMode = "N/A";
 	
 	for(var i = 0; i<inboxRow.length;i++) {
 		if(inboxRow != "") {
@@ -150,6 +161,7 @@ function checkInboxCallBack(data, options) {
 			isConnected = inboxColumn[5];
 			requestId = inboxColumn[6];
 			canCommunicate = inboxColumn[7];
+			communicationMode = inboxColumn[8];
 		}
 		contentString = contentString.concat("<tr><td>"+requestId+"</td><td>"+consumerId+"</td><td>"+requestorTypePriority+"</td><td>"+
 				powerRequested+"</td><td>"+powerGranted+"</td>");
@@ -161,11 +173,11 @@ function checkInboxCallBack(data, options) {
 			contentString = contentString.concat("<td>"+messageStatus+"</td>");
 		}
 		
-		contentString = contentString.concat("<td>"+isConnected+"</td></tr>");
+		contentString = contentString.concat("<td>"+isConnected+"</td><td>"+communicationMode+"</td></tr>");
 	}
 	if(inboxColumn == "") {
-		contentString = contentString.concat("<tr><td>"+consumerId+"</td><td>"+requestorTypePriority+"</td><td>"+
-				powerRequested+"</td><td>"+powerGranted+"</td><td>"+messageStatus+"</td><td>"+isConnected+"</td></tr>");
+		contentString = contentString.concat("<tr><td>"+requestId+"</td><td>"+consumerId+"</td><td>"+requestorTypePriority+"</td><td>"+
+				powerRequested+"</td><td>"+powerGranted+"</td><td>"+messageStatus+"</td><td>"+isConnected+"</td><td>"+communicationMode+"</td></tr>");
 	}
 	$("#producerInboxList").html(contentString);
 	openDiv("producerInboxId");
@@ -173,4 +185,164 @@ function checkInboxCallBack(data, options) {
 		swal("Cannot communicate!", "Necessary action can not be taken. Set the 'Can Communicate' field to 'Yes' to continue" +
 				" taking actions on pending requests.", "info");
 	}
+}
+
+function distributeEnergyAmongHolonObjects(holonObjectId) {
+	var dataAttributes= {
+			holonObjectId : holonObjectId
+	}
+	ajaxRequest("distributeEnergyAmongHolonObjects", dataAttributes, distributeEnergyAmongHolonObjectsCallBack, dataAttributes);
+	
+}
+
+function distributeEnergyViaCoordinator() {
+	var holonObjectId = $("#hiddenSupplierCoordinatorId").val();
+	var takeAction = "yes"; 
+	var dataAttributes= {
+			holonObjectId : holonObjectId,
+			takeAction : takeAction
+	}
+	ajaxRequest("distributeEnergyAmongHolonObjects", dataAttributes, distributeEnergyViaCoordinatorCallBack, dataAttributes);
+
+}
+
+function distributeEnergyViaCoordinatorCallBack(data, options) {
+	closeDiv("distributeEnergyAmongHolonObjectsDiv");
+	swal("Energy distributed successfully!", "Energy has been distributed to the required holon objects. Please check their supplier details for more information.", "info");
+}
+function distributeEnergyAmongHolonObjectsCallBack(data, options) {
+	var holonCoordinatorId = options["holonObjectId"];
+	$("#hiddenSupplierCoordinatorId").val(holonCoordinatorId);
+	var inboxRow = "";
+	if(data != "") {
+		inboxRow = data.split("!");
+	}
+	var contentString = "<tr><td colspan='9' style='text-decoration: underline;'>Distribution of energy by Holon Coordinator</td></tr>"+
+		"<tr>"+
+		"<td>Consumer ID</td>"+
+		"<td>Consumer Type (Priority)</td>"+
+		"<td>Producer ID</td>"+
+		"<td>Producer Type</td>"+
+		"<td>Power Requested</td>"+
+		"<td>Power Granted</td>"+
+		"<td>Message Status</td>"+
+		"<td>Connected</td>"+
+		"<td>Comunication Mode</td>"+
+		"<tr>";
+	var inboxColumn = "";
+	var consumerId = "N/A";
+	var consumerType = "N/A";
+	var producerId = "N/A";
+	var producerType = "N/A";
+	var powerRequested = "N/A";
+	var powerGranted = "N/A";
+	var messageStatus = "N/A";
+	var isConnected = "N/A";
+	var communicationMode = "N/A";
+	
+	for(var i = 0; i<inboxRow.length;i++) {
+		if(inboxRow != "") {
+			inboxColumn = inboxRow[i].split("~");
+		}
+		if(inboxColumn != "") {
+			consumerId = inboxColumn[0];
+			consumerType = inboxColumn[1];
+			producerId = inboxColumn[2];
+			producerType = inboxColumn[3];
+			powerRequested = inboxColumn[4];
+			powerGranted = inboxColumn[5];
+			messageStatus = inboxColumn[6];
+			isConnected = inboxColumn[7];
+			communicationMode = inboxColumn[8];
+		}
+		contentString = contentString.concat("<tr><td>"+consumerId+"</td><td>"+consumerType+"</td><td>"+producerId+"</td><td>"+
+				producerType+"</td><td>"+powerRequested+"</td><td>"+powerGranted+"</td>");
+		if(messageStatus == "ACCEPTED") {
+			contentString = contentString.concat("<td style='color:green'>"+messageStatus+"</td>");
+		} else if(messageStatus == "REJECTED" || messageStatus == "CONNECTION RESET") {
+			contentString = contentString.concat("<td style='color:red'>"+messageStatus+"</td>");
+		} else {
+			contentString = contentString.concat("<td>"+messageStatus+"</td>");
+		}
+		
+		contentString = contentString.concat("<td>"+isConnected+"</td><td>"+communicationMode+"</td></tr>");
+	}
+	if(inboxColumn == "") {
+		contentString = contentString.concat("<tr><td>"+consumerId+"</td><td>"+consumerType+"</td><td>"+
+				producerId+"</td><td>"+producerType+"</td><td>"+powerRequested+"</td><td>"+powerGranted+"</td><td>"+
+				messageStatus+"</td><td>"+isConnected+"</td><td>"+communicationMode+"</td></tr>");
+	}
+	$("#distributeEnergyAmongHolonObjectsList").html(contentString);
+	openDiv("distributeEnergyAmongHolonObjectsDiv");
+}
+
+function historyDistributeEnergyAmongHolonObjects(holonObjectId) {
+	var dataAttributes= {
+			holonObjectId : holonObjectId
+	}
+	ajaxRequest("historyDistributeEnergyAmongHolonObjects", dataAttributes, historyDistributeEnergyAmongHolonObjectsCallBack, dataAttributes);
+}
+
+function historyDistributeEnergyAmongHolonObjectsCallBack(data, options) {
+	var inboxRow = "";
+	if(data != "") {
+		inboxRow = data.split("!");
+	}
+	var contentString = "<tr><td colspan='9' style='text-decoration: underline;'>History of Distribution of energy by Holon Coordinator</td></tr>"+
+		"<tr>"+
+		"<td>Consumer ID</td>"+
+		"<td>Consumer Type (Priority)</td>"+
+		"<td>Producer ID</td>"+
+		"<td>Producer Type</td>"+
+		"<td>Power Requested</td>"+
+		"<td>Power Granted</td>"+
+		"<td>Message Status</td>"+
+		"<td>Connected</td>"+
+		"<td>Comunication Mode</td>"+
+		"<tr>";
+	var inboxColumn = "";
+	var consumerId = "N/A";
+	var consumerType = "N/A";
+	var producerId = "N/A";
+	var producerType = "N/A";
+	var powerRequested = "N/A";
+	var powerGranted = "N/A";
+	var messageStatus = "N/A";
+	var isConnected = "N/A";
+	var communicationMode = "N/A";
+	
+	for(var i = 0; i<inboxRow.length;i++) {
+		if(inboxRow != "") {
+			inboxColumn = inboxRow[i].split("~");
+		}
+		if(inboxColumn != "") {
+			consumerId = inboxColumn[0];
+			consumerType = inboxColumn[1];
+			producerId = inboxColumn[2];
+			producerType = inboxColumn[3];
+			powerRequested = inboxColumn[4];
+			powerGranted = inboxColumn[5];
+			messageStatus = inboxColumn[6];
+			isConnected = inboxColumn[7];
+			communicationMode = inboxColumn[8];
+		}
+		contentString = contentString.concat("<tr><td>"+consumerId+"</td><td>"+consumerType+"</td><td>"+producerId+"</td><td>"+
+				producerType+"</td><td>"+powerRequested+"</td><td>"+powerGranted+"</td>");
+		if(messageStatus == "ACCEPTED") {
+			contentString = contentString.concat("<td style='color:green'>"+messageStatus+"</td>");
+		} else if(messageStatus == "REJECTED" || messageStatus == "CONNECTION RESET") {
+			contentString = contentString.concat("<td style='color:red'>"+messageStatus+"</td>");
+		} else {
+			contentString = contentString.concat("<td>"+messageStatus+"</td>");
+		}
+		
+		contentString = contentString.concat("<td>"+isConnected+"</td><td>"+communicationMode+"</td></tr>");
+	}
+	if(inboxColumn == "") {
+		contentString = contentString.concat("<tr><td>"+consumerId+"</td><td>"+consumerType+"</td><td>"+
+				producerId+"</td><td>"+producerType+"</td><td>"+powerRequested+"</td><td>"+powerGranted+"</td><td>"+
+				messageStatus+"</td><td>"+isConnected+"</td><td>"+communicationMode+"</td></tr>");
+	}
+	$("#historyDistributeEnergyAmongHolonObjectsList").html(contentString);
+	openDiv("historyDistributeEnergyAmongHolonObjectsDiv");
 }
