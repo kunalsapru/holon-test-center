@@ -452,6 +452,20 @@ public class CommonUtilities extends AbstractAction{
 		return false;
 	}
 	
+	public boolean checkConnectivityBetweenHolonObjectAndPowerSource(HolonObject holonObject, PowerSource powerSource) {
+		Integer powerLineId = getPowerLineService().getPowerLineByHolonObject(holonObject).getId();
+		Integer powerSourceId = powerSource.getId();
+		ArrayList<PowerLine> connectedPowerLines = connectedPowerLines(powerLineId);
+		for(PowerLine powerLine : connectedPowerLines) {
+			if(powerLine.getType().equalsIgnoreCase(ConstantValues.POWERSUBLINE)) {
+				if(powerLine.getPowerSource().getStatus() && powerSourceId.equals(powerLine.getPowerSource().getId())) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	public Map<String, Integer> getFlexibilityAndCurrentEnergyRequirementOfHolonObject(HolonObject holonObject, Integer currentEnergyRequired) {
 		Map<String, Integer> flexibilityAndCurrentEnergyRequiredMap = new TreeMap<String, Integer>();
 		
@@ -501,19 +515,40 @@ public class CommonUtilities extends AbstractAction{
 		//Scenario from consumer's perspective
 		ArrayList<Supplier> supplierListForConsumer = getSupplierService().getSupplierListForConsumer(holonObject);
 		for(Supplier supplier : supplierListForConsumer) {
-			if(!checkConnectivityBetweenHolonObjects(holonObject, supplier.getHolonObjectProducer()) 
-					&& supplier.getMessageStatus().equals(ConstantValues.ACCEPTED)) {
-				supplier.setMessageStatus(ConstantValues.CONNECTION_RESET);
-				getSupplierService().merge(supplier);
-			}
-			if(checkConnectivityBetweenHolonObjects(holonObject, supplier.getHolonObjectProducer())) {
-				if(supplier.getMessageStatus().equalsIgnoreCase(ConstantValues.ACCEPTED)) {
-					if(currentEnergyRequired >= supplier.getPowerGranted()) {
-						currentEnergyRequired = currentEnergyRequired - supplier.getPowerGranted();
-					} else {
-						currentEnergyRequired = 0;
+			if(supplier.getHolonObjectProducer() != null) {
+				if(!checkConnectivityBetweenHolonObjects(holonObject, supplier.getHolonObjectProducer()) 
+						&& supplier.getMessageStatus().equals(ConstantValues.ACCEPTED)) {
+					supplier.setMessageStatus(ConstantValues.CONNECTION_RESET);
+					getSupplierService().merge(supplier);
+				}
+				if(checkConnectivityBetweenHolonObjects(holonObject, supplier.getHolonObjectProducer())) {
+					if(supplier.getMessageStatus().equalsIgnoreCase(ConstantValues.ACCEPTED)) {
+						if(currentEnergyRequired >= supplier.getPowerGranted()) {
+							currentEnergyRequired = currentEnergyRequired - supplier.getPowerGranted();
+						} else {
+							currentEnergyRequired = 0;
+						}
 					}
 				}
+			} else if(supplier.getPowerSource() != null) {
+				if(!checkConnectivityBetweenHolonObjectAndPowerSource(holonObject, supplier.getPowerSource()) 
+						&& supplier.getMessageStatus().equals(ConstantValues.ACCEPTED)) {
+					supplier.setMessageStatus(ConstantValues.CONNECTION_RESET);
+					getSupplierService().merge(supplier);
+					PowerSource powerSource = supplier.getPowerSource();
+					powerSource.setFlexibility(powerSource.getFlexibility() + supplier.getPowerGranted());
+					getPowerSourceService().merge(powerSource);
+				}
+				if(checkConnectivityBetweenHolonObjectAndPowerSource(holonObject, supplier.getPowerSource())) {
+					if(supplier.getMessageStatus().equalsIgnoreCase(ConstantValues.ACCEPTED)) {
+						if(currentEnergyRequired >= supplier.getPowerGranted()) {
+							currentEnergyRequired = currentEnergyRequired - supplier.getPowerGranted();
+						} else {
+							currentEnergyRequired = 0;
+						}
+					}
+				}
+							
 			}
 		}
 		
