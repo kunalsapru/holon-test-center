@@ -21,7 +21,24 @@ $(document).ready(function() {
 		closeDiv("historyDistributeEnergyAmongHolonObjectsDiv");
 	});
 	
-	
+	$(document).bind("click",".linkHolonObject",function(event) {
+		var id=event.target.id;
+		var holonObject = globalHoList.get(id);
+		if(holonObject !=undefined && holonObject.getBounds()!= undefined){
+			var holonObjectLocation=holonObject.getBounds().getNorthEast().lat()+"~"+holonObject.getBounds().getNorthEast().lng();
+		    zoomToHolon(id,holonObjectLocation, "Holon Object")
+		    console.log(holonObjectLocation);
+		}
+	});
+	$(document).bind("click",".linkPowerSource",function(event) {
+		var id=event.target.id;
+		var powerSource = globalPSrcList.get(id);
+		if(powerSource !=undefined && powerSource.getBounds()!= undefined){
+			var powerSourceLocation=powerSource.getBounds().getNorthEast().lat()+"~"+powerSource.getBounds().getNorthEast().lng();
+		    zoomToHolon(id,powerSourceLocation, "Power Source")
+		    console.log(powerSource);
+		}
+	});
 })
 
 function showSupplierDetails(holonObjectId) {
@@ -168,7 +185,7 @@ function checkInboxCallBack(data, options) {
 			canCommunicate = inboxColumn[7];
 			communicationMode = inboxColumn[8];
 		}
-		contentString = contentString.concat("<tr><td>"+requestId+"</td><td>"+consumerId+"</td><td>"+requestorTypePriority+"</td><td>"+
+		contentString = contentString.concat("<tr><td>"+requestId+"</td><td><a href='#' class='linkHolonObject' id='"+consumerId+"'>"+consumerId+"</a></td><td>"+requestorTypePriority+"</td><td>"+
 				powerRequested+"</td><td>"+powerGranted+"</td>");
 		if(messageStatus == "ACCEPTED") {
 			contentString = contentString.concat("<td style='color:green'>"+messageStatus+"</td>");
@@ -261,7 +278,7 @@ function distributeEnergyAmongHolonObjectsCallBack(data, options) {
 			isConnected = inboxColumn[7];
 			communicationMode = inboxColumn[8];
 		}
-		contentString = contentString.concat("<tr><td>"+consumerId+"</td><td>"+consumerType+"</td><td>"+producerId+"</td><td>"+
+		contentString = contentString.concat("<tr><td><a href='#' class='linkHolonObject' id='"+consumerId+"'>"+consumerId+"</a></td><td>"+consumerType+"</td><td>"+producerId+"</td><td>"+
 				producerType+"</td><td>"+powerRequested+"</td><td>"+powerGranted+"</td>");
 		if(messageStatus == "ACCEPTED") {
 			contentString = contentString.concat("<td style='color:green'>"+messageStatus+"</td>");
@@ -316,23 +333,32 @@ function historyDistributeEnergyAmongHolonObjectsCallBack(data, options) {
 	var messageStatus = "N/A";
 	var isConnected = "N/A";
 	var communicationMode = "N/A";
-	
+	var consumerLocation;
+	var consumerZoomType = "Holon Object";
 	for(var i = 0; i<inboxRow.length;i++) {
 		if(inboxRow != "") {
-			inboxColumn = inboxRow[i].split("~");
+			inboxColumn = inboxRow[i].split("#");
 		}
 		if(inboxColumn != "") {
 			consumerId = inboxColumn[0];
-			consumerType = inboxColumn[1];
-			producerId = inboxColumn[2];
-			producerType = inboxColumn[3];
-			powerRequested = inboxColumn[4];
-			powerGranted = inboxColumn[5];
-			messageStatus = inboxColumn[6];
-			isConnected = inboxColumn[7];
-			communicationMode = inboxColumn[8];
+			consumerLocation = inboxColumn[1];
+			consumerType = inboxColumn[2];
+			producerId = inboxColumn[3];
+			producerType = inboxColumn[4];
+			powerRequested = inboxColumn[5];
+			powerGranted = inboxColumn[6];
+			messageStatus = inboxColumn[7];
+			isConnected = inboxColumn[8];
+			communicationMode = inboxColumn[9];
 		}
-		contentString = contentString.concat("<tr><td>"+consumerId+"</td><td>"+consumerType+"</td><td>"+producerId+"</td><td>"+
+		contentString = contentString.concat("<tr><td><a href='#' class='linkHolonObject' id='"+consumerId+"'>"+consumerId+"</a></td><td>"+consumerType+"</td>");
+		if(producerType == "Holon Object") {
+			contentString = contentString.concat("<td><a href='#' class='linkHolonObject' id='"+producerId+"'>"+producerId+"</a></td>");
+		} else {
+			contentString = contentString.concat("<td><a href='#' class='linkPowerSource' id='"+producerId+"'>"+producerId+"</a></td>");
+		}
+				
+		contentString = contentString.concat("<td>"+
 				producerType+"</td><td>"+powerRequested+"</td><td>"+powerGranted+"</td>");
 		if(messageStatus == "ACCEPTED") {
 			contentString = contentString.concat("<td style='color:green'>"+messageStatus+"</td>");
@@ -341,7 +367,6 @@ function historyDistributeEnergyAmongHolonObjectsCallBack(data, options) {
 		} else {
 			contentString = contentString.concat("<td>"+messageStatus+"</td>");
 		}
-		
 		contentString = contentString.concat("<td>"+isConnected+"</td><td>"+communicationMode+"</td></tr>");
 	}
 	if(inboxColumn == "") {

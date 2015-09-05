@@ -644,23 +644,25 @@ public class HolonObjectAction extends CommonUtilities {
 			StringBuffer responseStr =new StringBuffer("");
 
 			for(Supplier supplier : listOfSuppliersHolonCoordinator) {
-					responseStr.append(supplier.getHolonObjectConsumer().getId()+"~");
+					responseStr.append(supplier.getHolonObjectConsumer().getId()+"#");
+					responseStr.append(supplier.getHolonObjectConsumer().getLatLngByNeLocation().getLatitude()+"~"+
+							supplier.getHolonObjectConsumer().getLatLngByNeLocation().getLongitude()+"#");
 					responseStr.append(supplier.getHolonObjectConsumer().getHolonObjectType().getName()
-							+" ("+supplier.getHolonObjectConsumer().getHolonObjectType().getPriority()+")"+"~");
+							+" ("+supplier.getHolonObjectConsumer().getHolonObjectType().getPriority()+")"+"#");
 					if(supplier.getHolonObjectProducer() != null) {
-						responseStr.append(supplier.getHolonObjectProducer().getId()+"~");
-						responseStr.append("Holon Object~");
+						responseStr.append(supplier.getHolonObjectProducer().getId()+"#");
+						responseStr.append("Holon Object#");
 					} else {
-						responseStr.append(supplier.getPowerSource().getId()+"~");
-						responseStr.append("Power Source~");
+						responseStr.append(supplier.getPowerSource().getId()+"#");
+						responseStr.append("Power Source#");
 					}
-					responseStr.append(supplier.getPowerRequested()+"~");
-					responseStr.append(supplier.getPowerGranted()+"~");
-					responseStr.append(supplier.getMessageStatus()+"~");
+					responseStr.append(supplier.getPowerRequested()+"#");
+					responseStr.append(supplier.getPowerGranted()+"#");
+					responseStr.append(supplier.getMessageStatus()+"#");
 					if(supplier.getPowerSource() != null) {
-						responseStr.append(checkConnectivityBetweenHolonObjectAndPowerSource(supplier.getHolonObjectConsumer(), supplier.getPowerSource())+"~");
+						responseStr.append(checkConnectivityBetweenHolonObjectAndPowerSource(supplier.getHolonObjectConsumer(), supplier.getPowerSource())+"#");
 					} else {
-						responseStr.append(checkConnectivityBetweenHolonObjects(supplier.getHolonObjectConsumer(), supplier.getHolonObjectProducer())+"~");
+						responseStr.append(checkConnectivityBetweenHolonObjects(supplier.getHolonObjectConsumer(), supplier.getHolonObjectProducer())+"#");
 					}
 					responseStr.append(supplier.getCommunicationMode()+"!");
 			}
