@@ -68,6 +68,7 @@ public class PowerLineAction extends CommonUtilities {
 				powerLineB = powerLineMap.get("powerLineB");
 			}
 			Integer newPowerLineID = getPowerLineService().persist(powerLine);
+			PowerLine powerLine2 = getPowerLineService().findById(newPowerLineID);
 			String color = CommonUtilities.getLineColor(CommonUtilities.getPercent(currentCapacity,maxCapacity));
 			log.info("NewLy Generated powerLine  ID --> "+newPowerLineID);
 			getResponse().setContentType("text/html");
@@ -87,9 +88,7 @@ public class PowerLineAction extends CommonUtilities {
 			if(powerLineType.equals(ConstantValues.SUBLINE)) {
 				colorOfHolonObject= getHolonObjectService().findById(subLineHolonObjId).getHolon().getColor();
 				plResponse.append("!"+colorOfHolonObject+"!"+subLineHolonObjId);
-				
 				HolonObject holonObject = getHolonObjectService().findById(subLineHolonObjId);
-				PowerLine powerLine2 = getPowerLineService().findById(newPowerLineID);
 				HolonObject holonCoordinator = findConnectedHolonCoordinatorByHolon(holonObject.getHolon(), powerLine2);
 				connectedHolonObjects =  getHolonObjectListByConnectedPowerLines(powerLine2,holonCoordinator);
 				
@@ -109,10 +108,20 @@ public class PowerLineAction extends CommonUtilities {
 			if(powerLineType.equals(ConstantValues.MAINLINE)){
 				ArrayList<PowerLine> connectedToMainLine=connectedPowerLines(powerLine.getId());
 				if(connectedToMainLine.size()>0){
-					ArrayList<HolonObject> responseArray= getHolonCoordinatorByElectionUsingForMainLineAndSwitch(powerLine, "common");
+					Map<String, ArrayList<HolonObject>> mapOfNewAndOldCoordinators = getHolonCoordinatorByElectionUsingForMainLineAndSwitch(powerLine2, "common");
+					ArrayList<HolonObject> newCoordinators = mapOfNewAndOldCoordinators.get("newCoordinators");
+					for(HolonObject holonObject : newCoordinators) {
+						System.out.println("New Coordinator ID --> "+holonObject.getId());
+					}
+					ArrayList<HolonObject> oldCoordinators = mapOfNewAndOldCoordinators.get("oldCoordinators");
+					for(HolonObject holonObject : oldCoordinators) {
+						System.out.println("Old Coordinator ID --> "+holonObject.getId());
+					}
+					
+/*					ArrayList<HolonObject> responseArray= getHolonCoordinatorByElectionUsingForMainLineAndSwitch(powerLine, "common");
 					if(responseArray.size()>0 && responseArray.get(0)!=null && responseArray.size() > 1 &&responseArray.get(1)!=null){
 						plResponse.append("!0!0!null!null"+"!YesCoordinatoorMainLine"+"!"+responseArray.get(0).getId()+"!"+responseArray.get(1).getId());
-					}
+					}*/
 				}
 			}
 			

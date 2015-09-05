@@ -68,103 +68,9 @@ public class PowerSwitchAction extends CommonUtilities {
 		powerSwitch.setLatLng(switchLatLng2);
 		powerSwitch.setPowerLineByPowerLineA(powerLineA);
 		powerSwitch.setPowerLineByPowerLineB(powerLineB);
-		powerSwitch.setStatus(false);
+		powerSwitch.setStatus(true);
 		Integer newPowerSwitchId= getPowerSwitchService().persist(powerSwitch);
 		String resp= newPowerSwitchId.toString()+"*"+powerLineA.getId().toString()+"*"+powerLineB.getId();
-		
-		System.out.println("---------------------->>>"+newPowerSwitchId);
-		PowerSwitch powerSwitch2 = getPowerSwitchService().findById(newPowerSwitchId);
-		if(!powerSwitch2.getStatus()) {
-			PowerLine newPowerLineA = powerSwitch2.getPowerLineByPowerLineA();
-			PowerLine newPowerLineB = powerSwitch2.getPowerLineByPowerLineB();
-			ArrayList<PowerLine> connectedLines1 = connectedPowerLines(newPowerLineA.getId());
-			Holon holon1 = null;
-			Holon holon2 = null;
-			for(PowerLine powerLine : connectedLines1) {
-				System.out.println("1 --> "+powerLine.getId());
-				if(holon1 == null) {
-					if(powerLine.getType().equalsIgnoreCase(ConstantValues.SUBLINE) || powerLine.getType().equalsIgnoreCase(ConstantValues.POWERSUBLINE)) {
-						if(powerLine.getHolonObject() != null) {
-							holon1 = powerLine.getHolonObject().getHolon();
-						} else if(powerLine.getPowerSource() != null) {
-							holon1 = powerLine.getPowerSource().getHolonCoordinator().getHolon();
-						}
-						
-					}
-				}
-			}
-			ArrayList<PowerLine> connectedLines2 = connectedPowerLines(newPowerLineB.getId());
-			for(PowerLine powerLine : connectedLines2) {
-				System.out.println("2 --> "+powerLine.getId());
-				if(holon2 == null) {
-					if(powerLine.getType().equalsIgnoreCase(ConstantValues.SUBLINE) || powerLine.getType().equalsIgnoreCase(ConstantValues.POWERSUBLINE)) {
-						if(powerLine.getHolonObject() != null) {
-							holon2 = powerLine.getHolonObject().getHolon();
-						} else if(powerLine.getPowerSource() != null) {
-							holon2 = powerLine.getPowerSource().getHolonCoordinator().getHolon();
-						}
-						
-					}
-				}
-			}
-			
-			
-			HolonObject hk1 = findConnectedHolonCoordinatorByHolon(holon1, newPowerLineA);
-			HolonObject hk2 = findConnectedHolonCoordinatorByHolon(holon2, newPowerLineB);
-			if(hk1 != null) {
-				System.out.println("hk1 = "+hk1.getId());
-			} else {
-				System.out.println("hk1 = null");
-			}
-			if(hk2 != null) {
-				System.out.println("hk2 = "+hk2.getId());
-			} else {
-				System.out.println("hk2 = null");
-			}
-			ArrayList<HolonObject> h1=getHolonCoordinatorByElectionUsingForMainLineAndSwitch(newPowerLineA, "common");
-			ArrayList<HolonObject> h2=getHolonCoordinatorByElectionUsingForMainLineAndSwitch(newPowerLineB, "powerSwitch");
-			if(h1.size()>0 && h2.size()>0)
-			{
-				//resp="*"+h1.get(0)+"*"+h2.get(0);
-			}
-			
-		}
-		Boolean flag= false;
-		// get holon Objects from two new powerLines and make coordinator
-		/*if(newPowerLineA!= null && newPowerLineB!= null){
-			// poweLine divides the holon into parts. One powerLine has coordinator other don't
-			ArrayList<PowerLine>connectedPowerLinesA  = connectedPowerLines(newPowerLineA.getId());
-			if(connectedPowerLinesA.size() > 0){
-				for(PowerLine powerLine2 : connectedPowerLinesA){
-					if(powerLine2.getType()!=null){
-						if(powerLine2.getType().equalsIgnoreCase(ConstantValues.SUBLINE) && powerLine2.getHolonObject()!=null && powerLine2.getHolonObject().getIsCoordinator()==true){
-							flag=true;
-						}
-					}
-				}
-			}
-			
-			
-			if(flag){
-				System.out.println("Flag is:::"+flag+"*******"+powerLineA.getId());
-				updateHolonObjectsAndPowerSources(powerLineA.getId());
-			}else{
-				System.out.println("Flag isssss:::"+flag);
-				updateHolonObjectsAndPowerSources(powerLineB.getId());
-				System.out.println("Updated powerLine B"+"***"+powerLineB.getId());
-			}
-			
-			System.out.println("Holon A turn");
-			ArrayList<HolonObject> holonObjectA= getHolonCoordinatorByElectionUsingForMainLineAndSwitch(powerLineA);
-			System.out.println("Holon B turn");
-			ArrayList<HolonObject> holonObjectB= getHolonCoordinatorByElectionUsingForMainLineAndSwitch(powerLineB);
-			if(holonObjectA.size()>0 && holonObjectB.size()>0){
-				System.out.println("Coordinator of A------->"+holonObjectA.get(0).getId()+"**********"+"Coordinator of B------->"+holonObjectB.get(0).getId());
-			}
-				
-		}*/
-		
-		
 		getResponse().setContentType("text/html");
 		getResponse().getWriter().write(resp);
 		
@@ -229,8 +135,6 @@ public class PowerSwitchAction extends CommonUtilities {
 		try {
 			Integer powerSwitchId= getRequest().getParameter("powerSwitchId")!=null?Integer.parseInt(getRequest().getParameter("powerSwitchId")):0;
 			PowerSwitch pwSw= getPowerSwitchService().findById(powerSwitchId); 
-			PowerLine powerLineA = pwSw.getPowerLineByPowerLineA();
-			PowerLine powerLineB= pwSw.getPowerLineByPowerLineB();
 			boolean psOldStatus=pwSw.getStatus();
 			boolean psNewStatus=true;
 			Integer psNewIntStatus=1;
@@ -246,12 +150,37 @@ public class PowerSwitchAction extends CommonUtilities {
 			if(!powerSwitch2.getStatus()) {
 				PowerLine newPowerLineA = powerSwitch2.getPowerLineByPowerLineA();
 				PowerLine newPowerLineB = powerSwitch2.getPowerLineByPowerLineB();
-				ArrayList<HolonObject> h1=getHolonCoordinatorByElectionUsingForMainLineAndSwitch(newPowerLineA, "common");
-				ArrayList<HolonObject> h2=getHolonCoordinatorByElectionUsingForMainLineAndSwitch(newPowerLineB, "powerSwitch");
+				Map<String, ArrayList<HolonObject>> mapOfNewAndOldCoordinators = getHolonCoordinatorByElectionUsingForMainLineAndSwitch(newPowerLineA, "common");
+				ArrayList<HolonObject> newCoordinators = mapOfNewAndOldCoordinators.get("newCoordinators");
+				for(HolonObject holonObject : newCoordinators) {
+					System.out.println("New Coordinator ID --> "+holonObject.getId());
+				}
+				ArrayList<HolonObject> oldCoordinators = mapOfNewAndOldCoordinators.get("oldCoordinators");
+				for(HolonObject holonObject : oldCoordinators) {
+					System.out.println("Old Coordinator ID --> "+holonObject.getId());
+				}
+
+				Map<String, ArrayList<HolonObject>> mapOfNewAndOldCoordinatorsB = getHolonCoordinatorByElectionUsingForMainLineAndSwitch(newPowerLineB, "powerSwitch");
+				ArrayList<HolonObject> newCoordinatorsB = mapOfNewAndOldCoordinatorsB.get("newCoordinators");
+				for(HolonObject holonObject : newCoordinatorsB) {
+					System.out.println("New Coordinator ID --> "+holonObject.getId());
+				}
+				ArrayList<HolonObject> oldCoordinatorsB = mapOfNewAndOldCoordinatorsB.get("oldCoordinators");
+				for(HolonObject holonObject : oldCoordinatorsB) {
+					System.out.println("Old Coordinator ID --> "+holonObject.getId());
+				}
 				//response="*"+h1.get(0).getId()+"*"+h2.get(0).getId();
 			} else {
 				PowerLine newPowerLineA = powerSwitch2.getPowerLineByPowerLineA();
-				ArrayList<HolonObject> h1=getHolonCoordinatorByElectionUsingForMainLineAndSwitch(newPowerLineA, "common");
+				Map<String, ArrayList<HolonObject>> mapOfNewAndOldCoordinators = getHolonCoordinatorByElectionUsingForMainLineAndSwitch(newPowerLineA, "common");
+				ArrayList<HolonObject> newCoordinators = mapOfNewAndOldCoordinators.get("newCoordinators");
+				for(HolonObject holonObject : newCoordinators) {
+					System.out.println("New Coordinator ID --> "+holonObject.getId());
+				}
+				ArrayList<HolonObject> oldCoordinators = mapOfNewAndOldCoordinators.get("oldCoordinators");
+				for(HolonObject holonObject : oldCoordinators) {
+					System.out.println("Old Coordinator ID --> "+holonObject.getId());
+				}
 				//response="*"+h1.get(0);
 			}
 			

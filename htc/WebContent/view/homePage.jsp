@@ -185,13 +185,13 @@
 						<td>Power Line Capacity:</td>
 						<td><input id="powerLineCapacity" type="text"></td>
 					</tr>
-					</table><hr>
+					</table>
 					<table>
 					<tr >
 						<td colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="cancelPowerLine" type='button' class="button"  value='Cancel' />
 						<input id="savePowerLineObject" type='button' class="button"  value='Save Power Line' /></td>
 					</tr>
-				</table><hr>
+				</table>
 			</div>
 					
 				<div id="masterTableHolonObjectsTypes" class="ui-content"

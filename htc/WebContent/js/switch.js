@@ -19,10 +19,10 @@ $(document).ready(function() {
 
 function createPowerSwitch(latLng,powerLineId){
 	var circleSwitch = new google.maps.Circle({
-		 strokeColor: '#FF0000',
+		 strokeColor: '#0B6121',
 	     strokeOpacity: 1,
 	     strokeWeight: 8,
-	     fillColor: '#FF0000',
+	     fillColor: '#0B6121',
 	     fillOpacity: 0.35,
 	     map: map,
 	     center: latLng,
