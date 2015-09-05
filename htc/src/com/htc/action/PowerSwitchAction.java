@@ -1,20 +1,14 @@
 package com.htc.action;
 
-
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
-
 import org.apache.log4j.Logger;
-
-import com.htc.hibernate.pojo.Holon;
 import com.htc.hibernate.pojo.HolonObject;
 import com.htc.hibernate.pojo.LatLng;
 import com.htc.hibernate.pojo.PowerLine;
 import com.htc.hibernate.pojo.PowerSwitch;
 import com.htc.utilities.CommonUtilities;
-import com.htc.utilities.ConstantValues;
-
 
 public class PowerSwitchAction extends CommonUtilities {
 
