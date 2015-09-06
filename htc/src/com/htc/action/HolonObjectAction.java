@@ -87,20 +87,20 @@ public class HolonObjectAction extends CommonUtilities {
 			String holonColor="black";
 			HolonObject hc = null;
 			if(holonObject2.getHolon() != null) {
-				PowerLine immediatePowerLine = getPowerLineService().getPowerLineByHolonObject(holonObject2); 
-				hc = findConnectedHolonCoordinatorByHolon (holonObject2.getHolon(), immediatePowerLine);
+				PowerLine immediatePowerLine = getPowerLineService().getPowerLineByHolonObject(holonObject2);
+				if(holonObject2.getIsCoordinator()) {
+					hc = holonObject2;
+				} else {
+					hc = findConnectedHolonCoordinatorByHolon (holonObject2.getHolon(), immediatePowerLine);
+				}
 			}
 			Integer coordinatorHolonId=0;
 			String coOredNeLocation="";
 			if(hc!=null) {
-				if(checkConnectivityBetweenHolonObjects(holonObject2, hc)) {
 					holonCoordinatorName_Holon = holonObject2.getHolon().getName();
 					holonColor = holonObject2.getHolon().getColor();
 					coordinatorHolonId = hc.getId();
 					coOredNeLocation= hc.getLatLngByNeLocation().getLatitude()+"~"+hc.getLatLngByNeLocation().getLongitude();
-				} else {
-					coordinatorHolonId = -1;
-				}
 			}
 			String coordinatorCompetency = holonObject2.getCoordinatorCompetency().toPlainString();
 			String trustValue = holonObject2.getTrustValue().toPlainString();
@@ -545,15 +545,34 @@ public class HolonObjectAction extends CommonUtilities {
 					if(currentEnergyRequired > 0) {
 						if(holonObject.getHolonObjectType().getPriority() == 1) {
 							listOfConsumers.add(holonObject);
-						} else if(holonObject.getHolonObjectType().getPriority() == 2) {
-							listOfConsumers.add(holonObject);
-						}  else if(holonObject.getHolonObjectType().getPriority() == 3) {
-							listOfConsumers.add(holonObject);
-						}  else if(holonObject.getHolonObjectType().getPriority() == 4) {
+						}
+					}
+				}
+				for(HolonObject holonObject : listOfConnectedHolonObjects) {
+					Integer currentEnergyRequired = getHolonObjectEnergyDetails(holonObject).get("currentEnergyRequired");
+					if(currentEnergyRequired > 0) {
+						if(holonObject.getHolonObjectType().getPriority() == 2) {
 							listOfConsumers.add(holonObject);
 						}
 					}
-				}//Now we have a priority wise list of consumers
+				}
+				for(HolonObject holonObject : listOfConnectedHolonObjects) {
+					Integer currentEnergyRequired = getHolonObjectEnergyDetails(holonObject).get("currentEnergyRequired");
+					if(currentEnergyRequired > 0) {
+						if(holonObject.getHolonObjectType().getPriority() == 3) {
+							listOfConsumers.add(holonObject);
+						}
+					}
+				}
+				for(HolonObject holonObject : listOfConnectedHolonObjects) {
+					Integer currentEnergyRequired = getHolonObjectEnergyDetails(holonObject).get("currentEnergyRequired");
+					if(currentEnergyRequired > 0) {
+						if(holonObject.getHolonObjectType().getPriority() == 4) {
+							listOfConsumers.add(holonObject);
+						}
+					}
+				}
+				//Now we have a priority wise list of consumers
 				Collections.sort(listOfConnectedHolonObjects);
 				for(HolonObject holonObjectProducer : listOfConnectedHolonObjects) {
 					Integer flexibility = getHolonObjectEnergyDetails(holonObjectProducer).get("flexibility");

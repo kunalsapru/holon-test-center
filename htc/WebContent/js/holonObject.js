@@ -245,8 +245,6 @@ function getHolonInfoWindowCallBack(data,options) {
 	console.log(contentString);
 	if(coordHolonId==0) {
 		contentString=contentString.concat("<td>Coordinator Id: No Coordinator</td></tr>");
-	} else if(coordHolonId==-1) {
-		contentString=contentString.concat("<td style='color:red'>Coordinator Id: Not connected</td></tr>");
 	} else {
 		contentString=contentString.concat("<td>Coordinator Id: <a href='#' id='hoCoId'>"+coordHolonId+"</a></td><tr>");
 	}

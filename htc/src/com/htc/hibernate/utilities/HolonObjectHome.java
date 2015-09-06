@@ -27,6 +27,9 @@ public class HolonObjectHome {
 			tx.commit();// Committing transaction changes
 		} catch (Exception exp){
 			exp.printStackTrace();
+			tx.rollback();
+		} finally {
+			HibernateSessionFactory.closeSession();
 		}
 		return holonObject_id;
 	}
@@ -42,7 +45,10 @@ public class HolonObjectHome {
 			return result;
 		} catch (RuntimeException re) {
 			log.info("Merge Failed...");
+			tx.rollback();
 			throw re;
+		} finally {
+			HibernateSessionFactory.closeSession();
 		}
 	}
 
@@ -57,7 +63,10 @@ public class HolonObjectHome {
 			return instance;
 		} catch (RuntimeException re) {
 			log.info("Exception --> "+re.getMessage());
+			tx.rollback();
 			throw re;
+		} finally {
+			HibernateSessionFactory.closeSession();
 		}
 	}
 	
@@ -77,7 +86,10 @@ public class HolonObjectHome {
 		} catch (RuntimeException re) {
 			log.info("Exception --> "+re.getMessage());
 			re.printStackTrace();
+			tx.rollback();
 		
+		} finally {
+			HibernateSessionFactory.closeSession();
 		}
 		return listHolonObject;
 	}
@@ -95,6 +107,9 @@ public class HolonObjectHome {
 			return deleteStatus;
 		} catch (RuntimeException re) {
 			log.info("Delete Failed...");
+			tx.rollback();
+		} finally {
+			HibernateSessionFactory.closeSession();
 		}
 		return deleteStatus;
 	}
@@ -112,6 +127,9 @@ public class HolonObjectHome {
 			return listHolonObject;
 		} catch (RuntimeException re) {
 			log.info("get holon Object list failed");
+			tx.rollback();
+		} finally {
+			HibernateSessionFactory.closeSession();
 		}
 		return listHolonObject;
 	}
@@ -130,7 +148,10 @@ public class HolonObjectHome {
 			return listHolonObject;
 		} catch (RuntimeException re) {
 			log.info("Exception --> "+re.getMessage());
+			tx.rollback();
 			re.printStackTrace();
+		} finally {
+			HibernateSessionFactory.closeSession();
 		}
 		return listHolonObject;
 	}

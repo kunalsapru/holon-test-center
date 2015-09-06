@@ -174,6 +174,22 @@ public class CommonUtilities extends AbstractAction{
 		Integer minimumProductionCapacityPowerSource = 0;
 		Integer maximumProductionCapacityPowerSource = 0;
 		Integer currentProductionPowerSource = 0;
+		boolean checkFlagForCoordinator = false;
+		if(holonObjectListByConnectedPowerLines .size() == 0 && holonCoordinator.getIsCoordinator()) {
+			holonObjectListByConnectedPowerLines.add(holonCoordinator);
+			checkFlagForCoordinator = true;
+		} else if(holonObjectListByConnectedPowerLines.size() > 0) {
+			for(HolonObject holonObject : holonObjectListByConnectedPowerLines) {
+				if(holonObject.getId() == holonCoordinator.getId()) {
+					checkFlagForCoordinator = true;
+				}
+			}
+		}
+		if(!checkFlagForCoordinator) {
+			if(holonCoordinator.getIsCoordinator()) {
+				holonObjectListByConnectedPowerLines.add(holonCoordinator);
+			}
+		}
 		
 		noOfHolonObjects = holonObjectListByConnectedPowerLines.size();
 		Map<String, Integer> holonObjectEnergyDetails = null;

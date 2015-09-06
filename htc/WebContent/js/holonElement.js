@@ -59,8 +59,8 @@ function deleteHolonElementCallBack(data, options) {
 	if(resp[0] == "true"){
 		var holonObjectId = options['holonObjectId'];
 		showHolonElements(holonObjectId);
-		showPowerCircles(holonObjectId);
-		updateCoordinator(resp[1]);	
+/*		showPowerCircles(holonObjectId);
+		updateCoordinator(resp[1]);	*/
 		showHolonCoIcons();
 	} else {
 		//alert("Error in deleting Holon Element. Please check application logs.")
