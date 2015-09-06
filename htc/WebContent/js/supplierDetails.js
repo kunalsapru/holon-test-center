@@ -114,7 +114,7 @@ function sendMessageToAllProducersCallBack(data, options) {
 	if(data == "SUCCESS") {
 		swal("Message sent", "Message has been sent to all connected producers", "info");
 	} else if (data == "FAILURE") {
-		swal("Cannot communicate!", "Message has not been sent. Set the 'Can Communicate' field to 'Yes' to enable communication.", "info");
+		swal("Cannot communicate!", "Either 'Can Communicate' field is 'No' or Holon Object is not connected to any power line..", "info");
 	}
 }
 

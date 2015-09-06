@@ -355,42 +355,46 @@ public class HolonObjectAction extends CommonUtilities {
 				int requestId = 0;
 				Integer newSupplierId = 0;
 				PowerLine powerLine = getPowerLineService().getPowerLineByHolonObject(holonObjectConsumer);
-				ArrayList<HolonObject> connectedHolonObjects = getHolonObjectListByConnectedPowerLines(powerLine, holonObjectConsumer);
-				Boolean statusDuplicateMessage = false;
-				ArrayList<Supplier> checkDuplicateMessageList = getSupplierService().getAllSupplier();
-				//Sending energy requirement message to all producers
-				for(HolonObject holonObjectProducer : connectedHolonObjects) {
-					for(Supplier supplier : checkDuplicateMessageList) {
-						if(supplier.getHolonObjectProducer() != null && supplier.getHolonObjectProducer().getId() == holonObjectProducer.getId() 
-								&& supplier.getHolonObjectConsumer().getId() == holonObjectConsumer.getId() 
-								&& supplier.getMessageStatus().equalsIgnoreCase(ConstantValues.PENDING)) {
-							statusDuplicateMessage = true;
-						}
-					}
-					if(!statusDuplicateMessage) {
-						Integer flexibility = getHolonObjectEnergyDetails(holonObjectProducer).get("flexibility");
-						if(flexibility > 0) {
-							holonObjectProducer.setFlexibility(flexibility);
-							getHolonObjectService().merge(holonObjectProducer);
-							Supplier supplier = new Supplier();
-							supplier.setHolonObjectConsumer(holonObjectConsumer);
-							supplier.setHolonObjectProducer(holonObjectProducer);
-							supplier.setMessageStatus(ConstantValues.PENDING);
-							supplier.setPowerSource(null);
-							supplier.setPowerRequested(currentEnergyRequired);
-							supplier.setPowerGranted(0);
-							supplier.setRequestId(requestId);
-							supplier.setCommunicationMode(ConstantValues.COMMUNICATION_MODE_DIRECT);
-							newSupplierId = getSupplierService().persist(supplier);
-							if(requestId == 0) {
-								requestId  = newSupplierId;
+				if(!(powerLine == null)) {
+					ArrayList<HolonObject> connectedHolonObjects = getHolonObjectListByConnectedPowerLines(powerLine, holonObjectConsumer);
+					Boolean statusDuplicateMessage = false;
+					ArrayList<Supplier> checkDuplicateMessageList = getSupplierService().getAllSupplier();
+					//Sending energy requirement message to all producers
+					for(HolonObject holonObjectProducer : connectedHolonObjects) {
+						for(Supplier supplier : checkDuplicateMessageList) {
+							if(supplier.getHolonObjectProducer() != null && supplier.getHolonObjectProducer().getId() == holonObjectProducer.getId() 
+									&& supplier.getHolonObjectConsumer().getId() == holonObjectConsumer.getId() 
+									&& supplier.getMessageStatus().equalsIgnoreCase(ConstantValues.PENDING)) {
+								statusDuplicateMessage = true;
 							}
-							Supplier tempSupplier = getSupplierService().findById(newSupplierId);
-							tempSupplier.setRequestId(requestId);
-							getSupplierService().merge(tempSupplier);
 						}
+						if(!statusDuplicateMessage) {
+							Integer flexibility = getHolonObjectEnergyDetails(holonObjectProducer).get("flexibility");
+							if(flexibility > 0) {
+								holonObjectProducer.setFlexibility(flexibility);
+								getHolonObjectService().merge(holonObjectProducer);
+								Supplier supplier = new Supplier();
+								supplier.setHolonObjectConsumer(holonObjectConsumer);
+								supplier.setHolonObjectProducer(holonObjectProducer);
+								supplier.setMessageStatus(ConstantValues.PENDING);
+								supplier.setPowerSource(null);
+								supplier.setPowerRequested(currentEnergyRequired);
+								supplier.setPowerGranted(0);
+								supplier.setRequestId(requestId);
+								supplier.setCommunicationMode(ConstantValues.COMMUNICATION_MODE_DIRECT);
+								newSupplierId = getSupplierService().persist(supplier);
+								if(requestId == 0) {
+									requestId  = newSupplierId;
+								}
+								Supplier tempSupplier = getSupplierService().findById(newSupplierId);
+								tempSupplier.setRequestId(requestId);
+								getSupplierService().merge(tempSupplier);
+							}
+						}
+						statusDuplicateMessage = false;
 					}
-					statusDuplicateMessage = false;
+				} else {
+					responseMessage = ConstantValues.FAILURE;
 				}
 			} else {
 				responseMessage = ConstantValues.FAILURE;
