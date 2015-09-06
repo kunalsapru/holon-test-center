@@ -42,11 +42,11 @@ public class FactoryUtilities extends CommonUtilities{
 			System.out.println("Holon Object Type : "+holonObjectType.getName()+", No of Objects = "+finalMapAfterFactoryAlgorithm.get(holonObjectTypeId));
 			int noOfObjects = finalMapAfterFactoryAlgorithm.get(holonObjectTypeId);
 			while(noOfObjects > 0){
-				latNE = Double.parseDouble(HolonObjectsLocationFactory.mapLocations.get(0).split("~")[0].split("!")[0]);
-				lngNE = Double.parseDouble(HolonObjectsLocationFactory.mapLocations.get(0).split("~")[0].split("!")[1]);
-				latSW = Double.parseDouble(HolonObjectsLocationFactory.mapLocations.get(0).split("~")[1].split("!")[0]);
-				lngSW = Double.parseDouble(HolonObjectsLocationFactory.mapLocations.get(0).split("~")[1].split("!")[1]);
-				HolonObjectsLocationFactory.mapLocations.remove(0);
+				latNE = Double.parseDouble(FactoryHolonObjectsLocation.mapLocations.get(0).split("~")[0].split("!")[0]);
+				lngNE = Double.parseDouble(FactoryHolonObjectsLocation.mapLocations.get(0).split("~")[0].split("!")[1]);
+				latSW = Double.parseDouble(FactoryHolonObjectsLocation.mapLocations.get(0).split("~")[1].split("!")[0]);
+				lngSW = Double.parseDouble(FactoryHolonObjectsLocation.mapLocations.get(0).split("~")[1].split("!")[1]);
+				FactoryHolonObjectsLocation.mapLocations.remove(0);
 				
 				NorthlatLng = new LatLng(latNE, lngNE);
 				SouthlatLng = new LatLng(latSW, lngSW);
@@ -103,7 +103,7 @@ public class FactoryUtilities extends CommonUtilities{
 	
 	public Map<Integer, Integer> algorithmForPriorityProbability(Map<Integer, String> holonObjectType_ProbabilityMap, int cumulativeProbability) {
 		Map<Integer, Integer> mapHolonObjectTypesOccurences = new TreeMap<Integer, Integer>();
-		int mapLocationSize = HolonObjectsLocationFactory.mapLocations.size();
+		int mapLocationSize = FactoryHolonObjectsLocation.mapLocations.size();
 		
 		try {
 				while(mapLocationSize > 0 && cumulativeProbability > 0) {

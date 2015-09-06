@@ -435,7 +435,9 @@ public class HolonObjectAction extends CommonUtilities {
 											supplier2.setMessageStatus(ConstantValues.PROCESSED);
 											getSupplierService().merge(supplier2);
 									}
-									supplier.setMessageStatus(ConstantValues.ACCEPTED);
+									if(supplier.getHolonObjectConsumer().getCanCommunicate()) {
+										supplier.setMessageStatus(ConstantValues.ACCEPTED);
+									}
 								}
 								getSupplierService().merge(supplier);
 							} else {
@@ -445,7 +447,9 @@ public class HolonObjectAction extends CommonUtilities {
 									supplier2.setMessageStatus(ConstantValues.PROCESSED);
 									getSupplierService().merge(supplier2);
 								}
-								supplier.setMessageStatus(ConstantValues.ACCEPTED);
+								if(supplier.getHolonObjectConsumer().getCanCommunicate()) {
+									supplier.setMessageStatus(ConstantValues.ACCEPTED);
+								}
 								getSupplierService().merge(supplier);
 							}
 						} else if(producerFlexibility > 0 && producerFlexibility < supplier.getPowerRequested()){
@@ -455,7 +459,9 @@ public class HolonObjectAction extends CommonUtilities {
 									supplier2.setMessageStatus(ConstantValues.PROCESSED);
 									getSupplierService().merge(supplier2);
 								}
-								supplier.setMessageStatus(ConstantValues.ACCEPTED);
+								if(supplier.getHolonObjectConsumer().getCanCommunicate()) {
+									supplier.setMessageStatus(ConstantValues.ACCEPTED);
+								}
 								getSupplierService().merge(supplier);
 								producerFlexibility = 0;
 							} else {
@@ -468,7 +474,9 @@ public class HolonObjectAction extends CommonUtilities {
 										supplier2.setMessageStatus(ConstantValues.PROCESSED);
 										getSupplierService().merge(supplier2);
 									}
-									supplier.setMessageStatus(ConstantValues.ACCEPTED);
+									if(supplier.getHolonObjectConsumer().getCanCommunicate()) {
+										supplier.setMessageStatus(ConstantValues.ACCEPTED);
+									}
 								}
 								getSupplierService().merge(supplier);
 							}
@@ -552,24 +560,26 @@ public class HolonObjectAction extends CommonUtilities {
 					if(flexibility > 0) {
 						if(listOfConsumers.size() > 0) {
 							HolonObject holonObjectConsumer = listOfConsumers.get(0);
-							Integer currentEnergyRequired = getHolonObjectEnergyDetails(holonObjectConsumer).get("currentEnergyRequired");
-							Supplier supplier = new Supplier();
-							supplier.setCommunicationMode(ConstantValues.COMMUNICATION_MODE_COORDINATOR);
-							supplier.setHolonObjectConsumer(holonObjectConsumer);
-							supplier.setHolonObjectProducer(holonObjectProducer);
-							supplier.setMessageStatus(ConstantValues.ACCEPTED);
-							if(flexibility <= currentEnergyRequired) {
-								supplier.setPowerGranted(flexibility);
-							} else {
-								supplier.setPowerGranted(currentEnergyRequired);
+							if(holonObjectConsumer.getCanCommunicate()) {
+								Integer currentEnergyRequired = getHolonObjectEnergyDetails(holonObjectConsumer).get("currentEnergyRequired");
+								Supplier supplier = new Supplier();
+								supplier.setCommunicationMode(ConstantValues.COMMUNICATION_MODE_COORDINATOR);
+								supplier.setHolonObjectConsumer(holonObjectConsumer);
+								supplier.setHolonObjectProducer(holonObjectProducer);
+								supplier.setMessageStatus(ConstantValues.ACCEPTED);
+								if(flexibility <= currentEnergyRequired) {
+									supplier.setPowerGranted(flexibility);
+								} else {
+									supplier.setPowerGranted(currentEnergyRequired);
+								}
+								supplier.setPowerRequested(currentEnergyRequired);
+								supplier.setPowerSource(null);
+								supplier.setRequestId(0);
+								Integer newSupplierId = getSupplierService().persist(supplier);
+								Supplier supplier2 = getSupplierService().findById(newSupplierId);
+								supplier2.setRequestId(newSupplierId);
+								getSupplierService().merge(supplier2);
 							}
-							supplier.setPowerRequested(currentEnergyRequired);
-							supplier.setPowerSource(null);
-							supplier.setRequestId(0);
-							Integer newSupplierId = getSupplierService().persist(supplier);
-							Supplier supplier2 = getSupplierService().findById(newSupplierId);
-							supplier2.setRequestId(newSupplierId);
-							getSupplierService().merge(supplier2);
 							listOfConsumers.remove(0);
 						}
 					}

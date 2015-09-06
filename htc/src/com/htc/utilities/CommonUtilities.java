@@ -324,7 +324,6 @@ public class CommonUtilities extends AbstractAction{
 			}
 			for(PowerLine powerLine4 : tempConnectedPowerLines) {
 				if(!(listOfAllConnectedPowerLines.containsKey(powerLine4.getId()))) {
-					log.info("Recursive call !");
 					connectedPowerLines(powerLine3.getId());//Recursive call to get list of neighbors of neighbor
 				}
 			}
