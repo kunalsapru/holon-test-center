@@ -48,7 +48,7 @@ function deleteHolonElement(holonElementId, holonObjectId) {
     	 swal("Removed", "Holon Element has been removed", "info");
     	} else
     	{
-      swal("Cancelled", "Map has not been cleared", "info");
+      swal("Cancelled", "Holon Element has not been deleted.", "info");
     }
 	});
 	
