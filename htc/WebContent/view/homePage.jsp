@@ -67,7 +67,7 @@
     </ul>
     </li>
 	<li><a href="#" id="clear"><i class="fa fa-eraser"></i>Clear Map</a></li>
-	<li><a href="view/dataGenerator.jsp" target="_blank" id="dataFactoryGenerator"><i class="fa fa-wrench"></i>Data Factory</a></li>
+	<li><a href="view/dataGenerator.jsp" id="dataFactoryGenerator"><i class="fa fa-wrench"></i>Data Factory</a></li>
 	</ul>
 	
   <a href="#" id="showmenu"> <i class="fa fa-align-justify"></i> </a> </nav>
