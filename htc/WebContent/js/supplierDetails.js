@@ -84,7 +84,14 @@ function getDataForSupplierDetailsCallBack(data,options) {
 			requestId = supplierColumn[6];
 			communicationMode = supplierColumn[7];
 		}
-		contentString = contentString.concat("<tr><td>"+requestId+"</td><td>"+typeSupplier+"</td><td>"+idSupplier+"</td><td>"+
+		contentString = contentString.concat("<tr><td>"+requestId+"</td><td>"+typeSupplier+"</td>");
+		if(typeSupplier == "Holon Object") {
+			contentString = contentString.concat("<td><a href='#' class='linkHolonObject' id='"+idSupplier+"'>"+idSupplier+"</a></td>");
+		} else {
+			contentString = contentString.concat("<td><a href='#' class='linkPowerSource' id='"+idSupplier+"'>"+idSupplier+"</a></td>");
+		}
+		
+		contentString = contentString.concat("<td>"+
 				powerRequested+"</td><td>"+powerGranted+"</td>");
 		if(messageStatus == "ACCEPTED") {
 			contentString = contentString.concat("<td style='color:green'>"+messageStatus+"</td>")
