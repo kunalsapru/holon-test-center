@@ -543,7 +543,7 @@ public class HolonObjectAction extends CommonUtilities {
 				for(HolonObject holonObject : listOfConnectedHolonObjects) {
 					Integer currentEnergyRequired = getHolonObjectEnergyDetails(holonObject).get("currentEnergyRequired");
 					if(currentEnergyRequired > 0) {
-						if(holonObject.getHolonObjectType().getPriority() == 1) {
+						if(holonObject.getHolonObjectType().getPriority() == 1 && holonObject.getCanCommunicate()) {
 							listOfConsumers.add(holonObject);
 						}
 					}
@@ -551,7 +551,7 @@ public class HolonObjectAction extends CommonUtilities {
 				for(HolonObject holonObject : listOfConnectedHolonObjects) {
 					Integer currentEnergyRequired = getHolonObjectEnergyDetails(holonObject).get("currentEnergyRequired");
 					if(currentEnergyRequired > 0) {
-						if(holonObject.getHolonObjectType().getPriority() == 2) {
+						if(holonObject.getHolonObjectType().getPriority() == 2 && holonObject.getCanCommunicate()) {
 							listOfConsumers.add(holonObject);
 						}
 					}
@@ -559,7 +559,7 @@ public class HolonObjectAction extends CommonUtilities {
 				for(HolonObject holonObject : listOfConnectedHolonObjects) {
 					Integer currentEnergyRequired = getHolonObjectEnergyDetails(holonObject).get("currentEnergyRequired");
 					if(currentEnergyRequired > 0) {
-						if(holonObject.getHolonObjectType().getPriority() == 3) {
+						if(holonObject.getHolonObjectType().getPriority() == 3 && holonObject.getCanCommunicate()) {
 							listOfConsumers.add(holonObject);
 						}
 					}
@@ -567,48 +567,23 @@ public class HolonObjectAction extends CommonUtilities {
 				for(HolonObject holonObject : listOfConnectedHolonObjects) {
 					Integer currentEnergyRequired = getHolonObjectEnergyDetails(holonObject).get("currentEnergyRequired");
 					if(currentEnergyRequired > 0) {
-						if(holonObject.getHolonObjectType().getPriority() == 4) {
+						if(holonObject.getHolonObjectType().getPriority() == 4 && holonObject.getCanCommunicate()) {
 							listOfConsumers.add(holonObject);
 						}
 					}
 				}
 				//Now we have a priority wise list of consumers
-				Collections.sort(listOfConnectedHolonObjects);
-				for(HolonObject holonObjectProducer : listOfConnectedHolonObjects) {
-					Integer flexibility = getHolonObjectEnergyDetails(holonObjectProducer).get("flexibility");
-					if(flexibility > 0) {
-						if(listOfConsumers.size() > 0) {
-							HolonObject holonObjectConsumer = listOfConsumers.get(0);
-							if(holonObjectConsumer.getCanCommunicate()) {
-								Integer currentEnergyRequired = getHolonObjectEnergyDetails(holonObjectConsumer).get("currentEnergyRequired");
-								Supplier supplier = new Supplier();
-								supplier.setCommunicationMode(ConstantValues.COMMUNICATION_MODE_COORDINATOR);
-								supplier.setHolonObjectConsumer(holonObjectConsumer);
-								supplier.setHolonObjectProducer(holonObjectProducer);
-								supplier.setMessageStatus(ConstantValues.ACCEPTED);
-								if(flexibility <= currentEnergyRequired) {
-									supplier.setPowerGranted(flexibility);
-								} else {
-									supplier.setPowerGranted(currentEnergyRequired);
-								}
-								supplier.setPowerRequested(currentEnergyRequired);
-								supplier.setPowerSource(null);
-								supplier.setRequestId(0);
-								Integer newSupplierId = getSupplierService().persist(supplier);
-								Supplier supplier2 = getSupplierService().findById(newSupplierId);
-								supplier2.setRequestId(newSupplierId);
-								getSupplierService().merge(supplier2);
-							}
-							listOfConsumers.remove(0);
-						}
-					}
+				
+				ArrayList<PowerSource> listOfConnectedPowerSources = null;
+				if(listOfConsumers.size() > 0) {
+					listOfConnectedPowerSources = getPowerSourceListByConnectedPowerLines(powerLine, listOfConsumers.get(0));
 				}
+				//Distributing Energy via Power Sources
 				for(HolonObject holonObjectConsumer : listOfConsumers) {
-					ArrayList<PowerSource> listOfConnectedPowerSources = getPowerSourceListByConnectedPowerLines(powerLine, holonObjectConsumer);
 					for(PowerSource powerSource : listOfConnectedPowerSources) {
 						Integer flexibility = powerSource.getFlexibility();
-						if(flexibility > 0) {
-								Integer currentEnergyRequired = getHolonObjectEnergyDetails(holonObjectConsumer).get("currentEnergyRequired");
+						Integer currentEnergyRequired = getHolonObjectEnergyDetails(holonObjectConsumer).get("currentEnergyRequired");
+						if(flexibility > 0 && currentEnergyRequired > 0) {
 								Supplier supplier = new Supplier();
 								supplier.setCommunicationMode(ConstantValues.COMMUNICATION_MODE_COORDINATOR);
 								supplier.setHolonObjectConsumer(holonObjectConsumer);
@@ -632,10 +607,35 @@ public class HolonObjectAction extends CommonUtilities {
 					}
 				}
 				
-				
+				//Distributing energy via Holon Objects (Producers)
+				Collections.sort(listOfConnectedHolonObjects);
+				for(HolonObject holonObjectConsumer: listOfConsumers) {
+					for(HolonObject holonObjectProducer : listOfConnectedHolonObjects) {
+						Integer flexibility = getHolonObjectEnergyDetails(holonObjectProducer).get("flexibility");
+						Integer currentEnergyRequired = getHolonObjectEnergyDetails(holonObjectConsumer).get("currentEnergyRequired");
+						if(flexibility > 0 && currentEnergyRequired > 0) {
+							Supplier supplier = new Supplier();
+							supplier.setCommunicationMode(ConstantValues.COMMUNICATION_MODE_COORDINATOR);
+							supplier.setHolonObjectConsumer(holonObjectConsumer);
+							supplier.setHolonObjectProducer(holonObjectProducer);
+							supplier.setMessageStatus(ConstantValues.ACCEPTED);
+							if(flexibility <= currentEnergyRequired) {
+								supplier.setPowerGranted(flexibility);
+							} else {
+								supplier.setPowerGranted(currentEnergyRequired);
+							}
+							supplier.setPowerRequested(currentEnergyRequired);
+							supplier.setPowerSource(null);
+							supplier.setRequestId(0);
+							Integer newSupplierId = getSupplierService().persist(supplier);
+							Supplier supplier2 = getSupplierService().findById(newSupplierId);
+							supplier2.setRequestId(newSupplierId);
+							getSupplierService().merge(supplier2);
+						}
+					}
+				}
+
 			}
-			
-				
 
 			if(responseStr.length() > 0) {
 				responseStr = responseStr.deleteCharAt(responseStr.lastIndexOf("!"));

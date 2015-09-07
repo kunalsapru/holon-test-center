@@ -154,13 +154,13 @@
 					<tr>
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;Maximum Production Capacity:&nbsp;&nbsp;&nbsp;&nbsp;<input id="psMaxProdCap" type="text"></td>	
 					</tr>
-					</table><hr>
+					</table>
 					<table >
 					<tr>
 						<td><input id="cancelPowerObject" type='button' class="button"  value='Cancel' />&nbsp;&nbsp;&nbsp;&nbsp;
 						<input id="savePowerObject" type='button' class="button"  value='Save Power Source' /></td>	
 					</tr>					
-					</table><hr>
+					</table>
 						
 			</div>
 			

@@ -27,6 +27,9 @@ public class HolonElementTypeHome {
 			tx.commit();// Committing transaction changes
 		} catch (Exception exp){
 			exp.printStackTrace();
+			tx.rollback();
+		} finally {
+			HibernateSessionFactory.closeSession();
 		}
 		return holonElementType_id;
 	}
@@ -42,7 +45,10 @@ public class HolonElementTypeHome {
 			return result;
 		} catch (RuntimeException re) {
 			log.info("Merge Failed...");
+			tx.rollback();
 			throw re;
+		} finally {
+			HibernateSessionFactory.closeSession();
 		}
 	}
 
@@ -58,7 +64,10 @@ public class HolonElementTypeHome {
 			return instance;
 		} catch (RuntimeException re) {
 			log.info("Exception --> "+re.getMessage());
+			tx.rollback();
 			throw re;
+		} finally {
+			HibernateSessionFactory.closeSession();
 		}
 	}
 
@@ -75,6 +84,9 @@ public class HolonElementTypeHome {
 			return deleteStatus;
 		} catch (RuntimeException re) {
 			log.info("Delete Failed...");
+			tx.rollback();
+		} finally {
+			HibernateSessionFactory.closeSession();
 		}
 		return deleteStatus;
 	}
@@ -92,6 +104,9 @@ public class HolonElementTypeHome {
 			return listHolonElementType;
 		} catch (RuntimeException re) {
 			log.info("get holon element type list failed");
+			tx.rollback();
+		} finally {
+			HibernateSessionFactory.closeSession();
 		}
 		return listHolonElementType;
 	}

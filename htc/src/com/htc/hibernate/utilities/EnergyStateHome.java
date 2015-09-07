@@ -22,7 +22,10 @@ public class EnergyStateHome {
 			return instance;
 		} catch (RuntimeException re) {
 			System.out.println("Exception --> "+re.getMessage());
+			tx.rollback();
 			throw re;
+		} finally {
+			HibernateSessionFactory.closeSession();
 		}
 	}
 
@@ -40,6 +43,9 @@ public class EnergyStateHome {
 			return listEnergyState;
 		} catch (RuntimeException re) {
 			System.out.println("get holon element State list failed");
+			tx.rollback();
+		} finally {
+			HibernateSessionFactory.closeSession();
 		}
 		return listEnergyState;
 	}

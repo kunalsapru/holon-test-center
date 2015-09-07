@@ -243,6 +243,7 @@
 	background: #E2E4DD;
 	border: 5px solid rgb(128, 128, 128);
 	z-index: 1;
+	overflow: scroll;
 }
 
 #historyDistributeEnergyAmongHolonObjectsDiv {
@@ -259,6 +260,7 @@
 	background: #E2E4DD;
 	border: 5px solid rgb(128, 128, 128);
 	z-index: 1;
+	overflow: scroll;
 }
 
 /* .button {

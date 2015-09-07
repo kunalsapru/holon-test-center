@@ -33,6 +33,9 @@ public class SupplierHome {
 			tx.commit();// Committing transaction changes
 		} catch (Exception exp){
 			exp.printStackTrace();
+			tx.rollback();
+		} finally {
+			HibernateSessionFactory.closeSession();
 		}
 		return supplier_id;
 	}
@@ -48,7 +51,10 @@ public class SupplierHome {
 			return result;
 		} catch (RuntimeException re) {
 			System.out.println("Merge Failed...");
+			tx.rollback();
 			throw re;
+		} finally {
+			HibernateSessionFactory.closeSession();
 		}
 	}
 
@@ -63,7 +69,10 @@ public class SupplierHome {
 			return instance;
 		} catch (RuntimeException re) {
 			System.out.println("Exception --> "+re.getMessage());
+			tx.rollback();
 			throw re;
+		} finally {
+			HibernateSessionFactory.closeSession();
 		}
 	}
 
@@ -80,6 +89,9 @@ public class SupplierHome {
 			return deleteStatus;
 		} catch (RuntimeException re) {
 			System.out.println("Delete Failed...");
+			tx.rollback();
+		} finally {
+			HibernateSessionFactory.closeSession();
 		}
 		return deleteStatus;
 	}
@@ -97,6 +109,9 @@ public class SupplierHome {
 			return listSupplier;
 		} catch (RuntimeException re) {
 			System.out.println("get Supplier list failed");
+			tx.rollback();
+		} finally {
+			HibernateSessionFactory.closeSession();
 		}
 		return listSupplier;
 	}
@@ -116,6 +131,9 @@ public class SupplierHome {
 			return listSupplier;
 		} catch (RuntimeException re) {
 			System.out.println("getSupplierListForProducer failed");
+			tx.rollback();
+		} finally {
+			HibernateSessionFactory.closeSession();
 		}
 		return listSupplier;
 	}
@@ -135,6 +153,9 @@ public class SupplierHome {
 			return listSupplier;
 		} catch (RuntimeException re) {
 			System.out.println("getSupplierListForProducerPowerSource failed");
+			tx.rollback();
+		} finally {
+			HibernateSessionFactory.closeSession();
 		}
 		return listSupplier;
 	}
@@ -155,6 +176,9 @@ public class SupplierHome {
 			return listSupplier;
 		} catch (RuntimeException re) {
 			System.out.println("getSupplierListForProducer failed");
+			tx.rollback();
+		} finally {
+			HibernateSessionFactory.closeSession();
 		}
 		return listSupplier;
 	}
@@ -174,6 +198,9 @@ public class SupplierHome {
 			return listSupplier;
 		} catch (RuntimeException re) {
 			System.out.println("getSupplierListForConsumer failed");
+			tx.rollback();
+		} finally {
+			HibernateSessionFactory.closeSession();
 		}
 		return listSupplier;
 	}
@@ -193,6 +220,9 @@ public class SupplierHome {
 			return listSupplier;
 		} catch (RuntimeException re) {
 			System.out.println("getSupplierListForConsumer failed");
+			tx.rollback();
+		} finally {
+			HibernateSessionFactory.closeSession();
 		}
 		return listSupplier;
 	}
@@ -213,6 +243,9 @@ public class SupplierHome {
 			return listSupplier;
 		} catch (RuntimeException re) {
 			System.out.println("getSupplierListForConsumer failed");
+			tx.rollback();
+		} finally {
+			HibernateSessionFactory.closeSession();
 		}
 		return listSupplier;
 	}

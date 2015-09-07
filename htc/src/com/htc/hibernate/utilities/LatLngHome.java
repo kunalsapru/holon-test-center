@@ -27,6 +27,9 @@ public class LatLngHome {
 			tx.commit();// Committing transaction changes
 		} catch (Exception exp){
 			exp.printStackTrace();
+			tx.rollback();
+		} finally {
+			HibernateSessionFactory.closeSession();
 		}
 		return latLng_id;
 	}
@@ -42,7 +45,10 @@ public class LatLngHome {
 			return result;
 		} catch (RuntimeException re) {
 			System.out.println("Merge Failed...");
+			tx.rollback();
 			throw re;
+		} finally {
+			HibernateSessionFactory.closeSession();
 		}
 	}
 
@@ -57,7 +63,10 @@ public class LatLngHome {
 			return instance;
 		} catch (RuntimeException re) {
 			System.out.println("Exception --> "+re.getMessage());
+			tx.rollback();
 			throw re;
+		} finally {
+			HibernateSessionFactory.closeSession();
 		}
 	}
 
@@ -74,6 +83,9 @@ public class LatLngHome {
 			return deleteStatus;
 		} catch (RuntimeException re) {
 			System.out.println("Delete Failed...");
+			tx.rollback();
+		} finally {
+			HibernateSessionFactory.closeSession();
 		}
 		return deleteStatus;
 	}
@@ -91,6 +103,9 @@ public class LatLngHome {
 			return listLatLng;
 		} catch (RuntimeException re) {
 			System.out.println("get LatLng list failed");
+			tx.rollback();
+		} finally {
+			HibernateSessionFactory.closeSession();
 		}
 		return listLatLng;
 	}
@@ -114,7 +129,9 @@ public class LatLngHome {
 		} catch (RuntimeException re) {
 			log.info("Exception --> "+re.getMessage());
 			re.printStackTrace();
-		
+			tx.rollback();
+		} finally {
+			HibernateSessionFactory.closeSession();
 		}
 		return listLatLng;
 	}

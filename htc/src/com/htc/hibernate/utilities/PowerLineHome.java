@@ -30,6 +30,9 @@ public class PowerLineHome {
 			tx.commit();// Committing transaction changes
 		} catch (Exception exp){
 			exp.printStackTrace();
+			tx.rollback();
+		} finally {
+			HibernateSessionFactory.closeSession();
 		}
 		return powerLine_id;
 	}
@@ -45,7 +48,10 @@ public class PowerLineHome {
 			return result;
 		} catch (RuntimeException re) {
 			System.out.println("Merge Failed...");
+			tx.rollback();
 			throw re;
+		} finally {
+			HibernateSessionFactory.closeSession();
 		}
 	}
 
@@ -60,7 +66,10 @@ public class PowerLineHome {
 			return instance;
 		} catch (RuntimeException re) {
 			System.out.println("Exception --> "+re.getMessage());
+			tx.rollback();
 			throw re;
+		} finally {
+			HibernateSessionFactory.closeSession();
 		}
 	}
 
@@ -77,6 +86,9 @@ public class PowerLineHome {
 			return deleteStatus;
 		} catch (RuntimeException re) {
 			System.out.println("Delete Failed...");
+			tx.rollback();
+		} finally {
+			HibernateSessionFactory.closeSession();
 		}
 		return deleteStatus;
 	}
@@ -94,6 +106,9 @@ public class PowerLineHome {
 			return listPowerLine;
 		} catch (RuntimeException re) {
 			System.out.println("get Power Line list failed");
+			tx.rollback();
+		} finally {
+			HibernateSessionFactory.closeSession();
 		}
 		return listPowerLine;
 	}
@@ -119,6 +134,9 @@ public class PowerLineHome {
 			return connectedPowerLines;
 		} catch (RuntimeException re) {
 			System.out.println("get Connected Power Line list failed");
+			tx.rollback();
+		} finally {
+			HibernateSessionFactory.closeSession();
 		}
 		return connectedPowerLines;
 	}
@@ -138,6 +156,9 @@ public class PowerLineHome {
 			tx.commit();
 		} catch (RuntimeException re) {
 			System.out.println("getPowerLineByHolonObject failed");
+			tx.rollback();
+		} finally {
+			HibernateSessionFactory.closeSession();
 		}
 		return powerLine;
 	}
@@ -157,6 +178,9 @@ public class PowerLineHome {
 			tx.commit();
 		} catch (RuntimeException re) {
 			System.out.println("getPowerLineByPowerSource failed");
+			tx.rollback();
+		} finally {
+			HibernateSessionFactory.closeSession();
 		}
 		return powerLine;
 	}

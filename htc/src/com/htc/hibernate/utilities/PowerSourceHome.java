@@ -27,6 +27,9 @@ public class PowerSourceHome {
 			tx.commit();// Committing transaction changes
 		} catch (Exception exp){
 			exp.printStackTrace();
+			tx.rollback();
+		} finally {
+			HibernateSessionFactory.closeSession();
 		}
 		return powerSource_id;
 	}
@@ -42,7 +45,10 @@ public class PowerSourceHome {
 			return result;
 		} catch (RuntimeException re) {
 			System.out.println("Merge Failed...");
+			tx.rollback();
 			throw re;
+		} finally {
+			HibernateSessionFactory.closeSession();
 		}
 	}
 
@@ -57,7 +63,10 @@ public class PowerSourceHome {
 			return instance;
 		} catch (RuntimeException re) {
 			System.out.println("Exception --> "+re.getMessage());
+			tx.rollback();
 			throw re;
+		} finally {
+			HibernateSessionFactory.closeSession();
 		}
 	}
 
@@ -74,6 +83,9 @@ public class PowerSourceHome {
 			return deleteStatus;
 		} catch (RuntimeException re) {
 			System.out.println("Delete Failed...");
+			tx.rollback();
+		} finally {
+			HibernateSessionFactory.closeSession();
 		}
 		return deleteStatus;
 	}
@@ -91,6 +103,9 @@ public class PowerSourceHome {
 			return listPowerSource;
 		} catch (RuntimeException re) {
 			System.out.println("get Power Source list failed");
+			tx.rollback();
+		} finally {
+			HibernateSessionFactory.closeSession();
 		}
 		return listPowerSource;
 	}
@@ -111,7 +126,9 @@ public class PowerSourceHome {
 		} catch (RuntimeException re) {
 			log.info("Exception --> "+re.getMessage());
 			re.printStackTrace();
-		
+			tx.rollback();
+		} finally {
+			HibernateSessionFactory.closeSession();
 		}
 		return listPSrcObject;
 	}

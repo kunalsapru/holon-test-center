@@ -27,6 +27,9 @@ public class HolonElementHome {
 			tx.commit();// Committing transaction changes
 		} catch (Exception exp){
 			exp.printStackTrace();
+			tx.rollback();
+		} finally {
+			HibernateSessionFactory.closeSession();
 		}
 		return holonElement_id;
 	}
@@ -42,7 +45,10 @@ public class HolonElementHome {
 			return result;
 		} catch (RuntimeException re) {
 			System.out.println("Merge Failed...");
+			tx.rollback();
 			throw re;
+		} finally {
+			HibernateSessionFactory.closeSession();
 		}
 	}
 
@@ -57,7 +63,10 @@ public class HolonElementHome {
 			return instance;
 		} catch (RuntimeException re) {
 			System.out.println("Exception --> "+re.getMessage());
+			tx.rollback();
 			throw re;
+		} finally {
+			HibernateSessionFactory.closeSession();
 		}
 	}
 
@@ -74,6 +83,9 @@ public class HolonElementHome {
 			return deleteStatus;
 		} catch (RuntimeException re) {
 			System.out.println("Delete Failed...");
+			tx.rollback();
+		} finally {
+			HibernateSessionFactory.closeSession();
 		}
 		return deleteStatus;
 	}
@@ -91,6 +103,9 @@ public class HolonElementHome {
 			return listHolonElement;
 		} catch (RuntimeException re) {
 			System.out.println("get holon element list failed");
+			tx.rollback();
+		} finally {
+			HibernateSessionFactory.closeSession();
 		}
 		return listHolonElement;
 	}
@@ -110,6 +125,9 @@ public class HolonElementHome {
 			return listHolonElement;
 		} catch (RuntimeException re) {
 			System.out.println("get holon element list failed");
+			tx.rollback();
+		} finally {
+			HibernateSessionFactory.closeSession();
 		}
 		return listHolonElement;
 	}
