@@ -13,6 +13,10 @@ $(document).ready(function() {
 		}
 	})
 
+	$("#disasterMode").click(function(){
+		disasterModeSelected();
 
+	});
+	
 })
 

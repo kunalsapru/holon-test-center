@@ -45,6 +45,8 @@ public class PowerLineAction extends CommonUtilities {
 			powerLine.setType(powerLineType);
 			PowerLine powerLineA = null, powerLineB = null;
 			String colorOfHolonObject="";
+			StringBuffer newCoordinatorsList = new StringBuffer();
+			StringBuffer oldCoordinatorsList = new StringBuffer();
 			ArrayList<HolonObject> connectedHolonObjects= new ArrayList<HolonObject>();
 			if(powerLineType.equals(ConstantValues.SUBLINE)) {
 				subLineHolonObjId=getRequest().getParameter("holonObjectId")!=null?Integer.parseInt(getRequest().getParameter("holonObjectId")):0;
@@ -97,7 +99,7 @@ public class PowerLineAction extends CommonUtilities {
 					}else{
 						System.out.println("Start leadership Elections");
 						HolonObject newCoordinator= getHolonCoordinatorByElectionUsingPowerLineId(powerLine2, holonObject);
-						plResponse.append("!YesCoordinator"+"!"+newCoordinator.getId()+"!"+holonCoordinator.getId());
+						plResponse.append("!YesCoordinator"+"!"+newCoordinator.getId()+"~!"+holonCoordinator.getId()+"~");
 					}
 				}
 				
@@ -109,16 +111,17 @@ public class PowerLineAction extends CommonUtilities {
 					ArrayList<HolonObject> newCoordinators = mapOfNewAndOldCoordinators.get("newCoordinators");
 					for(HolonObject holonObject : newCoordinators) {
 						System.out.println("New Coordinator ID --> "+holonObject.getId());
+						newCoordinatorsList.append(holonObject.getId()+"~");
 					}
 					ArrayList<HolonObject> oldCoordinators = mapOfNewAndOldCoordinators.get("oldCoordinators");
 					for(HolonObject holonObject : oldCoordinators) {
 						System.out.println("Old Coordinator ID --> "+holonObject.getId());
+						oldCoordinatorsList.append(holonObject.getId()+"~");
 					}
 					
-/*					ArrayList<HolonObject> responseArray= getHolonCoordinatorByElectionUsingForMainLineAndSwitch(powerLine, "common");
-					if(responseArray.size()>0 && responseArray.get(0)!=null && responseArray.size() > 1 &&responseArray.get(1)!=null){
-						plResponse.append("!0!0!null!null"+"!YesCoordinatoorMainLine"+"!"+responseArray.get(0).getId()+"!"+responseArray.get(1).getId());
-					}*/
+					if(oldCoordinatorsList!= null && oldCoordinatorsList.toString().length()>0 && newCoordinatorsList!=null && newCoordinatorsList.toString().length() > 0 ){
+						plResponse.append("!0!0!null!null"+"!YesCoordinatoorMainLine"+"!"+newCoordinatorsList.toString()+"!"+oldCoordinatorsList.toString());
+					}
 				}
 			}
 			

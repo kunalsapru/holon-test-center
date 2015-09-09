@@ -245,6 +245,8 @@ function getHolonInfoWindowCallBack(data,options) {
 	console.log(contentString);
 	if(coordHolonId==0) {
 		contentString=contentString.concat("<td>Coordinator Id: No Coordinator</td></tr>");
+	} else if(coordHolonId==-1) {
+		contentString=contentString.concat("<td style='color:red'>Coordinator Id: Not connected</td></tr>");
 	} else {
 		contentString=contentString.concat("<td>Coordinator Id: <a href='#' id='hoCoId'>"+coordHolonId+"</a></td><tr>");
 	}
@@ -631,4 +633,58 @@ function closeDiv(id) {
 
 function openDiv(id) {
 	$("#"+id).slideDown(100);
+}
+
+function removeIconFromMap(objectId){
+	var holonObjectMarkerIcon = globalHKList.get(objectId);
+	console.log(holonObjectMarkerIcon.icon);
+	var holonObject= globalHoList.get(objectId);
+	if(holonObjectMarkerIcon.icon="css/images/coordinator.png"){
+		holonObjectMarkerIcon.setVisible(false);
+	}
+	holonObjectMarkerIcon.setIcon("css/images/no_coordinator.png");
+	holonObjectMarkerIcon.setTitle("No Coordinator");
+	/*holonObjectMarkerIcon.setMap(null);
+	holonObjectMarkerIcon.setVisible(false)
+	delete globalHKList.objectId;
+	delete globalHoList.objectId;
+	globalHoList.set(holonObject);*/
+	
+	
+}
+
+function createIconOnMap(objectId){
+	
+	var holonObject= globalHoList.get(objectId);
+	var holonObjectPosition= holonObject.getBounds().getNorthEast();
+	if(globalHKList.get(objectId)== null){
+		var coordinatorIcon= new Marker({
+			map: map,
+			title: 'Holon Coordinator',
+			position: holonObjectPosition,
+			zIndex: 9,
+			icon: {
+				path: ROUTE,
+				fillColor: '#0E77E9',
+				fillOpacity: 0,
+				strokeColor: '',
+				strokeWeight: 0,
+				scale: 1/100
+			},
+			icon : 'css/images/coordinator.png'
+		});
+		globalHKList.set(objectId,coordinatorIcon);
+	}
+	
+	if(globalHKList.get(objectId).visible){
+		
+	}else{
+		globalHKList.get(objectId).visible=true;
+		globalHKList.get(objectId).setVisible(true);
+		globalHKList.get(objectId).setIcon("css/images/coordinator.png");
+		globalHKList.get(objectId).setTitle("Holon Coordinator");
+		
+	}
+ 
+ 
 }

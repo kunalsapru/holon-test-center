@@ -18,13 +18,13 @@ $(document)
 					window.areConnectedMode=false;
 					window.addPowerSourceMode=false;
 					window.addPowerSourceToLineMode=false;
+					window.disasterMode=false;
 					window.globalHoList=new Map(); //Holon Object
 					window.globalPlList=new Map(); //Power Line
 					window.globalPsList=new Map(); //Power Switch
 					window.globalHKList=new Map(); //Holon Coordinator
 					window.globalPCList=new Map(); //Power Circle
 					window.globalPSrcList=new Map(); //Power Source
-					window.globalHKIconList= new Map(); //Coordinator Icon
 					window.currentInfoWindowObject=null;
 					window.currentLineInfoWindowObject=null;
 					window.currentSwitchInfoWindow=null;

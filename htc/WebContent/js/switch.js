@@ -166,56 +166,52 @@ function SwitchOnOff(circleSwitch,powerSwitchId,infowindowHolonObject)
 	
 }
 
-function powerSwitchOnOffCallBack(data,options){	
+function powerSwitchOnOffCallBack(data,options){
 	var circleSwitch = options["circleSwitch"];
 	var infowindowHolonObject = options["infowindowHolonObject"];
 	var powerSwitchId = options["powerSwitchId"];
 	var content = infowindowHolonObject.getContent();
-	var newSwitchStatus = data;
+	var newSwitchStatus = data.split("*")[0];
+	var newCoordinatorIds= data.split("*")[1].split("!");
+	var oldCoordinatorIds=data.split("*")[2].split("!");
 /*	var hk1=data.split("*")[1];
 	var hk2= data.split("*")[2];*/
 	
 	if(newSwitchStatus== 1)
 		{
-		//alert("Abhinav");
 		circleSwitch.setOptions({strokeColor:'#0B6121',fillColor: '#0B6121'});
 		var newContent=content.replace("<b>Switch Status: </b>Off","<b>Switch Status: </b>On").replace("Switch On","Switch Off");
 		//alert("newSwitchStatus "+newSwitchStatus+" "+newContent);
 		infowindowHolonObject.setContent(newContent);
-		infowindowHolonObject.close();	
+		infowindowHolonObject.close();
 	
 		}
 	else{
-		//alert("Abhinava");
 		circleSwitch.setOptions({strokeColor:'#FF0000', fillColor: '#FF0000'});
 		var newContent=content.replace("<b>Switch Status: </b>On","<b>Switch Status: </b>Off").replace("Switch Off","Switch On");
 		infowindowHolonObject.setContent(newContent);
 		infowindowHolonObject.close();		
 		}
-	
-	/*if(hk1 != undefined ){
-		var holonObject = globalHoList.get(hk1);
-		var coordinatorLocation=holonObject.getBounds().getNorthEast();
-		//Returns marker of the image
-		var coordinatorIcon=createCoIcon(coordinatorLocation);
-		globalHKList.set(hk1,coordinatorIcon);
-		
+	if(oldCoordinatorIds != undefined ){
+		for(var i=0;i< oldCoordinatorIds.length-1; i++){
+			var oldCoordinatorId= oldCoordinatorIds[i];
+			removeIconFromMap(oldCoordinatorId);
+			
+		}
 	}
 	
-	if(hk2 != undefined ){
-		var holonObject = globalHoList.get(hk2);
-		var coordinatorLocation=holonObject.getBounds().getNorthEast();
-		//Returns marker of the image
-		var coordinatorIcon=createCoIcon(coordinatorLocation);
-		globalHKList.set(hk2,coordinatorIcon);
-		
-		
-	}*/
+	if (newCoordinatorIds != undefined){
+		for(var i=0;i< newCoordinatorIds.length-1;i++){
+			var newCoordinatorId= newCoordinatorIds[i];
+			createIconOnMap(newCoordinatorId);
+			
+		}
+	}
 	infowindowHolonObject.open(map,circleSwitch);
 	$('#togglePowerSwitch').click(function() {
 		SwitchOnOff(circleSwitch,powerSwitchId,infowindowHolonObject);			
-	})
-	showHolonCoIcons();
+	});
+
 }
 
 

@@ -120,7 +120,6 @@ function editPowerLineObjectCallBack(data, options){
 }
 
 function drawPoweLineCallBack(data, options){
-	
 	var newLineShape = options["lineShape"];
 	var path = options["path"];
 	var dataArray = data.split("!");
@@ -148,47 +147,24 @@ function drawPoweLineCallBack(data, options){
 		}
 	if(typeof isCoordinator != 'undefined' && typeof holonObjectId != 'undefined'){
 		if(isCoordinator=="Yes"){
-			//set coordinator icon for holonObject
-			//First HolonObject
-			var holonObject = globalHoList.get(holonObjectId);
-			coordinatorLocation=holonObject.getBounds().getNorthEast();
-			//Returns marker of the image
-			coordinatorIcon=createCoIcon(coordinatorLocation);
-			globalHKList.set(holonObjectId,coordinatorIcon);
-			console.log("Set id:"+holonObjectId+" in globalHKList");
-			console.log("getting value for id"+holonObjectId+":"+globalHKList.get(holonObjectId));
+			createIconOnMap(holonObjectId);
 		}
 		else{
-			var newCoordinatorId=dataArray[7];
-			var oldCoordinatorId= dataArray[8];
+			var newCoordinatorIds= dataArray[7].split("~");
+			var oldCoordinatorIds= dataArray[8].split("~");
 			
-			if(newCoordinatorId != undefined && oldCoordinatorId != undefined)
+			if(newCoordinatorIds != undefined && oldCoordinatorIds != undefined)
 				{
-				
-				 if(newCoordinatorId==oldCoordinatorId) {
-					 // Marker already present . Do nothing...
-				 }  
-				 else{
-					 var newCoordinatorObject = globalHoList.get(newCoordinatorId);
-					 var newCoordinatorLocation=newCoordinatorObject.getBounds().getNorthEast();
-					 if(globalHKList.get(newCoordinatorId) != null){
-						 // No need of icon
-					 }else{
-						 coordinatorIcon=createCoIcon(newCoordinatorLocation);
-						 globalHKList.set(newCoordinatorId,coordinatorIcon);
-						 console.log("Set new coordinator id:"+newCoordinatorId+" in globalHKList");
-					 }
-					 var oldCoordinatorObject= globalHoList.get(oldCoordinatorId);
-					 var oldCoordinatorIconMarker = globalHKList.get(oldCoordinatorId);
-					 console.log("old coordinator id:: "+oldCoordinatorId);
-						if(oldCoordinatorIconMarker != null){
-							console.log("old coordinator ");
-							oldCoordinatorIconMarker.setIcon("css/images/no_coordinator.png");
-							oldCoordinatorIconMarker.setMap(null);
-							oldCoordinatorIconMarker=null;
-							
+						for (var i=0;i< oldCoordinatorIds.length-1;i++){
+							var oldCoordinatorId= oldCoordinatorIds[i];
+							removeIconFromMap(oldCoordinatorId);
 						}
-				 }
+						for(var i=0;i< newCoordinatorIds.length-1; i++){
+							var newCoordinatorId =  newCoordinatorIds[i];
+							createIconOnMap(newCoordinatorId);
+						}
+						
+				
 				}
 			
 		}

@@ -28,7 +28,9 @@
 <script type="text/javascript" src="js/highcharts.js"></script>
 <script type="text/javascript" src="js/highcharts_exporting.js"></script>
 <script type="text/javascript" src="js/areConnected.js"></script>
+<script type="text/javascript" src="js/disasterMode.js"></script>
 <script src="js/sweetalert.min.js"></script>
+<script type="text/javascript" src="js/trigger.js"></script>
 </head>
 
 <body>
@@ -68,6 +70,7 @@
     </li>
 	<li><a href="#" id="clear"><i class="fa fa-eraser"></i>Clear Map</a></li>
 	<li><a href="view/dataGenerator.jsp" id="dataFactoryGenerator"><i class="fa fa-wrench"></i>Data Factory</a></li>
+	<li><a href="#" id="disasterMode"><i class="fa fa-ban"></i>Disaster Mode</a></li>
 	</ul>
 	
   <a href="#" id="showmenu"> <i class="fa fa-align-justify"></i> </a> </nav>
@@ -154,13 +157,13 @@
 					<tr>
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;Maximum Production Capacity:&nbsp;&nbsp;&nbsp;&nbsp;<input id="psMaxProdCap" type="text"></td>	
 					</tr>
-					</table>
+					</table><hr>
 					<table >
 					<tr>
 						<td><input id="cancelPowerObject" type='button' class="button"  value='Cancel' />&nbsp;&nbsp;&nbsp;&nbsp;
 						<input id="savePowerObject" type='button' class="button"  value='Save Power Source' /></td>	
 					</tr>					
-					</table>
+					</table><hr>
 						
 			</div>
 			
@@ -308,6 +311,5 @@
  	</div>
  	
 </div>
-<script type="text/javascript" src="js/trigger.js"></script>
 </body>
 </html>
