@@ -208,7 +208,7 @@ public class PowerSwitchAction extends CommonUtilities {
 		ArrayList<PowerLine> removeIndexListA = new ArrayList<PowerLine>();
 		ArrayList<PowerLine> removeIndexListB = new ArrayList<PowerLine>();
 		
-		if(powerLine != null) {
+		if(!(powerLine == null)) {
 			connectedPowerLines = getPowerLineService().getConnectedPowerLines(powerLine);
 		}
 		PowerLine powerLine2 = null;
@@ -216,7 +216,7 @@ public class PowerSwitchAction extends CommonUtilities {
 		for(int i =0; i< connectedPowerLines.size();i++) {
 			powerLine2 = connectedPowerLines.get(i);
 			powerSwitch = getPowerSwitchService().checkSwitchStatusBetweenPowerLines(powerLine, powerLine2);
-			if(powerSwitch != null){
+			if(!(powerSwitch == null)){
 				if(!powerSwitch.getStatus()) {
 					removeIndexListA.add(powerLine2);
 				}
@@ -233,13 +233,22 @@ public class PowerSwitchAction extends CommonUtilities {
 		}
 		for(PowerLine powerLine3 : connectedPowerLines) {
 			ArrayList<PowerLine> tempConnectedPowerLines = getPowerLineService().getConnectedPowerLines(powerLine3);
-
+			int indexToRemove = -1;
+			for(int i=0; i<tempConnectedPowerLines.size(); i++) {
+				PowerLine powerLine4 = tempConnectedPowerLines.get(i);
+				if(powerLine4.getId().equals(powerLineId)) {
+					indexToRemove = i;
+				}
+			}
+			if(indexToRemove>= 0 ) {
+				tempConnectedPowerLines.remove(indexToRemove);
+			}
 			PowerLine powerLineTemp = null;
 			PowerSwitch powerSwitchTemp = null;
 			for(int i =0; i< tempConnectedPowerLines.size();i++) {
 				powerLineTemp = tempConnectedPowerLines.get(i);
-				powerSwitchTemp = getPowerSwitchService().checkSwitchStatusBetweenPowerLines(powerLine, powerLineTemp);
-				if(powerSwitchTemp != null){
+				powerSwitchTemp = getPowerSwitchService().checkSwitchStatusBetweenPowerLines(powerLine3, powerLineTemp);
+				if(!(powerSwitchTemp == null)) {
 					if(!powerSwitchTemp.getStatus()) {
 						removeIndexListB.add(powerLineTemp);
 					}
