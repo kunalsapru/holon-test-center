@@ -30,7 +30,6 @@
 <script type="text/javascript" src="js/areConnected.js"></script>
 <script type="text/javascript" src="js/disasterMode.js"></script>
 <script src="js/sweetalert.min.js"></script>
-<script type="text/javascript" src="js/trigger.js"></script>
 </head>
 
 <body>
@@ -308,8 +307,8 @@
 	</td>
 	</tr>
 	</table> 	
- 	</div>
- 	
+ 	</div>	
 </div>
+<script type="text/javascript" src="js/trigger.js"></script>
 </body>
 </html>
