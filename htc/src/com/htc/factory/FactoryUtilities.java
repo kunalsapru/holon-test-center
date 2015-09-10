@@ -93,8 +93,10 @@ public class FactoryUtilities extends CommonUtilities{
 					holonElement.setHolonElementType(holonElementType);
 					holonElement.setHolonObject(holonObject2);
 					//Calling service method to save the Element in database and saving the auto-incremented ID in an integer
-					getHolonElementService().persist(holonElement);
+					Integer newHolonElementID = getHolonElementService().persist(holonElement);
+					System.out.println("NewLy Generated Holon Element ID --> "+newHolonElementID);
 				}
+				
 				noOfObjects --;
 			}
 		}

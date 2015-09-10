@@ -172,31 +172,30 @@ function powerSwitchOnOffCallBack(data,options){
 	var powerSwitchId = options["powerSwitchId"];
 	var content = infowindowHolonObject.getContent();
 	var newSwitchStatus = data.split("*")[0];
-	var newCoordinatorIds= data.split("*")[1].split("!");
-	var oldCoordinatorIds=data.split("*")[2].split("!");
-/*	var hk1=data.split("*")[1];
-	var hk2= data.split("*")[2];*/
-	
-	if(newSwitchStatus== 1)
-		{
+	var newCoordinatorIds = undefined;
+	if(data.split("*")[1] != undefined) {
+		newCoordinatorIds = data.split("*")[1].split("!");
+	}
+	var oldCoordinatorIds = undefined;
+	if(data.split("*")[2] != undefined) {
+		oldCoordinatorIds=data.split("*")[2].split("!");
+	}
+	if(newSwitchStatus== 1) {
 		circleSwitch.setOptions({strokeColor:'#0B6121',fillColor: '#0B6121'});
 		var newContent=content.replace("<b>Switch Status: </b>Off","<b>Switch Status: </b>On").replace("Switch On","Switch Off");
 		//alert("newSwitchStatus "+newSwitchStatus+" "+newContent);
 		infowindowHolonObject.setContent(newContent);
 		infowindowHolonObject.close();
-	
-		}
-	else{
+	} else {
 		circleSwitch.setOptions({strokeColor:'#FF0000', fillColor: '#FF0000'});
 		var newContent=content.replace("<b>Switch Status: </b>On","<b>Switch Status: </b>Off").replace("Switch Off","Switch On");
 		infowindowHolonObject.setContent(newContent);
 		infowindowHolonObject.close();		
-		}
+	}
 	if(oldCoordinatorIds != undefined ){
 		for(var i=0;i< oldCoordinatorIds.length-1; i++){
 			var oldCoordinatorId= oldCoordinatorIds[i];
 			removeIconFromMap(oldCoordinatorId);
-			
 		}
 	}
 	
@@ -204,14 +203,10 @@ function powerSwitchOnOffCallBack(data,options){
 		for(var i=0;i< newCoordinatorIds.length-1;i++){
 			var newCoordinatorId= newCoordinatorIds[i];
 			createIconOnMap(newCoordinatorId);
-			
 		}
 	}
 	infowindowHolonObject.open(map,circleSwitch);
 	$('#togglePowerSwitch').click(function() {
 		SwitchOnOff(circleSwitch,powerSwitchId,infowindowHolonObject);			
 	});
-
 }
-
-
