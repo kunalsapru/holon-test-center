@@ -79,7 +79,7 @@ public class FactoryUtilities extends CommonUtilities{
 				//Adding 10 Holon Elements to the newly generated Holon Object
 				for(int i=0; i<10; i++) {
 					Integer holonElementTypeId = randomNumber(1, 6);// Replace this with hibernate function to get minimum and maximum ID of holonElementType in DB.
-					Integer holonElementStateId = randomNumber(1, 2);// Replace this with hibernate function to get minimum and maximum ID of holonElementState in DB.
+					Integer holonElementStateId = 1;//Setting state to ON
 					HolonElementType holonElementType = getHolonElementTypeService().findById(holonElementTypeId);
 					HolonElementState holonElementState = getHolonElementStateService().findById(holonElementStateId);
 
