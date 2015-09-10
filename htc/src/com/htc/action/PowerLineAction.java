@@ -18,7 +18,7 @@ public class PowerLineAction extends CommonUtilities {
 	public void drawPowerLine() {
 		try {
 			Boolean isConnected = getRequest().getParameter("isConnected")!=null?Boolean.parseBoolean(getRequest().getParameter("isConnected")):false;
-			Integer maxCapacity = getRequest().getParameter("maxCapacity")!=null?Integer.parseInt(getRequest().getParameter("maxCapacity")):0;
+			Integer maxCapacity = getRequest().getParameter("maxCapacity")!=null && getRequest().getParameter("maxCapacity") != ""?Integer.parseInt(getRequest().getParameter("maxCapacity")):0;
 			String powerLineType = getRequest().getParameter("powerLineType")!=null?getRequest().getParameter("powerLineType"):ConstantValues.MAINLINE;
 			String reasonDown = getRequest().getParameter("reasonDown")!=null?getRequest().getParameter("reasonDown"):"";
 			Double latStart = getRequest().getParameter("latStart")!=null?Double.parseDouble(getRequest().getParameter("latStart")):0D;
