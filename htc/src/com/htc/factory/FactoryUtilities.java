@@ -74,6 +74,7 @@ public class FactoryUtilities extends CommonUtilities{
 				holonObject.setTrustValue(new BigDecimal(Math.random()));
 				//Calling service method to save the object in database and saving the auto-incremented ID in an integer
 				newHolonObjectId = getHolonObjectService().persist(holonObject);
+				HolonObject holonObject2 = getHolonObjectService().findById(newHolonObjectId);
 				System.out.println("New HolonObject ID = "+newHolonObjectId);
 
 				//Adding 10 Holon Elements to the newly generated Holon Object
@@ -90,12 +91,10 @@ public class FactoryUtilities extends CommonUtilities{
 					holonElement.setCurrentCapacity(currentCapacity);
 					holonElement.setHolonElementState(holonElementState);
 					holonElement.setHolonElementType(holonElementType);
-					holonElement.setHolonObject(holonObject);
+					holonElement.setHolonObject(holonObject2);
 					//Calling service method to save the Element in database and saving the auto-incremented ID in an integer
-					Integer newHolonElementID = getHolonElementService().persist(holonElement);
-					System.out.println("NewLy Generated Holon Element ID --> "+newHolonElementID);
+					getHolonElementService().persist(holonElement);
 				}
-				
 				noOfObjects --;
 			}
 		}
