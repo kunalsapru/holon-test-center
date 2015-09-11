@@ -3,7 +3,7 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated 16 Aug, 2015 3:28:11 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="com.htc.hibernate.pojo.EnergyState" table="energy_state" catalog="htc" optimistic-lock="version">
+    <class name="com.htc.hibernate.pojo.EnergyState" table="energy_state" catalog="group1_htc" optimistic-lock="version">
         <id name="id" type="int">
             <column name="id" />
             <generator class="increment" />

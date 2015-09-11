@@ -6,9 +6,9 @@
     <session-factory name="HibernateSessionFactory">
         <property name="hibernate.connection.driver_class">org.gjt.mm.mysql.Driver</property>
         <property name="hibernate.connection.password">root</property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/htc</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/group1_htc</property>
         <property name="hibernate.connection.username">root</property>
-<!--         <property name="hibernate.default_schema">htc</property> -->
+<!--         <property name="hibernate.default_schema">group1_htc</property> -->
         <property name="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
         <property name="hibernate.search.autoregister_listeners">false</property>
         <property name="hibernate.validator.apply_to_ddl">false</property>
