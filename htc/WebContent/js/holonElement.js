@@ -206,7 +206,6 @@ function updateCoordinatorCallBack(data,options)
 			  holonObjectId : holonObjectId,
 			}
 	 ajaxRequest("getHolonObjectInfoWindow", dataAttributes, getHolonInfoWindowCallBack, {});
-	console.log(data);
 }
 
 

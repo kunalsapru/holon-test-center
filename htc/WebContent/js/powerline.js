@@ -153,19 +153,23 @@ function drawPoweLineCallBack(data, options){
 			var newCoordinatorIds= dataArray[7].split("~");
 			var oldCoordinatorIds= dataArray[8].split("~");
 			
-			if(newCoordinatorIds != undefined && oldCoordinatorIds != undefined)
+			if(oldCoordinatorIds != undefined)
 				{
 						for (var i=0;i< oldCoordinatorIds.length-1;i++){
 							var oldCoordinatorId= oldCoordinatorIds[i];
 							removeIconFromMap(oldCoordinatorId);
 						}
-						for(var i=0;i< newCoordinatorIds.length-1; i++){
-							var newCoordinatorId =  newCoordinatorIds[i];
-							createIconOnMap(newCoordinatorId);
-						}
+				}
+			if(newCoordinatorIds != undefined){
+				for(var i=0;i< newCoordinatorIds.length-1; i++){
+					var newCoordinatorId =  newCoordinatorIds[i];
+					createIconOnMap(newCoordinatorId);
+				}
+			}
+						
 						
 				
-				}
+				
 			
 		}
 	}

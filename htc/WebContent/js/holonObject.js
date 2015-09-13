@@ -242,7 +242,6 @@ function getHolonInfoWindowCallBack(data,options) {
 			"<tr><td><b>Holon Object Id: "+holonObjectId +"</td>"+
 			"<td>Holon Object Type: "+holonObjectTypeName+"</td></tr>"+
 			"<tr><td>Line Connected State: "+lineConnectedState+"</td>";
-	console.log(contentString);
 	if(coordHolonId==0) {
 		contentString=contentString.concat("<td>Coordinator Id: No Coordinator</td></tr>");
 	} else if(coordHolonId==-1) {
@@ -472,7 +471,7 @@ function getDetailForPowerSourceIconCallBack(data,options)
 	if(typeof(currecntPC) === "undefined")
 		{
 		if(hasPower=="true")
-		 {    
+		 { 
 			    currecntPC = new Marker({
 					map: map,
 					title: 'Power Producer',
@@ -493,9 +492,10 @@ function getDetailForPowerSourceIconCallBack(data,options)
 			
 			}else
 				{
-			
 					if(hasPower=="true"){
-						//alert(powerColor);
+						//remove old icon
+						currecntPC.setVisible(false);
+						//Create new Icon
 						currecntPC = new Marker({
 							map: map,
 							title: 'Power Producer',
@@ -511,6 +511,8 @@ function getDetailForPowerSourceIconCallBack(data,options)
 							},
 							icon: iconImage
 						});
+						currecntPC.setIcon(iconImage);
+						console.log(currecntPC);
 						
 						//currntPC.setOptions({strokeColor:powerColor, fillColor:powerColor,center:new google.maps.LatLng(ne_location_lat, sw_location_lng)});
 					}else
