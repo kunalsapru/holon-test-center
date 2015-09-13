@@ -426,13 +426,25 @@ public class CommonUtilities extends AbstractAction{
 			Holon randomHolon = getHolonService().findById(randomHolonId);
 			 if(existingHolon != null) {
 				 immediateHolonObject.setHolon(existingHolon);
-				 } else {
-					 immediateHolonObject.setHolon(randomHolon);
-					 immediateHolonObject.setHolon(randomHolon);
-					 }
-			immediateHolonObject.setHolon(randomHolon);
+			 } else {
+				 immediateHolonObject.setHolon(randomHolon);
+			 }
 			immediateHolonObject.setIsCoordinator(true);
 			getHolonObjectService().merge(immediateHolonObject);
+		}
+		//Code to assign holonCoordinator to already existing power source
+		for(PowerLine powerLine2 : connectedPowerLines) {
+			if(powerLine2.getPowerSource() != null && powerLine2.getPowerSource().getHolonCoordinator() == null) {
+				Holon holon = null;
+				immediateHolonObject = getHolonObjectService().findById(immediateHolonObjectId);
+				if(immediateHolonObject != null && immediateHolonObject.getHolon() != null) {
+					holon = immediateHolonObject.getHolon();
+					HolonObject holonCoordinator = findConnectedHolonCoordinatorByHolon(holon, powerLine2);
+					PowerSource powerSource = powerLine2.getPowerSource();
+					powerSource.setHolonCoordinator(holonCoordinator);
+					getPowerSourceService().merge(powerSource);
+				}
+			}
 		}
 
 	}

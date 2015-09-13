@@ -339,7 +339,7 @@ function getHolonInfoWindowCallBack(data,options) {
 			zoomToHolon(coordHolonId,coOrd_ne_location,"Holon Object");			
 	});
 	$('#checkInbox').click(function() {
-		checkInbox(holonObjectId);
+		checkInbox(holonObjectId, canCommunicate);
 	});
 	$("#distributeEnergyAmongHolonObjects").click(function(){
 		distributeEnergyAmongHolonObjects(holonObjectId);
@@ -371,7 +371,7 @@ function zoomToHolon(holonObjectId,neLoc, type) {
 				  holonObjectId : holonObjectId
 				};
 		 ajaxRequest("getHolonObjectInfoWindow", dataAttributes, getHolonInfoWindowCallBack, {});
-	} else {
+	} else if(type=="Power Source"){
 		var dataAttributes= {
 				  psId : holonObjectId,
 				};
@@ -379,7 +379,7 @@ function zoomToHolon(holonObjectId,neLoc, type) {
 				  powerSrc : globalPSrcList.get(holonObjectId.toString()),
 				};
 		 ajaxRequest("getPsObjectInfoWindow", dataAttributes, getPsObjectInfoWindowCallBack, option);			
-		}
+	}
 	map.setCenter(location);
 	map.setZoom(18);
 }

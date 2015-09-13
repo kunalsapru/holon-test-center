@@ -24,19 +24,17 @@ $(document).ready(function() {
 	$(document).bind("click",".linkHolonObject",function(event) {
 		var id=event.target.id;
 		var holonObject = globalHoList.get(id);
-		if(holonObject !=undefined && holonObject.getBounds()!= undefined){
+		if(holonObject !=undefined && holonObject.getBounds()!= undefined && event.toElement.className=="linkHolonObject"){
 			var holonObjectLocation=holonObject.getBounds().getNorthEast().lat()+"~"+holonObject.getBounds().getNorthEast().lng();
 		    zoomToHolon(id,holonObjectLocation, "Holon Object")
-		    console.log(holonObjectLocation);
 		}
 	});
 	$(document).bind("click",".linkPowerSource",function(event) {
 		var id=event.target.id;
 		var powerSource = globalPSrcList.get(id);
-		if(powerSource !=undefined && powerSource.getBounds()!= undefined){
+		if(powerSource !=undefined && powerSource.getBounds()!= undefined && event.toElement.className=="linkPowerSource"){
 			var powerSourceLocation=powerSource.getBounds().getNorthEast().lat()+"~"+powerSource.getBounds().getNorthEast().lng();
 		    zoomToHolon(id,powerSourceLocation, "Power Source")
-		    console.log(powerSource);
 		}
 	});
 })
@@ -87,8 +85,10 @@ function getDataForSupplierDetailsCallBack(data,options) {
 		contentString = contentString.concat("<tr><td>"+requestId+"</td><td>"+typeSupplier+"</td>");
 		if(typeSupplier == "Holon Object") {
 			contentString = contentString.concat("<td><a href='#' class='linkHolonObject' id='"+idSupplier+"'>"+idSupplier+"</a></td>");
-		} else {
+		} else if(typeSupplier == "Power Source") {
 			contentString = contentString.concat("<td><a href='#' class='linkPowerSource' id='"+idSupplier+"'>"+idSupplier+"</a></td>");
+		} else {
+			contentString = contentString.concat("<td>"+idSupplier+"</td>");
 		}
 		
 		contentString = contentString.concat("<td>"+
