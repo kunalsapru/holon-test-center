@@ -21,6 +21,13 @@ function showHolonElementsCallBack(data, options) {
 			
 	  });
 	$("#holonElementsListBody").html(data);
+	if(data.indexOf("noData") >= 0){
+		var currecntPC=globalPCList.get(holonObjectId.toString());
+		if(currecntPC != undefined){
+			//All items have been removed.
+			currecntPC.setVisible(false);
+		}
+	}
 	openDiv("divHolonElementsDetail");
 }
 

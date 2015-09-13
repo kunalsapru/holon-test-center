@@ -172,7 +172,7 @@ public class HolonElementAction extends CommonUtilities {
 				listElements.append("</tr>");
 			}
 		} else {
-			listElements.append("<tr><td colspan=\"10\">No Elements found! Please click on Add Holon Element to add some.</td> ");
+			listElements.append("<tr><td colspan=\"10\" class=\"noData\">No Elements found! Please click on Add Holon Element to add some.</td> ");
 		}
 		return listElements;
 	}
