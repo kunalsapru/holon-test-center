@@ -15,10 +15,12 @@ function showHolonElementsCallBack(data, options) {
 		getListHolonElementState();
 		openDiv('elementInfo');
 	});
-	$("#saveElementInfo").click(function(){
-		
-			addHolonElement();
-			
+	$("#saveElementInfo").click(function(event){
+		//This code will prevent event from firing more than once
+		if(event.handled !== true) {
+		  event.handled = true;
+		  addHolonElement();
+		}
 	  });
 	$("#holonElementsListBody").html(data);
 	if(data.indexOf("noData") >= 0){
@@ -103,14 +105,11 @@ function getListHolonElementTypeCallBack(data,options) {
 }
 }
 
-function getListHolonElementState(state)
-{
+function getListHolonElementState(state) {
 	var options={};
-	if(typeof state != "undefined")
-		{
+	if(typeof state != "undefined") {
 		options={state:state};
-		}
-	
+	}
 	ajaxRequest("getListHolonElementState", {}, getListHolonElementStateCallBack,options);
 }
 
@@ -132,12 +131,11 @@ function getListHolonElementStateCallBack(data,options) {
 	}
 }
 
-function addHolonElement(){
+function addHolonElement() {
 	var holonElementTypeId=$("#holonElementType option:selected").val();
 	var holonElementStateId=$("#holonElementState option:selected").val();
 	var currentCapacity=$("#currentCapacity").val();
 	var usage=$("#usage").val();
-
 	var holonObjectId = $("#hiddenHolonObjectId").val();
 	var holonElementActionState = $("#holonElementActionState").val();
 	var holonElementId = $("#hiddenHolonElementId").val();
@@ -197,22 +195,17 @@ function editHolonElement(holonElementId,holonElementTypeId,state,currentCapacit
 	openDiv('elementInfo');
 }
 
-function updateCoordinator(holonObjectId)
-{
+function updateCoordinator(holonObjectId) {
 	var options= {
 			  holonObjectId : holonObjectId,
 			}
 	ajaxRequest("updateCoordinator", {}, updateCoordinatorCallBack, options);
-
 }
 
-function updateCoordinatorCallBack(data,options)
-{
+function updateCoordinatorCallBack(data,options) {
 	var holonObjectId=options['holonObjectId'];
 	var dataAttributes= {
 			  holonObjectId : holonObjectId,
 			}
 	 ajaxRequest("getHolonObjectInfoWindow", dataAttributes, getHolonInfoWindowCallBack, {});
 }
-
-
