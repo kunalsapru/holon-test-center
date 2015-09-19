@@ -1,6 +1,7 @@
 package com.htc.service;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.htc.serviceImpl.DisasterServiceImpl;
 import com.htc.serviceImpl.HolonElementServiceImpl;
 import com.htc.serviceImpl.HolonElementStateServiceImpl;
 import com.htc.serviceImpl.HolonElementTypeServiceImpl;
@@ -32,6 +33,8 @@ public abstract class ServiceAware extends ActionSupport {
 	private PowerSwitchService powerSwitchService = new PowerSwitchServiceImpl();
 	private PowerSourceService powerSourceService = new PowerSourceServiceImpl();
 	private SupplierService supplierService = new SupplierServiceImpl();
+	private DisasterService disasterService = new DisasterServiceImpl();
+	
 	
 	public HolonService getHolonService() {
 		return holonService;
@@ -102,5 +105,10 @@ public abstract class ServiceAware extends ActionSupport {
 	public void setSupplierService(SupplierService supplierService) {
 		this.supplierService = supplierService;
 	}
-	
+	public DisasterService getDisasterService() {
+		return disasterService;
+	}
+	public void setDisasterService(DisasterService disasterService) {
+		this.disasterService = disasterService;
+	}
 }

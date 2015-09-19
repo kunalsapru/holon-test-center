@@ -169,6 +169,10 @@
 		<action name="checkInbox" class="com.htc.action.HolonObjectAction" method="checkInbox" />
 		<action name="distributeEnergyAmongHolonObjects" class="com.htc.action.HolonObjectAction" method="distributeEnergyAmongHolonObjects" />
 		<action name="historyDistributeEnergyAmongHolonObjects" class="com.htc.action.HolonObjectAction" method="historyDistributeEnergyAmongHolonObjects" />
+		
+		<!-- Disaster related actions -->
+		<action name="getAllPointsInsideCircle" class="com.htc.action.PowerLineAction" method="getAllPointsInsideCircle" />
+		
 	</package>
 
 </struts>

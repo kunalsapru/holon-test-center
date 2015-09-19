@@ -22,6 +22,7 @@ public class PowerLine implements java.io.Serializable {
 	private String reasonDown;
 	private Set<?> powerSwitchesForPowerLineA = new HashSet<Object>(0);
 	private Set<?> powerSwitchesForPowerLineB = new HashSet<Object>(0);
+	private Disaster disaster;
 
 	public PowerLine() {
 	}
@@ -129,4 +130,13 @@ public class PowerLine implements java.io.Serializable {
 	public void setPowerSwitchesForPowerLineB(Set<?> powerSwitchesForPowerLineB) {
 		this.powerSwitchesForPowerLineB = powerSwitchesForPowerLineB;
 	}
+	
+	public Disaster getDisaster() {
+		return disaster;
+	}
+
+	public void setDisaster(Disaster disaster) {
+		this.disaster = disaster;
+	}
+
 }

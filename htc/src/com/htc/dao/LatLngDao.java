@@ -12,5 +12,6 @@ public interface LatLngDao {
 	public boolean delete(LatLng persistentInstance);
 	public ArrayList<LatLng> getAllLatLng();
 	public ArrayList<LatLng> findByLocation(Double lat, Double lng);
+	public ArrayList<LatLng> findAllLatLngInsideTheCircle(Double lat, Double lng,Double radius);
 
 }

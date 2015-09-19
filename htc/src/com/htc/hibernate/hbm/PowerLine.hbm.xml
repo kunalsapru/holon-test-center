@@ -20,6 +20,9 @@
         <many-to-one name="powerSource" class="com.htc.hibernate.pojo.PowerSource" fetch="select" lazy="false">
             <column name="power_source" />
         </many-to-one>
+        <many-to-one name="disaster" class="com.htc.hibernate.pojo.Disaster" fetch="select" lazy="false">
+            <column name="disaster" />
+        </many-to-one>
         <property name="type" type="string">
             <column name="type" not-null="true" />
         </property>
@@ -47,5 +50,6 @@
             </key>
             <one-to-many class="com.htc.hibernate.pojo.PowerSwitch" />
         </set>
+        
     </class>
 </hibernate-mapping>

@@ -269,7 +269,7 @@ public class HolonObjectAction extends CommonUtilities {
 		for(int i=0;i<holonElementList.size();i++) {
 			if(holonElementList.get(i).getHolonElementType().getProducer()) {
 				hasPower=true;
-				if(hasPower) {
+				if(hasPower && !hasPowerOn) {
 					hasPowerOn=holonElementList.get(i).getHolonElementState().getId()==1?true:false;
 				}
 			}

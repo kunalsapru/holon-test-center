@@ -38,4 +38,11 @@ public class LatLngServiceImpl extends AbstractService implements LatLngService 
 		return getLatLngDao().findByLocation(lat,lng);
 	}
 
+	@Override
+	public ArrayList<LatLng> findAllLatLngInsideTheCircle(Double lat,
+			Double lng, Double radius) {
+		// TODO Auto-generated method stub
+		return getLatLngDao().findAllLatLngInsideTheCircle(lat,lng,radius);
+	}
+
 }

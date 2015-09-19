@@ -50,5 +50,11 @@
             </key>
             <one-to-many class="com.htc.hibernate.pojo.PowerSwitch" />
         </set>
+        <set name="disasters" table="disaster" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="center" not-null="true" />
+            </key>
+            <one-to-many class="com.htc.hibernate.pojo.Disaster" />
+        </set>
     </class>
 </hibernate-mapping>

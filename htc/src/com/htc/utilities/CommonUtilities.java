@@ -904,5 +904,20 @@ public class CommonUtilities extends AbstractAction{
 
 		return mapOfCoordinatorsOfAllHolons;
 	}
+	
+	public Map<Integer, PowerLine> getListOfAllPowerLineIdsInsideCircle(Double latitudeOfCircle,Double longitudeOfCircle,Double radiusOfCircle){
+		ArrayList<LatLng> listOfAllLatLngIdsInsideCircle= getLatLngService().findAllLatLngInsideTheCircle(latitudeOfCircle, longitudeOfCircle, radiusOfCircle);
+		Map<Integer, PowerLine> mapOfAllPowerLinesInsideCircles = new TreeMap<Integer, PowerLine>();
+		for(LatLng latLng : listOfAllLatLngIdsInsideCircle){
+			ArrayList<PowerLine> powerLineListFromLatLng = getPowerLineService().getPowerLineFromLatLng(latLng);
+			for(PowerLine powerLine : powerLineListFromLatLng){
+				System.out.println("OUTSIDE MAP LOOP --> "+powerLine.getId());
+				if(!mapOfAllPowerLinesInsideCircles.containsKey(powerLine.getId())) {
+					mapOfAllPowerLinesInsideCircles.put(powerLine.getId(), powerLine);
+				}
+			}
+		}
+		return mapOfAllPowerLinesInsideCircles;
+	}
  
 }

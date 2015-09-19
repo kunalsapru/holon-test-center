@@ -20,7 +20,16 @@ function disasterModeSelected(){
 		google.maps.event.addListener(disasterModeDrawingManager, 'overlaycomplete', function(event) {
 			var disasterObjectShape = event.overlay; // Object
 			disasterObjectShape.type = event.type;	// Circle
-			console.log(event.overlay);
+			//event.setVisible(false);
+			var lat=event.overlay.center.lat();
+			var lng=event.overlay.center.lng();
+			var radius=event.overlay.radius;
+			var dataAttributes= {
+					latitude : lat,
+					longitude : lng,
+					radius : radius
+					};
+			ajaxRequest("getAllPointsInsideCircle", dataAttributes, getAllPointsInsideCircleCallback, {});
 			
 	   
 	});
@@ -30,4 +39,8 @@ function disasterModeSelected(){
 		disasterMode=false;
 	}
 
+}
+
+function getAllPointsInsideCircleCallback(data,options){
+	console.log("Data is"+data);
 }

@@ -185,4 +185,24 @@ public class PowerLineHome {
 		return powerLine;
 	}
 
+	@SuppressWarnings("unchecked")
+	public ArrayList<PowerLine> getPowerLineFromLatLng(LatLng latLng){
+		Session session = null;
+		Transaction tx = null;
+		ArrayList<PowerLine> listPowerLine = null;
+		try {
+			session = HibernateSessionFactory.getSessionFactory().getCurrentSession();
+			tx = session.beginTransaction();
+			Query query = session.createQuery("from PowerLine p where p.latLngBySource=:latLng or p.latLngByDestination =:latLng");
+			query.setEntity("latLng", latLng);
+			listPowerLine = (ArrayList<PowerLine>) query.list();
+			tx.commit();
+		} catch (RuntimeException re) {
+			System.out.println("getPowerLineFromLatLngId failed");
+			tx.rollback();
+		} finally {
+			HibernateSessionFactory.closeSession();
+		}
+		return listPowerLine;
+	}
 }

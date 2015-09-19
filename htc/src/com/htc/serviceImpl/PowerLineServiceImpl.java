@@ -3,6 +3,7 @@ package com.htc.serviceImpl;
 import java.util.ArrayList;
 
 import com.htc.hibernate.pojo.HolonObject;
+import com.htc.hibernate.pojo.LatLng;
 import com.htc.hibernate.pojo.PowerLine;
 import com.htc.hibernate.pojo.PowerSource;
 import com.htc.service.AbstractService;
@@ -56,6 +57,12 @@ public class PowerLineServiceImpl extends AbstractService implements PowerLineSe
 	public PowerLine getPowerLineByPowerSource(PowerSource powerSource) {
 		// TODO Auto-generated method stub
 		return getPowerLineDao().getPowerLineByPowerSource(powerSource);
+	}
+
+	@Override
+	public ArrayList<PowerLine> getPowerLineFromLatLng(LatLng latLng) {
+		// TODO Auto-generated method stub
+		return getPowerLineDao().getPowerLineFromLatLng(latLng);
 	}
 
 }

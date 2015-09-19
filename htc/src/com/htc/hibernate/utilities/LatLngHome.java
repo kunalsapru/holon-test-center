@@ -135,5 +135,35 @@ public class LatLngHome {
 		}
 		return listLatLng;
 	}
-
+public ArrayList<LatLng> findAllLatLngInsideTheCircle(Double lat,Double lng,Double radius){
+	Session session = null;
+	Transaction tx = null;
+	ArrayList<LatLng> listLatLng = null;
+	try {
+		session = HibernateSessionFactory.getSessionFactory().getCurrentSession();
+		tx = session.beginTransaction();
+		String queryStr = "from LatLng l group by l.id having ( 6371377 * acos( cos( radians("+lat+") ) * cos( radians( l.latitude ) ) * cos( radians( l.longitude ) - "
+				+ "radians("+lng+") ) + sin( radians("+lat+") ) * sin( radians( l.latitude ) ) ) ) <"+radius;
+		Query qr= session.createQuery(queryStr);
+//		qr.setDouble("latitude", lat);
+//		qr.setParameter("longitude", lng);
+		//qr.setParameter("radius", radius);
+		listLatLng =  (ArrayList<LatLng>) qr.list();
+		tx.commit();
+		return listLatLng;
+	} catch (RuntimeException re) {
+		log.info("Exception --> "+re.getMessage());
+		re.printStackTrace();
+		tx.rollback();
+	} finally {
+		HibernateSessionFactory.closeSession();
+	}
+	if(listLatLng!= null){
+		System.out.println("size is"+listLatLng.size());
+		}else{
+			System.out.println("size is null");
+	}
+	
+	return listLatLng;
+ }
 }

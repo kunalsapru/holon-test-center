@@ -48,5 +48,12 @@ public class LatLngDaoImpl implements LatLngDao {
 		return getLatLngHome().findByLocation(lat,lng);
 	}
 
+	@Override
+	public ArrayList<LatLng> findAllLatLngInsideTheCircle(Double lat,
+			Double lng, Double radius) {
+		// TODO Auto-generated method stub
+		return getLatLngHome().findAllLatLngInsideTheCircle(lat,lng,radius);
+	}
+
 
 }
