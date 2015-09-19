@@ -184,6 +184,7 @@ function getPsObjectInfoWindowCallBack(data,option) {
 	var minProd=resp[6];
 	var latCenter=resp[7];
 	var lngCenter=resp[8];
+	var holonName = resp[10];
 	var flexibility = resp[11];
 	var powerSrc=option['powerSrc'];
 	var powerStatusVal="Producing";
@@ -200,7 +201,7 @@ function getPsObjectInfoWindowCallBack(data,option) {
 		if(CoHolonId==0) {
 			contentString=contentString.concat("<tr><td>Coordinator Id: Not Part of any Holon</td>");
 		} else {
-			contentString=contentString.concat("<tr><td>Coordinator Id: <a href='#' id='CoHolonId'>"+CoHolonId+"</a></td>");
+			contentString=contentString.concat("<tr><td>Coordinator Id: <a href='#' id='CoHolonId'>"+CoHolonId+"</a> ("+holonName+" Holon)</td>");
 		}
 		contentString=contentString.concat("<td>Minimum Production Capacity: "+minProd+"</td></tr>");
 		if(flexibility > 0) {
