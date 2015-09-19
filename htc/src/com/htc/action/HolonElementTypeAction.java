@@ -44,9 +44,12 @@ public class HolonElementTypeAction extends CommonUtilities {
 	public void editHolonElementType(){
 		Integer holonElementTypeId = getRequest().getParameter("holonElementTypeId")!=null?
 				Integer.parseInt(getRequest().getParameter("holonElementTypeId")):0;//Getting HE ID value from JSP
+		String holonElementTypeName = getRequest().getParameter("holonElementTypeName")!=null?
+						getRequest().getParameter("holonElementTypeName"):"Default Value";//Getting HE name value from JSP
+				
 		HolonElementType holonElementType = getHolonElementTypeService().findById(holonElementTypeId); // Fetching holon element type from database
 				
-		holonElementType.setName("Kunal"); // Setting new values in HE type object
+		holonElementType.setName(holonElementTypeName); // Setting new values in HE type object
 
 		//Editing holon element type object and saving in database 
 		HolonElementType holonElementType2 = getHolonElementTypeService().merge(holonElementType);
