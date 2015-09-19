@@ -273,7 +273,6 @@ function getHolonInfoWindowCallBack(data,options) {
 	contentString = contentString.concat(
 			"<td>Created from factory: "+createdFromFactory+"</td></tr>" +
 			"</table>"+
-			"<hr>"+
 			"<table><tr><td colspan='2' style='text-align: center;'>"+
 			"<span class='button' id='supplierDetails' title='Show Supplier Details' onclick='showSupplierDetails("+holonObjectId+")'><i class='fa fa-bolt'>&nbsp;Supplier Details</i></span>"+
 			"&nbsp;&nbsp;&nbsp;&nbsp;"+
@@ -284,11 +283,11 @@ function getHolonInfoWindowCallBack(data,options) {
 			"<span class='button' id='showHolonElement' title='Show Holon Elements' onclick='showHolonElements("+holonObjectId+")'><i class='fa fa-info'>&nbsp;Holon Elements</i></span>" +
 			"&nbsp;&nbsp;&nbsp;&nbsp;"+
 			"<span class='button' id='checkInbox' title='Inbox'><i class='fa fa-list'>&nbsp;Inbox</i></span>"+
-			"</td></tr></table><hr>");
+			"</td></tr></table>");
 	if(coordHolonId===holonObjectId) {
 		contentString = contentString.concat(
-				"<table>"+
-				"<tr><td colspan='2' style='text-decoration: underline;'>Holon ("+holonColor+") Details</td></tr>" +
+				"<hr /><table>"+
+				"<tr><td colspan='2' style='text-decoration: underline;'>Holon Details ("+holonColor+")</td></tr>" +
 				"<tr><td>Number of Holon Objects: "+nOfHolonObj +"</td>"+
 				"<td>Minimum Energy Req:"+minEnergyHo +"</td></tr>"+
 				"<tr><td>Maximum Energy Req: "+maxEnergyHo +"</td>");
@@ -319,7 +318,7 @@ function getHolonInfoWindowCallBack(data,options) {
 		}
 		
 		contentString = contentString.concat("</table>"+
-		"<hr><table><tr><td colspan='2' style='text-align: center;'>Holon Objects in "+holonColor+" holon:&nbsp;&nbsp;"+
+		"<table><tr><td colspan='2' style='text-align: center;'>Holon Objects in "+holonColor+" holon:&nbsp;&nbsp;"+
 		"<select align = \"center\" name=\"infoWindowHolonList\" id=\"infoWindowHolonList\">"+hoList+"</select></td></tr>"+
 		"</table>"
 		);

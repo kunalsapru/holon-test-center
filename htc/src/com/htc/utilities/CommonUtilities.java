@@ -462,7 +462,6 @@ public class CommonUtilities extends AbstractAction{
 			connectedPowerLines = new CommonUtilities().connectedPowerLines(powerLineId);
 		}
 		for(PowerLine powerLine2 : connectedPowerLines) {
-			System.out.println("Connected Lines --> "+powerLine2.getId());
 			if(powerLine2.getType().equalsIgnoreCase(ConstantValues.SUBLINE)) {
 				if(powerLine2.getHolonObject() != null && powerLine2.getHolonObject().getHolon()!= null && holonObject != null &&holonObject.getHolon() != null &&
 						powerLine2.getHolonObject().getHolon().getId() == holonObject.getHolon().getId()) {
@@ -798,7 +797,6 @@ public class CommonUtilities extends AbstractAction{
 			}
 		}
 		for(PowerLine powerLine2 : connectedPowerLines) {
-			System.out.println("Connected Lines --> "+powerLine2.getId());
 			if(powerLine2.getType().equalsIgnoreCase(ConstantValues.SUBLINE)) {
 				if(powerLine2.getHolonObject() != null) {
 					connectedHolonObjectsOfAllHolons.add(powerLine2.getHolonObject());
