@@ -29,6 +29,7 @@
 <script type="text/javascript" src="js/highcharts_exporting.js"></script>
 <script type="text/javascript" src="js/areConnected.js"></script>
 <script type="text/javascript" src="js/disasterMode.js"></script>
+<script type="text/javascript" src="js/dynamicHolon.js"></script>
 <script src="js/sweetalert.min.js"></script>
 </head>
 

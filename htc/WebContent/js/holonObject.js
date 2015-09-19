@@ -243,13 +243,13 @@ function getHolonInfoWindowCallBack(data,options) {
 			"<td>Holon Object Type: "+holonObjectTypeName+"</td></tr>"+
 			"<tr><td>Line Connected State: "+lineConnectedState+"</td>";
 	if(coordHolonId==0) {
-		contentString=contentString.concat("<td>Coordinator Id: No Coordinator</td></tr>");
+		contentString=contentString.concat("<td>Coordinator Id: No Coordinator</td>");
 	} else if(coordHolonId==-1) {
-		contentString=contentString.concat("<td style='color:red'>Coordinator Id: Not connected</td></tr>");
+		contentString=contentString.concat("<td style='color:red'>Coordinator Id: Not connected</td>");
 	} else {
-		contentString=contentString.concat("<td>Coordinator Id: <a href='#' id='hoCoId'>"+coordHolonId+"</a></td><tr>");
+		contentString=contentString.concat("<td>Coordinator Id: <a href='#' id='hoCoId'>"+coordHolonId+"</a></td>");
 	}
-	contentString = contentString.concat("<tr><td>Coordinator Competency: "+coordinatorCompetency+"</td><td>Trust Value: "+trustValue+"</td></tr>");
+	contentString = contentString.concat("</tr><tr><td>Coordinator Competency: "+coordinatorCompetency+"</td><td>Trust Value: "+trustValue+"</td></tr>");
 	contentString = contentString.concat("<tr><td>Minimum Energy Req: "+minEnergyHoObj+"</td>"+
 			"<td>Maximum Energy Req: "+maxEnergyHoObj+"</td></tr>"+
 			"<tr><td>Original Energy Req: "+originalEnergyHoObj+"</td>"+
@@ -272,8 +272,7 @@ function getHolonInfoWindowCallBack(data,options) {
 	}
 	contentString = contentString.concat(
 			"<td>Created from factory: "+createdFromFactory+"</td></tr>" +
-			"</table>"+
-			"<table><tr><td colspan='2' style='text-align: center;'>"+
+			"<tr rowspan='2'><td colspan='2' style='text-align: center;'>"+
 			"<span class='button' id='supplierDetails' title='Show Supplier Details' onclick='showSupplierDetails("+holonObjectId+")'><i class='fa fa-bolt'>&nbsp;Supplier Details</i></span>"+
 			"&nbsp;&nbsp;&nbsp;&nbsp;"+
 			"<span class='button' id='consumptionGraph' title='Show Consumption' onclick='showConsumptionGraph("+holonObjectId+","+holonObjectId+","+'"ho"'+")'><i class='fa fa-line-chart'>&nbsp;Consumption</i></span>"+
@@ -283,6 +282,8 @@ function getHolonInfoWindowCallBack(data,options) {
 			"<span class='button' id='showHolonElement' title='Show Holon Elements' onclick='showHolonElements("+holonObjectId+")'><i class='fa fa-info'>&nbsp;Holon Elements</i></span>" +
 			"&nbsp;&nbsp;&nbsp;&nbsp;"+
 			"<span class='button' id='checkInbox' title='Inbox'><i class='fa fa-list'>&nbsp;Inbox</i></span>"+
+			"&nbsp;&nbsp;&nbsp;&nbsp;"+
+			"<span class='button' id='startDynamicHolon' title='Start dynamic holon module'><i class='fa fa-object-ungroup'>&nbsp;Start Dynamic Holon</i></span>"+
 			"</td></tr></table>");
 	if(coordHolonId===holonObjectId) {
 		contentString = contentString.concat(
@@ -306,14 +307,22 @@ function getHolonInfoWindowCallBack(data,options) {
 			contentString = contentString.concat("<td><span class='button' id='distributeEnergyAmongHolonObjects' " +
 				"title='Distribute Holon energy among holon objects'><img src='css/images/distribute_energy.png'/><b>&nbsp;&nbsp;Distribute Energy</b></span>" +
 				"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class='button' id='historyDistributeEnergyAmongHolonObjects' " +
-				"title='History of Holon energy distribution among holon objects'><img src='css/images/history.png'/><b>&nbsp;&nbsp;History</b></span></td>");
+				"title='History of Holon energy distribution among holon objects'><img src='css/images/history.png'/><b>&nbsp;&nbsp;History</b></span>" +
+				"&nbsp;&nbsp;&nbsp;&nbsp;<span class='button' id='dontDissolveHolonID' " +
+				"title='Dissolve holon with other holon if flexibility is zero and current energy requirement is greater than zero.'>" +
+				"<img src='css/images/dissolveHolon.png'/><b>&nbsp;&nbsp;Dissolve Holon</b></span>" +
+				"</td>");
 			contentString = contentString.concat("</tr>");
 		} else {
 			contentString = contentString.concat("<tr><td>Flexibility: "+flexibilityHolon +"</td>");
 			contentString = contentString.concat("<td><span class='button' id='distributeEnergyAmongHolonObjectsFlexibilityZero' " +
 					"title='Distribute Holon energy among holon objects'><img src='css/images/distribute_energy.png'/><b>&nbsp;&nbsp;Distribute Energy</b></span>" +
-					"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class='button' id='historyDistributeEnergyAmongHolonObjects' " +
-					"title='History of Holon energy distribution among holon objects'><img src='css/images/history.png'/><b>&nbsp;&nbsp;History</b></span></td>");
+					"&nbsp;&nbsp;&nbsp;&nbsp;<span class='button' id='historyDistributeEnergyAmongHolonObjects' " +
+					"title='History of Holon energy distribution among holon objects'><img src='css/images/history.png'/><b>&nbsp;&nbsp;History</b></span>" +
+					"&nbsp;&nbsp;&nbsp;&nbsp;<span class='button' id='dissolveHolonID' " +
+					"title='Dissolve holon with other holon if flexibility is zero and current energy requirement is greater than zero.'>" +
+					"<img src='css/images/dissolveHolon.png'/><b>&nbsp;&nbsp;Dissolve Holon</b></span>" +
+					"</td>");
 				contentString = contentString.concat("</tr>");
 		}
 		
@@ -353,6 +362,16 @@ function getHolonInfoWindowCallBack(data,options) {
 	$('#sendMessageToAllProducers').click(function() {
 		sendMessageToAllProducers(holonObjectId);
 	});
+	$('#startDynamicHolon').click(function() {
+		startDynamicHolon(holonObjectId);
+	}); 
+	$('#dissolveHolonID').click(function() {
+		dissolveHolon(cuEnergyHo, coordHolonId);
+	});
+	$('#dontDissolveHolonID').click(function() {
+		dontDissolveHolon();
+	});
+	
 	$('#infoWindowHolonList').change(function(){
       if(jQuery("#infoWindowHolonList option:selected").val()!='Select Holon')
     	  {
