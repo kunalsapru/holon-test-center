@@ -176,6 +176,7 @@
 		<!-- Dissolve Holon and Dynamic Holon actions -->
 		<action name="dissolveHolon" class="com.htc.action.DissolveHolonAction" method="dissolveHolon" />
 		<action name="startDynamicHolon" class="com.htc.action.DissolveHolonAction" method="startDynamicHolon" />
+		<action name="getAllSavedDisasters" class="com.htc.action.PowerLineAction" method="getAllSavedDisasters" />
 		
 	</package>
 

@@ -11,6 +11,7 @@ import com.htc.hibernate.pojo.HolonObject;
 import com.htc.hibernate.pojo.LatLng;
 import com.htc.hibernate.pojo.PowerLine;
 import com.htc.hibernate.pojo.PowerSource;
+import com.htc.hibernate.pojo.PowerSwitch;
 import com.htc.utilities.CommonUtilities;
 import com.htc.utilities.ConstantValues;
 
@@ -361,9 +362,32 @@ public class PowerLineAction extends CommonUtilities {
 				powerLine.setDisaster(disaster2);
 				getPowerLineService().merge(powerLine);
 			}
+			getResponse().setContentType("text/html");
+			getResponse().getWriter().write(disaster2.getId().toString());
 			
 		}catch(Exception e){
 			log.info("Exception "+e.getMessage()+" occurred in getAllPointsInsideCircle()");
+			e.printStackTrace();
+		}
+	}
+	
+	public void getAllSavedDisasters(){
+		try{
+			
+			ArrayList<Disaster> disasterList = getDisasterService().getAllDisasterCircles();
+			ArrayList<String> disasterListArray = new ArrayList<String>();
+			for(Disaster disaster1 : disasterList){
+				Integer disasterId=disaster1.getId();
+				Double radius=disaster1.getRadius();
+				Double latitude= disaster1.getCenter().getLatitude();
+				Double longitude= disaster1.getCenter().getLongitude();
+				disasterListArray.add(disasterId+"^"+radius+"^"+latitude+"^"+longitude+"*");
+			}
+			getResponse().setContentType("text/html");
+			getResponse().getWriter().write(disasterListArray.toString());
+			
+		} catch (Exception e) {
+			log.info("Exception "+e.getMessage()+" occurred in action getAllSavedDisasters()");
 			e.printStackTrace();
 		}
 	}

@@ -1,5 +1,7 @@
 package com.htc.hibernate.utilities;
 
+import java.util.ArrayList;
+
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -81,6 +83,26 @@ static Logger log = Logger.getLogger(HolonObjectHome.class);
 			HibernateSessionFactory.closeSession();
 		}
 		return deleteStatus;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public ArrayList<Disaster> getAllDisasterCircles() {
+		Session session = null;
+		Transaction tx = null;
+		ArrayList<Disaster> listDisaster = null;
+		try {
+			session = HibernateSessionFactory.getSessionFactory().getCurrentSession();
+			tx = session.beginTransaction();
+			listDisaster = (ArrayList<Disaster>) session.createQuery("from Disaster d").list();
+			tx.commit();
+			return listDisaster;
+		} catch (RuntimeException re) {
+			System.out.println("get DisasterCircles list failed");
+			tx.rollback();
+		} finally {
+			HibernateSessionFactory.closeSession();
+		}
+		return listDisaster;
 	}
 
 

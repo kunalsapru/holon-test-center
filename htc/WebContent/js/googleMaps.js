@@ -9,6 +9,7 @@ $(document)
 					window.createdPowerLineObject=null;
 					window.createdSubLineObject=null;
 					window.createdPowerSourceObject=null;
+					window.createdDisasterCircle=null;
 					window.showHolons=false;
 					window.drawPowerLineMode=false;
 					window.drawHolonObjectMode=false;
@@ -25,6 +26,7 @@ $(document)
 					window.globalHKList=new Map(); //Holon Coordinator
 					window.globalPCList=new Map(); //Power Circle
 					window.globalPSrcList=new Map(); //Power Source
+					window.globalDisasterList= new Map(); //Disaster List
 					window.currentInfoWindowObject=null;
 					window.currentLineInfoWindowObject=null;
 					window.currentSwitchInfoWindow=null;

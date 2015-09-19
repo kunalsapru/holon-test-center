@@ -20,6 +20,7 @@ function disasterModeSelected(){
 		google.maps.event.addListener(disasterModeDrawingManager, 'overlaycomplete', function(event) {
 			var disasterObjectShape = event.overlay; // Object
 			disasterObjectShape.type = event.type;	// Circle
+			createdDisasterCircle=disasterObjectShape;
 			//event.setVisible(false);
 			var lat=event.overlay.center.lat();
 			var lng=event.overlay.center.lng();
@@ -42,5 +43,39 @@ function disasterModeSelected(){
 }
 
 function getAllPointsInsideCircleCallback(data,options){
-	console.log("Data is"+data);
+	var disasterCircleID= data;
+	var disasterColor= '#888888';
+	createdDisasterCircle.setOptions({strokeColor:disasterColor,fillColor: disasterColor});
+	attachMessage(disasterCircleID,createdDisasterCircle);
+	globalDisasterList.set(disasterCircleID,createdDisasterCircle);
+	
+}
+
+function showSavedDisasters(){
+	ajaxRequest("getAllSavedDisasters", {}, getAllSavedDisastersCallback, {});
+}
+
+function getAllSavedDisastersCallback(data,options){
+	var response=data.split("*");
+	var disasterColor='#888888';
+	$.each(response,function(index,value){
+			disasterValues=value.replace("[","").replace("]","").split("^");
+			if(disasterValues!= null || disasterValues!= ""){
+			disasterCircleId=disasterValues[0];
+			disasterCircleRadius=disasterValues[1];
+			disasterValuesLatitude=disasterValues[2];
+			disasterValuesLongitude=disasterValues[3];
+			var disasterMarker= new google.maps.Circle({
+				 strokeColor: disasterColor,
+			     strokeOpacity: 1,
+			     strokeWeight: 1,
+			     fillColor: disasterColor,
+			     fillOpacity: 0.35,
+			     map: map,
+			     center: new google.maps.LatLng(disasterValuesLatitude, disasterValuesLongitude),
+			     radius: parseInt(disasterCircleRadius)
+			    });	
+		}
+		
+	});
 }

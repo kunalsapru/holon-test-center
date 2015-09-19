@@ -1,5 +1,7 @@
 package com.htc.serviceImpl;
 
+import java.util.ArrayList;
+
 import com.htc.hibernate.pojo.Disaster;
 import com.htc.service.AbstractService;
 import com.htc.service.DisasterService;
@@ -27,6 +29,12 @@ public class DisasterServiceImpl extends AbstractService implements DisasterServ
 	public boolean delete(Disaster persistentInstance) {
 		// TODO Auto-generated method stub
 		return getDisasterdao().delete(persistentInstance);
+	}
+
+	@Override
+	public ArrayList<Disaster> getAllDisasterCircles() {
+		// TODO Auto-generated method stub
+		return getDisasterdao().getAllDisasterCircles();
 	}
 
 	

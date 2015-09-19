@@ -409,6 +409,7 @@ function showHolonObjects() {
 	showSavedPowerLines();
 	showSavedPowerSwitches();
 	showSavedPowerSources();
+	showSavedDisasters();
 	loadHolon=false;
 	}else{
 		$("#showHolonObjects").css("background-color", "rgb(26, 26, 26)");

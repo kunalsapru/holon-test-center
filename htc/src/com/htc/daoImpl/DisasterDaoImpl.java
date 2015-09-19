@@ -1,9 +1,10 @@
 package com.htc.daoImpl;
 
+import java.util.ArrayList;
+
 import com.htc.dao.DisasterDao;
 import com.htc.hibernate.pojo.Disaster;
 import com.htc.hibernate.utilities.DisasterHome;
-import com.htc.hibernate.utilities.HolonHome;
 
 public class DisasterDaoImpl  implements DisasterDao {
 	private DisasterHome disasterHome = new DisasterHome();
@@ -38,6 +39,12 @@ public class DisasterDaoImpl  implements DisasterDao {
 	public boolean delete(Disaster persistentInstance) {
 		// TODO Auto-generated method stub
 		return getDisasterHome().delete(persistentInstance);
+	}
+
+	@Override
+	public ArrayList<Disaster> getAllDisasterCircles() {
+		// TODO Auto-generated method stub
+		return getDisasterHome().getAllDisasterCircles();
 	}
 
 }

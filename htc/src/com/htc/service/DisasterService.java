@@ -1,5 +1,7 @@
 package com.htc.service;
 
+import java.util.ArrayList;
+
 import com.htc.hibernate.pojo.Disaster;
 
 public interface DisasterService {
@@ -7,5 +9,6 @@ public interface DisasterService {
 	public Disaster merge(Disaster detachedInstance);
 	public Disaster findById(int disasterId);
 	public boolean delete(Disaster persistentInstance);
+	public ArrayList<Disaster> getAllDisasterCircles();
 
 }
