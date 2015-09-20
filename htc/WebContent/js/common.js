@@ -1,4 +1,4 @@
-function ajaxRequest(actionName,dataAttributes, callBack,options){
+function ajaxRequest(actionName, dataAttributes, callBack, options){
 	$.ajax({
 		  url: actionName,
 		  type: "POST",
