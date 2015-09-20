@@ -52,15 +52,12 @@ function deleteHolonElement(holonElementId, holonObjectId) {
 		closeOnCancel: false
 	},
 	function(isConfirm){
-    if (isConfirm){
-    	ajaxRequest("deleteHolonElement", dataAttributes, deleteHolonElementCallBack, options);	
-    	 swal("Removed", "Holon Element has been removed", "info");
-    	} else
-    	{
-      swal("Cancelled", "Holon Element has not been deleted.", "info");
-    }
+	    if (isConfirm){
+	    	ajaxRequest("deleteHolonElement", dataAttributes, deleteHolonElementCallBack, options);	
+		} else {
+	      swal("Cancelled", "Holon Element has not been deleted.", "info");
+	    }
 	});
-	
 }
 
 function deleteHolonElementCallBack(data, options) {
@@ -68,22 +65,18 @@ function deleteHolonElementCallBack(data, options) {
 	if(resp[0] == "true"){
 		var holonObjectId = options['holonObjectId'];
 		showHolonElements(holonObjectId);
-/*		showPowerCircles(holonObjectId);
-		updateCoordinator(resp[1]);	*/
+		swal("Holon Element Removed!", "Holon Element has been removed", "info");
 		showHolonCoIcons();
 	} else {
-		//alert("Error in deleting Holon Element. Please check application logs.")
+		swal("Server Error!", "Error in deleting holon element, please check applciation logs.", "info");
 	}
 }
 
 function getListHolonElementType(holonElementTypeId) {
 	var options={};
-	if(typeof holonElementTypeId != "undefined")
-		{
+	if(typeof holonElementTypeId != "undefined") {
 		options={holonElementTypeId:holonElementTypeId};
-		}
-	
-	
+	}
 	ajaxRequest("getListHolonElementType", {}, getListHolonElementTypeCallBack, options);
 }
 
@@ -91,18 +84,15 @@ function getListHolonElementTypeCallBack(data,options) {
 	var holonElementTypeId =options['holonElementTypeId'];
 	var listHolonElementTypeMaster= data.split("*");
 	$("#holonElementType").empty();
-	for(var i=0;i<listHolonElementTypeMaster.length-1;i++)
-		{
+	for(var i=0;i<listHolonElementTypeMaster.length-1;i++) {
 		if((typeof holonElementTypeId != "undefined")&&(holonElementTypeId==listHolonElementTypeMaster[i].split("-")[0])){
-		var options= "<option value="+listHolonElementTypeMaster[i].split("-")[0]+"id="+listHolonElementTypeMaster[i].split("-")[0]+" selected>"+listHolonElementTypeMaster[i].split("-")[1]+"</option>";
-		$("#holonElementType").append(options);
-		}
-		else
-		{
+			var options= "<option value="+listHolonElementTypeMaster[i].split("-")[0]+"id="+listHolonElementTypeMaster[i].split("-")[0]+" selected>"+listHolonElementTypeMaster[i].split("-")[1]+"</option>";
+			$("#holonElementType").append(options);
+		} else {
 			var options= "<option value="+listHolonElementTypeMaster[i].split("-")[0]+"id="+listHolonElementTypeMaster[i].split("-")[0]+">"+listHolonElementTypeMaster[i].split("-")[1]+"</option>";
 			$("#holonElementType").append(options);
-			}
-}
+		}
+	}
 }
 
 function getListHolonElementState(state) {
@@ -118,17 +108,14 @@ function getListHolonElementStateCallBack(data,options) {
 	var listHolonElementState= data.split("*");
 	$("#holonElementState").empty();
 	for(var i=0;i<listHolonElementState.length-1;i++) {
-		if((typeof state != "undefined")&&(state==listHolonElementState[i].split("-")[0])){
+		if((typeof state != "undefined")&&(state==listHolonElementState[i].split("-")[0])) {
 			var options= "<option value="+listHolonElementState[i].split("-")[0]+" id= "+listHolonElementState[i].split("-")[0]+" selected>"+listHolonElementState[i].split("-")[1]+"</option>";
 			$("#holonElementState").append(options);
+		} else {
+			var options= "<option value="+listHolonElementState[i].split("-")[0]+" id= "+listHolonElementState[i].split("-")[0]+">"+listHolonElementState[i].split("-")[1]+"</option>";
+			$("#holonElementState").append(options);
 			}
-			else
-			{
-				var options= "<option value="+listHolonElementState[i].split("-")[0]+" id= "+listHolonElementState[i].split("-")[0]+">"+listHolonElementState[i].split("-")[1]+"</option>";
-				$("#holonElementState").append(options);
-				}
-	
-	}
+		}
 }
 
 function addHolonElement() {
@@ -162,9 +149,8 @@ function addHolonElementCallBack(data, options) {
 		showHolonCoIcons();
 		showHolonElements(holonObjectId);
 		showPowerCircles(holonObjectId);
-		
 	} else {
-		alert("Error in adding Holon Element. Please check application logs.")
+		swal("Server Error!", "Error in adding Holon Element. Please check application logs.", "info");
 	}
 }
 
@@ -178,9 +164,8 @@ function editHolonElementCallBack(data, options) {
 		showHolonCoIcons();
 		showHolonElements(holonObjectId);
 		showPowerCircles(holonObjectId);
-		
 	} else {
-		alert("Error in editing Holon Element. Please check application logs.")
+		swal("Server Error!","Error in editing Holon Element. Please check application logs.","info");
 	}
 }
 
