@@ -7,16 +7,14 @@ function ajaxRequest(actionName,dataAttributes, callBack,options){
 		  dataType:"text",
 		  context: document.body,
 		  beforeSend:function (){
-		 // alert("Inside beforeSend");
-		 // window.ajaxReqStatus=true;
+			  $("#spinner").show();
 		  },
 		  complete:function (){
-		  //alert("Inside complete");
-		 // window.ajaxReqStatus=false;
+			  $("#spinner").hide();
 		  },
 		  error: function(){
-			  ajaxRequestCount = 0;
-			  alert("There is a problem with Ajax request.");
+			  swal("Server Error!", "There is a problem with AJAX request.", "info");
+			  $("#spinner").hide();
 		  },
 		  success: function(data) {
 		  	  callBack(data,options);	

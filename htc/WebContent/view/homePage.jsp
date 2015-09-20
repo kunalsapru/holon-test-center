@@ -314,7 +314,10 @@
 	</td>
 	</tr>
 	</table> 	
- 	</div>	
+ 	</div>
+ 	<div id="spinner" class="spinner" style="display:none;">
+    	<img id="img-spinner" src="css/images/spinner.gif" alt="Loading"/>
+	</div>
 </div>
 <script type="text/javascript" src="js/trigger.js"></script>
 </body>
