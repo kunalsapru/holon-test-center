@@ -13,7 +13,8 @@ function ajaxRequest(actionName,dataAttributes, callBack,options){
 			  $("#spinner").hide();
 		  },
 		  error: function(){
-			  swal("Server Error!", "There is a problem with AJAX request.", "info");
+			  swal("Server Error!", "There is a problem with AJAX request. " +
+			  		"Please check tomcat server status and database accessibility.", "info");
 			  $("#spinner").hide();
 		  },
 		  success: function(data) {
