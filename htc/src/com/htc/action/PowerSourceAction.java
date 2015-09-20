@@ -15,26 +15,19 @@ import com.htc.utilities.ConstantValues;
 
 public class PowerSourceAction  extends CommonUtilities{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	static Logger log = Logger.getLogger(PowerSourceAction.class);
 	
-	
 	public void createPowerSourceObject(){
-
 		try {
 		Integer psMaxProdCap = getRequest().getParameter("psMaxProdCap")!=null?Integer.parseInt(getRequest().getParameter("psMaxProdCap")):0;
 		Integer psStatus = getRequest().getParameter("psStatus")!=null?Integer.parseInt(getRequest().getParameter("psStatus")):0;
 		Double radius = getRequest().getParameter("radius")!=null?Double.parseDouble(getRequest().getParameter("radius")):0D;
 		Double latCenter = getRequest().getParameter("latCenter")!=null?Double.parseDouble(getRequest().getParameter("latCenter")):0D;
 		Double lngCenter = getRequest().getParameter("lngCenter")!=null?Double.parseDouble(getRequest().getParameter("lngCenter")):0D;
-				
 		LatLng centerLatLng = new LatLng(latCenter, lngCenter);
 		Integer centerLatLngId = saveLocation(centerLatLng);
 		PowerSource pwSrc = new PowerSource(); // Creating HolonObject object to store values
-
 		pwSrc.setCenter(getLatLngService().findById(centerLatLngId));
 		pwSrc.setCurrentProduction(psMaxProdCap);
 		pwSrc.setRadius(radius);
@@ -47,10 +40,6 @@ public class PowerSourceAction  extends CommonUtilities{
 		log.info("NewLy Generated Power Source ID --> "+newPsId);
 		PowerSource pwSrc2 = getPowerSourceService().findById(newPsId);
 
-		PowerLine powerLine = getPowerLineService().getPowerLineByPowerSource(pwSrc2);
-		//Update all holon objects
-		updateHolonObjectsAndPowerSources(powerLine.getId());
-				
 		//Calling the response function and setting the content type of response.
 		getResponse().setContentType("text/html");
 		StringBuffer psResponse = new StringBuffer();
@@ -66,33 +55,28 @@ public class PowerSourceAction  extends CommonUtilities{
 	}
 	
 	
-	public void editPowerSourceObject()
-	{
-		
+	public void editPowerSourceObject() {
 		try {
 			Integer psMaxProdCap = getRequest().getParameter("psMaxProdCap")!=null?Integer.parseInt(getRequest().getParameter("psMaxProdCap")):0;
 			Integer psStatus = getRequest().getParameter("psStatus")!=null?Integer.parseInt(getRequest().getParameter("psStatus")):0;
 			Integer pSourceId = getRequest().getParameter("hiddenPowerObjectId")!=null?Integer.parseInt(getRequest().getParameter("hiddenPowerObjectId")):0;		
-			
 			PowerSource pwSrcOld = getPowerSourceService().findById(pSourceId);
-
 			pwSrcOld.setMaxProduction(psMaxProdCap);
 			pwSrcOld.setStatus((psStatus==1?true:false));
 			pwSrcOld.setCurrentProduction((psStatus==1?psMaxProdCap:0));
 			pwSrcOld.setFlexibility(psMaxProdCap);
 			getPowerSourceService().merge(pwSrcOld);
 			PowerSource pwSrc2 = getPowerSourceService().findById(pSourceId);
-			
 			PowerLine powerLine = getPowerLineService().getPowerLineByPowerSource(pwSrc2);
 			//Update all holon objects
-			updateHolonObjectsAndPowerSources(powerLine.getId());
-			
+			if(powerLine != null) {
+				updateHolonObjectsAndPowerSources(powerLine.getId());
+			}
 			//Calling the response function and setting the content type of response.
 			getResponse().setContentType("text/html");
 			StringBuffer psResponse = new StringBuffer();
 			psResponse.append(pwSrc2.getId()+"!");
 			psResponse.append(psStatus);
-					
 			log.info(psResponse.toString());
 			getResponse().getWriter().write(psResponse.toString());
 			} catch (Exception e) {
@@ -106,7 +90,6 @@ public class PowerSourceAction  extends CommonUtilities{
 		try {
 			Integer psId = getRequest().getParameter("psId")!=null?Integer.parseInt(getRequest().getParameter("psId")):0;
 			PowerSource powerSource = getPowerSourceService().findById(psId);
-			
 			ArrayList<Supplier> listOfProducerPowerSource = getSupplierService().getSupplierListForProducerPowerSource(powerSource);
 			for(Supplier supplier : listOfProducerPowerSource) {
 				if(!checkConnectivityBetweenHolonObjectAndPowerSource(supplier.getHolonObjectConsumer(), powerSource)
@@ -117,9 +100,7 @@ public class PowerSourceAction  extends CommonUtilities{
 					getPowerSourceService().merge(powerSource);
 				}
 			}
-			
 			PowerSource pwSrc = getPowerSourceService().findById(psId); 
-			
 			Integer MaxProdCap=pwSrc.getMaxProduction();
 			Integer currProd=pwSrc.getCurrentProduction();
 			Integer minProd=pwSrc.getMinProduction();
@@ -130,17 +111,15 @@ public class PowerSourceAction  extends CommonUtilities{
 			double pwSrcRad=pwSrc.getRadius();
 			HolonObject hc= null;
 			Holon holon = null;
-			PowerLine powerLine = getPowerLineService().getPowerLineByPowerSource(powerSource);
-			if(powerSource.getHolonCoordinator() != null && powerSource.getHolonCoordinator().getHolon() != null) {
-				holon = powerSource.getHolonCoordinator().getHolon();
+			PowerLine powerLine = getPowerLineService().getPowerLineByPowerSource(pwSrc);
+			if(pwSrc.getHolonCoordinator() != null && pwSrc.getHolonCoordinator().getHolon() != null) {
+				holon = pwSrc.getHolonCoordinator().getHolon();
 			}
 			if(powerLine != null && holon != null) {
 				hc = findConnectedHolonCoordinatorByHolon(holon, powerLine);
 			}
-			powerSource.setHolonCoordinator(hc);
-			getPowerSourceService().merge(powerSource);
-
-			
+			pwSrc.setHolonCoordinator(hc);
+			getPowerSourceService().merge(pwSrc);
 			Integer CoHolonId=0;
 			String coHoLoc="";
 			String CoHolonName="";
@@ -149,7 +128,6 @@ public class PowerSourceAction  extends CommonUtilities{
 				CoHolonName= hc.getHolon().getName();
 				coHoLoc=hc.getLatLngByNeLocation().getLatitude()+"~"+hc.getLatLngByNeLocation().getLongitude();
 			}
-			
 			//Calling the response function and setting the content type of response.
 			getResponse().setContentType("text/html");
 			StringBuffer psResponse = new StringBuffer();
@@ -204,8 +182,7 @@ public class PowerSourceAction  extends CommonUtilities{
 		}
 	}
 	
-	public void powerSourceOnOff()
-	{
+	public void powerSourceOnOff() {
 		try {			
 			Integer powerSrcId = getRequest().getParameter("powerSrcId")!=null?Integer.parseInt(getRequest().getParameter("powerSrcId")):0;
 			PowerSource powerSource = getPowerSourceService().findById(powerSrcId); 
