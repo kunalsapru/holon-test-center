@@ -18,6 +18,7 @@ function ajaxRequest(actionName, dataAttributes, callBack, options){
 			  $("#spinner").hide();
 		  },
 		  success: function(data) {
+			  $("#spinner").hide();
 		  	  callBack(data,options);	
 		  }
 	});	
