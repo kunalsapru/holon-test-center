@@ -177,7 +177,7 @@ public class DissolveHolonAction extends CommonUtilities {
 			getResponse().setContentType("text/html");
 			getResponse().getWriter().write(currentEnergyRequired+"~"+originalEnergyRequiredAfterCurrentProduction);
 		} catch (Exception e) {
-			log.info("Exception "+e.getMessage()+" occurred in action startDynamicHolon()");
+			log.info("Exception "+e.getMessage()+" occurred in action checkDynamicCurrentEnergyRequired()");
 			e.printStackTrace();
 		}
 	}
@@ -306,7 +306,7 @@ public class DissolveHolonAction extends CommonUtilities {
 				getResponse().getWriter().write(startDynamicHolonMergerResponse);
 			}
 		} catch (Exception e) {
-			log.info("Exception "+e.getMessage()+" occurred in action startDynamicHolon()");
+			log.info("Exception "+e.getMessage()+" occurred in action startDynamicHolonMerger()");
 			e.printStackTrace();
 		}
 	}
