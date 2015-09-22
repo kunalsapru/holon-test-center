@@ -363,7 +363,7 @@ function getHolonInfoWindowCallBack(data,options) {
 		sendMessageToAllProducers(holonObjectId);
 	});
 	$('#startDynamicHolon').click(function() {
-		startDynamicHolon(holonObjectId);
+		startDynamicHolon(currentEnergyRequired, holonObjectId);
 	}); 
 	$('#dissolveHolonID').click(function() {
 		dissolveHolon(cuEnergyHo, coordHolonId);

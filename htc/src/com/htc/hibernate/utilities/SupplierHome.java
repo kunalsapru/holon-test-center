@@ -250,5 +250,26 @@ public class SupplierHome {
 		return listSupplier;
 	}
 	
+	@SuppressWarnings("unchecked")
+	public ArrayList<Supplier> getSupplierListForConsumerOrProducer(HolonObject holonObject) {
+		Session session = null;
+		Transaction tx = null;
+		ArrayList<Supplier> listSupplier = null;
+		try {
+			session = HibernateSessionFactory.getSessionFactory().getCurrentSession();
+			tx = session.beginTransaction();
+			Query query = session.createQuery("from Supplier s where s.holonObjectConsumer=:holonObject or s.holonObjectProducer=:holonObject order by s.id DESC");
+			query.setEntity("holonObject", holonObject);
+			listSupplier = (ArrayList<Supplier>) query.list();
+			tx.commit();
+			return listSupplier;
+		} catch (RuntimeException re) {
+			System.out.println("getSupplierListForConsumer failed");
+			tx.rollback();
+		} finally {
+			HibernateSessionFactory.closeSession();
+		}
+		return listSupplier;
+	}
 
 }

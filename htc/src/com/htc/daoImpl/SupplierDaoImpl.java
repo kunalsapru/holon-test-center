@@ -68,4 +68,9 @@ public class SupplierDaoImpl implements SupplierDao {
 		return supplierHome.getSupplierListHolonCoordinator(holon);
 	}
 
+	@Override
+	public ArrayList<Supplier> getSupplierListForConsumerOrProducer(HolonObject holonObject) {
+		return supplierHome.getSupplierListForConsumerOrProducer(holonObject);
+	}
+
 }

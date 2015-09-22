@@ -9,7 +9,7 @@
 <link rel="stylesheet" type="text/css" href="css/sweetalert.css">
 <link rel="stylesheet" type="text/css" href="css/map-icons.css">
 <link rel="stylesheet" type="text/css" href="css/icon-style.css">
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=drawing"></script>
 <script type="text/javascript" src="js/googleMaps.js"></script>
 <script type="text/javascript" src="js/map-icons.js"></script>

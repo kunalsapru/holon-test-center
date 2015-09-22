@@ -65,5 +65,10 @@ public class SupplierServiceImpl extends AbstractService implements  SupplierSer
 	public ArrayList<Supplier> getSupplierListHolonCoordinator(Holon holon) {
 		return getSupplierDao().getSupplierListHolonCoordinator(holon);
 	}
+
+	@Override
+	public ArrayList<Supplier> getSupplierListForConsumerOrProducer(HolonObject holonObject) {
+		return getSupplierDao().getSupplierListForConsumerOrProducer(holonObject);
+	}
 	
 }

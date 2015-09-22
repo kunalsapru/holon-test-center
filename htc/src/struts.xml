@@ -171,15 +171,16 @@
 		<action name="historyDistributeEnergyAmongHolonObjects" class="com.htc.action.HolonObjectAction" method="historyDistributeEnergyAmongHolonObjects" />
 		
 		<!-- Disaster related actions -->
-		<action name="getAllPointsInsideCircle" class="com.htc.action.PowerLineAction" method="getAllPointsInsideCircle" />
-		<action name="deleteAllDisasterCircleFromDatabase" class="com.htc.action.PowerLineAction" method="deleteAllDisasterCircleFromDatabase" />
-		<action name="deleteDisasterCircleFromDatabase" class="com.htc.action.PowerLineAction" method="deleteDisasterCircleFromDatabase" />
-
+		<action name="getAllPointsInsideCircle" class="com.htc.action.DisasterAction" method="getAllPointsInsideCircle" />
+		<action name="deleteAllDisasterCircleFromDatabase" class="com.htc.action.DisasterAction" method="deleteAllDisasterCircleFromDatabase" />
+		<action name="deleteDisasterCircleFromDatabase" class="com.htc.action.DisasterAction" method="deleteDisasterCircleFromDatabase" />
+		<action name="getAllSavedDisasters" class="com.htc.action.DisasterAction" method="getAllSavedDisasters" />
+		
 		<!-- Dissolve Holon and Dynamic Holon actions -->
 		<action name="dissolveHolon" class="com.htc.action.DissolveHolonAction" method="dissolveHolon" />
-		<action name="startDynamicHolon" class="com.htc.action.DissolveHolonAction" method="startDynamicHolon" />
-		<action name="getAllSavedDisasters" class="com.htc.action.PowerLineAction" method="getAllSavedDisasters" />
-		
+		<action name="checkDynamicCurrentEnergyRequired" class="com.htc.action.DissolveHolonAction" method="checkDynamicCurrentEnergyRequired" />
+		<action name="startDynamicHolonMerger" class="com.htc.action.DissolveHolonAction" method="startDynamicHolonMerger" />
+				
 	</package>
 
 </struts>
