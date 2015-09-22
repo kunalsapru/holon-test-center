@@ -141,7 +141,7 @@ function deleteAllDisasterCircleFromDatabaseCallback(data,option){
 	if(data!= undefined || data!= null){
 		var disasterIds=data.split("*");
 		$.each(disasterIds,function(key,value){
-			if(value!= null || value != ""){
+			if(value!= null && value != ""){
 				deleteDisasterMarkerFromGlobalList(value);
 			}
 		});
@@ -153,14 +153,14 @@ function deleteDisasterCircleFromDatabaseCallback(data,options){
 	$("#removeSelectedDisaster").css("background-color", "rgb(26, 26, 26)");
 	deleteSelectedDisasterMode=false;
 	var disasterId= data.split("*");
-	if(disasterId[0] != undefined || disasterId[0] != null){
+	if(disasterId[0] != undefined && disasterId[0] != null){
 		deleteDisasterMarkerFromGlobalList(disasterId[0]);	
 	}
 }
 
 function deleteDisasterMarkerFromGlobalList(disasterId){
 	var disasterCircleMarker= globalDisasterList.get(disasterId);
-	if(disasterCircleMarker!= null || disasterCircleMarker!= undefined || disasterCircleMarker!= ""){
+	if(disasterCircleMarker!= null && disasterCircleMarker!= undefined && disasterCircleMarker!= ""){
 		disasterCircleMarker.setVisible(false);
 		delete globalDisasterList[disasterId];
 	}
