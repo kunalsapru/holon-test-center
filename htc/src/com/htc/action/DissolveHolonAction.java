@@ -168,11 +168,14 @@ public class DissolveHolonAction extends CommonUtilities {
 			Integer holonObjectId = getRequest().getParameter("holonObjectId")!=null?Integer.parseInt(getRequest().getParameter("holonObjectId")):0;
 			HolonObject holonObject = getHolonObjectService().findById(holonObjectId);
 			Integer currentEnergyRequired = 0;
+			Integer originalEnergyRequiredAfterCurrentProduction = 0;
 			if(holonObject != null) {
-				currentEnergyRequired = getHolonObjectEnergyDetails(holonObject).get("currentEnergyRequired");
+				Map<String, Integer> holonObjectEnergyDetails = getHolonObjectEnergyDetails(holonObject);
+				currentEnergyRequired = holonObjectEnergyDetails.get("currentEnergyRequired");
+				originalEnergyRequiredAfterCurrentProduction = holonObjectEnergyDetails.get("originalEnergyRequiredAfterCurrentProduction");
 			}
 			getResponse().setContentType("text/html");
-			getResponse().getWriter().write(currentEnergyRequired+"");
+			getResponse().getWriter().write(currentEnergyRequired+"~"+originalEnergyRequiredAfterCurrentProduction);
 		} catch (Exception e) {
 			log.info("Exception "+e.getMessage()+" occurred in action startDynamicHolon()");
 			e.printStackTrace();
@@ -182,13 +185,13 @@ public class DissolveHolonAction extends CommonUtilities {
 	public void startDynamicHolonMerger() {
 		try {
 			Integer holonObjectId = getRequest().getParameter("holonObjectId")!=null?Integer.parseInt(getRequest().getParameter("holonObjectId")):0;
-			Integer dynamicCurrentEnergyRequired = getRequest().getParameter("dynamicCurrentEnergyRequired")!=null?
-					Integer.parseInt(getRequest().getParameter("dynamicCurrentEnergyRequired")):0;
+			Integer originalEnergyRequiredAfterCurrentProduction = getRequest().getParameter("originalEnergyRequiredAfterCurrentProduction")!=null?
+					Integer.parseInt(getRequest().getParameter("originalEnergyRequiredAfterCurrentProduction")):0;
 			HolonObject holonObject = getHolonObjectService().findById(holonObjectId);
 			String startDynamicHolonMergerResponse = "false";
 			StringBuffer startDynamicHolonMergerResponseBuffer = new StringBuffer();
 			
-			if(holonObject != null && dynamicCurrentEnergyRequired > 0) {
+			if(holonObject != null && originalEnergyRequiredAfterCurrentProduction > 0) {
 				PowerLine powerLine = getPowerLineService().getPowerLineByHolonObject(holonObject);
 				if(powerLine != null) {
 					ArrayList<HolonObject> connectedHolonObjectsOfAllHolons = getHolonObjectListByConnectedPowerLinesOfAllHolons(powerLine, "common");
@@ -225,7 +228,7 @@ public class DissolveHolonAction extends CommonUtilities {
 						Map<String, String> holonEnergyDetailsTemp = getHolonEnergyDetails(redHolonCoordinator);
 						currentEnergyRequiredHolonTemp = Integer.parseInt(holonEnergyDetailsTemp.get("currentEnergyRequiredHolon"));
 						flexibilityHolonTemp = Integer.parseInt(holonEnergyDetailsTemp.get("flexibilityHolon"));
-						redBenchmarkEnergy = (flexibilityHolonTemp-currentEnergyRequiredHolonTemp)-dynamicCurrentEnergyRequired;
+						redBenchmarkEnergy = (flexibilityHolonTemp-currentEnergyRequiredHolonTemp)-originalEnergyRequiredAfterCurrentProduction;
 						if(redBenchmarkEnergy >= 0) {
 							bestHolonCoordinatorMatch = redHolonCoordinator;
 						}
@@ -236,7 +239,7 @@ public class DissolveHolonAction extends CommonUtilities {
 						Map<String, String> holonEnergyDetailsTemp = getHolonEnergyDetails(yellowHolonCoordinator);
 						currentEnergyRequiredHolonTemp = Integer.parseInt(holonEnergyDetailsTemp.get("currentEnergyRequiredHolon"));
 						flexibilityHolonTemp = Integer.parseInt(holonEnergyDetailsTemp.get("flexibilityHolon"));
-						yellowBenchmarkEnergy = (flexibilityHolonTemp-currentEnergyRequiredHolonTemp)-dynamicCurrentEnergyRequired;
+						yellowBenchmarkEnergy = (flexibilityHolonTemp-currentEnergyRequiredHolonTemp)-originalEnergyRequiredAfterCurrentProduction;
 						if(yellowBenchmarkEnergy > redBenchmarkEnergy && yellowBenchmarkEnergy > 0) {
 							bestHolonCoordinatorMatch = yellowHolonCoordinator;
 						}
@@ -247,7 +250,7 @@ public class DissolveHolonAction extends CommonUtilities {
 						Map<String, String> holonEnergyDetailsTemp = getHolonEnergyDetails(greenHolonCoordinator);
 						currentEnergyRequiredHolonTemp = Integer.parseInt(holonEnergyDetailsTemp.get("currentEnergyRequiredHolon"));
 						flexibilityHolonTemp = Integer.parseInt(holonEnergyDetailsTemp.get("flexibilityHolon"));
-						greenBenchmarkEnergy = (flexibilityHolonTemp-currentEnergyRequiredHolonTemp)-dynamicCurrentEnergyRequired;
+						greenBenchmarkEnergy = (flexibilityHolonTemp-currentEnergyRequiredHolonTemp)-originalEnergyRequiredAfterCurrentProduction;
 						if(greenBenchmarkEnergy > yellowBenchmarkEnergy && greenBenchmarkEnergy > 0) {
 							bestHolonCoordinatorMatch = greenHolonCoordinator;
 						}
@@ -258,7 +261,7 @@ public class DissolveHolonAction extends CommonUtilities {
 						Map<String, String> holonEnergyDetailsTemp = getHolonEnergyDetails(blueHolonCoordinator);
 						currentEnergyRequiredHolonTemp = Integer.parseInt(holonEnergyDetailsTemp.get("currentEnergyRequiredHolon"));
 						flexibilityHolonTemp = Integer.parseInt(holonEnergyDetailsTemp.get("flexibilityHolon"));
-						blueBenchmarkEnergy = (flexibilityHolonTemp-currentEnergyRequiredHolonTemp)-dynamicCurrentEnergyRequired;
+						blueBenchmarkEnergy = (flexibilityHolonTemp-currentEnergyRequiredHolonTemp)-originalEnergyRequiredAfterCurrentProduction;
 						if(blueBenchmarkEnergy > greenBenchmarkEnergy && blueBenchmarkEnergy > 0) {
 							bestHolonCoordinatorMatch = yellowHolonCoordinator;
 						}

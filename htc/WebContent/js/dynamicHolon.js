@@ -16,13 +16,16 @@ function checkTimerDynamicHolon(holonObjectId) {
 	ajaxRequest("checkDynamicCurrentEnergyRequired", dataAttributes, checkDynamicCurrentEnergyRequiredCallBack, dataAttributes);
 }
 
-function checkDynamicCurrentEnergyRequiredCallBack(dynamicCurrentEnergyRequired, options) {
+function checkDynamicCurrentEnergyRequiredCallBack(data, options) {
 	intervalFlag++;
 	console.log("Call number --> "+intervalFlag);
 	var holonObjectId = options["holonObjectId"];
+	var dynamicCurrentEnergyRequired = data.split("~")[0];
+	var originalEnergyRequiredAfterCurrentProduction = data.split("~")[1];
 	var dataAttributes= {
 			holonObjectId : holonObjectId,
-			dynamicCurrentEnergyRequired : dynamicCurrentEnergyRequired
+			dynamicCurrentEnergyRequired : dynamicCurrentEnergyRequired,
+			originalEnergyRequiredAfterCurrentProduction : originalEnergyRequiredAfterCurrentProduction
 	}
 	if(dynamicCurrentEnergyRequired > 0 && intervalFlag <= 5) {
 		ajaxRequest("sendMessageToAllProducers", options, sendMessageToAllProducersCallBack, options);

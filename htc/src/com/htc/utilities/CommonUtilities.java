@@ -116,6 +116,7 @@ public class CommonUtilities extends AbstractAction{
 		Integer currentProduction=0;
 		Integer currentEnergyRequired = 0;
 		Integer flexibility = 0;
+		Integer originalEnergyRequiredAfterCurrentProduction = 0;
 
 		ArrayList<HolonElement> holonElementList= getHolonElementService().getHolonElements(holonObject);
 		for(HolonElement holonElement : holonElementList) {
@@ -141,6 +142,7 @@ public class CommonUtilities extends AbstractAction{
 				currentEnergyRequired = 0;
 			}
 		}
+		originalEnergyRequiredAfterCurrentProduction = currentEnergyRequired;
 		Map<String, Integer> flexibilityAndCurrentRequirement = getFlexibilityAndCurrentEnergyRequirementOfHolonObject(holonObject, currentEnergyRequired);
 		currentEnergyRequired = flexibilityAndCurrentRequirement.get("currentEnergyRequired");
 		flexibility = flexibilityAndCurrentRequirement.get("flexibility");
@@ -154,6 +156,7 @@ public class CommonUtilities extends AbstractAction{
 		holonObjectEnergyDetails.put("currentProduction", currentProduction);
 		holonObjectEnergyDetails.put("currentEnergyRequired", currentEnergyRequired);
 		holonObjectEnergyDetails.put("flexibility", flexibility);
+		holonObjectEnergyDetails.put("originalEnergyRequiredAfterCurrentProduction", originalEnergyRequiredAfterCurrentProduction);
 		
 		return holonObjectEnergyDetails;
 	}
