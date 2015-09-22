@@ -20,6 +20,8 @@ $(document)
 					window.addPowerSourceMode=false;
 					window.addPowerSourceToLineMode=false;
 					window.disasterMode=false;
+					window.deleteSelectedDisasterMode=false;
+					window.deleteAllDisasterMode=false;
 					window.globalHoList=new Map(); //Holon Object
 					window.globalPlList=new Map(); //Power Line
 					window.globalPsList=new Map(); //Power Switch

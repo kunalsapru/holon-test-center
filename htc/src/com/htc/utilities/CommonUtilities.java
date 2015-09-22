@@ -4,7 +4,9 @@ package com.htc.utilities;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +18,7 @@ import org.apache.struts2.ServletActionContext;
 
 import com.htc.action.AbstractAction;
 import com.htc.action.PowerSwitchAction;
+import com.htc.hibernate.pojo.Disaster;
 import com.htc.hibernate.pojo.Holon;
 import com.htc.hibernate.pojo.HolonElement;
 import com.htc.hibernate.pojo.HolonObject;
@@ -918,6 +921,29 @@ public class CommonUtilities extends AbstractAction{
 			}
 		}
 		return mapOfAllPowerLinesInsideCircles;
+	}
+	
+	public StringBuffer deleteDisasterMode(ArrayList<PowerLine> powerLines){
+		StringBuffer listofDisasterIdsAsResponse= new StringBuffer();
+		Set<Integer> disasterIds = new HashSet<Integer>();
+		try{
+			for(PowerLine powerLine: powerLines){
+				disasterIds.add(powerLine.getDisaster().getId());
+				System.out.println("Selected Disaster PowerLine"+powerLine.getDisaster().getId());
+				powerLine.setDisaster(null);
+				getPowerLineService().merge(powerLine);
+			}
+			
+			for(Integer disasterId : disasterIds){
+				listofDisasterIdsAsResponse.append(disasterId+"*");
+				Disaster disaster= getDisasterService().findById(disasterId);
+				getDisasterService().delete(disaster);
+				
+			}
+		}catch(Exception e){
+			System.out.println("Error in delete Disaster Mode");
+		}
+		return listofDisasterIdsAsResponse;
 	}
  
 }

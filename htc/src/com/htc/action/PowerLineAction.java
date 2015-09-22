@@ -2,8 +2,12 @@ package com.htc.action;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
+
 import org.apache.log4j.Logger;
+
 import com.htc.hibernate.pojo.Disaster;
 import com.htc.hibernate.pojo.HolonObject;
 import com.htc.hibernate.pojo.LatLng;
@@ -360,8 +364,8 @@ public class PowerLineAction extends CommonUtilities {
 				getPowerLineService().merge(powerLine);
 			}
 			getResponse().setContentType("text/html");
-			getResponse().getWriter().write(disaster2.getId().toString());
-			
+			getResponse().getWriter().write(disaster2.getId()+"*"+disaster2.getCenter().getLatitude()+"*"+disaster2.getCenter().getLongitude());
+						
 		}catch(Exception e){
 			log.info("Exception "+e.getMessage()+" occurred in getAllPointsInsideCircle()");
 			e.printStackTrace();
@@ -387,5 +391,32 @@ public class PowerLineAction extends CommonUtilities {
 			log.info("Exception "+e.getMessage()+" occurred in action getAllSavedDisasters()");
 			e.printStackTrace();
 		}
+	}
+	
+	public void deleteAllDisasterCircleFromDatabase(){
+		try{
+			ArrayList<PowerLine> listPowerLine= getPowerLineService().getAllPowerLineIdsHavingDisaster();
+			String response= deleteDisasterMode(listPowerLine).toString();
+			getResponse().setContentType("text/html");
+			getResponse().getWriter().write(response);
+		}catch(Exception e){
+			System.out.println("Exception in deleteAllDisasterCircleFromDatabase()");
+		}
+	}
+	
+	public void deleteDisasterCircleFromDatabase(){
+		Integer disasterId = getRequest().getParameter("disasterId")!=null && getRequest().getParameter("disasterId") != ""?Integer.parseInt(getRequest().getParameter("disasterId")):0;
+		Disaster disaster= getDisasterService().findById(disasterId);
+		try{
+			if(disaster!= null){
+				ArrayList<PowerLine> connectedPowerLines = getPowerLineService().getAllPowerLinesWithDisasterId(disaster);
+				String response= deleteDisasterMode(connectedPowerLines).toString();
+				getResponse().setContentType("text/html");
+				getResponse().getWriter().write(response);
+			}
+		}catch(Exception e){
+			System.out.println("Exception in deleteDisasterCircleFromDatabase");
+		}
+		
 	}
 }

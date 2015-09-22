@@ -2,6 +2,7 @@ package com.htc.dao;
 
 import java.util.ArrayList;
 
+import com.htc.hibernate.pojo.Disaster;
 import com.htc.hibernate.pojo.HolonObject;
 import com.htc.hibernate.pojo.LatLng;
 import com.htc.hibernate.pojo.PowerLine;
@@ -17,4 +18,6 @@ public interface PowerLineDao {
 	public PowerLine getPowerLineByHolonObject(HolonObject holonObject);
 	public PowerLine getPowerLineByPowerSource(PowerSource powerSource);
 	public ArrayList<PowerLine> getPowerLineFromLatLng(LatLng latLng);
+	public ArrayList<PowerLine> getAllPowerLineIdsHavingDisaster();
+	public ArrayList<PowerLine> getAllPowerLinesWithDisasterId(Disaster disaster);
 }

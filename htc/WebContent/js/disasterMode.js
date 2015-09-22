@@ -43,10 +43,13 @@ function disasterModeSelected(){
 }
 
 function getAllPointsInsideCircleCallback(data,options){
-	var disasterCircleID= data;
+	var response= data.split("*");
+	var disasterCircleID= response[0];
+	var diasaterCircleLatitude= response[1];
+	var disasterCircleLongitude= response[2];
 	var disasterColor= '#888888';
 	createdDisasterCircle.setOptions({strokeColor:disasterColor,fillColor: disasterColor});
-	attachMessage(disasterCircleID,createdDisasterCircle);
+	showInfoWindowForDisaster(disasterCircleID,diasaterCircleLatitude,disasterCircleLongitude,createdDisasterCircle);
 	globalDisasterList.set(disasterCircleID,createdDisasterCircle);
 	
 }
@@ -56,6 +59,7 @@ function showSavedDisasters(){
 }
 
 function getAllSavedDisastersCallback(data,options){
+	if(data != "[]"){
 	var response=data.split("*");
 	var disasterColor='#888888';
 	$.each(response,function(index,value){
@@ -75,7 +79,89 @@ function getAllSavedDisastersCallback(data,options){
 			     center: new google.maps.LatLng(disasterValuesLatitude, disasterValuesLongitude),
 			     radius: parseInt(disasterCircleRadius)
 			    });	
+			showInfoWindowForDisaster(disasterCircleId,disasterValuesLatitude,disasterValuesLongitude,disasterMarker);
 		}
 		
 	});
+	}
+
+}
+
+function showInfoWindowForDisaster(disasterId,disasterCircleLatitude,disasterCircleLongitude,createdDisasterCircle){
+	google.maps.event.addListener(createdDisasterCircle, 'click', function(event) {
+		var id= disasterId.replace(","," ");
+		if(deleteSelectedDisasterMode){
+			var dataAttributes={
+					disasterId: parseInt(id)
+			}
+			ajaxRequest("deleteDisasterCircleFromDatabase", dataAttributes, deleteDisasterCircleFromDatabaseCallback, {});
+			
+		}else{/*
+		var contentString=
+			"<div class='table'><table>"+
+			"<tr><td colspan='1' style='text-decoration: underline;'>Disaster Details</td></tr>"+
+			"<tr><td><b>Disaster Id: "+disasterId.replace(","," ") +"</td></tr></table></div>"+
+			
+		closeOtherInfoWindows();
+		var infowindowDisaster = new google.maps.InfoWindow({
+		      content: contentString,
+		      position:new google.maps.LatLng(disasterCircleLatitude,disasterCircleLongitude)
+		  });
+		infowindowDisaster.open(map,map);	
+		*/}
+   });
+	
+	
+}
+
+
+function deleteSelectedDisaster(){
+	if(deleteSelectedDisasterMode == false){
+		deleteSelectedDisasterMode =true;
+		$("#removeSelectedDisaster").css("background-color", "rgb(153,153,0)");
+	}else{
+		$("#removeSelectedDisaster").css("background-color", "rgb(26, 26, 26)");
+		deleteSelectedDisasterMode=false;
+	}
+}
+
+function deleteAllDisaster(){
+	if(deleteAllDisasterMode== false){
+		deleteAllDisasterMode=true;
+		$("#removeAllDisaster").css("background-color", "rgb(153,153,0)");
+		ajaxRequest("deleteAllDisasterCircleFromDatabase", {}, deleteAllDisasterCircleFromDatabaseCallback, {});
+	}else{
+		$("#removeAllDisaster").css("background-color", "rgb(26, 26, 26)");
+		deleteAllDisasterMode=false;
+	}
+}
+
+function deleteAllDisasterCircleFromDatabaseCallback(data,option){
+	//Get all ids from database and remove from the global list
+	if(data!= undefined || data!= null){
+		var disasterIds=data.split("*");
+		$.each(disasterIds,function(key,value){
+			if(value!= null || value != ""){
+				deleteDisasterMarkerFromGlobalList(value);
+			}
+		});
+	}
+	
+}
+
+function deleteDisasterCircleFromDatabaseCallback(data,options){
+	$("#removeSelectedDisaster").css("background-color", "rgb(26, 26, 26)");
+	deleteSelectedDisasterMode=false;
+	var disasterId= data.split("*");
+	if(disasterId[0] != undefined || disasterId[0] != null){
+		deleteDisasterMarkerFromGlobalList(disasterId[0]);	
+	}
+}
+
+function deleteDisasterMarkerFromGlobalList(disasterId){
+	var disasterCircleMarker= globalDisasterList.get(disasterId);
+	if(disasterCircleMarker!= null || disasterCircleMarker!= undefined || disasterCircleMarker!= ""){
+		disasterCircleMarker.setVisible(false);
+		delete globalDisasterList[disasterId];
+	}
 }

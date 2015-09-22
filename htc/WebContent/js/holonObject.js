@@ -546,10 +546,10 @@ function getDetailForPowerSourceIconCallBack(data,options)
 
 function attachMessage(holonObjectId, rectangleFromFactory) {
 	google.maps.event.addListener(rectangleFromFactory, 'click', function(event) {	
-		if(connectToPowerSourceMode==true)
+		if(connectToPowerSourceMode)
 		{
 		connectToPowerSource(event.latLng,holonObjectId,"HolonObject");
-		}else if(areConnectedMode == true){
+		}else if(areConnectedMode){
 			if(isConnectedFirst=="" && isConnectedSecond=="")
 				{
 				isConnectedFirst=holonObjectId;
@@ -566,9 +566,12 @@ function attachMessage(holonObjectId, rectangleFromFactory) {
 				alert("Please close the isConnected Mode" );
 				}
 			
-		}
-		
-		else{
+		}/*else if(disasterModeDelete){
+			var disasterId=holonObjectId;
+			var disasterMarker= globalDisasterList.get(disasterId);
+			showInfoWindowForDisater(disasterId,disasterMarker);
+			
+		}*/else{
 			var dataAttributes={
 					holonObjectId:holonObjectId	
 			};

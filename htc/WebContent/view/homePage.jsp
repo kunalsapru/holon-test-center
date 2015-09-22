@@ -70,11 +70,11 @@
     </li>
 	<li><a href="#" id="clear"><i class="fa fa-eraser"></i>Clear Map</a></li>
 	<li><a href="view/dataGenerator.jsp" id="dataFactoryGenerator"><i class="fa fa-wrench"></i>Data Factory</a></li>
-	<li><a href="#" id="disaster"><i class="fa fa-ban"></i>Disaster Mode</a>
+	<li><a href="#" id="disaster"><i class="fa fa-exclamation-triangle"></i>Disaster Mode<i class="fa fa-caret-down"></i></a>
 	<ul>
-	<li><a href="#" id="disasterMode"><i class="fa fa-ban"></i>Create Disaster Mode</a>
-	<li><a href="#" id="removeDisasterMode"><i class="fa fa-ban"></i>Remove Disaster Mode</a>
-	<li><a href="#" id="removeAllDisasterMode"><i class="fa fa-ban"></i>Remove All Disaster Mode</a>
+	<li><a href="#" id="disasterMode"><i class="fa fa-circle"></i>Create Disaster Mode</a>
+	<li><a href="#" id="removeSelectedDisaster"><i class="fa fa-ban"></i>Remove Selected Disaster</a>
+	<li><a href="#" id="removeAllDisaster"><i class="fa fa-ban"></i>Remove All Disasters</a>
 	</ul>
 	</li>
 	</ul>

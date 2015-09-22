@@ -7,6 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.htc.hibernate.config.HibernateSessionFactory;
+import com.htc.hibernate.pojo.Disaster;
 import com.htc.hibernate.pojo.HolonObject;
 import com.htc.hibernate.pojo.LatLng;
 import com.htc.hibernate.pojo.PowerLine;
@@ -195,6 +196,47 @@ public class PowerLineHome {
 			tx = session.beginTransaction();
 			Query query = session.createQuery("from PowerLine p where p.latLngBySource=:latLng or p.latLngByDestination =:latLng");
 			query.setEntity("latLng", latLng);
+			listPowerLine = (ArrayList<PowerLine>) query.list();
+			tx.commit();
+		} catch (RuntimeException re) {
+			System.out.println("getPowerLineFromLatLngId failed");
+			tx.rollback();
+		} finally {
+			HibernateSessionFactory.closeSession();
+		}
+		return listPowerLine;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public ArrayList<PowerLine> getAllPowerLineIdsHavingDisaster(){
+		Session session = null;
+		Transaction tx = null;
+		ArrayList<PowerLine> listPowerLine = null;
+		try {
+			session = HibernateSessionFactory.getSessionFactory().getCurrentSession();
+			tx = session.beginTransaction();
+			Query query = session.createQuery("from PowerLine p where p.disaster is not null");
+			listPowerLine = (ArrayList<PowerLine>) query.list();
+			tx.commit();
+		} catch (RuntimeException re) {
+			System.out.println("getPowerLineFromLatLngId failed");
+			tx.rollback();
+		} finally {
+			HibernateSessionFactory.closeSession();
+		}
+		return listPowerLine;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public ArrayList<PowerLine> getAllPowerLinesWithDisasterId(Disaster disaster){
+		Session session = null;
+		Transaction tx = null;
+		ArrayList<PowerLine> listPowerLine = null;
+		try {
+			session = HibernateSessionFactory.getSessionFactory().getCurrentSession();
+			tx = session.beginTransaction();
+			Query query = session.createQuery("from PowerLine p where p.disaster=:disaster");
+			query.setEntity("disaster", disaster);
 			listPowerLine = (ArrayList<PowerLine>) query.list();
 			tx.commit();
 		} catch (RuntimeException re) {

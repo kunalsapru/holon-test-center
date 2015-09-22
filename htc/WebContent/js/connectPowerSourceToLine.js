@@ -38,5 +38,12 @@ $(document).ready(function() {
 		disasterModeSelected();
 	});
 	
+	$("#removeSelectedDisaster").click(function(){
+		deleteSelectedDisaster();
+	});
+	$("#removeAllDisaster").click(function(){
+		deleteAllDisaster();
+	});
+	
 })
 
