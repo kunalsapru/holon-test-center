@@ -126,7 +126,7 @@ public class PowerLineHome {
 			LatLng latLngByDestination = powerLine.getLatLngByDestination();
 			Integer powerLineId = powerLine.getId();
 			Query query = session.createQuery("from PowerLine p where (p.latLngBySource=:latLngBySource or p.latLngBySource=:latLngByDestination"
-					+ " or p.latLngByDestination=:latLngByDestination or p.latLngByDestination=:latLngBySource) and p.id !=:id");
+					+ " or p.latLngByDestination=:latLngByDestination or p.latLngByDestination=:latLngBySource) and p.id !=:id and p.disaster=null");
 			query.setEntity("latLngBySource", latLngBySource);
 			query.setEntity("latLngByDestination", latLngByDestination);
 			query.setInteger("id", powerLineId);
