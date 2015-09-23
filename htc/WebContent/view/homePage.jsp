@@ -46,7 +46,7 @@
     <li><a href="#"><i class="fa fa-institution"></i>Holon Object<i class="fa fa-caret-down"></i></a>
     <ul>
         <li><a href="#" id="addHolonObject"><i class="fa fa-plus"></i>Add Holon Object</a></li>
-        <li><a href="#" id="connectToPowerSource"><i class="fa fa-plug"></i>Connect to Main Line</a></li>
+        <li><a href="#" id="connectToPowerSource"><i class="fa fa-plug"></i>Connect To Main Line</a></li>
     	<li><a href="#" id="areConnected"><i class="fa fa-exchange"></i>Are Connected ?</a></li>
     </ul>
       </li>
@@ -57,7 +57,7 @@
       </ul>
       </li>
       
-    <li> <a href="#" ><i class="fa fa-flash"></i>PowerLine<i class="fa fa-caret-down"></i></a>
+    <li> <a href="#" ><i class="fa fa-flash"></i>Power Line<i class="fa fa-caret-down"></i></a>
       <ul>
         <li><a href="#" id="addPowerLine"><i class="fa fa-long-arrow-right"></i>Draw PowerLine</a></li>
         <li><a href="#" id="calcDistance"><i class="fa fa-arrows-h"></i>Calculate Distance</a></li>
