@@ -196,10 +196,23 @@ public class DissolveHolonAction extends CommonUtilities {
 				if(powerLine != null) {
 					ArrayList<HolonObject> connectedHolonObjectsOfAllHolons = getHolonObjectListByConnectedPowerLinesOfAllHolons(powerLine, "common");
 					Map<String, ArrayList<HolonObject>> mapOfHolonCoordinatorsOfAllHolons = getHolonCoordinatorsOfAllHolons(connectedHolonObjectsOfAllHolons);
-					ArrayList<HolonObject> redHolonCoordinatorsList = mapOfHolonCoordinatorsOfAllHolons.get("redCoordinators");
-					ArrayList<HolonObject> yellowHolonCoordinatorsList = mapOfHolonCoordinatorsOfAllHolons.get("yellowCoordinators");
-					ArrayList<HolonObject> blueHolonCoordinatorsList = mapOfHolonCoordinatorsOfAllHolons.get("blueCoordinators");
-					ArrayList<HolonObject> greenHolonCoordinatorsList = mapOfHolonCoordinatorsOfAllHolons.get("greenCoordinators");
+					ArrayList<HolonObject> redHolonCoordinatorsList = null;
+					ArrayList<HolonObject> yellowHolonCoordinatorsList = null;
+					ArrayList<HolonObject> blueHolonCoordinatorsList = null;
+					ArrayList<HolonObject> greenHolonCoordinatorsList = null;
+					String currentHolonColor = holonObject.getHolon()!=null?holonObject.getHolon().getColor():"black";
+					if(!currentHolonColor.equalsIgnoreCase("red")) {
+						redHolonCoordinatorsList = mapOfHolonCoordinatorsOfAllHolons.get("redCoordinators");
+					}
+					if(!currentHolonColor.equalsIgnoreCase("blue")) {
+						blueHolonCoordinatorsList = mapOfHolonCoordinatorsOfAllHolons.get("blueCoordinators");
+					}
+					if (!currentHolonColor.equalsIgnoreCase("green")) {
+						greenHolonCoordinatorsList = mapOfHolonCoordinatorsOfAllHolons.get("greenCoordinators");
+					}
+					if(!currentHolonColor.equalsIgnoreCase("yellow")) {
+						yellowHolonCoordinatorsList = mapOfHolonCoordinatorsOfAllHolons.get("yellowCoordinators");
+					}
 					HolonObject redHolonCoordinator = null;
 					HolonObject yellowHolonCoordinator = null;
 					HolonObject blueHolonCoordinator = null;
@@ -263,7 +276,7 @@ public class DissolveHolonAction extends CommonUtilities {
 						flexibilityHolonTemp = Integer.parseInt(holonEnergyDetailsTemp.get("flexibilityHolon"));
 						blueBenchmarkEnergy = (flexibilityHolonTemp-currentEnergyRequiredHolonTemp)-originalEnergyRequiredAfterCurrentProduction;
 						if(blueBenchmarkEnergy > greenBenchmarkEnergy && blueBenchmarkEnergy > 0) {
-							bestHolonCoordinatorMatch = yellowHolonCoordinator;
+							bestHolonCoordinatorMatch = blueHolonCoordinator;
 						}
 					}
 					if(bestHolonCoordinatorMatch != null) {

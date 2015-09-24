@@ -1,6 +1,6 @@
 var intervalFlag = 0;
 var myDynamicTimer;
-var timeInMilliSeconds = 15000;
+var timeInMilliSeconds = 10000;
 function startDynamicHolon(currentEnergyRequired, holonObjectId) {
 	$("#dynamicHolonLegend").html("This Holon Object will send a request after every "+(timeInMilliSeconds/1000)+" seconds");
 	if(currentEnergyRequired > 0 && intervalFlag == 0) {
@@ -57,7 +57,7 @@ function checkDynamicCurrentEnergyRequiredCallBack(data, options) {
 			confirmButtonColor: '#DD6B55',
 			confirmButtonText: 'Yes, find a new holon!',
 			cancelButtonText: "No, don't do anything!",
-			closeOnConfirm: false,
+			closeOnConfirm: true,
 			closeOnCancel: false
 		},
 		function(isConfirm) {
