@@ -2,13 +2,20 @@ var intervalFlag = 0;
 var myDynamicTimer;
 var timeInMilliSeconds = 15000;
 function startDynamicHolon(currentEnergyRequired, holonObjectId) {
+	$("#dynamicHolonLegend").html("This Holon Object will send a request after every "+(timeInMilliSeconds/1000)+" seconds");
 	if(currentEnergyRequired > 0 && intervalFlag == 0) {
 		checkTimerDynamicHolon(currentEnergyRequired, holonObjectId);
+		openDiv("dynamicHolonDiv");
 	} else if(currentEnergyRequired > 0 && intervalFlag == 1) {
+		openDiv("dynamicHolonDiv");
 		myDynamicTimer = setInterval(function () {checkTimerDynamicHolon(currentEnergyRequired,holonObjectId)}, timeInMilliSeconds);
+		} else if(intervalFlag < 6){
+			openDiv("dynamicHolonDiv");
 		} else {
 			intervalFlag = 0;//Re-initializing interval timer for new requests.
 			swal("Cannot Start Dynamic Holon!", "Current energy required must be greater than zero for this module to work.", "info");
+			closeDiv("dynamicHolonDiv");
+			$("#dynamicHolonDivTable").html("<tr style='display: none'><td colspan='2'></td></tr>");
 			}
 }
 
@@ -22,7 +29,6 @@ function checkTimerDynamicHolon(currentEnergyRequired,holonObjectId) {
 
 function checkDynamicCurrentEnergyRequiredCallBack(data, options) {
 	intervalFlag++;
-	console.log("Call number --> "+intervalFlag);
 	var holonObjectId = options["holonObjectId"];
 	var currentEnergyRequired = options["currentEnergyRequired"];
 	var dynamicCurrentEnergyRequired = data.split("~")[0];
@@ -58,22 +64,25 @@ function checkDynamicCurrentEnergyRequiredCallBack(data, options) {
 		    if (isConfirm) {
 		    	ajaxRequest("startDynamicHolonMerger", dataAttributes, startDynamicHolonMergerCallBack, dataAttributes);	
 			} else {
-		      swal("Cancelled", "Dynamic Holon merger has been cancelled.", "info");
+				swal("Cancelled", "Dynamic Holon merger has been cancelled.", "info");
 		    }
 		});
 	} else {
 		clearTimeout(myDynamicTimer);
+		$("#dynamicHolonDivTable").append("<tr><td>Request#"+intervalFlag+"-</td><td><b>Energy supplied!</b> Either, required energy has been provided to the holon object or timer has expired.</td></tr>");
+		swal("Energy supplied!","Either, required energy has been provided to the holon object or timer has expired.","info");
 		intervalFlag = 0;//Re-initializing interval timer for new requests.
-		swal("Energy supplied!", "Either, required energy has been provided to the holon object or timer has expired.", "info");
 	}
 }
 
 function dynamicHolonSendMessageToAllProducersCallBack(data, options) {
 	if(data == "SUCCESS") {
-		swal("Message sent", "Message has been sent to all connected producers", "info");
-	} else if (data == "FAILURE") {
+		$("#dynamicHolonDivTable").append("<tr><td>Request#"+intervalFlag+"-</td><td><b>Message sent:</b> Message has been sent to all connected producers.</td></tr>");
+	} else {
+		swal("Cannot communicate!", "Either 'Can Communicate' field is 'No' or Holon Object is not connected to any power line.", "info");
+		$("#dynamicHolonDivTable").append("<tr><td>Request#"+intervalFlag+"-</td><td><b>Cannot communicate!</b> Either 'Can Communicate' field is 'No' or Holon " +
+				"Object is not connected to any power line.</td></tr>");
 		intervalFlag = 0;//Re-initializing interval timer for new requests.
-		swal("Cannot communicate!", "Either 'Can Communicate' field is 'No' or Holon Object is not connected to any power line..", "info");
 	}
 	var tempIntervalFlag = options["intervalFlag"];
 	var holonObjectId = options["holonObjectId"];
@@ -141,4 +150,11 @@ function dissolveHolonCallBack(data, options) {
 
 function dontDissolveHolon() {
 	swal("Cannot dissolve!", "This option works only when flexibility of Holon is zero and current energy requirement is greater than zero", "info");
+}
+
+function abortDynamicHolonRequests(divToClose) {
+	intervalFlag = 0;//Re-initializing interval timer for new requests.
+	$("#dynamicHolonDivTable").html("<tr style='display: none'><td colspan='2'></td></tr>");
+	clearTimeout(myDynamicTimer);
+	closeDiv(divToClose);
 }

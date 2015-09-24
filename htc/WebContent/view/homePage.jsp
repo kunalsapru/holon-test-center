@@ -315,6 +315,13 @@
 	</tr>
 	</table> 	
  	</div>
+ 	<div id="dynamicHolonDiv"  class="table">
+ 	<fieldset>
+ 	<legend id="dynamicHolonLegend"></legend>
+ 		<table id="dynamicHolonDivTable"><tr style="display: none"><td colspan="2"></td></tr></table>
+ 	</fieldset>
+ 	<input type="button" id="closeDynamicHolonDiv" onclick="abortDynamicHolonRequests('dynamicHolonDiv')" value="X" title="This will abort subsequent requests." />
+ 	</div>
  	<div id="spinner" class="spinner" style="display:none;">
     	<img id="img-spinner" src="css/images/spinner.gif" alt="Loading"/>
 	</div>

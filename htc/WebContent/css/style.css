@@ -262,6 +262,28 @@
 	z-index: 1;
 	overflow: scroll;
 }
+#dynamicHolonDiv {
+	display: none;
+	position: absolute;
+	top: 22%;
+	left: 75%;
+	right: 1%;
+	width: auto;
+	height: auto;
+	max-width: 40%;
+	max-height: 50%;
+	margin: -100px 0 0 -250px;
+	background: #EAF4FF;
+	border: 5px solid rgb(128, 128, 128);
+	z-index: 1;
+	overflow: scroll;
+}
+
+#closeDynamicHolonDiv {
+	position: absolute;
+	top: 0%;
+	right: 0%;
+}
 
 /* .button {
 	background-color:#E2E4DD;
