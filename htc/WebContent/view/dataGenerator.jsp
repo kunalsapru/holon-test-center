@@ -8,6 +8,9 @@
 <link rel="shortcut icon" href="../css/images/favicon.ico" />
 <script type="text/javascript" src="../js/common.js"></script>
 <script type="text/javascript" src="../js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="../js/sweetalert.min.js"></script>
+<link rel="stylesheet" type="text/css" href="../css/style.css">
+<link rel="stylesheet" type="text/css" href="../css/sweetalert.css">
 <script type="text/javascript">
 	$(document).ready(function() {
 		ajaxRequest("factoryListHolonObjectType", {},factoryListHolonObjectTypeCallBack, {});
@@ -77,7 +80,7 @@
 	}
 
 	function factoryDataGeneratorCallBack(data, options) {
-		alert(data);
+		swal("Server Response!",data,"info");
 	}
 </script>
 <link rel="stylesheet" href="../css/style.css">
@@ -123,6 +126,9 @@
 	<table>
 		<tbody id="dataFactoryOutput"></tbody>
 	</table>
+</div>
+<div id="spinner" class="spinner" style="display:none;">
+   	<img id="img-spinner" src="../css/images/spinner.gif" alt="Loading"/>
 </div>
 </body>
 </html>

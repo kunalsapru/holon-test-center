@@ -2,16 +2,20 @@ var intervalFlag = 0;
 var myDynamicTimer;
 var timeInMilliSeconds = 15000;
 function startDynamicHolon(currentEnergyRequired, holonObjectId) {
-	if(currentEnergyRequired > 0) {
-		myDynamicTimer = setInterval(function () {checkTimerDynamicHolon(holonObjectId)}, timeInMilliSeconds);
-	} else {
-		swal("Cannot Start Dynamic Holon!", "Current energy required must be greater than zero for this module to work.", "info");
-	}
+	if(currentEnergyRequired > 0 && intervalFlag == 0) {
+		checkTimerDynamicHolon(currentEnergyRequired, holonObjectId);
+	} else if(currentEnergyRequired > 0 && intervalFlag == 1) {
+		myDynamicTimer = setInterval(function () {checkTimerDynamicHolon(currentEnergyRequired,holonObjectId)}, timeInMilliSeconds);
+		} else {
+			intervalFlag = 0;//Re-initializing interval timer for new requests.
+			swal("Cannot Start Dynamic Holon!", "Current energy required must be greater than zero for this module to work.", "info");
+			}
 }
 
-function checkTimerDynamicHolon(holonObjectId) {
+function checkTimerDynamicHolon(currentEnergyRequired,holonObjectId) {
 	var dataAttributes= {
-			holonObjectId : holonObjectId
+			holonObjectId : holonObjectId,
+			currentEnergyRequired : currentEnergyRequired
 	}
 	ajaxRequest("checkDynamicCurrentEnergyRequired", dataAttributes, checkDynamicCurrentEnergyRequiredCallBack, dataAttributes);
 }
@@ -20,6 +24,7 @@ function checkDynamicCurrentEnergyRequiredCallBack(data, options) {
 	intervalFlag++;
 	console.log("Call number --> "+intervalFlag);
 	var holonObjectId = options["holonObjectId"];
+	var currentEnergyRequired = options["currentEnergyRequired"];
 	var dynamicCurrentEnergyRequired = data.split("~")[0];
 	var originalEnergyRequiredAfterCurrentProduction = data.split("~")[1];
 	var dataAttributes= {
@@ -28,8 +33,13 @@ function checkDynamicCurrentEnergyRequiredCallBack(data, options) {
 			originalEnergyRequiredAfterCurrentProduction : originalEnergyRequiredAfterCurrentProduction
 	}
 	if(dynamicCurrentEnergyRequired > 0 && intervalFlag <= 5) {
-		ajaxRequest("sendMessageToAllProducers", options, sendMessageToAllProducersCallBack, options);
-	} else if(intervalFlag == 6) {
+		var tempOptions = {
+				intervalFlag:intervalFlag,
+				currentEnergyRequired : currentEnergyRequired,
+				holonObjectId : holonObjectId
+		}
+		ajaxRequest("sendMessageToAllProducers", options, dynamicHolonSendMessageToAllProducersCallBack, tempOptions);
+	} else if(dynamicCurrentEnergyRequired > 0 && intervalFlag == 6) {
 		intervalFlag = 0;//Re-initializing interval timer for new requests.
 		clearTimeout(myDynamicTimer);
 		//Code to start dynamic holon merger
@@ -53,9 +63,26 @@ function checkDynamicCurrentEnergyRequiredCallBack(data, options) {
 		});
 	} else {
 		clearTimeout(myDynamicTimer);
+		intervalFlag = 0;//Re-initializing interval timer for new requests.
 		swal("Energy supplied!", "Either, required energy has been provided to the holon object or timer has expired.", "info");
 	}
 }
+
+function dynamicHolonSendMessageToAllProducersCallBack(data, options) {
+	if(data == "SUCCESS") {
+		swal("Message sent", "Message has been sent to all connected producers", "info");
+	} else if (data == "FAILURE") {
+		intervalFlag = 0;//Re-initializing interval timer for new requests.
+		swal("Cannot communicate!", "Either 'Can Communicate' field is 'No' or Holon Object is not connected to any power line..", "info");
+	}
+	var tempIntervalFlag = options["intervalFlag"];
+	var holonObjectId = options["holonObjectId"];
+	var currentEnergyRequired = options["currentEnergyRequired"];
+	if(tempIntervalFlag == 1) {
+		startDynamicHolon(currentEnergyRequired, holonObjectId);
+	}
+}
+
 
 function startDynamicHolonMergerCallBack(data, options) {
 	if(data == "false") {
@@ -74,6 +101,7 @@ function startDynamicHolonMergerCallBack(data, options) {
 			swal("New holon assigned successfully!", "This holon object has been succesfully assigned to a new holon with sufficient energy.", "info");			
 		}
 	}
+	intervalFlag = 0;//Re-initializing interval timer for new requests.
 }
 
 function dissolveHolon(currentEnergyRequirementHolon, holonCoordinatorId) {
