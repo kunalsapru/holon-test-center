@@ -239,13 +239,8 @@ public class HolonObjectAction extends CommonUtilities {
 				ne_location = holonObject.getLatLngByNeLocation().getLatitude()+"~"+holonObject.getLatLngByNeLocation().getLongitude();
 				sw_location = holonObject.getLatLngBySwLocation().getLatitude()+"~"+holonObject.getLatLngBySwLocation().getLongitude();
 				holonColor ="black";
-				PowerLine powerLine = getPowerLineService().getPowerLineByHolonObject(holonObject);
-				HolonObject hco = null;
 				if(holonObject.getHolon() != null) {
-					hco = findConnectedHolonCoordinatorByHolon(holonObject.getHolon(), powerLine);
-				}
-				if(hco!=null) {
-					holonColor=hco.getHolon().getColor();
+					holonColor = holonObject.getHolon().getColor();
 				}
 				holonObjectId = holonObject.getId();
 				isCoord = holonObject.getIsCoordinator();
