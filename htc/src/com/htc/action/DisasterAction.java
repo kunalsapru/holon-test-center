@@ -47,16 +47,19 @@ public class DisasterAction extends CommonUtilities {
 		try{
 			
 			ArrayList<Disaster> disasterList = getDisasterService().getAllDisasterCircles();
-			ArrayList<String> disasterListArray = new ArrayList<String>();
+			StringBuffer disasterListBuffer = new StringBuffer();
 			for(Disaster disaster1 : disasterList){
 				Integer disasterId=disaster1.getId();
 				Double radius=disaster1.getRadius();
 				Double latitude= disaster1.getCenter().getLatitude();
 				Double longitude= disaster1.getCenter().getLongitude();
-				disasterListArray.add(disasterId+"^"+radius+"^"+latitude+"^"+longitude+"*");
+				disasterListBuffer.append(disasterId+"^"+radius+"^"+latitude+"^"+longitude+"*");
+			}
+			if(disasterListBuffer.length() > 0) {
+				disasterListBuffer = disasterListBuffer.deleteCharAt(disasterListBuffer.lastIndexOf("*"));
 			}
 			getResponse().setContentType("text/html");
-			getResponse().getWriter().write(disasterListArray.toString());
+			getResponse().getWriter().write(disasterListBuffer.toString());
 			
 		} catch (Exception e) {
 			log.info("Exception "+e.getMessage()+" occurred in action getAllSavedDisasters()");
@@ -68,14 +71,9 @@ public class DisasterAction extends CommonUtilities {
 		try{
 			ArrayList<PowerLine> listDisasterPowerLine= getPowerLineService().getAllPowerLineIdsHavingDisaster();
 			Map<Integer, Disaster> disasterIdMap = new TreeMap<Integer, Disaster>();
-			for(PowerLine powerLine : listDisasterPowerLine) {
-				Integer tempPowerLineId = powerLine.getId();
-				Disaster tempDisaster = powerLine.getDisaster()!=null?powerLine.getDisaster():null;
-				if(!(disasterIdMap.containsKey(tempPowerLineId))) {
-					if(tempDisaster!=null) {
-						disasterIdMap.put(tempPowerLineId, tempDisaster);
-					}
-				}
+			ArrayList<Disaster> allDisasterList = getDisasterService().getAllDisasterCircles();
+			for(Disaster disaster : allDisasterList) {
+				disasterIdMap.put(disaster.getId(), disaster);
 			}
 			String disasterResponse = deleteDisasterMode(listDisasterPowerLine, disasterIdMap);
 			getResponse().setContentType("text/html");
@@ -114,7 +112,9 @@ public class DisasterAction extends CommonUtilities {
 				getDisasterService().delete(disasterIdMap.get(disasterId));
 				listofDisasterIdsAsResponse.append(disasterId+"*");
 			}
-			
+			if(listofDisasterIdsAsResponse.length() > 0) {
+				listofDisasterIdsAsResponse = listofDisasterIdsAsResponse.deleteCharAt(listofDisasterIdsAsResponse.lastIndexOf("*"));
+			}
 		} catch(Exception e){
 			System.out.println("Error in delete Disaster Mode");
 		}

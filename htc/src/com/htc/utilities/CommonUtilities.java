@@ -4,21 +4,15 @@ package com.htc.utilities;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 import java.util.TreeMap;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
-
 import com.htc.action.AbstractAction;
 import com.htc.action.PowerSwitchAction;
-import com.htc.hibernate.pojo.Disaster;
 import com.htc.hibernate.pojo.Holon;
 import com.htc.hibernate.pojo.HolonElement;
 import com.htc.hibernate.pojo.HolonObject;

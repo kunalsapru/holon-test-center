@@ -80,19 +80,17 @@ function getAllSavedDisastersCallback(data,options){
 			     radius: parseInt(disasterCircleRadius)
 			    });	
 			showInfoWindowForDisaster(disasterCircleId,disasterValuesLatitude,disasterValuesLongitude,disasterMarker);
+			globalDisasterList.set(disasterCircleId,disasterMarker);
 		}
-		
 	});
 	}
-
 }
 
 function showInfoWindowForDisaster(disasterId,disasterCircleLatitude,disasterCircleLongitude,createdDisasterCircle){
 	google.maps.event.addListener(createdDisasterCircle, 'click', function(event) {
-		var id= disasterId.replace(","," ");
 		if(deleteSelectedDisasterMode){
 			var dataAttributes={
-					disasterId: parseInt(id)
+					disasterId: disasterId
 			}
 			ajaxRequest("deleteDisasterCircleFromDatabase", dataAttributes, deleteDisasterCircleFromDatabaseCallback, {});
 			
@@ -129,7 +127,25 @@ function deleteAllDisaster(){
 	if(deleteAllDisasterMode== false){
 		deleteAllDisasterMode=true;
 		$("#removeAllDisaster").css("background-color", "rgb(153,153,0)");
-		ajaxRequest("deleteAllDisasterCircleFromDatabase", {}, deleteAllDisasterCircleFromDatabaseCallback, {});
+		swal({
+			title: "This will remove all disasters permanently!",
+			text: "This action will remove all disasters from database. Do you want to continue?",
+			type: "warning",
+			showCancelButton: true,
+			confirmButtonColor: '#DD6B55',
+			confirmButtonText: 'Yes, remove all disasters!',
+			cancelButtonText: "No, don't do anything!",
+			closeOnConfirm: true,
+			closeOnCancel: true
+		},
+		function(isConfirm) {
+		    if (isConfirm) {
+		    	ajaxRequest("deleteAllDisasterCircleFromDatabase", {}, deleteAllDisasterCircleFromDatabaseCallback, {});	
+			} else {
+				$("#removeAllDisaster").css("background-color", "rgb(26, 26, 26)");
+				deleteAllDisasterMode=false;
+			}
+		});
 	}else{
 		$("#removeAllDisaster").css("background-color", "rgb(26, 26, 26)");
 		deleteAllDisasterMode=false;
@@ -146,7 +162,6 @@ function deleteAllDisasterCircleFromDatabaseCallback(data,option){
 			}
 		});
 	}
-	
 }
 
 function deleteDisasterCircleFromDatabaseCallback(data,options){
