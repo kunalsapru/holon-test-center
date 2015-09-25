@@ -1,6 +1,7 @@
 package com.htc.action;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.TreeMap;
 import org.apache.log4j.Logger;
 import com.htc.hibernate.pojo.Disaster;
 import com.htc.hibernate.pojo.LatLng;
@@ -65,28 +66,59 @@ public class DisasterAction extends CommonUtilities {
 	
 	public void deleteAllDisasterCircleFromDatabase(){
 		try{
-			ArrayList<PowerLine> listPowerLine= getPowerLineService().getAllPowerLineIdsHavingDisaster();
-			String response= deleteDisasterMode(listPowerLine).toString();
+			ArrayList<PowerLine> listDisasterPowerLine= getPowerLineService().getAllPowerLineIdsHavingDisaster();
+			Map<Integer, Disaster> disasterIdMap = new TreeMap<Integer, Disaster>();
+			for(PowerLine powerLine : listDisasterPowerLine) {
+				Integer tempPowerLineId = powerLine.getId();
+				Disaster tempDisaster = powerLine.getDisaster()!=null?powerLine.getDisaster():null;
+				if(!(disasterIdMap.containsKey(tempPowerLineId))) {
+					if(tempDisaster!=null) {
+						disasterIdMap.put(tempPowerLineId, tempDisaster);
+					}
+				}
+			}
+			String disasterResponse = deleteDisasterMode(listDisasterPowerLine, disasterIdMap);
 			getResponse().setContentType("text/html");
-			getResponse().getWriter().write(response);
+			getResponse().getWriter().write(disasterResponse);
 		}catch(Exception e){
 			System.out.println("Exception in deleteAllDisasterCircleFromDatabase()");
 		}
 	}
 	
-	public void deleteDisasterCircleFromDatabase(){
+	public void deleteDisasterCircleFromDatabase() {
 		Integer disasterId = getRequest().getParameter("disasterId")!=null && getRequest().getParameter("disasterId") != ""?Integer.parseInt(getRequest().getParameter("disasterId")):0;
-		Disaster disaster= getDisasterService().findById(disasterId);
-		try{
-			if(disaster!= null){
-				ArrayList<PowerLine> connectedPowerLines = getPowerLineService().getAllPowerLinesWithDisasterId(disaster);
-				String response= deleteDisasterMode(connectedPowerLines).toString();
-				getResponse().setContentType("text/html");
-				getResponse().getWriter().write(response);
-			}
-		}catch(Exception e){
+		String disasterResponse;
+		Disaster disaster = getDisasterService().findById(disasterId);
+		Map<Integer, Disaster> disasterIdMap = new TreeMap<Integer, Disaster>();
+		disasterIdMap.put(disasterId, disaster);
+		try {
+			ArrayList<PowerLine> disasterPowerLines = disaster!=null?getPowerLineService().getAllPowerLinesWithDisasterId(disaster):null;
+			disasterResponse= disasterPowerLines!=null?deleteDisasterMode(disasterPowerLines, disasterIdMap):"failure";
+			getResponse().setContentType("text/html");
+			getResponse().getWriter().write(disasterResponse);
+		} catch(Exception e) {
 			System.out.println("Exception in deleteDisasterCircleFromDatabase");
 		}
-		
 	}
+	
+	public String deleteDisasterMode(ArrayList<PowerLine> disasterPowerLines, Map<Integer, Disaster> disasterIdMap){
+		StringBuffer listofDisasterIdsAsResponse= new StringBuffer();
+		try{
+			//Setting all power lines' disaster reference to null before deleting all disaster objects
+			for(PowerLine powerLine: disasterPowerLines){
+				powerLine.setDisaster(null);
+				getPowerLineService().merge(powerLine);
+			}
+			//Removing all disaster objects from database
+			for(Integer disasterId : disasterIdMap.keySet()) {
+				getDisasterService().delete(disasterIdMap.get(disasterId));
+				listofDisasterIdsAsResponse.append(disasterId+"*");
+			}
+			
+		} catch(Exception e){
+			System.out.println("Error in delete Disaster Mode");
+		}
+		return listofDisasterIdsAsResponse.toString();
+	}
+	
 }

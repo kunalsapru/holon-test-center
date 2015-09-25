@@ -926,27 +926,4 @@ public class CommonUtilities extends AbstractAction{
 		return mapOfAllPowerLinesInsideCircles;
 	}
 	
-	public StringBuffer deleteDisasterMode(ArrayList<PowerLine> powerLines){
-		StringBuffer listofDisasterIdsAsResponse= new StringBuffer();
-		Set<Integer> disasterIds = new HashSet<Integer>();
-		try{
-			for(PowerLine powerLine: powerLines){
-				disasterIds.add(powerLine.getDisaster().getId());
-				System.out.println("Selected Disaster PowerLine"+powerLine.getDisaster().getId());
-				powerLine.setDisaster(null);
-				getPowerLineService().merge(powerLine);
-			}
-			
-			for(Integer disasterId : disasterIds){
-				listofDisasterIdsAsResponse.append(disasterId+"*");
-				Disaster disaster= getDisasterService().findById(disasterId);
-				getDisasterService().delete(disaster);
-				
-			}
-		}catch(Exception e){
-			System.out.println("Error in delete Disaster Mode");
-		}
-		return listofDisasterIdsAsResponse;
-	}
- 
 }

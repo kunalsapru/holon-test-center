@@ -138,7 +138,7 @@ function deleteAllDisaster(){
 
 function deleteAllDisasterCircleFromDatabaseCallback(data,option){
 	//Get all ids from database and remove from the global list
-	if(data!= undefined || data!= null){
+	if(data!= undefined && data!= null && data!="failure"){
 		var disasterIds=data.split("*");
 		$.each(disasterIds,function(key,value){
 			if(value!= null && value != ""){
@@ -153,7 +153,7 @@ function deleteDisasterCircleFromDatabaseCallback(data,options){
 	$("#removeSelectedDisaster").css("background-color", "rgb(26, 26, 26)");
 	deleteSelectedDisasterMode=false;
 	var disasterId= data.split("*");
-	if(disasterId[0] != undefined && disasterId[0] != null){
+	if(data!="failure" && disasterId[0] != undefined && disasterId[0] != null){
 		deleteDisasterMarkerFromGlobalList(disasterId[0]);	
 	}
 }
