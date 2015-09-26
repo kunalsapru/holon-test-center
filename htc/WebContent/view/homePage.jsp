@@ -30,6 +30,7 @@
 <script type="text/javascript" src="js/areConnected.js"></script>
 <script type="text/javascript" src="js/disasterMode.js"></script>
 <script type="text/javascript" src="js/dynamicHolon.js"></script>
+<script type="text/javascript" src="js/simulation.js"></script>
 <script src="js/sweetalert.min.js"></script>
 </head>
 
@@ -77,6 +78,7 @@
 	<li><a href="#" id="removeAllDisaster"><i class="fa fa-ban"></i>Remove All Disasters</a>
 	</ul>
 	</li>
+	<li><a href="#" id="startSimulation"><i class="fa fa-thumbs-up"></i>Start Simulation</a></li>
 	</ul>
 	
   <a href="#" id="showmenu"> <i class="fa fa-align-justify"></i> </a> </nav>
