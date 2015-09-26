@@ -51,6 +51,10 @@ $(document)
 					    var url = $(this).attr('href'); 
 					    window.open(url, '_blank');
 					});
+					$("#startSimulation").click(function(){
+					    var url = $(this).attr('href'); 
+					    window.open(url, '_blank');
+					});
 					$("#buttonHolonMaster").click(function(){
 						var textHolonMaster= $("#textHolonMaster").val();
 						var dataAttributes = {
