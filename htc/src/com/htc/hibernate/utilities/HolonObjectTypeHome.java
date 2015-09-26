@@ -1,8 +1,11 @@
 package com.htc.hibernate.utilities;
 
 import java.util.ArrayList;
+
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
 import com.htc.hibernate.config.HibernateSessionFactory;
 import com.htc.hibernate.pojo.HolonObjectType;
 
@@ -11,7 +14,7 @@ import com.htc.hibernate.pojo.HolonObjectType;
  * @see .HolonObjectType
  */
 public class HolonObjectTypeHome {
-	
+	static Logger log = Logger.getLogger(HolonObjectTypeHome.class);
 	public Integer persist(HolonObjectType transientInstance) {
 		Integer holonObjectType_id=null;
 		Session session = null;
@@ -23,7 +26,7 @@ public class HolonObjectTypeHome {
 			tx.commit();// Committing transaction changes
 		} catch (Exception exp){
 			exp.printStackTrace();
-			tx.rollback();
+			if(tx!=null) { tx.rollback(); }
 		} finally {
 			HibernateSessionFactory.closeSession();
 		}
@@ -40,8 +43,8 @@ public class HolonObjectTypeHome {
 			tx.commit();
 			return result;
 		} catch (RuntimeException re) {
-			System.out.println("Merge Failed...");
-			tx.rollback();
+			log.info("Merge Failed...");
+			if(tx!=null) { tx.rollback(); }
 			throw re;
 		} finally {
 			HibernateSessionFactory.closeSession();
@@ -58,8 +61,8 @@ public class HolonObjectTypeHome {
 			tx.commit();
 			return instance;
 		} catch (RuntimeException re) {
-			System.out.println("Exception --> "+re.getMessage());
-			tx.rollback();
+			log.info("Exception --> "+re.getMessage());
+			if(tx!=null) { tx.rollback(); }
 			throw re;
 		} finally {
 			HibernateSessionFactory.closeSession();
@@ -78,8 +81,8 @@ public class HolonObjectTypeHome {
 			deleteStatus = true;
 			return deleteStatus;
 		} catch (RuntimeException re) {
-			System.out.println("Delete Failed...");
-			tx.rollback();
+			log.info("Delete Failed...");
+			if(tx!=null) { tx.rollback(); }
 		} finally {
 			HibernateSessionFactory.closeSession();
 		}
@@ -98,8 +101,8 @@ public class HolonObjectTypeHome {
 			tx.commit();
 			return listHolonObjectType;
 		} catch (RuntimeException re) {
-			System.out.println("get holon Object type list failed");
-			tx.rollback();
+			log.info("get holon Object type list failed");
+			if(tx!=null) { tx.rollback(); }
 		} finally {
 			HibernateSessionFactory.closeSession();
 		}

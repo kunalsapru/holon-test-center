@@ -28,7 +28,8 @@ function disasterModeSelected(){
 			var dataAttributes= {
 					latitude : lat,
 					longitude : lng,
-					radius : radius
+					radius : radius,
+					zIndex:-1
 					};
 			ajaxRequest("getAllPointsInsideCircle", dataAttributes, getAllPointsInsideCircleCallback, {});
 			
@@ -77,7 +78,8 @@ function getAllSavedDisastersCallback(data,options){
 			     fillOpacity: 0.35,
 			     map: map,
 			     center: new google.maps.LatLng(disasterValuesLatitude, disasterValuesLongitude),
-			     radius: parseInt(disasterCircleRadius)
+			     radius: parseInt(disasterCircleRadius),
+			     zIndex:-1
 			    });	
 			showInfoWindowForDisaster(disasterCircleId,disasterValuesLatitude,disasterValuesLongitude,disasterMarker);
 			globalDisasterList.set(disasterCircleId,disasterMarker);

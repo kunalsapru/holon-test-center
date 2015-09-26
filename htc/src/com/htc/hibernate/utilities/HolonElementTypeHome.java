@@ -14,7 +14,6 @@ import com.htc.hibernate.pojo.HolonElementType;
  * @see .HolonElementType
  */
 public class HolonElementTypeHome {
-	
 	static Logger log = Logger.getLogger(HolonElementTypeHome.class);
 	public Integer persist(HolonElementType transientInstance) {
 		Integer holonElementType_id=null;
@@ -27,7 +26,7 @@ public class HolonElementTypeHome {
 			tx.commit();// Committing transaction changes
 		} catch (Exception exp){
 			exp.printStackTrace();
-			tx.rollback();
+			if(tx!=null) { tx.rollback(); }
 		} finally {
 			HibernateSessionFactory.closeSession();
 		}
@@ -45,7 +44,7 @@ public class HolonElementTypeHome {
 			return result;
 		} catch (RuntimeException re) {
 			log.info("Merge Failed...");
-			tx.rollback();
+			if(tx!=null) { tx.rollback(); }
 			throw re;
 		} finally {
 			HibernateSessionFactory.closeSession();
@@ -64,7 +63,7 @@ public class HolonElementTypeHome {
 			return instance;
 		} catch (RuntimeException re) {
 			log.info("Exception --> "+re.getMessage());
-			tx.rollback();
+			if(tx!=null) { tx.rollback(); }
 			throw re;
 		} finally {
 			HibernateSessionFactory.closeSession();
@@ -84,7 +83,7 @@ public class HolonElementTypeHome {
 			return deleteStatus;
 		} catch (RuntimeException re) {
 			log.info("Delete Failed...");
-			tx.rollback();
+			if(tx!=null) { tx.rollback(); }
 		} finally {
 			HibernateSessionFactory.closeSession();
 		}
@@ -104,7 +103,7 @@ public class HolonElementTypeHome {
 			return listHolonElementType;
 		} catch (RuntimeException re) {
 			log.info("get holon element type list failed");
-			tx.rollback();
+			if(tx!=null) { tx.rollback(); }
 		} finally {
 			HibernateSessionFactory.closeSession();
 		}

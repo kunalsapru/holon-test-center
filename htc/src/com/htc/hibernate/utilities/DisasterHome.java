@@ -1,16 +1,14 @@
 package com.htc.hibernate.utilities;
 
 import java.util.ArrayList;
-
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-
 import com.htc.hibernate.config.HibernateSessionFactory;
 import com.htc.hibernate.pojo.Disaster;
 
 public class DisasterHome {
-static Logger log = Logger.getLogger(HolonObjectHome.class);
+static Logger log = Logger.getLogger(DisasterHome.class);
 	
 	public Integer persist(Disaster transientInstance) {
 		Integer disaster_id=null;
@@ -23,7 +21,7 @@ static Logger log = Logger.getLogger(HolonObjectHome.class);
 			tx.commit();// Committing transaction changes
 		} catch (Exception exp){
 			exp.printStackTrace();
-			tx.rollback();
+			if(tx!=null) { tx.rollback(); }
 		} finally {
 			HibernateSessionFactory.closeSession();
 		}
@@ -39,8 +37,8 @@ static Logger log = Logger.getLogger(HolonObjectHome.class);
 			tx.commit();
 			return result;
 		} catch (RuntimeException re) {
-			System.out.println("Merge Failed...");
-			tx.rollback();
+			log.info("Merge Failed...");
+			if(tx!=null) { tx.rollback(); }
 			throw re;
 		} finally {
 			HibernateSessionFactory.closeSession();
@@ -57,8 +55,8 @@ static Logger log = Logger.getLogger(HolonObjectHome.class);
 			tx.commit();
 			return instance;
 		} catch (RuntimeException re) {
-			System.out.println("Exception --> "+re.getMessage());
-			tx.rollback();
+			log.info("Exception --> "+re.getMessage());
+			if(tx!=null) { tx.rollback(); }
 			throw re;
 		} finally {
 			HibernateSessionFactory.closeSession();
@@ -77,8 +75,8 @@ static Logger log = Logger.getLogger(HolonObjectHome.class);
 			deleteStatus = true;
 			return deleteStatus;
 		} catch (RuntimeException re) {
-			System.out.println("Delete Failed...");
-			tx.rollback();
+			log.info("Delete Failed...");
+			if(tx!=null) { tx.rollback(); }
 		} finally {
 			HibernateSessionFactory.closeSession();
 		}
@@ -97,8 +95,8 @@ static Logger log = Logger.getLogger(HolonObjectHome.class);
 			tx.commit();
 			return listDisaster;
 		} catch (RuntimeException re) {
-			System.out.println("get DisasterCircles list failed");
-			tx.rollback();
+			log.info("get DisasterCircles list failed");
+			if(tx!=null) { tx.rollback(); }
 		} finally {
 			HibernateSessionFactory.closeSession();
 		}

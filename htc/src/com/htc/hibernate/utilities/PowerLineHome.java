@@ -2,6 +2,7 @@ package com.htc.hibernate.utilities;
 
 import java.util.ArrayList;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -20,6 +21,8 @@ import com.htc.utilities.ConstantValues;
  */
 public class PowerLineHome {
 	
+	static Logger log = Logger.getLogger(PowerLineHome.class);
+	
 	public Integer persist(PowerLine transientInstance) {
 		Integer powerLine_id=null;
 		Session session = null;
@@ -31,7 +34,7 @@ public class PowerLineHome {
 			tx.commit();// Committing transaction changes
 		} catch (Exception exp){
 			exp.printStackTrace();
-			tx.rollback();
+			if(tx!=null) { tx.rollback(); }
 		} finally {
 			HibernateSessionFactory.closeSession();
 		}
@@ -48,8 +51,8 @@ public class PowerLineHome {
 			tx.commit();
 			return result;
 		} catch (RuntimeException re) {
-			System.out.println("Merge Failed...");
-			tx.rollback();
+			log.info("Merge Failed...");
+			if(tx!=null) { tx.rollback(); }
 			throw re;
 		} finally {
 			HibernateSessionFactory.closeSession();
@@ -66,8 +69,8 @@ public class PowerLineHome {
 			tx.commit();
 			return instance;
 		} catch (RuntimeException re) {
-			System.out.println("Exception --> "+re.getMessage());
-			tx.rollback();
+			log.info("Exception --> "+re.getMessage());
+			if(tx!=null) { tx.rollback(); }
 			throw re;
 		} finally {
 			HibernateSessionFactory.closeSession();
@@ -86,8 +89,8 @@ public class PowerLineHome {
 			deleteStatus = true;
 			return deleteStatus;
 		} catch (RuntimeException re) {
-			System.out.println("Delete Failed...");
-			tx.rollback();
+			log.info("Delete Failed...");
+			if(tx!=null) { tx.rollback(); }
 		} finally {
 			HibernateSessionFactory.closeSession();
 		}
@@ -106,8 +109,8 @@ public class PowerLineHome {
 			tx.commit();
 			return listPowerLine;
 		} catch (RuntimeException re) {
-			System.out.println("get Power Line list failed");
-			tx.rollback();
+			log.info("get Power Line list failed");
+			if(tx!=null) { tx.rollback(); }
 		} finally {
 			HibernateSessionFactory.closeSession();
 		}
@@ -118,24 +121,27 @@ public class PowerLineHome {
 	public ArrayList<PowerLine> getConnectedPowerLines(PowerLine powerLine) {
 		Session session = null;
 		Transaction tx = null;
-		ArrayList<PowerLine> connectedPowerLines = null;
+		ArrayList<PowerLine> connectedPowerLines = new ArrayList<PowerLine>();
+		Disaster selfDisaster = powerLine.getDisaster();
 		try {
-			session = HibernateSessionFactory.getSessionFactory().getCurrentSession();
-			tx = session.beginTransaction();
-			LatLng latLngBySource = powerLine.getLatLngBySource();
-			LatLng latLngByDestination = powerLine.getLatLngByDestination();
-			Integer powerLineId = powerLine.getId();
-			Query query = session.createQuery("from PowerLine p where (p.latLngBySource=:latLngBySource or p.latLngBySource=:latLngByDestination"
-					+ " or p.latLngByDestination=:latLngByDestination or p.latLngByDestination=:latLngBySource) and p.id !=:id and p.disaster=null");
-			query.setEntity("latLngBySource", latLngBySource);
-			query.setEntity("latLngByDestination", latLngByDestination);
-			query.setInteger("id", powerLineId);
-			connectedPowerLines =  (ArrayList<PowerLine>) query.list();
-			tx.commit();
-			return connectedPowerLines;
+			if (selfDisaster == null) {
+				session = HibernateSessionFactory.getSessionFactory().getCurrentSession();
+				tx = session.beginTransaction();
+				LatLng latLngBySource = powerLine.getLatLngBySource();
+				LatLng latLngByDestination = powerLine.getLatLngByDestination();
+				Integer powerLineId = powerLine.getId();
+				Query query = session.createQuery("from PowerLine p where (p.latLngBySource=:latLngBySource or p.latLngBySource=:latLngByDestination"
+						+ " or p.latLngByDestination=:latLngByDestination or p.latLngByDestination=:latLngBySource) and p.id !=:id and p.disaster=null");
+				query.setEntity("latLngBySource", latLngBySource);
+				query.setEntity("latLngByDestination", latLngByDestination);
+				query.setInteger("id", powerLineId);
+				connectedPowerLines =  (ArrayList<PowerLine>) query.list();
+				tx.commit();
+				return connectedPowerLines;
+			}
 		} catch (RuntimeException re) {
-			System.out.println("get Connected Power Line list failed");
-			tx.rollback();
+			log.info("get Connected Power Line list failed");
+			if(tx!=null) { tx.rollback(); }
 		} finally {
 			HibernateSessionFactory.closeSession();
 		}
@@ -156,8 +162,8 @@ public class PowerLineHome {
 			powerLine =  (PowerLine)query.uniqueResult();
 			tx.commit();
 		} catch (RuntimeException re) {
-			System.out.println("getPowerLineByHolonObject failed");
-			tx.rollback();
+			log.info("getPowerLineByHolonObject failed");
+			if(tx!=null) { tx.rollback(); }
 		} finally {
 			HibernateSessionFactory.closeSession();
 		}
@@ -178,8 +184,8 @@ public class PowerLineHome {
 			powerLine =  (PowerLine)query.uniqueResult();
 			tx.commit();
 		} catch (RuntimeException re) {
-			System.out.println("getPowerLineByPowerSource failed");
-			tx.rollback();
+			log.info("getPowerLineByPowerSource failed");
+			if(tx!=null) { tx.rollback(); }
 		} finally {
 			HibernateSessionFactory.closeSession();
 		}
@@ -199,8 +205,8 @@ public class PowerLineHome {
 			listPowerLine = (ArrayList<PowerLine>) query.list();
 			tx.commit();
 		} catch (RuntimeException re) {
-			System.out.println("getPowerLineFromLatLngId failed");
-			tx.rollback();
+			log.info("getPowerLineFromLatLngId failed");
+			if(tx!=null) { tx.rollback(); }
 		} finally {
 			HibernateSessionFactory.closeSession();
 		}
@@ -219,8 +225,8 @@ public class PowerLineHome {
 			listPowerLine = (ArrayList<PowerLine>) query.list();
 			tx.commit();
 		} catch (RuntimeException re) {
-			System.out.println("getPowerLineFromLatLngId failed");
-			tx.rollback();
+			log.info("getPowerLineFromLatLngId failed");
+			if(tx!=null) { tx.rollback(); }
 		} finally {
 			HibernateSessionFactory.closeSession();
 		}
@@ -240,8 +246,8 @@ public class PowerLineHome {
 			listPowerLine = (ArrayList<PowerLine>) query.list();
 			tx.commit();
 		} catch (RuntimeException re) {
-			System.out.println("getPowerLineFromLatLngId failed");
-			tx.rollback();
+			log.info("getPowerLineFromLatLngId failed");
+			if(tx!=null) { tx.rollback(); }
 		} finally {
 			HibernateSessionFactory.closeSession();
 		}

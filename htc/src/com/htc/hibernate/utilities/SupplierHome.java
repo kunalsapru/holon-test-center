@@ -33,7 +33,7 @@ public class SupplierHome {
 			tx.commit();// Committing transaction changes
 		} catch (Exception exp){
 			exp.printStackTrace();
-			tx.rollback();
+			if(tx!=null) { tx.rollback(); }
 		} finally {
 			HibernateSessionFactory.closeSession();
 		}
@@ -50,8 +50,8 @@ public class SupplierHome {
 			tx.commit();
 			return result;
 		} catch (RuntimeException re) {
-			System.out.println("Merge Failed...");
-			tx.rollback();
+			log.info("Merge Failed...");
+			if(tx!=null) { tx.rollback(); }
 			throw re;
 		} finally {
 			HibernateSessionFactory.closeSession();
@@ -68,8 +68,8 @@ public class SupplierHome {
 			tx.commit();
 			return instance;
 		} catch (RuntimeException re) {
-			System.out.println("Exception --> "+re.getMessage());
-			tx.rollback();
+			log.info("Exception --> "+re.getMessage());
+			if(tx!=null) { tx.rollback(); }
 			throw re;
 		} finally {
 			HibernateSessionFactory.closeSession();
@@ -88,8 +88,8 @@ public class SupplierHome {
 			deleteStatus = true;
 			return deleteStatus;
 		} catch (RuntimeException re) {
-			System.out.println("Delete Failed...");
-			tx.rollback();
+			log.info("Delete Failed...");
+			if(tx!=null) { tx.rollback(); }
 		} finally {
 			HibernateSessionFactory.closeSession();
 		}
@@ -108,8 +108,8 @@ public class SupplierHome {
 			tx.commit();
 			return listSupplier;
 		} catch (RuntimeException re) {
-			System.out.println("get Supplier list failed");
-			tx.rollback();
+			log.info("get Supplier list failed");
+			if(tx!=null) { tx.rollback(); }
 		} finally {
 			HibernateSessionFactory.closeSession();
 		}
@@ -130,8 +130,8 @@ public class SupplierHome {
 			tx.commit();
 			return listSupplier;
 		} catch (RuntimeException re) {
-			System.out.println("getSupplierListForProducer failed");
-			tx.rollback();
+			log.info("getSupplierListForProducer failed");
+			if(tx!=null) { tx.rollback(); }
 		} finally {
 			HibernateSessionFactory.closeSession();
 		}
@@ -152,8 +152,8 @@ public class SupplierHome {
 			tx.commit();
 			return listSupplier;
 		} catch (RuntimeException re) {
-			System.out.println("getSupplierListForProducerPowerSource failed");
-			tx.rollback();
+			log.info("getSupplierListForProducerPowerSource failed");
+			if(tx!=null) { tx.rollback(); }
 		} finally {
 			HibernateSessionFactory.closeSession();
 		}
@@ -175,8 +175,8 @@ public class SupplierHome {
 			tx.commit();
 			return listSupplier;
 		} catch (RuntimeException re) {
-			System.out.println("getSupplierListForProducer failed");
-			tx.rollback();
+			log.info("getSupplierListForProducer failed");
+			if(tx!=null) { tx.rollback(); }
 		} finally {
 			HibernateSessionFactory.closeSession();
 		}
@@ -197,8 +197,8 @@ public class SupplierHome {
 			tx.commit();
 			return listSupplier;
 		} catch (RuntimeException re) {
-			System.out.println("getSupplierListForConsumer failed");
-			tx.rollback();
+			log.info("getSupplierListForConsumer failed");
+			if(tx!=null) { tx.rollback(); }
 		} finally {
 			HibernateSessionFactory.closeSession();
 		}
@@ -219,8 +219,8 @@ public class SupplierHome {
 			tx.commit();
 			return listSupplier;
 		} catch (RuntimeException re) {
-			System.out.println("getSupplierListForConsumer failed");
-			tx.rollback();
+			log.info("getSupplierListForConsumer failed");
+			if(tx!=null) { tx.rollback(); }
 		} finally {
 			HibernateSessionFactory.closeSession();
 		}
@@ -242,8 +242,8 @@ public class SupplierHome {
 			tx.commit();
 			return listSupplier;
 		} catch (RuntimeException re) {
-			System.out.println("getSupplierListForConsumer failed");
-			tx.rollback();
+			log.info("getSupplierListForConsumer failed");
+			if(tx!=null) { tx.rollback(); }
 		} finally {
 			HibernateSessionFactory.closeSession();
 		}
@@ -264,8 +264,8 @@ public class SupplierHome {
 			tx.commit();
 			return listSupplier;
 		} catch (RuntimeException re) {
-			System.out.println("getSupplierListForConsumer failed");
-			tx.rollback();
+			log.info("getSupplierListForConsumer failed");
+			if(tx!=null) { tx.rollback(); }
 		} finally {
 			HibernateSessionFactory.closeSession();
 		}

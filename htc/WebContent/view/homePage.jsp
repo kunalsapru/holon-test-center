@@ -82,7 +82,6 @@
   <a href="#" id="showmenu"> <i class="fa fa-align-justify"></i> </a> </nav>
 <!-- /menu vertical --> 
 
-<!-- contenido de pagina, realmente no importa -->
 <div id="container">
   <div id="googleMap"></div>
   <div id="elementInfo" class='table'>

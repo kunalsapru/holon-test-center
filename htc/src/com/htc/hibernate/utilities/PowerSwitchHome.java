@@ -28,7 +28,7 @@ public class PowerSwitchHome {
 			tx.commit();// Committing transaction changes
 		} catch (Exception exp){
 			exp.printStackTrace();
-			tx.rollback();
+			if(tx!=null) { tx.rollback(); }
 		} finally {
 			HibernateSessionFactory.closeSession();
 		}
@@ -45,8 +45,8 @@ public class PowerSwitchHome {
 			tx.commit();
 			return result;
 		} catch (RuntimeException re) {
-			System.out.println("Merge Failed...");
-			tx.rollback();
+			log.info("Merge Failed...");
+			if(tx!=null) { tx.rollback(); }
 			throw re;
 		} finally {
 			HibernateSessionFactory.closeSession();
@@ -63,8 +63,8 @@ public class PowerSwitchHome {
 			tx.commit();
 			return instance;
 		} catch (RuntimeException re) {
-			System.out.println("Exception --> "+re.getMessage());
-			tx.rollback();
+			log.info("Exception --> "+re.getMessage());
+			if(tx!=null) { tx.rollback(); }
 			throw re;
 		} finally {
 			HibernateSessionFactory.closeSession();
@@ -83,8 +83,8 @@ public class PowerSwitchHome {
 			deleteStatus = true;
 			return deleteStatus;
 		} catch (RuntimeException re) {
-			System.out.println("Delete Failed...");
-			tx.rollback();
+			log.info("Delete Failed...");
+			if(tx!=null) { tx.rollback(); }
 		} finally {
 			HibernateSessionFactory.closeSession();
 		}
@@ -103,8 +103,8 @@ public class PowerSwitchHome {
 			tx.commit();
 			return listPowerSwitch;
 		} catch (RuntimeException re) {
-			System.out.println("get Power Switch list failed");
-			tx.rollback();
+			log.info("get Power Switch list failed");
+			if(tx!=null) { tx.rollback(); }
 		} finally {
 			HibernateSessionFactory.closeSession();
 		}
@@ -125,8 +125,8 @@ public class PowerSwitchHome {
 			powerSwitch =  (PowerSwitch) query.uniqueResult();
 			tx.commit();
 		} catch (RuntimeException re) {
-			System.out.println("checkSwitchStatusBetweenPowerLines failed");
-			tx.rollback();
+			log.info("checkSwitchStatusBetweenPowerLines failed");
+			if(tx!=null) { tx.rollback(); }
 		} finally {
 			HibernateSessionFactory.closeSession();
 		}

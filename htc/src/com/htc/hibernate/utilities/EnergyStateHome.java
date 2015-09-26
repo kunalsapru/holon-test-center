@@ -2,6 +2,7 @@ package com.htc.hibernate.utilities;
 
 import java.util.ArrayList;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -9,7 +10,7 @@ import com.htc.hibernate.config.HibernateSessionFactory;
 import com.htc.hibernate.pojo.EnergyState;
 
 public class EnergyStateHome {
-	
+	static Logger log = Logger.getLogger(EnergyStateHome.class);
 
 	public EnergyState findById(int id) {
 		Session session = null;
@@ -21,8 +22,8 @@ public class EnergyStateHome {
 			tx.commit();
 			return instance;
 		} catch (RuntimeException re) {
-			System.out.println("Exception --> "+re.getMessage());
-			tx.rollback();
+			log.info("Exception --> "+re.getMessage());
+			if(tx!=null) { tx.rollback(); }
 			throw re;
 		} finally {
 			HibernateSessionFactory.closeSession();
@@ -42,8 +43,8 @@ public class EnergyStateHome {
 			tx.commit();
 			return listEnergyState;
 		} catch (RuntimeException re) {
-			System.out.println("get holon element State list failed");
-			tx.rollback();
+			log.info("get holon element State list failed");
+			if(tx!=null) { tx.rollback(); }
 		} finally {
 			HibernateSessionFactory.closeSession();
 		}

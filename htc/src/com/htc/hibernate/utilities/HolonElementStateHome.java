@@ -1,8 +1,11 @@
 package com.htc.hibernate.utilities;
 
 import java.util.ArrayList;
+
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
 import com.htc.hibernate.config.HibernateSessionFactory;
 import com.htc.hibernate.pojo.HolonElementState;
 
@@ -11,7 +14,7 @@ import com.htc.hibernate.pojo.HolonElementState;
  * @see .HolonElementState
  */
 public class HolonElementStateHome {
-	
+	static Logger log = Logger.getLogger(HolonElementStateHome.class);
 	public Integer persist(HolonElementState transientInstance) {
 		Integer holonElementState_id=null;
 		Session session = null;
@@ -23,7 +26,7 @@ public class HolonElementStateHome {
 			tx.commit();// Committing transaction changes
 		} catch (Exception exp){
 			exp.printStackTrace();
-			tx.rollback();
+			if(tx!=null) { tx.rollback(); }
 		} finally {
 			HibernateSessionFactory.closeSession();
 		}
@@ -40,8 +43,8 @@ public class HolonElementStateHome {
 			tx.commit();
 			return result;
 		} catch (RuntimeException re) {
-			System.out.println("Merge Failed...");
-			tx.rollback();
+			log.info("Merge Failed...");
+			if(tx!=null) { tx.rollback(); }
 			throw re;
 		} finally {
 			HibernateSessionFactory.closeSession();
@@ -58,8 +61,8 @@ public class HolonElementStateHome {
 			tx.commit();
 			return instance;
 		} catch (RuntimeException re) {
-			System.out.println("Exception --> "+re.getMessage());
-			tx.rollback();
+			log.info("Exception --> "+re.getMessage());
+			if(tx!=null) { tx.rollback(); }
 			throw re;
 		} finally {
 			HibernateSessionFactory.closeSession();
@@ -78,8 +81,8 @@ public class HolonElementStateHome {
 			deleteStatus = true;
 			return deleteStatus;
 		} catch (RuntimeException re) {
-			System.out.println("Delete Failed...");
-			tx.rollback();
+			log.info("Delete Failed...");
+			if(tx!=null) { tx.rollback(); }
 		} finally {
 			HibernateSessionFactory.closeSession();
 		}
@@ -98,8 +101,8 @@ public class HolonElementStateHome {
 			tx.commit();
 			return listHolonElementState;
 		} catch (RuntimeException re) {
-			System.out.println("get holon element State list failed");
-			tx.rollback();
+			log.info("get holon element State list failed");
+			if(tx!=null) { tx.rollback(); }
 		} finally {
 			HibernateSessionFactory.closeSession();
 		}

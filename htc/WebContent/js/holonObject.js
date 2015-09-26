@@ -34,7 +34,8 @@ $(document).ready(function() {
     	    rectangleOptions: {
                 geodesic:true,
                 clickable: true,
-                strokeColor:"black"
+                strokeColor:"black",
+                zIndex : 10
             }
     	    });
      // Setting the layout on the map 
@@ -447,7 +448,8 @@ function showHolonObjectsCallBack(data, options){
 		      fillColor:color,
 		      bounds: new google.maps.LatLngBounds(
 		    	      new google.maps.LatLng(sw_location_lat, sw_location_lng),
-		    	      new google.maps.LatLng(ne_location_lat, ne_location_lng))
+		    	      new google.maps.LatLng(ne_location_lat, ne_location_lng)),
+    	      zIndex : 10
 		    });
 	    showPowerCircles(holonObjectId);
 	    attachMessage(holonObjectId, rectangleFromFactory);
