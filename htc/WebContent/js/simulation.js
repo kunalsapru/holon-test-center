@@ -1,7 +1,6 @@
 $(document).ready(function(){
 	var map1;
 	initializeMap();
-	 google.maps.event.addDomListener(window, 'load', initializeMap);
 	
 });
 
