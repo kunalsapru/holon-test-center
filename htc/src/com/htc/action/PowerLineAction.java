@@ -140,14 +140,15 @@ public class PowerLineAction extends CommonUtilities {
 			String startLocation;
 			String endLocation;
 			String color;
-			log.info("No of PowerLines "+powerLineList.size());
-			for(int i=0; i<powerLineList.size();i++){
-				PowerLine  powerLine = powerLineList.get(i);
-				log.info("PowerLine Id: "+powerLine.getId());
-				startLocation = powerLine.getLatLngBySource().getLatitude()+"~"+powerLine.getLatLngBySource().getLongitude();
-				endLocation = powerLine.getLatLngByDestination().getLatitude()+"~"+powerLine.getLatLngByDestination().getLongitude();
-				color= CommonUtilities.getLineColor(CommonUtilities.getPercent(powerLine.getCurrentCapacity(),powerLine.getMaximumCapacity())); 				
-				powerLineListArray.add(startLocation+"^"+endLocation+"!"+color+"!"+powerLine.getId()+"*");
+			if(powerLineList != null) {
+				for(int i=0; i<powerLineList.size();i++){
+					PowerLine  powerLine = powerLineList.get(i);
+					log.info("PowerLine Id: "+powerLine.getId());
+					startLocation = powerLine.getLatLngBySource().getLatitude()+"~"+powerLine.getLatLngBySource().getLongitude();
+					endLocation = powerLine.getLatLngByDestination().getLatitude()+"~"+powerLine.getLatLngByDestination().getLongitude();
+					color= CommonUtilities.getLineColor(CommonUtilities.getPercent(powerLine.getCurrentCapacity(),powerLine.getMaximumCapacity())); 				
+					powerLineListArray.add(startLocation+"^"+endLocation+"!"+color+"!"+powerLine.getId()+"*");
+				}
 			}
 			
 			//Calling the response function and setting the content type of response.

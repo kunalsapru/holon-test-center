@@ -43,5 +43,7 @@
         <mapping resource="com/htc/hibernate/hbm/EnergyState.hbm.xml" />
         <mapping resource="com/htc/hibernate/hbm/Supplier.hbm.xml" />
         <mapping resource="com/htc/hibernate/hbm/Disaster.hbm.xml" />
+        <mapping resource="com/htc/hibernate/hbm/Simulation.hbm.xml" />
+        
     </session-factory>
 </hibernate-configuration>

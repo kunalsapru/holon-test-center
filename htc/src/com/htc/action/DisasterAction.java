@@ -48,15 +48,17 @@ public class DisasterAction extends CommonUtilities {
 			
 			ArrayList<Disaster> disasterList = getDisasterService().getAllDisasterCircles();
 			StringBuffer disasterListBuffer = new StringBuffer();
-			for(Disaster disaster1 : disasterList){
-				Integer disasterId=disaster1.getId();
-				Double radius=disaster1.getRadius();
-				Double latitude= disaster1.getCenter().getLatitude();
-				Double longitude= disaster1.getCenter().getLongitude();
-				disasterListBuffer.append(disasterId+"^"+radius+"^"+latitude+"^"+longitude+"*");
-			}
-			if(disasterListBuffer.length() > 0) {
-				disasterListBuffer = disasterListBuffer.deleteCharAt(disasterListBuffer.lastIndexOf("*"));
+			if(disasterList != null) {
+				for(Disaster disaster1 : disasterList){
+					Integer disasterId=disaster1.getId();
+					Double radius=disaster1.getRadius();
+					Double latitude= disaster1.getCenter().getLatitude();
+					Double longitude= disaster1.getCenter().getLongitude();
+					disasterListBuffer.append(disasterId+"^"+radius+"^"+latitude+"^"+longitude+"*");
+				}
+				if(disasterListBuffer.length() > 0) {
+					disasterListBuffer = disasterListBuffer.deleteCharAt(disasterListBuffer.lastIndexOf("*"));
+				}
 			}
 			getResponse().setContentType("text/html");
 			getResponse().getWriter().write(disasterListBuffer.toString());

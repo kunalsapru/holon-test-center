@@ -229,23 +229,25 @@ public class HolonObjectAction extends CommonUtilities {
 			HolonObject holonObject = null;
 			new HolonCoordinatorAction().chooseCoordinatorValue();
 			ArrayList<HolonObject> holonObjectList = getHolonObjectService().getAllHolonObject();
-			for(int i=0; i<holonObjectList.size();i++){
-				boolean isCoord=false;
-				String ne_location;
-				String sw_location;
-				String holonColor;
-				Integer holonObjectId;
-			    holonObject = holonObjectList.get(i);
-				ne_location = holonObject.getLatLngByNeLocation().getLatitude()+"~"+holonObject.getLatLngByNeLocation().getLongitude();
-				sw_location = holonObject.getLatLngBySwLocation().getLatitude()+"~"+holonObject.getLatLngBySwLocation().getLongitude();
-				holonColor ="black";
-				if(holonObject.getHolon() != null) {
-					holonColor = holonObject.getHolon().getColor();
+			if(holonObjectList != null) {
+				for(int i=0; i<holonObjectList.size();i++){
+					boolean isCoord=false;
+					String ne_location;
+					String sw_location;
+					String holonColor;
+					Integer holonObjectId;
+				    holonObject = holonObjectList.get(i);
+					ne_location = holonObject.getLatLngByNeLocation().getLatitude()+"~"+holonObject.getLatLngByNeLocation().getLongitude();
+					sw_location = holonObject.getLatLngBySwLocation().getLatitude()+"~"+holonObject.getLatLngBySwLocation().getLongitude();
+					holonColor ="black";
+					if(holonObject.getHolon() != null) {
+						holonColor = holonObject.getHolon().getColor();
+					}
+					holonObjectId = holonObject.getId();
+					isCoord = holonObject.getIsCoordinator();
+					log.info("The Color of the Holon is "+holonColor);
+					hoListArray.add(holonObjectId+"#"+holonColor+"#"+ne_location+"^"+sw_location+"#"+isCoord+"*");
 				}
-				holonObjectId = holonObject.getId();
-				isCoord = holonObject.getIsCoordinator();
-				log.info("The Color of the Holon is "+holonColor);
-				hoListArray.add(holonObjectId+"#"+holonColor+"#"+ne_location+"^"+sw_location+"#"+isCoord+"*");
 			}
 			//Calling the response function and setting the content type of response.
 			getResponse().setContentType("text/html");

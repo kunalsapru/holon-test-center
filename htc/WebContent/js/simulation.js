@@ -2,6 +2,7 @@ $(document).ready(function(){
 	var map1;
 	initializeMap();
 	openDiv('simulationDiv');
+	clearAllSimulations();
 });
 function closeDiv(id) {
 	$("#"+id).slideUp(100);
@@ -27,4 +28,10 @@ function initializeMap() {
 function abortSimulationRequests(id) {
 	closeDiv(id);
 	//More code will go here to cancel all subsequent requests
+}
+
+function clearAllSimulations() {
+	var contentString = "<tr><td>Clear Simulation:</td><td>Previous simulations cleared!</td>";
+	$("#simulationDivTable").append(contentString);
+	
 }
