@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.htc.hibernate.pojo.Simulation" table="simulation" catalog="group1_htc" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="increment" />
+        </id>
+        <many-to-one name="powerSwitch" class="com.htc.hibernate.pojo.PowerSwitch" fetch="select" lazy="false">
+            <column name="power_switch" not-null="true" />
+        </many-to-one>
+        <many-to-one name="powerLine" class="com.htc.hibernate.pojo.PowerLine" fetch="select" lazy="false">
+            <column name="power_line" not-null="true" />
+        </many-to-one>
+        <many-to-one name="powerSource" class="com.htc.hibernate.pojo.PowerSource" fetch="select" lazy="false">
+            <column name="power_source" not-null="true" />
+        </many-to-one>
+        <many-to-one name="holonObject" class="com.htc.hibernate.pojo.HolonObject" fetch="select" lazy="false">
+            <column name="holon_object" not-null="true" />
+        </many-to-one>
+        <many-to-one name="latLng" class="com.htc.hibernate.pojo.LatLng" fetch="select" lazy="false">
+            <column name="lat_lng" not-null="true" />
+        </many-to-one>
+        
+    </class>
+</hibernate-mapping>

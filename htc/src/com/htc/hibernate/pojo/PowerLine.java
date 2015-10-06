@@ -23,6 +23,32 @@ public class PowerLine implements java.io.Serializable {
 	private Set<?> powerSwitchesForPowerLineA = new HashSet<Object>(0);
 	private Set<?> powerSwitchesForPowerLineB = new HashSet<Object>(0);
 	private Disaster disaster;
+	private Set<?> simulations = new HashSet<Object>(0);
+	
+
+	public PowerLine(Integer id, HolonObject holonObject,
+			LatLng latLngBySource, LatLng latLngByDestination,
+			PowerSource powerSource, String type, int currentCapacity,
+			int maximumCapacity, boolean isConnected, String reasonDown,
+			Set<?> powerSwitchesForPowerLineA,
+			Set<?> powerSwitchesForPowerLineB, Disaster disaster,
+			Set<?> simulations) {
+		super();
+		this.id = id;
+		this.holonObject = holonObject;
+		this.latLngBySource = latLngBySource;
+		this.latLngByDestination = latLngByDestination;
+		this.powerSource = powerSource;
+		this.type = type;
+		this.currentCapacity = currentCapacity;
+		this.maximumCapacity = maximumCapacity;
+		this.isConnected = isConnected;
+		this.reasonDown = reasonDown;
+		this.powerSwitchesForPowerLineA = powerSwitchesForPowerLineA;
+		this.powerSwitchesForPowerLineB = powerSwitchesForPowerLineB;
+		this.disaster = disaster;
+		this.simulations = simulations;
+	}
 
 	public PowerLine() {
 	}
@@ -137,6 +163,22 @@ public class PowerLine implements java.io.Serializable {
 
 	public void setDisaster(Disaster disaster) {
 		this.disaster = disaster;
+	}
+
+	public boolean isConnected() {
+		return isConnected;
+	}
+
+	public void setConnected(boolean isConnected) {
+		this.isConnected = isConnected;
+	}
+
+	public Set<?> getSimulations() {
+		return simulations;
+	}
+
+	public void setSimulations(Set<?> simulations) {
+		this.simulations = simulations;
 	}
 
 }

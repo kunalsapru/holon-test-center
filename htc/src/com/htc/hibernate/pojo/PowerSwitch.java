@@ -1,5 +1,8 @@
 package com.htc.hibernate.pojo;
 
+import java.util.HashSet;
+import java.util.Set;
+
 // Generated 16 Aug, 2015 3:28:11 PM by Hibernate Tools 4.3.1
 
 /**
@@ -13,7 +16,8 @@ public class PowerSwitch implements java.io.Serializable {
 	private PowerLine powerLineByPowerLineA;
 	private PowerLine powerLineByPowerLineB;
 	private Boolean status;
-
+	private Set<?> simulations = new HashSet<Object>(0);
+	
 	public PowerSwitch() {
 	}
 
@@ -22,14 +26,16 @@ public class PowerSwitch implements java.io.Serializable {
 		this.latLng = latLng;
 	}
 
-	public PowerSwitch(int id, LatLng latLng,
-			PowerLine powerLineByPowerLineA, PowerLine powerLineByPowerLineB,
-			Boolean status) {
+
+	public PowerSwitch(int id, LatLng latLng, PowerLine powerLineByPowerLineA,
+			PowerLine powerLineByPowerLineB, Boolean status, Set<?> simulations) {
+		super();
 		this.id = id;
 		this.latLng = latLng;
 		this.powerLineByPowerLineA = powerLineByPowerLineA;
 		this.powerLineByPowerLineB = powerLineByPowerLineB;
 		this.status = status;
+		this.simulations = simulations;
 	}
 
 	public int getId() {
@@ -70,6 +76,14 @@ public class PowerSwitch implements java.io.Serializable {
 
 	public void setStatus(Boolean status) {
 		this.status = status;
+	}
+
+	public Set<?> getSimulations() {
+		return simulations;
+	}
+
+	public void setSimulations(Set<?> simulations) {
+		this.simulations = simulations;
 	}
 
 }

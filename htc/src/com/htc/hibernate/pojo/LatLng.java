@@ -20,7 +20,27 @@ public class LatLng implements java.io.Serializable {
 	private Set<?> powerLinesForDestination = new HashSet<Object>(0);
 	private Set<?> powerSwitches = new HashSet<Object>(0);
 	private Set<?> disasters = new HashSet<Object>(0);
+	private Set<?> simulations = new HashSet<Object>(0);
 	
+	public LatLng(Integer id, double latitude, double longitude,
+			Set<?> holonObjectsForNeLocation, Set<?> powerSources,
+			Set<?> powerLinesForSource, Set<?> holonObjectsForSwLocation,
+			Set<?> powerLinesForDestination, Set<?> powerSwitches,
+			Set<?> disasters, Set<?> simulations) {
+		super();
+		this.id = id;
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.holonObjectsForNeLocation = holonObjectsForNeLocation;
+		this.powerSources = powerSources;
+		this.powerLinesForSource = powerLinesForSource;
+		this.holonObjectsForSwLocation = holonObjectsForSwLocation;
+		this.powerLinesForDestination = powerLinesForDestination;
+		this.powerSwitches = powerSwitches;
+		this.disasters = disasters;
+		this.simulations = simulations;
+	}
+
 	public LatLng() {
 	}
 
@@ -107,6 +127,14 @@ public class LatLng implements java.io.Serializable {
 
 	public void setDisasters(Set<?> disasters) {
 		this.disasters = disasters;
+	}
+
+	public Set<?> getSimulations() {
+		return simulations;
+	}
+
+	public void setSimulations(Set<?> simulations) {
+		this.simulations = simulations;
 	}
 
 	@Override

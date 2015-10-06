@@ -29,7 +29,40 @@ public class HolonObject implements java.io.Serializable, Comparable {
 	private Set<Supplier> supplierConsumers = new HashSet<Supplier>(0);
 	private BigDecimal coordinatorCompetency;
 	private BigDecimal trustValue;
+	private Set<?> simulations = new HashSet<Object>(0);
 	
+	public HolonObject(int id, EnergyState energyState, Holon holon,
+			HolonObjectType holonObjectType, LatLng latLngByNeLocation,
+			LatLng latLngBySwLocation, Boolean lineConnectedState,
+			Integer consumption, Boolean canCommunicate,
+			Boolean createdFactory, Integer flexibility, Boolean isCoordinator,
+			Set<HolonElement> holonElements, Set<PowerLine> powerLines,
+			Set<PowerSource> powerSources, Set<Supplier> supplierProducers,
+			Set<Supplier> supplierConsumers, BigDecimal coordinatorCompetency,
+			BigDecimal trustValue, Set<?> simulations) {
+		super();
+		this.id = id;
+		this.energyState = energyState;
+		this.holon = holon;
+		this.holonObjectType = holonObjectType;
+		this.latLngByNeLocation = latLngByNeLocation;
+		this.latLngBySwLocation = latLngBySwLocation;
+		this.lineConnectedState = lineConnectedState;
+		this.consumption = consumption;
+		this.canCommunicate = canCommunicate;
+		this.createdFactory = createdFactory;
+		this.flexibility = flexibility;
+		this.isCoordinator = isCoordinator;
+		this.holonElements = holonElements;
+		this.powerLines = powerLines;
+		this.powerSources = powerSources;
+		this.supplierProducers = supplierProducers;
+		this.supplierConsumers = supplierConsumers;
+		this.coordinatorCompetency = coordinatorCompetency;
+		this.trustValue = trustValue;
+		this.simulations = simulations;
+	}
+
 	public HolonObject() {
 	}
 
@@ -215,6 +248,14 @@ public class HolonObject implements java.io.Serializable, Comparable {
 
 	public void setTrustValue(BigDecimal trustValue) {
 		this.trustValue = trustValue;
+	}
+
+	public Set<?> getSimulations() {
+		return simulations;
+	}
+
+	public void setSimulations(Set<?> simulations) {
+		this.simulations = simulations;
 	}
 
 }

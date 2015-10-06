@@ -1,8 +1,16 @@
 $(document).ready(function(){
 	var map1;
 	initializeMap();
-	
+	openDiv('simulationDiv');
 });
+function closeDiv(id) {
+	$("#"+id).slideUp(100);
+}
+
+function openDiv(id) {
+	console.log("Opening Div -- "+id);
+	$("#"+id).slideDown(100);
+}
 
 function initializeMap() {
 	mapProperties = {
@@ -14,6 +22,9 @@ function initializeMap() {
 	directionsService = new google.maps.DirectionsService();
 	directionsDisplay = new google.maps.DirectionsRenderer();
 	directionsDisplay.setMap(map1);
-
 }
 
+function abortSimulationRequests(id) {
+	closeDiv(id);
+	//More code will go here to cancel all subsequent requests
+}
