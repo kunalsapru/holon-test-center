@@ -8,13 +8,14 @@
 <script type="text/javascript" src="../js/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=drawing"></script>
 <script type="text/javascript" src="../js/simulation.js"></script>
+<script type="text/javascript" src="../js/common.js"></script>
 
 </head>
 <body>
 <div id="googleMaps" style="height:100%; width:100%;"></div>
-<div id="simulationDiv">
+<div id="simulationDiv" class="table">
 	<fieldset style="display: inline;">
-	<legend id="simulationLegend">Simulation HTC (All messages from server will be displayed here.)</legend>
+	<legend id="simulationLegend">Simulation HTC (Displaying Messages from server.)</legend>
 		<table id="simulationDivTable"><tr style="display: none"><td colspan="2"></td></tr></table>
 	</fieldset>
 	<input type="button" id="closeSimluationDiv" style="float: right;" onclick="abortSimulationRequests('simulationDiv')" value="X" title="This will abort subsequent requests." />

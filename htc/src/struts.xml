@@ -181,6 +181,11 @@
 		<action name="checkDynamicCurrentEnergyRequired" class="com.htc.action.DissolveHolonAction" method="checkDynamicCurrentEnergyRequired" />
 		<action name="startDynamicHolonMerger" class="com.htc.action.DissolveHolonAction" method="startDynamicHolonMerger" />
 				
+				
+		<!-- Simulation actions -->
+		<action name="drawPowerLinesSimulation" class="com.htc.simulation.action.SimulationAction" method="drawPowerLinesSimulation" />
+		<action name="clearAllSimulations" class="com.htc.simulation.action.SimulationAction" method="clearAllSimulations" />		
+		
 	</package>
 
 </struts>

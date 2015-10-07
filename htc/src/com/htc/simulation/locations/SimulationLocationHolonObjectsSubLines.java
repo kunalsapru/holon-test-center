@@ -5,7 +5,7 @@ import java.util.Arrays;
 
 public class SimulationLocationHolonObjectsSubLines {
 
-	static ArrayList<String> mapLocations = new ArrayList<String>(Arrays.asList(
+	static ArrayList<String> holonObjectsSubLinesLocationList = new ArrayList<String>(Arrays.asList(
 			"49.861686566858886!8.662510514259338~49.86159319829717!8.662338852882385#Sub#"
 			+ "49.86164679878984!8.662338852882385~49.861626448940456!8.662127543300585",
 			"49.8614306674074!8.66247296333313~49.86129925905424!8.66222083568573#Sub#"

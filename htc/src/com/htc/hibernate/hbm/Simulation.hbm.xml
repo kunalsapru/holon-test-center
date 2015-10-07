@@ -8,19 +8,19 @@
             <generator class="increment" />
         </id>
         <many-to-one name="powerSwitch" class="com.htc.hibernate.pojo.PowerSwitch" fetch="select" lazy="false">
-            <column name="power_switch" not-null="true" />
+            <column name="power_switch" not-null="false" />
         </many-to-one>
         <many-to-one name="powerLine" class="com.htc.hibernate.pojo.PowerLine" fetch="select" lazy="false">
-            <column name="power_line" not-null="true" />
+            <column name="power_line" not-null="false" />
         </many-to-one>
         <many-to-one name="powerSource" class="com.htc.hibernate.pojo.PowerSource" fetch="select" lazy="false">
-            <column name="power_source" not-null="true" />
+            <column name="power_source" not-null="false" />
         </many-to-one>
         <many-to-one name="holonObject" class="com.htc.hibernate.pojo.HolonObject" fetch="select" lazy="false">
-            <column name="holon_object" not-null="true" />
+            <column name="holon_object" not-null="false" />
         </many-to-one>
         <many-to-one name="latLng" class="com.htc.hibernate.pojo.LatLng" fetch="select" lazy="false">
-            <column name="lat_lng" not-null="true" />
+            <column name="lat_lng" not-null="false" />
         </many-to-one>
         
     </class>

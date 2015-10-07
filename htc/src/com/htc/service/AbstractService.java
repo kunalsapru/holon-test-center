@@ -12,6 +12,7 @@ import com.htc.dao.LatLngDao;
 import com.htc.dao.PowerLineDao;
 import com.htc.dao.PowerSourceDao;
 import com.htc.dao.PowerSwitchDao;
+import com.htc.dao.SimulationDao;
 import com.htc.dao.SupplierDao;
 import com.htc.daoImpl.DisasterDaoImpl;
 import com.htc.daoImpl.EnergyStateDaoImpl;
@@ -25,6 +26,7 @@ import com.htc.daoImpl.LatLngDaoImpl;
 import com.htc.daoImpl.PowerLineDaoImpl;
 import com.htc.daoImpl.PowerSourceDaoImpl;
 import com.htc.daoImpl.PowerSwitchDaoImpl;
+import com.htc.daoImpl.SimulationDaoImpl;
 import com.htc.daoImpl.SupplierDaoImpl;
 
 /**
@@ -46,7 +48,7 @@ public class AbstractService {
 	private EnergyStateDao energyStateDao = new EnergyStateDaoImpl();
 	private SupplierDao supplierDao = new SupplierDaoImpl();
 	private DisasterDao disasterdao= new DisasterDaoImpl();
-
+	private SimulationDao simulationDao = new SimulationDaoImpl();
 	
 	public HolonDao getHolonDao() {
 		return holonDao;
@@ -125,6 +127,12 @@ public class AbstractService {
 	}
 	public void setDisasterdao(DisasterDao disasterdao) {
 		this.disasterdao = disasterdao;
+	}
+	public SimulationDao getSimulationDao() {
+		return simulationDao;
+	}
+	public void setSimulationDao(SimulationDao simulationDao) {
+		this.simulationDao = simulationDao;
 	}
 	
 }

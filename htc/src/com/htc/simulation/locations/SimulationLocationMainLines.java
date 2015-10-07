@@ -5,7 +5,7 @@ import java.util.Arrays;
 
 public class SimulationLocationMainLines {
 
-	static ArrayList<String> mainLinesLocationList = new ArrayList<String>(Arrays.asList(
+	public static ArrayList<String> mainLinesLocationList = new ArrayList<String>(Arrays.asList(
 			"49.861797225661356!8.662161827087402~49.861626448940456!8.662127543300585",
 			"49.86120934786983!8.662043809890747~49.86111409630491!8.662053660481433",
 			"49.86061800475709!8.662102818489075~49.86041565321704!8.662164125785807",
