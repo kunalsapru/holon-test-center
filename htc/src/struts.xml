@@ -10,8 +10,7 @@
 
 	<package name="htc" extends="struts-default">
 		<interceptors>
-			<interceptor name="sessionInterceptor"
-				class="com.htc.interceptor.SessionInterceptor" />
+			<interceptor name="sessionInterceptor" class="com.htc.interceptor.SessionInterceptor" />
 			<interceptor-stack name="sessionCheckStack">
 				<interceptor-ref name="sessionInterceptor" />
 				<interceptor-ref name="defaultStack" />
@@ -29,140 +28,81 @@
 		<!-- HOLON OBJECT LEVEL -->
 
 		<!--To create New Holon Object -->
-		<action name="createHolonObject" class="com.htc.action.HolonObjectAction"
-			method="createHolonObject" />
-		<action name="getHolonObjectInfoWindow" class="com.htc.action.HolonObjectAction"
-			method="getHolonObjectInfoWindow" />
-		<action name="getDetailForPowerSourceIcon" class="com.htc.action.HolonObjectAction"
-			method="getDetailForPowerSourceIcon" />
+		<action name="createHolonObject" class="com.htc.action.HolonObjectAction" method="createHolonObject" />
+		<action name="getHolonObjectInfoWindow" class="com.htc.action.HolonObjectAction" method="getHolonObjectInfoWindow" />
+		<action name="getDetailForPowerSourceIcon" class="com.htc.action.HolonObjectAction" method="getDetailForPowerSourceIcon" />
 
-		<action name="editHolonObject" class="com.htc.action.HolonObjectAction"
-			method="editHolonObject" />
-		<action name="deleteHolonObject" class="com.htc.action.HolonObjectAction"
-			method="deleteHolonObject" /> 
-		<action name="showHolonObjects" class="com.htc.action.HolonObjectAction"
-			method="showHolonObjects" />
-		<action name="getDataForSupplierDetails" class="com.htc.action.HolonObjectAction"
-			method="getDataForSupplierDetails" />
-		<action name="getConnectedStatusForHolons" class="com.htc.action.HolonObjectAction"
-			method="getConnectedStatusForHolons" />
-
-		<action name="showHolonObjectConsumption" class="com.htc.action.ConsumptionGraphAction"
-			method="showConsumptionGraph" />
+		<action name="editHolonObject" class="com.htc.action.HolonObjectAction" method="editHolonObject" />
+		<action name="deleteHolonObject" class="com.htc.action.HolonObjectAction" method="deleteHolonObject" /> 
+		<action name="showHolonObjects" class="com.htc.action.HolonObjectAction" method="showHolonObjects" />
+		<action name="getDataForSupplierDetails" class="com.htc.action.HolonObjectAction" method="getDataForSupplierDetails" />
+		<action name="getConnectedStatusForHolons" class="com.htc.action.HolonObjectAction" method="getConnectedStatusForHolons" />
+		<action name="showHolonObjectConsumption" class="com.htc.action.ConsumptionGraphAction" method="showConsumptionGraph" />
 
 		<!-- Coordinator Related Actions -->
-		<action name="updateCoordinator" class="com.htc.action.HolonCoordinatorAction"
-			method="updateCoordinator" />
-		<action name="getHoCoIcons" class="com.htc.action.HolonCoordinatorAction"
-			method="getHoCoIcons" />
+		<action name="updateCoordinator" class="com.htc.action.HolonCoordinatorAction" method="updateCoordinator" />
+		<action name="getHoCoIcons" class="com.htc.action.HolonCoordinatorAction" method="getHoCoIcons" />
 
 		<!--SWITCH LEVEL -->
-		<action name="createPowerSwitch" class="com.htc.action.PowerSwitchAction"
-			method="createPowerSwitch" />
-		<action name="getSwitchInfo" class="com.htc.action.PowerSwitchAction"
-			method="getSwitchInfo" />
-		<action name="getListPowerSwitch" class="com.htc.action.PowerSwitchAction"
-			method="getListPowerSwitch" />
-		<action name="powerSwitchOnOff" class="com.htc.action.PowerSwitchAction"
-			method="powerSwitchOnOff" />
+		<action name="createPowerSwitch" class="com.htc.action.PowerSwitchAction" method="createPowerSwitch" />
+		<action name="getSwitchInfo" class="com.htc.action.PowerSwitchAction" method="getSwitchInfo" />
+		<action name="getListPowerSwitch" class="com.htc.action.PowerSwitchAction" method="getListPowerSwitch" />
+		<action name="powerSwitchOnOff" class="com.htc.action.PowerSwitchAction" method="powerSwitchOnOff" />
 
 		<!--POWER LINE LEVEL -->
-		<action name="drawPowerLine" class="com.htc.action.PowerLineAction"
-			method="drawPowerLine" /> <!-- Completed By Abhinav and Code Checked in. Enhancements could be done 
-			later -->
-		<action name="showPowerLines" class="com.htc.action.PowerLineAction"
-			method="showPowerLines" /> <!-- Completed By Abhinav and Code Checked in. Enhancements could be done 
-			later -->
-		<action name="getPowerLineInfo" class="com.htc.action.PowerLineAction"
-			method="getPowerLineInfo" />
-		<action name="updatePowerLine" class="com.htc.action.PowerLineAction"
-			method="updatePowerLine" />
-		<action name="editPowerLine" class="com.htc.action.PowerLineAction"
-			method="editPowerLine" />
-				<!-- To connect a holon object to main line with the help of subline -->
-		<action name="connectToPowerSource" class="com.htc.action.PowerLineAction"
-			method="connectToPowerSource" />
+		<action name="drawPowerLine" class="com.htc.action.PowerLineAction" method="drawPowerLine" /> 
+		<action name="showPowerLines" class="com.htc.action.PowerLineAction" method="showPowerLines" /> 
+		<action name="getPowerLineInfo" class="com.htc.action.PowerLineAction" method="getPowerLineInfo" />
+		<action name="updatePowerLine" class="com.htc.action.PowerLineAction" method="updatePowerLine" />
+		<action name="editPowerLine" class="com.htc.action.PowerLineAction" method="editPowerLine" />
+		
+		<!-- To connect a holon object to main line with the help of subline -->
+		<action name="connectToPowerSource" class="com.htc.action.PowerLineAction" method="connectToPowerSource" />
 
 		<!-- Start of Factory related actions -->
-
-		<action name="factoryDataGenerator" class="com.htc.factory.FactoryDataGeneratorAction"
-			method="factoryDataGenerator" />
-		<action name="factoryListHolonObjectType" class="com.htc.factory.FactoryDataGeneratorAction"
-			method="factoryListHolonObjectType" />
-		<action name="factoryListHolonElementType" class="com.htc.factory.FactoryDataGeneratorAction"
-			method="factoryListHolonElementType" />
-
+		<action name="factoryDataGenerator" class="com.htc.factory.FactoryDataGeneratorAction" method="factoryDataGenerator" />
+		<action name="factoryListHolonObjectType" class="com.htc.factory.FactoryDataGeneratorAction" method="factoryListHolonObjectType" />
+		<action name="factoryListHolonElementType" class="com.htc.factory.FactoryDataGeneratorAction" method="factoryListHolonElementType" />
 		<!-- End of factory related actions -->
 
 		<!-- Start of Actions for master tables -->
-		<action name="createHolonObjectType" class="com.htc.action.HolonObjectTypeAction"
-			method="createHolonObjectType" />
-		<action name="editHolonObjectType" class="com.htc.action.HolonObjectTypeAction"
-			method="editHolonObjectType" />
-		<action name="deleteHolonObjectType" class="com.htc.action.HolonObjectTypeAction"
-			method="deleteHolonObjectType" />
-		<action name="getListHolonObjectType" class="com.htc.action.HolonObjectTypeAction"
-			method="getListHolonObjectType" />
+		<action name="createHolonObjectType" class="com.htc.action.HolonObjectTypeAction" method="createHolonObjectType" />
+		<action name="editHolonObjectType" class="com.htc.action.HolonObjectTypeAction" method="editHolonObjectType" />
+		<action name="deleteHolonObjectType" class="com.htc.action.HolonObjectTypeAction" method="deleteHolonObjectType" />
+		<action name="getListHolonObjectType" class="com.htc.action.HolonObjectTypeAction" method="getListHolonObjectType" />
+		<action name="createHolonElementState" class="com.htc.action.HolonElementStateAction" method="createHolonElementState" />
+		<action name="editHolonElementState" class="com.htc.action.HolonElementStateAction" method="editHolonElementState" />
+		<action name="deleteHolonElementState" class="com.htc.action.HolonElementStateAction" method="deleteHolonElementState" />
+		<action name="getListHolonElementState" class="com.htc.action.HolonElementStateAction" method="getListHolonElementState" />
+		<action name="createHolonElementType" class="com.htc.action.HolonElementTypeAction" method="createHolonElementType" />
+		<action name="editHolonElementType" class="com.htc.action.HolonElementTypeAction" method="editHolonElementType" />
+		<action name="deleteHolonElementType" class="com.htc.action.HolonElementTypeAction" method="deleteHolonElementType" />
+		<action name="getListHolonElementType" class="com.htc.action.HolonElementTypeAction" method="getListHolonElementType" />
 
-		<action name="createHolonElementState" class="com.htc.action.HolonElementStateAction"
-			method="createHolonElementState" />
-		<action name="editHolonElementState" class="com.htc.action.HolonElementStateAction"
-			method="editHolonElementState" />
-		<action name="deleteHolonElementState" class="com.htc.action.HolonElementStateAction"
-			method="deleteHolonElementState" />
-		<action name="getListHolonElementState" class="com.htc.action.HolonElementStateAction"
-			method="getListHolonElementState" />
+		 <action name="addHolon" class="com.htc.action.HolonAction" method="addHolon" />
+		<action name="editHolon" class="com.htc.action.HolonAction" method="editHolon" />
+		<action name="deleteHolon" class="com.htc.action.HolonAction" method="deleteHolon" />
+		<action name="getListHolon" class="com.htc.action.HolonAction" method="getListHolon" />
 
-		<action name="createHolonElementType" class="com.htc.action.HolonElementTypeAction"
-			method="createHolonElementType" />
-		<action name="editHolonElementType" class="com.htc.action.HolonElementTypeAction"
-			method="editHolonElementType" />
-		<action name="deleteHolonElementType" class="com.htc.action.HolonElementTypeAction"
-			method="deleteHolonElementType" />
-		<action name="getListHolonElementType" class="com.htc.action.HolonElementTypeAction"
-			method="getListHolonElementType" />
-
-		 <action name="addHolon" class="com.htc.action.HolonAction"
-			method="addHolon" />
-		<action name="editHolon" class="com.htc.action.HolonAction"
-			method="editHolon" />
-		<action name="deleteHolon" class="com.htc.action.HolonAction"
-			method="deleteHolon" />
-		<action name="getListHolon" class="com.htc.action.HolonAction"
-			method="getListHolon" />
-
-		<action name="createHolonElement" class="com.htc.action.HolonElementAction"
-			method="createHolonElement" />
-		<action name="editHolonElement" class="com.htc.action.HolonElementAction"
-			method="editHolonElement" />
-		<action name="deleteHolonElement" class="com.htc.action.HolonElementAction"
-			method="deleteHolonElement" />
-		<action name="showHolonElements" class="com.htc.action.HolonElementAction"
-			method="showHolonElements" />
+		<action name="createHolonElement" class="com.htc.action.HolonElementAction" method="createHolonElement" />
+		<action name="editHolonElement" class="com.htc.action.HolonElementAction" method="editHolonElement" />
+		<action name="deleteHolonElement" class="com.htc.action.HolonElementAction" method="deleteHolonElement" />
+		<action name="showHolonElements" class="com.htc.action.HolonElementAction" method="showHolonElements" />
 
 		<!-- End of Actions for master tables -->
 
-		<action name="createHolonCoordinator" class="com.htc.action.HolonCoordinatorAction"
-			method="createHolonCoordinator" />
-		<action name="editHolonCoordinator" class="com.htc.action.HolonCoordinatorAction"
-			method="editHolonCoordinator" />
-		<action name="deleteHolonCoordinator" class="com.htc.action.HolonCoordinatorAction"
-			method="deleteHolonCoordinator" />
-		<action name="getListHolonCoordinator" class="com.htc.action.HolonCoordinatorAction"
-			method="getListHolonCoordinator" />
+		<action name="createHolonCoordinator" class="com.htc.action.HolonCoordinatorAction" method="createHolonCoordinator" />
+		<action name="editHolonCoordinator" class="com.htc.action.HolonCoordinatorAction" method="editHolonCoordinator" />
+		<action name="deleteHolonCoordinator" class="com.htc.action.HolonCoordinatorAction" method="deleteHolonCoordinator" />
+		<action name="getListHolonCoordinator" class="com.htc.action.HolonCoordinatorAction" method="getListHolonCoordinator" />
 		
 		<!-- Power Source Related Actions  -->
 		
-		<action name="editPowerSourceObject" class="com.htc.action.PowerSourceAction"
-			method="editPowerSourceObject" />
-		<action name="createPowerSourceObject" class="com.htc.action.PowerSourceAction"
-			method="createPowerSourceObject" />
-		<action name="getPsObjectInfoWindow" class="com.htc.action.PowerSourceAction"
-			method="getPsObjectInfoWindow" />
-		<action name="showPowerSources" class="com.htc.action.PowerSourceAction"
-			method="showPowerSources" />
-			<action name="powerSourceOnOff" class="com.htc.action.PowerSourceAction"
-			method="powerSourceOnOff" />
+		<action name="editPowerSourceObject" class="com.htc.action.PowerSourceAction" method="editPowerSourceObject" />
+		<action name="createPowerSourceObject" class="com.htc.action.PowerSourceAction" method="createPowerSourceObject" />
+		<action name="getPsObjectInfoWindow" class="com.htc.action.PowerSourceAction" method="getPsObjectInfoWindow" />
+		<action name="showPowerSources" class="com.htc.action.PowerSourceAction" method="showPowerSources" />
+			<action name="powerSourceOnOff" class="com.htc.action.PowerSourceAction" method="powerSourceOnOff" />
 			
 		<!-- Messaging System related actions -->
 		<action name="sendMessageToAllProducers" class="com.htc.action.HolonObjectAction" method="sendMessageToAllProducers" />
@@ -181,11 +121,12 @@
 		<action name="checkDynamicCurrentEnergyRequired" class="com.htc.action.DissolveHolonAction" method="checkDynamicCurrentEnergyRequired" />
 		<action name="startDynamicHolonMerger" class="com.htc.action.DissolveHolonAction" method="startDynamicHolonMerger" />
 				
-				
 		<!-- Simulation actions -->
 		<action name="drawPowerLinesSimulation" class="com.htc.simulation.action.SimulationAction" method="drawPowerLinesSimulation" />
 		<action name="clearAllSimulations" class="com.htc.simulation.action.SimulationAction" method="clearAllSimulations" />		
-		
+		<action name="drawSwitchesSimulation" class="com.htc.simulation.action.SimulationAction" method="drawSwitchesSimulation" />
+
+
 	</package>
 
 </struts>

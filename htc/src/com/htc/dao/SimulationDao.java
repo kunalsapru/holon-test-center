@@ -3,6 +3,7 @@ package com.htc.dao;
 import java.util.ArrayList;
 
 import com.htc.hibernate.pojo.PowerLine;
+import com.htc.hibernate.pojo.PowerSwitch;
 import com.htc.hibernate.pojo.Simulation;
 
 public interface SimulationDao {
@@ -10,4 +11,5 @@ public interface SimulationDao {
 	public boolean delete(Simulation persistentInstance);
 	public ArrayList<Simulation> getAllSimulations();
 	public ArrayList<PowerLine> getAllPowerLinesSimulation();
+	public ArrayList<PowerSwitch> getAllPowerSwitchesSimulation();
 }

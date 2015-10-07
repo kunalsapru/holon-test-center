@@ -7,20 +7,18 @@ public class Simulation implements java.io.Serializable {
 	private PowerLine powerLine;
 	private PowerSource powerSource;
 	private HolonObject holonObject;
-	private LatLng latLng;
 	
 	public Simulation() {
 	}
 
 	public Simulation(Integer id, PowerSwitch powerSwitch, PowerLine powerLine,
-			PowerSource powerSource, HolonObject holonObject, LatLng latLng) {
+			PowerSource powerSource, HolonObject holonObject) {
 		super();
 		this.id = id;
 		this.powerSwitch = powerSwitch;
 		this.powerLine = powerLine;
 		this.powerSource = powerSource;
 		this.holonObject = holonObject;
-		this.latLng = latLng;
 	}
 
 	public Integer getId() {
@@ -61,14 +59,6 @@ public class Simulation implements java.io.Serializable {
 
 	public void setHolonObject(HolonObject holonObject) {
 		this.holonObject = holonObject;
-	}
-
-	public LatLng getLatLng() {
-		return latLng;
-	}
-
-	public void setLatLng(LatLng latLng) {
-		this.latLng = latLng;
 	}
 
 }

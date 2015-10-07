@@ -19,29 +19,6 @@ public class PowerSwitchAction extends CommonUtilities {
 	private ArrayList<PowerLine> listOfAllNeighbouringConnectedPowerLines = new ArrayList<PowerLine>();
 	private static final long serialVersionUID = 1L;
 	static Logger log = Logger.getLogger(PowerSwitchAction.class);
-
-//	public void SwitchOn(HolonObject holonObject, PowerSwitch powerSwitch){
-//		if(powerSwitch.getBelongsTo() == holonObject.getId()){
-//			powerSwitch.setStatus(true);
-//		}
-//	}
-//	
-//	public void SwitchOff(HolonObject holonObject, PowerSwitch powerSwitch){
-//		if(powerSwitch.getBelongsTo() == holonObject.getId()){
-//			powerSwitch.setStatus(false);
-//		}
-//	}
-	
-	public void addPowerSwitchForHolonObject(HolonObject holonObject){
-		PowerSwitch powerSwitch=new PowerSwitch();
-		powerSwitch.setPowerLineByPowerLineA(null);
-		powerSwitch.setStatus(true);
-		
-		//Calling service method to save the object in database and saving the auto-incremented ID in an integer
-		Integer newPowerSwitchID = getPowerSwitchService().persist(powerSwitch);
-		log.info("NewLy Generated PowerSwitch  ID --> "+newPowerSwitchID);
-
-	}
 	
 	public void createPowerSwitch(){
 	try{

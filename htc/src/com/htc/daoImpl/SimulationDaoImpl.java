@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.htc.dao.SimulationDao;
 import com.htc.hibernate.pojo.PowerLine;
+import com.htc.hibernate.pojo.PowerSwitch;
 import com.htc.hibernate.pojo.Simulation;
 import com.htc.hibernate.utilities.SimulationHome;
 
@@ -36,6 +37,11 @@ public class SimulationDaoImpl  implements SimulationDao {
 	@Override
 	public ArrayList<PowerLine> getAllPowerLinesSimulation() {
 		return getSimulationHome().getAllPowerLinesSimulation();
+	}
+
+	@Override
+	public ArrayList<PowerSwitch> getAllPowerSwitchesSimulation() {
+		return getSimulationHome().getAllPowerSwitchesSimulation();
 	}
 
 }

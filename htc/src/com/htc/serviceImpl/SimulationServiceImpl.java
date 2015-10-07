@@ -3,6 +3,7 @@ package com.htc.serviceImpl;
 import java.util.ArrayList;
 
 import com.htc.hibernate.pojo.PowerLine;
+import com.htc.hibernate.pojo.PowerSwitch;
 import com.htc.hibernate.pojo.Simulation;
 import com.htc.service.AbstractService;
 import com.htc.service.SimulationService;
@@ -27,6 +28,11 @@ public class SimulationServiceImpl extends AbstractService implements Simulation
 	@Override
 	public ArrayList<PowerLine> getAllPowerLinesSimulation() {
 		return getSimulationDao().getAllPowerLinesSimulation();
+	}
+
+	@Override
+	public ArrayList<PowerSwitch> getAllPowerSwitchesSimulation() {
+		return getSimulationDao().getAllPowerSwitchesSimulation();
 	}
 	
 }

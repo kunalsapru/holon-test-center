@@ -3,6 +3,7 @@ package com.htc.service;
 import java.util.ArrayList;
 
 import com.htc.hibernate.pojo.PowerLine;
+import com.htc.hibernate.pojo.PowerSwitch;
 import com.htc.hibernate.pojo.Simulation;
 
 public interface SimulationService {
@@ -10,4 +11,5 @@ public interface SimulationService {
 	public boolean delete(Simulation persistentInstance);
 	public ArrayList<Simulation> getAllSimulations();
 	public ArrayList<PowerLine> getAllPowerLinesSimulation();
+	public ArrayList<PowerSwitch> getAllPowerSwitchesSimulation();
 }

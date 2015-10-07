@@ -1,5 +1,8 @@
 $(document).ready(function(){
-	window.globalPowerLineListSimulation = new Map(); //Power Line
+	window.globalPowerLineListSimulation = new Map(); //Power Line Map
+	window.globalPowerSwitchList = new Map(); //Power Switch Map
+	window.globalHKListSimulation = new Map(); //Holon Coordinator Map
+	window.globalHoListSimulation = new Map(); //Holon Object Map 
 	window.currentInfoWindowObjectSimulation = null;
 	window.currentLineInfoWindowObjectSimulation = null;
 	window.currentSwitchInfoWindowSimulation = null;
@@ -8,8 +11,8 @@ $(document).ready(function(){
 	initializeMap();
 	openDiv('simulationDiv');
 	clearAllSimulations();
-
 });
+
 function closeDiv(id) {
 	$("#"+id).slideUp(100);
 }
@@ -52,6 +55,194 @@ function clearAllSimulationsCallBack(data, options) {
 	drawPowerLinesSimulation();	
 }
 
+function drawSwitchesSimulation() {
+	var contentString = "<tr><td>Creating Switches:</td><td>Creating switches in Database!</td>";
+	$("#simulationDivTable").append(contentString);
+	ajaxRequest("drawSwitchesSimulation", {}, drawSwitchesSimulationCallBack, {});
+}
+
+function drawSwitchesSimulationCallBack(data, options) {
+	var contentString = "<tr><td>Drawing Switches:</td><td>Drawing switches on map!</td>";
+	$("#simulationDivTable").append(contentString);
+	var powerSwitchList= data.split("*");
+	for(var i=0;i<powerSwitchList.length-1;i++) {
+		var individualData = powerSwitchList[i].split("^");
+		var switchLat = individualData[0].replace("[","").replace(",","");
+		var switchLong = individualData[1];
+		var powerSwitchId = individualData[2].trim();
+		var status = individualData[3];
+		var switchStatus = "#FF0000";		
+		if(status == 1) {
+			switchStatus="#0B6121";
+		}
+		var circleSwitch = new google.maps.Circle({
+			 strokeColor: switchStatus,
+		     strokeOpacity: 1,
+		     strokeWeight: 8,
+		     fillColor: switchStatus,
+		     fillOpacity: 0.35,
+		     map: map1,
+		     center: new google.maps.LatLng(switchLat, switchLong),
+		     radius: 2
+		    });
+		addSwitchInfoSimulation(circleSwitch, powerSwitchId);
+		globalPowerSwitchList.set(powerSwitchId,circleSwitch);
+	}
+}
+
+function addSwitchInfoSimulation(circleSwitch, powerSwitchId) {
+	console.log(circleSwitch);
+	console.log(powerSwitchId);
+	
+   google.maps.event.addListener(circleSwitch, 'click', function(event) {
+		var dataAttributes= {
+				powerSwitchId : powerSwitchId,
+				}
+		var options= {
+				position:event.latLng,
+				circleSwitch:circleSwitch,
+				}
+		ajaxRequest("getSwitchInfo", dataAttributes, getSwitchInfoCallBackSimulation, options);		   
+	   
+   });
+}
+
+function getSwitchInfoCallBackSimulation(data, options) {
+	closeOtherInfoWindowsSimulation();
+	var individualData = data.split("^");
+	var switchLat = individualData[0].replace("[","").replace(",","");
+	var switchLong = individualData[1];
+	var powerSwitchId = individualData[2].trim();
+	var powerLineAId = individualData[3];
+	var powerLineBId = individualData[4];
+	var status = individualData[5].trim();
+	var switchStatus = "Off";
+	var btnText = "Switch On";
+	if(status == "1") {
+		switchStatus = "On";
+		btnText = "Switch Off";
+	}
+	var contentString= "<div id='contentId' class='table'><table>"+
+		"<tr><td colspan = '2' style='text-decoration: underline;'>Switch Details</td></tr>" +
+		"<tr><td><b>Switch Id: </b>"+powerSwitchId +"</td>"+
+		"<td><b>Switch Status: </b>"+switchStatus+"</td></tr>"+
+		"<tr><td><b>Connected Power Line A: </b>"+powerLineAId+"</td>"+
+		"<td><b>Connected Power Line B : </b>"+powerLineBId+"</td></tr>"+
+		"<tr><td colspan='2' style='text-align: center;'>" +
+		"<span class = 'button' id='togglePowerSwitch'><i class='fa fa-circle-o-notch'></i>&nbsp;&nbsp;Turn "+btnText+"</span></td></tr></table></div>";
+	var position = options["position"];
+	var circleSwitch = options["circleSwitch"];
+	var infowindowPowerSwitch = new google.maps.InfoWindow({
+	      content: contentString		    
+	  });
+	infowindowPowerSwitch.setOptions({position:position});
+	infowindowPowerSwitch.open(map1,circleSwitch);	
+	$('#togglePowerSwitch').click(function() {
+		switchOnOffSimulation(circleSwitch,powerSwitchId,infowindowPowerSwitch);			
+	})
+	currentSwitchInfoWindowSimulation = infowindowPowerSwitch;
+}
+
+function switchOnOffSimulation(circleSwitch,powerSwitchId,infowindowPowerSwitch) {
+		var dataAttributes = {    			
+    			powerSwitchId:powerSwitchId,
+    			};	
+		options = {
+				circleSwitch:circleSwitch,
+				infowindowPowerSwitch:infowindowPowerSwitch,
+				powerSwitchId:powerSwitchId,
+    			};
+	
+		ajaxRequest("powerSwitchOnOff", dataAttributes, powerSwitchOnOffCallBackSimulation,options);
+		globalPowerSwitchList.set(powerSwitchId,circleSwitch);
+}
+
+function powerSwitchOnOffCallBackSimulation(data,options){
+	var circleSwitch = options["circleSwitch"];
+	var infowindowPowerSwitch = options["infowindowPowerSwitch"];
+	var powerSwitchId = options["powerSwitchId"];
+	var content = infowindowPowerSwitch.getContent();
+	var newSwitchStatus = data.split("*")[0];
+	var newCoordinatorIds = undefined;
+	if(data.split("*")[1] != undefined) {
+		newCoordinatorIds = data.split("*")[1].split("!");
+	}
+	var oldCoordinatorIds = undefined;
+	if(data.split("*")[2] != undefined) {
+		oldCoordinatorIds=data.split("*")[2].split("!");
+	}
+	if(newSwitchStatus== 1) {
+		circleSwitch.setOptions({strokeColor:'#0B6121',fillColor: '#0B6121'});
+		var newContent=content.replace("<b>Switch Status: </b>Off","<b>Switch Status: </b>On").replace("Switch On","Switch Off");
+		infowindowPowerSwitch.setContent(newContent);
+		infowindowPowerSwitch.close();
+	} else {
+		circleSwitch.setOptions({strokeColor:'#FF0000', fillColor: '#FF0000'});
+		var newContent=content.replace("<b>Switch Status: </b>On","<b>Switch Status: </b>Off").replace("Switch Off","Switch On");
+		infowindowPowerSwitch.setContent(newContent);
+		infowindowPowerSwitch.close();		
+	}
+	if(oldCoordinatorIds != undefined ){
+		for(var i=0;i< oldCoordinatorIds.length-1; i++){
+			var oldCoordinatorId= oldCoordinatorIds[i];
+			removeIconFromMapSimulation(oldCoordinatorId);
+		}
+	}
+	
+	if (newCoordinatorIds != undefined){
+		for(var i=0;i< newCoordinatorIds.length-1;i++){
+			var newCoordinatorId= newCoordinatorIds[i];
+			createIconOnMapSimulation(newCoordinatorId);
+		}
+	}
+	infowindowPowerSwitch.open(map1,circleSwitch);
+	$('#togglePowerSwitch').click(function() {
+		switchOnOffSimulation(circleSwitch,powerSwitchId,infowindowPowerSwitch);			
+	});
+}
+
+function removeIconFromMapSimulation(objectId) {
+	var holonObjectMarkerIcon = globalHKListSimulation.get(objectId);
+	console.log(holonObjectMarkerIcon.icon);
+	var holonObject= globalHoListSimulation.get(objectId);
+	if(holonObjectMarkerIcon.icon="../css/images/coordinator.png"){
+		holonObjectMarkerIcon.setVisible(false);
+	}
+	holonObjectMarkerIcon.setIcon("../css/images/no_coordinator.png");
+	holonObjectMarkerIcon.setTitle("No Coordinator");
+}
+
+function createIconOnMapSimulation(objectId) {
+	var holonObject= globalHoListSimulation.get(objectId);
+	var holonObjectPosition= holonObject.getBounds().getNorthEast();
+	if(globalHKListSimulation.get(objectId)== null) {
+		var coordinatorIcon= new Marker({
+			map: map1,
+			title: 'Holon Coordinator',
+			position: holonObjectPosition,
+			zIndex: 9,
+			icon: {
+				path: ROUTE,
+				fillColor: '#0E77E9',
+				fillOpacity: 0,
+				strokeColor: '',
+				strokeWeight: 0,
+				scale: 1/100
+			},
+			icon : '../css/images/coordinator.png'
+		});
+		globalHKListSimulation.set(objectId,coordinatorIcon);
+	}
+	if(globalHKListSimulation.get(objectId).visible) {
+		//Do nothing
+	} else {
+		globalHKListSimulation.get(objectId).visible=true;
+		globalHKListSimulation.get(objectId).setVisible(true);
+		globalHKListSimulation.get(objectId).setIcon("../css/images/coordinator.png");
+		globalHKListSimulation.get(objectId).setTitle("Holon Coordinator");
+	}
+}
+
 function drawPowerLinesSimulation() {
 	var contentString = "<tr><td>Creating Main lines:</td><td>Creating Main lines in Database!</td>";
 	$("#simulationDivTable").append(contentString);
@@ -85,6 +276,7 @@ function drawPowerLinesSimulationCallBack(data, options) {
 		addMessageWindowSimulation(line,powerLineId);
 		globalPowerLineListSimulation.set(powerLineId, line);
 	}
+	drawSwitchesSimulation();
 }
 
 function addMessageWindowSimulation(line,powerLineId){
