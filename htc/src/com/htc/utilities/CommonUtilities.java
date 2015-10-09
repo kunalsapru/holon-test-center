@@ -1,6 +1,5 @@
 package com.htc.utilities;
 
-/*import java.util.Random;*/
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.ArrayList;
@@ -23,15 +22,21 @@ import com.htc.hibernate.pojo.Supplier;
 import com.htc.service.ServiceAware;
 import com.opensymphony.xwork2.ActionContext;
 
+/**
+ *	This class contains variables and functions that are used by all action classes.
+ */
 public class CommonUtilities extends ServiceAware {
 
 	private static final long serialVersionUID = 1L;
+
+	//Global(to class only) member map and arraylist to be used by the recursive function connectedPowerLines(Integer powerLineId) 
 	private Map<Integer, PowerLine> listOfAllConnectedPowerLines = new TreeMap<Integer, PowerLine>();
 	private ArrayList<PowerLine> listOfAllNeighbouringConnectedPowerLines = new ArrayList<PowerLine>();
+	
 	static Logger log = Logger.getLogger(CommonUtilities.class);
-	protected HttpServletResponse response;
-	protected HttpServletRequest request;
-	protected HttpSession httpSession;
+	protected HttpServletResponse response; //HTTP response object to be used by all AJAX calls
+	protected HttpServletRequest request; // HTTP request object to be used by all AJAX calls
+	protected HttpSession httpSession; // HTTP session object to be used by all AJAX calls
 
 	public HttpServletResponse getResponse() {
 		return (HttpServletResponse) ActionContext.getContext().get(ServletActionContext.HTTP_RESPONSE);
@@ -90,16 +95,12 @@ public class CommonUtilities extends ServiceAware {
 		return color;
 	}
 	
-/*	public static float randomCapGenerator(float maxCap) {
-		float finalX=0.0f;
-		float minX = 00.0f;
-		float maxX = maxCap;
-		Random rand = new Random();
-		finalX = rand.nextFloat() * (maxX - minX) + minX;
-		return finalX;
-	}
-*/	
 
+	/**
+	 * This method calculates energy details of the holon object passed as parameter and returns the same in the form of a map.
+	 * @param holonObject Holon Object for which energy needs to be calculated
+	 * @return Map of various parameters containing holon object energy details.
+	 */
 	public Map<String, Integer> getHolonObjectEnergyDetails(HolonObject holonObject) {
 		Map<String, Integer> holonObjectEnergyDetails = new TreeMap<String, Integer>();
 		Integer minimumEnergyRequired = 0;
@@ -155,8 +156,12 @@ public class CommonUtilities extends ServiceAware {
 		return holonObjectEnergyDetails;
 	}
 	
+	/**
+	 * This method calculates energy details of the entire holon represented by the holon coordinator passed as parameter.
+	 * @param holonCoordinator Holon Coordinator for which holon energy details needs to be calculated.
+	 * @return Map of various parameters containing holon energy details.
+	 */
 	public Map<String, String> getHolonEnergyDetails(HolonObject holonCoordinator) {
-
 		Map<String, String> holonEnergyDetails = new TreeMap<String, String>();
 		PowerLine powerLine = getPowerLineService().getPowerLineByHolonObject(holonCoordinator);
 		ArrayList<HolonObject> holonObjectListByConnectedPowerLines = getHolonObjectListByConnectedPowerLines(powerLine, holonCoordinator);
@@ -214,14 +219,7 @@ public class CommonUtilities extends ServiceAware {
 			flexibilityHolon = flexibilityHolon + holonObject.getFlexibility();
 		}
 
-/*		ArrayList<PowerSource> powerSourceListByHolonCoordinator = getPowerSourceService().findByHolonCoordinator(holonCoordinator);
-		for(PowerSource powerSource : powerSourceListByHolonCoordinator) {
-			//Include code for Power Source production and flexibility
-		}
-*/		
-		
 		//Code to get connected Power Sources
-		
 		ArrayList<PowerSource> listConnectedPowerSources = getPowerSourceListByConnectedPowerLines(powerLine, holonCoordinator);
 		for(PowerSource powerSource : listConnectedPowerSources) {
 			flexibilityPowerSource = flexibilityPowerSource + powerSource.getFlexibility();
@@ -249,6 +247,12 @@ public class CommonUtilities extends ServiceAware {
 		return holonEnergyDetails;
 	}
 	
+	/**
+	 * This method checks whether a power line is connected to a holon object or a power source or not and returns the status as true or false.
+	 * @param connectedPowerLines Array list of connected power lines
+	 * @param powerLine Object of powerLine POJO for which we need to check the connected status
+	 * @return boolean connected status as true or false.
+	 */
 	public boolean checkConnectedStatusForLine(ArrayList<PowerLine> connectedPowerLines, PowerLine powerLine) {
 		if(powerLine.getType().equals(ConstantValues.SUBLINE) || powerLine.getType().equals(ConstantValues.POWERSUBLINE)) {
 			return true;
@@ -262,6 +266,13 @@ public class CommonUtilities extends ServiceAware {
 		return false;
 	}
 
+	/**
+	 * This method takes LatLng object as a parameter and then stores it in database if there is no latitude and longitude of the same location.
+	 * Otherwise, it just returns the already existing LatLng object and does not create a new one in database.
+	 * This is to avoid duplicate entries in database.
+	 * @param locationToSave The location to be saved in database.
+	 * @return location ID or the id of LatLng object (either a new one or an existing one)
+	 */
 	public Integer saveLocation(LatLng locationToSave) {
 		Integer locationid=0;
 		Double lat =locationToSave.getLatitude();
@@ -280,6 +291,12 @@ public class CommonUtilities extends ServiceAware {
 		return locationid;
 	}
 
+	/**
+	 * This method takes powerline ID as an input and finds all connected power lines.
+	 * This method is used by almost all modules like dynamic holon, dissolve holon, distribute holon energy, leadership election for holon coordinator etc...   
+	 * @param powerLineId ID of the power line for which we want to calculate connected power lines.
+	 * @return Array list of connected power lines.
+	 */
 	public ArrayList<PowerLine> connectedPowerLines(Integer powerLineId) {
 		PowerLine powerLine = null;
 		if(powerLineId.compareTo(0) > 0 ){
@@ -347,8 +364,8 @@ public class CommonUtilities extends ServiceAware {
 		return listOfAllNeighbouringConnectedPowerLines;
 	}
 	
-	/*
-	 * This function can be called whenever:
+	/**
+	 * This method updates all connected holon objects and power sources and is called whenever:
 	 * 1 - Holon Object is added to a main line.
 	 * 2 - Power Source is added to a main line.
 	 * 3 - Switch is toggled.
@@ -356,7 +373,8 @@ public class CommonUtilities extends ServiceAware {
 	 * 5 - Power source is edited.
 	 * 6 - Holon Element is deleted from a holon object.
 	 * 7 - Holon Element is edited in such a way that its current capacity is less than the previous current capacity.
-	 * */	
+	 * @param powerLineId ID of the power line for which we want to update the connected holon objects and power sources.
+	 */
 	public void updateHolonObjectsAndPowerSources(Integer powerLineId) {
 		PowerLine powerLine = getPowerLineService().findById(powerLineId);
 		String powerLineType = powerLine.getType();
@@ -449,10 +467,22 @@ public class CommonUtilities extends ServiceAware {
 
 	}
 
+	/**
+	 * This method finds a random integer value between two integers passed as parameter. 
+	 * @param min Minimum value of the random integer
+	 * @param max Maximum value of the random integer
+	 * @return Random integer value between 1st and 2nd parameter.
+	 */
 	public int randomNumber(int min, int max) {
 		return (min + (int)(Math.random()*((max-min)+1)));
 	}
 	
+	/**
+	 * This method finds all connected holon objects to a single holon object
+	 * @param powerLine This is the object of powerLine POJO and power line type is MAINLINE
+	 * @param holonObject The holon object for which we want to find other connected holon objects
+	 * @return ArrayList of connected holon objects
+	 */
 	public ArrayList<HolonObject> getHolonObjectListByConnectedPowerLines(PowerLine powerLine, HolonObject holonObject) {
 		ArrayList<HolonObject> connectedHolonObjects = new ArrayList<HolonObject>();
 		Integer powerLineId = 0;
@@ -472,6 +502,12 @@ public class CommonUtilities extends ServiceAware {
 		return connectedHolonObjects;
 	}
 	
+	/**
+	 * This method finds list of all power sources connected to a power line and of a particular holon represented by the 2nd parameter (holonObject).
+	 * @param powerLine Power line object for which we need to find the connected power sources.
+	 * @param holonObject The holon object which is used to find only those power sources which have the same holon as this holon object.
+	 * @return Array list of power sources
+	 */
 	public ArrayList<PowerSource> getPowerSourceListByConnectedPowerLines(PowerLine powerLine, HolonObject holonObject) {
 		ArrayList<PowerSource> connectedPowerSources = new ArrayList<PowerSource>();
 		Integer powerLineId = powerLine!= null?powerLine.getId():null;
@@ -489,6 +525,12 @@ public class CommonUtilities extends ServiceAware {
 	}
 	
 
+	/**
+	 * This method checks whether two holon objects are connected or not.
+	 * @param holonObjectA 1st holon object for which we need to check the connectivity.
+	 * @param holonObjectB 2nd holon object for which we need to check the connectivity.
+	 * @return Connectivity status in the form of true or false.
+	 */
 	public boolean checkConnectivityBetweenHolonObjects(HolonObject holonObjectA, HolonObject holonObjectB) {
 		Integer powerLineIdA = getPowerLineService().getPowerLineByHolonObject(holonObjectA).getId();
 		Integer holonObjectBId = holonObjectB.getId();
@@ -503,6 +545,12 @@ public class CommonUtilities extends ServiceAware {
 		return false;
 	}
 	
+	/**
+	 * This method checks whether a holon object and a power source are connected or not.
+	 * @param holonObject The holon object that needs to be checked for connectivity.
+	 * @param powerSource The power source that needs to be checked for connectivity.
+	 * @return Connectivity status in the form of true or false.
+	 */
 	public boolean checkConnectivityBetweenHolonObjectAndPowerSource(HolonObject holonObject, PowerSource powerSource) {
 		Integer powerLineId = getPowerLineService().getPowerLineByHolonObject(holonObject).getId();
 		Integer powerSourceId = powerSource.getId();
@@ -517,6 +565,12 @@ public class CommonUtilities extends ServiceAware {
 		return false;
 	}
 
+	/**
+	 * This method calculates the flexibility and current energy required by a holon object by checking all possible scenarios.
+	 * @param holonObject The holon object for which calculation needs to be done.
+	 * @param currentEnergyRequired Current energy originally required by the holon object.
+	 * @return Map containing values for flexibility and currentEnergyRequired.
+	 */
 	public Map<String, Integer> getFlexibilityAndCurrentEnergyRequirementOfHolonObject(HolonObject holonObject, Integer currentEnergyRequired) {
 		Map<String, Integer> flexibilityAndCurrentEnergyRequiredMap = new TreeMap<String, Integer>();
 		
@@ -610,6 +664,12 @@ public class CommonUtilities extends ServiceAware {
 		return flexibilityAndCurrentEnergyRequiredMap;
 	}
 
+	/**
+	 * This method finds the connected holon coordinator of the holon passed as parameter. Calculation are based on the power line object passed as 2nd parameter.
+	 * @param holon The holon for which we need to find the holon coordinator.
+	 * @param powerLine The power line object which is used to find the connected holon coordinator.
+	 * @return Connected holon coordinator
+	 */
 	public HolonObject findConnectedHolonCoordinatorByHolon(Holon holon, PowerLine powerLine) {
 		HolonObject holonCoordinator = null;
 		Integer powerLineId =  powerLine!=null?powerLine.getId():0;
@@ -627,6 +687,12 @@ public class CommonUtilities extends ServiceAware {
 		return holonCoordinator;
 	}
 	
+	/**
+	 * This method is used to find the new holon coordinator by using leadership election algorithm.
+	 * @param powerLine The power line which is used to find connected holon objects. 
+	 * @param holonObject The holon object which wants to be a part of leadership election for holon coordinator. 
+	 * @return The new holon coordinator
+	 */
 	public HolonObject getHolonCoordinatorByElectionUsingPowerLineId(PowerLine powerLine, HolonObject holonObject){
 		ArrayList<HolonObject> connectedholonObject = new ArrayList<HolonObject>();
 		HolonObject newCoordinator= null;
@@ -666,7 +732,7 @@ public class CommonUtilities extends ServiceAware {
 				}
 				else{
 					HolonObject tempHolonObject = connectedholonObject.get(k);
-					//Set is coordinator to false
+					//Set isCoordinator false
 					tempHolonObject.setIsCoordinator(false);
 					getHolonObjectService().merge(tempHolonObject);
 				}
@@ -676,6 +742,12 @@ public class CommonUtilities extends ServiceAware {
 		return newCoordinator;
 	}
 	
+	/**
+	 * This method calculates list of new and old coordinators when a main line is connected to another main line or when a switch is toggled.
+	 * @param powerLine The power line object which is used for connectivity purpose.
+	 * @param status The status value to find which method to call as there are two methods which perform the same function.
+	 * @return Array list of new and old holon coordinators.
+	 */
 	public Map<String, ArrayList<HolonObject>> getHolonCoordinatorByElectionUsingForMainLineAndSwitch(PowerLine powerLine, String status){
 		Map<String, ArrayList<HolonObject>> mapOfNewAndOldCoordinators = new TreeMap<String, ArrayList<HolonObject>>();
 		ArrayList<HolonObject> connectedHolonObjectsOfAllHolons = getHolonObjectListByConnectedPowerLinesOfAllHolons(powerLine, status);
@@ -687,6 +759,7 @@ public class CommonUtilities extends ServiceAware {
 		ArrayList<HolonObject> blueHolonCoordinatorsList = mapOfHolonCoordinatorsOfAllHolons.get("blueCoordinators");
 		ArrayList<HolonObject> greenHolonCoordinatorsList = mapOfHolonCoordinatorsOfAllHolons.get("greenCoordinators");
 		
+		//Holon Coordinator leadership election for RED holon.
 		if(redHolonCoordinatorsList.size() > 1) {
 			HolonObject coordinator1 = redHolonCoordinatorsList.get(0);
 			HolonObject coordinator2 = redHolonCoordinatorsList.get(1);
@@ -710,6 +783,7 @@ public class CommonUtilities extends ServiceAware {
 			getHolonObjectService().merge(coordinator1);
 		}
 		
+		//Holon Coordinator leadership election for BLUE holon.
 		if(blueHolonCoordinatorsList.size() > 1) {
 			HolonObject coordinator1 = blueHolonCoordinatorsList.get(0);
 			HolonObject coordinator2 = blueHolonCoordinatorsList.get(1);
@@ -732,6 +806,8 @@ public class CommonUtilities extends ServiceAware {
 			coordinator1.setIsCoordinator(true);
 			getHolonObjectService().merge(coordinator1);
 		}
+		
+		//Holon Coordinator leadership election for GREEN holon.
 		if(greenHolonCoordinatorsList.size() > 1) {
 			HolonObject coordinator1 = greenHolonCoordinatorsList.get(0);
 			HolonObject coordinator2 = greenHolonCoordinatorsList.get(1);
@@ -755,6 +831,7 @@ public class CommonUtilities extends ServiceAware {
 			getHolonObjectService().merge(coordinator1);
 		}
 		
+		//Holon Coordinator leadership election for YELLOW holon.
 		if(yellowHolonCoordinatorsList.size() > 1) {
 			HolonObject coordinator1 = yellowHolonCoordinatorsList.get(0);
 			HolonObject coordinator2 = yellowHolonCoordinatorsList.get(1);
@@ -784,6 +861,12 @@ public class CommonUtilities extends ServiceAware {
 		return mapOfNewAndOldCoordinators;
 	}
 	
+	/**
+	 * This method finds connected holon objects of all holons(red, blue, green and yellow). 
+	 * @param powerLine The power line object which is used to check the connectivity.
+	 * @param status The status value to find which method to call as there are two methods which perform the same function.
+	 * @return Array list of connected holon objects of all holons.
+	 */
 	public ArrayList<HolonObject> getHolonObjectListByConnectedPowerLinesOfAllHolons(PowerLine powerLine, String status) {
 		ArrayList<HolonObject> connectedHolonObjectsOfAllHolons = new ArrayList<HolonObject>();
 		Integer powerLineId = 0;
@@ -806,6 +889,11 @@ public class CommonUtilities extends ServiceAware {
 		return connectedHolonObjectsOfAllHolons;
 	}
 
+	/**
+	 * This method finds all Holon Coordinators of all holons(red, blue, green, yellow)
+	 * @param connectedHolonObjectsOfAllHolons Aray list of all connected holon objects of all holons(red, blue, green, yellow).
+	 * @return Map containing holon coordinators of all holons.
+	 */
 	public Map<String, ArrayList<HolonObject>> getHolonCoordinatorsOfAllHolons(ArrayList<HolonObject> connectedHolonObjectsOfAllHolons) {
 		Map<String, ArrayList<HolonObject>> mapOfCoordinatorsOfAllHolons= new TreeMap<String, ArrayList<HolonObject>>();
 		ArrayList<HolonObject> redHolonCoordinatorsList = new ArrayList<HolonObject>();
@@ -846,7 +934,7 @@ public class CommonUtilities extends ServiceAware {
 			BigDecimal yellowMaxValue = new BigDecimal(0.0);
 			BigDecimal yellowCurrentValue = new BigDecimal(0.0);
 			
-			
+			//Condition for red holon
 			if(!redFlag) {
 				if(holonObject.getHolon().getId() == ConstantValues.HOLON_CO_RED) {
 					redCurrentValue = holonObject.getTrustValue().multiply(holonObject.getCoordinatorCompetency());
@@ -856,6 +944,8 @@ public class CommonUtilities extends ServiceAware {
 					}
 				}
 			}
+			
+			//Condition for blue holon
 			if(!blueFlag) {
 				if(holonObject.getHolon().getId() == ConstantValues.HOLON_CO_BLUE) {
 					blueCurrentValue = holonObject.getTrustValue().multiply(holonObject.getCoordinatorCompetency());
@@ -865,6 +955,8 @@ public class CommonUtilities extends ServiceAware {
 					}
 				}
 			}
+			
+			//Condition for green holon
 			if(!greenFlag) {
 				if(holonObject.getHolon().getId() == ConstantValues.HOLON_CO_GREEN) {
 					greenCurrentValue = holonObject.getTrustValue().multiply(holonObject.getCoordinatorCompetency());
@@ -874,6 +966,8 @@ public class CommonUtilities extends ServiceAware {
 					}
 				}
 			}
+			
+			//Condition for yellow holon
 			if(!yellowFlag) {
 				if(holonObject.getHolon().getId() == ConstantValues.HOLON_CO_YELLOW) {
 					yellowCurrentValue = holonObject.getTrustValue().multiply(holonObject.getCoordinatorCompetency());
@@ -905,13 +999,19 @@ public class CommonUtilities extends ServiceAware {
 		return mapOfCoordinatorsOfAllHolons;
 	}
 	
-	public Map<Integer, PowerLine> getListOfAllPowerLineIdsInsideCircle(Double latitudeOfCircle,Double longitudeOfCircle,Double radiusOfCircle){
+	/**
+	 * This method finds all power line IDs that lie inside a disaster circle.
+	 * @param latitudeOfCircle Latitude of the disaster circle. 
+	 * @param longitudeOfCircle Longitude of the disaster circle.
+	 * @param radiusOfCircle Radius of the disaster circle.
+	 * @return Map containing concerned power line IDs.
+	 */
+	public Map<Integer, PowerLine> getListOfAllPowerLineIdsInsideCircle(Double latitudeOfCircle,Double longitudeOfCircle,Double radiusOfCircle) {
 		ArrayList<LatLng> listOfAllLatLngIdsInsideCircle= getLatLngService().findAllLatLngInsideTheCircle(latitudeOfCircle, longitudeOfCircle, radiusOfCircle);
 		Map<Integer, PowerLine> mapOfAllPowerLinesInsideCircles = new TreeMap<Integer, PowerLine>();
 		for(LatLng latLng : listOfAllLatLngIdsInsideCircle){
 			ArrayList<PowerLine> powerLineListFromLatLng = getPowerLineService().getPowerLineFromLatLng(latLng);
 			for(PowerLine powerLine : powerLineListFromLatLng){
-				System.out.println("OUTSIDE MAP LOOP --> "+powerLine.getId());
 				if(!mapOfAllPowerLinesInsideCircles.containsKey(powerLine.getId())) {
 					mapOfAllPowerLinesInsideCircles.put(powerLine.getId(), powerLine);
 				}
