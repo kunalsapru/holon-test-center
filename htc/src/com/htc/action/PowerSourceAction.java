@@ -29,12 +29,12 @@ public class PowerSourceAction  extends CommonUtilities{
 		Integer centerLatLngId = saveLocation(centerLatLng);
 		PowerSource pwSrc = new PowerSource(); // Creating HolonObject object to store values
 		pwSrc.setCenter(getLatLngService().findById(centerLatLngId));
-		pwSrc.setCurrentProduction(psMaxProdCap);
+		pwSrc.setCurrentProduction(0);
 		pwSrc.setRadius(radius);
 		pwSrc.setMaxProduction(psMaxProdCap);
 		pwSrc.setMinProduction(0);
-		pwSrc.setStatus((psStatus==1?true:false));
-		pwSrc.setFlexibility(psMaxProdCap);
+		pwSrc.setStatus((psStatus==0?false:true));
+		pwSrc.setFlexibility(0);
 		Integer newPsId = getPowerSourceService().persist(pwSrc);
 					
 		log.info("NewLy Generated Power Source ID --> "+newPsId);
