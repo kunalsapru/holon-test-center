@@ -33,6 +33,8 @@
 <script type="text/javascript" src="js/dynamicHolon.js"></script>
 <script type="text/javascript" src="js/sweetalert.min.js"></script>
 <script type="text/javascript" src="js/resetDatabase.js"></script>
+<script type="text/javascript" src="js/mapCenterLocation.js"></script>
+
 </head>
 
 <body>

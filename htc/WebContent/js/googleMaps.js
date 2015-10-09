@@ -146,7 +146,7 @@ $(document)
 
 function initialize() {
 	mapProp = {
-		center : new google.maps.LatLng(49.865888, 8.658592),
+		center : new google.maps.LatLng(mapCenterLatitude, mapCenterLongitude),
 		zoom : 18,
 		mapTypeId : google.maps.MapTypeId.ROADMAP
 	};
