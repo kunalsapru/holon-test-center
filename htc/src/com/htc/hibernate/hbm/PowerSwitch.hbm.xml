@@ -20,10 +20,5 @@
         <property name="status" type="java.lang.Boolean">
             <column name="status" />
         </property>
-        <set name="simulations" table="simulation" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="power_switch" not-null="true" />
-            </key>
-            <one-to-many class="com.htc.hibernate.pojo.Simulation" />
-        </set>    </class>
+	</class>
 </hibernate-mapping>

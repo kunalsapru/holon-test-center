@@ -77,11 +77,5 @@
             </key>
             <one-to-many class="com.htc.hibernate.pojo.Supplier" />
         </set>
-        <set name="simulations" table="simulation" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="holon_object" not-null="true" />
-            </key>
-            <one-to-many class="com.htc.hibernate.pojo.Simulation" />
-        </set>
     </class>
 </hibernate-mapping>

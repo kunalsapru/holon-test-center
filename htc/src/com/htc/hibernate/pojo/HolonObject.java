@@ -29,7 +29,6 @@ public class HolonObject implements java.io.Serializable, Comparable {
 	private Set<Supplier> supplierConsumers = new HashSet<Supplier>(0);
 	private BigDecimal coordinatorCompetency;
 	private BigDecimal trustValue;
-	private Set<?> simulations = new HashSet<Object>(0);
 	
 	public HolonObject(int id, EnergyState energyState, Holon holon,
 			HolonObjectType holonObjectType, LatLng latLngByNeLocation,
@@ -39,7 +38,7 @@ public class HolonObject implements java.io.Serializable, Comparable {
 			Set<HolonElement> holonElements, Set<PowerLine> powerLines,
 			Set<PowerSource> powerSources, Set<Supplier> supplierProducers,
 			Set<Supplier> supplierConsumers, BigDecimal coordinatorCompetency,
-			BigDecimal trustValue, Set<?> simulations) {
+			BigDecimal trustValue) {
 		super();
 		this.id = id;
 		this.energyState = energyState;
@@ -60,7 +59,6 @@ public class HolonObject implements java.io.Serializable, Comparable {
 		this.supplierConsumers = supplierConsumers;
 		this.coordinatorCompetency = coordinatorCompetency;
 		this.trustValue = trustValue;
-		this.simulations = simulations;
 	}
 
 	public HolonObject() {
@@ -248,14 +246,6 @@ public class HolonObject implements java.io.Serializable, Comparable {
 
 	public void setTrustValue(BigDecimal trustValue) {
 		this.trustValue = trustValue;
-	}
-
-	public Set<?> getSimulations() {
-		return simulations;
-	}
-
-	public void setSimulations(Set<?> simulations) {
-		this.simulations = simulations;
 	}
 
 }

@@ -10,31 +10,31 @@ public class DisasterServiceImpl extends AbstractService implements DisasterServ
 
 	@Override
 	public Integer persist(Disaster transientInstance) {
-		return getDisasterdao().persist(transientInstance);
+		return getDisasterDao().persist(transientInstance);
 	}
 
 	@Override
 	public Disaster merge(Disaster detachedInstance) {
 		// TODO Auto-generated method stub
-		return getDisasterdao().merge(detachedInstance);
+		return getDisasterDao().merge(detachedInstance);
 	}
 
 	@Override
 	public Disaster findById(int disasterId) {
 		// TODO Auto-generated method stub
-		return getDisasterdao().findById(disasterId);
+		return getDisasterDao().findById(disasterId);
 	}
 
 	@Override
 	public boolean delete(Disaster persistentInstance) {
 		// TODO Auto-generated method stub
-		return getDisasterdao().delete(persistentInstance);
+		return getDisasterDao().delete(persistentInstance);
 	}
 
 	@Override
 	public ArrayList<Disaster> getAllDisasterCircles() {
 		// TODO Auto-generated method stub
-		return getDisasterdao().getAllDisasterCircles();
+		return getDisasterDao().getAllDisasterCircles();
 	}
 
 	

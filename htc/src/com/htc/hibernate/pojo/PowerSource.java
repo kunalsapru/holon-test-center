@@ -1,5 +1,4 @@
 package com.htc.hibernate.pojo;
-// Generated 16 Aug, 2015 3:28:11 PM by Hibernate Tools 4.3.1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -23,14 +22,12 @@ public class PowerSource implements java.io.Serializable {
 	private Integer flexibility;
 	private Set<?> powerLines = new HashSet<Object>(0);
 	private Set<?> suppliers = new HashSet<Object>(0);
-	private Set<?> simulations = new HashSet<Object>(0);
 	
 
 	public PowerSource(int id, HolonObject holonCoordinator, LatLng center,
 			String name, Integer minProduction, Integer maxProduction,
 			Integer currentProduction, Double radius, Boolean status,
-			Integer flexibility, Set<?> powerLines, Set<?> suppliers,
-			Set<?> simulations) {
+			Integer flexibility, Set<?> powerLines, Set<?> suppliers) {
 		super();
 		this.id = id;
 		this.holonCoordinator = holonCoordinator;
@@ -44,7 +41,6 @@ public class PowerSource implements java.io.Serializable {
 		this.flexibility = flexibility;
 		this.powerLines = powerLines;
 		this.suppliers = suppliers;
-		this.simulations = simulations;
 	}
 
 	public PowerSource() {
@@ -148,14 +144,6 @@ public class PowerSource implements java.io.Serializable {
 
 	public void setSuppliers(Set<?> suppliers) {
 		this.suppliers = suppliers;
-	}
-
-	public Set<?> getSimulations() {
-		return simulations;
-	}
-
-	public void setSimulations(Set<?> simulations) {
-		this.simulations = simulations;
 	}
 
 }

@@ -1,5 +1,4 @@
 package com.htc.hibernate.pojo;
-// Generated 16 Aug, 2015 3:28:11 PM by Hibernate Tools 4.3.1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -23,16 +22,13 @@ public class PowerLine implements java.io.Serializable {
 	private Set<?> powerSwitchesForPowerLineA = new HashSet<Object>(0);
 	private Set<?> powerSwitchesForPowerLineB = new HashSet<Object>(0);
 	private Disaster disaster;
-	private Set<?> simulations = new HashSet<Object>(0);
-	
 
 	public PowerLine(Integer id, HolonObject holonObject,
 			LatLng latLngBySource, LatLng latLngByDestination,
 			PowerSource powerSource, String type, int currentCapacity,
 			int maximumCapacity, boolean isConnected, String reasonDown,
 			Set<?> powerSwitchesForPowerLineA,
-			Set<?> powerSwitchesForPowerLineB, Disaster disaster,
-			Set<?> simulations) {
+			Set<?> powerSwitchesForPowerLineB, Disaster disaster) {
 		super();
 		this.id = id;
 		this.holonObject = holonObject;
@@ -47,7 +43,6 @@ public class PowerLine implements java.io.Serializable {
 		this.powerSwitchesForPowerLineA = powerSwitchesForPowerLineA;
 		this.powerSwitchesForPowerLineB = powerSwitchesForPowerLineB;
 		this.disaster = disaster;
-		this.simulations = simulations;
 	}
 
 	public PowerLine() {
@@ -171,14 +166,6 @@ public class PowerLine implements java.io.Serializable {
 
 	public void setConnected(boolean isConnected) {
 		this.isConnected = isConnected;
-	}
-
-	public Set<?> getSimulations() {
-		return simulations;
-	}
-
-	public void setSimulations(Set<?> simulations) {
-		this.simulations = simulations;
 	}
 
 }

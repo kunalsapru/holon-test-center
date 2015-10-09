@@ -12,7 +12,6 @@ import com.htc.serviceImpl.LatLngServiceImpl;
 import com.htc.serviceImpl.PowerLineServiceImpl;
 import com.htc.serviceImpl.PowerSourceServiceImpl;
 import com.htc.serviceImpl.PowerSwitchServiceImpl;
-import com.htc.serviceImpl.SimulationServiceImpl;
 import com.htc.serviceImpl.SupplierServiceImpl;
 
 /**
@@ -35,7 +34,6 @@ public abstract class ServiceAware extends ActionSupport {
 	private PowerSourceService powerSourceService = new PowerSourceServiceImpl();
 	private SupplierService supplierService = new SupplierServiceImpl();
 	private DisasterService disasterService = new DisasterServiceImpl();
-	private SimulationService simulationService = new SimulationServiceImpl();
 	
 	public HolonService getHolonService() {
 		return holonService;
@@ -112,10 +110,5 @@ public abstract class ServiceAware extends ActionSupport {
 	public void setDisasterService(DisasterService disasterService) {
 		this.disasterService = disasterService;
 	}
-	public SimulationService getSimulationService() {
-		return simulationService;
-	}
-	public void setSimulationService(SimulationService simulationService) {
-		this.simulationService = simulationService;
-	}
+
 }
