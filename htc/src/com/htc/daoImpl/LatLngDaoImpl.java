@@ -1,7 +1,6 @@
 package com.htc.daoImpl;
 
 import java.util.ArrayList;
-
 import com.htc.dao.LatLngDao;
 import com.htc.hibernate.pojo.LatLng;
 import com.htc.hibernate.utilities.LatLngHome;
@@ -49,11 +48,13 @@ public class LatLngDaoImpl implements LatLngDao {
 	}
 
 	@Override
-	public ArrayList<LatLng> findAllLatLngInsideTheCircle(Double lat,
-			Double lng, Double radius) {
-		// TODO Auto-generated method stub
+	public ArrayList<LatLng> findAllLatLngInsideTheCircle(Double lat, Double lng, Double radius) {
 		return getLatLngHome().findAllLatLngInsideTheCircle(lat,lng,radius);
 	}
 
+	@Override
+	public int deleteAllLatLngs() {
+		return getLatLngHome().deleteAllLatLngs();
+	}
 
 }

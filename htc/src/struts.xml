@@ -121,6 +121,8 @@
 		<action name="checkDynamicCurrentEnergyRequired" class="com.htc.action.DissolveHolonAction" method="checkDynamicCurrentEnergyRequired" />
 		<action name="startDynamicHolonMerger" class="com.htc.action.DissolveHolonAction" method="startDynamicHolonMerger" />
 
+		<!-- Action to reset database -->
+		<action name="resetDatabase" class="com.htc.action.ResetDatabaseAction" method="resetDatabase" />
 	</package>
 
 </struts>

@@ -20,5 +20,6 @@ public interface SupplierService {
 	public ArrayList<Supplier> getSupplierListForProducerPowerSource(PowerSource powerSource);
 	public ArrayList<Supplier> getSupplierListHolonCoordinator(Holon holon);
 	public ArrayList<Supplier> getSupplierListForConsumerOrProducer(HolonObject holonObject);
+	public int deleteAllSuppliers();
 	
 }

@@ -12,5 +12,6 @@ import com.htc.hibernate.pojo.PowerSwitch;
 		public boolean delete(PowerSwitch persistentInstance);
 		public ArrayList<PowerSwitch> getAllPowerSwitch();
 		public PowerSwitch checkSwitchStatusBetweenPowerLines(PowerLine powerLineA, PowerLine powerLineB);
+		public int deleteAllPowerSwitches();
 
 	}

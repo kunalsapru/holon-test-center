@@ -70,5 +70,10 @@ public class SupplierServiceImpl extends AbstractService implements  SupplierSer
 	public ArrayList<Supplier> getSupplierListForConsumerOrProducer(HolonObject holonObject) {
 		return getSupplierDao().getSupplierListForConsumerOrProducer(holonObject);
 	}
+
+	@Override
+	public int deleteAllSuppliers() {
+		return getSupplierDao().deleteAllSuppliers();
+	}
 	
 }

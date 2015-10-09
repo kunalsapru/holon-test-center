@@ -14,69 +14,62 @@ public class PowerLineServiceImpl extends AbstractService implements PowerLineSe
 
 	@Override
 	public Integer persist(PowerLine transientInstance) {
-		// TODO Auto-generated method stub
 		return getPowerLineDao().persist(transientInstance);
 	}
 
 	@Override
 	public PowerLine merge(PowerLine detachedInstance) {
-		// TODO Auto-generated method stub
 		return getPowerLineDao().merge(detachedInstance);
 	}
 
 	@Override
 	public PowerLine findById(int powerLineId) {
-		// TODO Auto-generated method stub
 		return getPowerLineDao().findById(powerLineId);
 	}
 
 	@Override
 	public boolean delete(PowerLine persistentInstance) {
-		// TODO Auto-generated method stub
 		return getPowerLineDao().delete(persistentInstance);
 	}
 
 	@Override
 	public ArrayList<PowerLine> getAllPowerLine() {
-		// TODO Auto-generated method stub
 		return getPowerLineDao().getAllPowerLine();
 	}
 
 	@Override
 	public ArrayList<PowerLine> getConnectedPowerLines(PowerLine powerLine) {
-		// TODO Auto-generated method stub
 		return getPowerLineDao().getConnectedPowerLines(powerLine);
 	}
 
 	@Override
 	public PowerLine getPowerLineByHolonObject(HolonObject holonObject) {
-		// TODO Auto-generated method stub
 		return getPowerLineDao().getPowerLineByHolonObject(holonObject);
 	}
 
 	@Override
 	public PowerLine getPowerLineByPowerSource(PowerSource powerSource) {
-		// TODO Auto-generated method stub
 		return getPowerLineDao().getPowerLineByPowerSource(powerSource);
 	}
 
 	@Override
 	public ArrayList<PowerLine> getPowerLineFromLatLng(LatLng latLng) {
-		// TODO Auto-generated method stub
 		return getPowerLineDao().getPowerLineFromLatLng(latLng);
 	}
 
 	@Override
 	public ArrayList<PowerLine> getAllPowerLineIdsHavingDisaster() {
-		// TODO Auto-generated method stub
 		return getPowerLineDao().getAllPowerLineIdsHavingDisaster();
 	}
 
 	@Override
-	public ArrayList<PowerLine> getAllPowerLinesWithDisasterId(
-			Disaster disaster) {
-		// TODO Auto-generated method stub
+	public ArrayList<PowerLine> getAllPowerLinesWithDisasterId(Disaster disaster) {
 		return getPowerLineDao().getAllPowerLinesWithDisasterId(disaster);
+	}
+
+	@Override
+	public int deleteAllPowerLines() {
+		return getPowerLineDao().deleteAllPowerLines();
 	}
 
 }

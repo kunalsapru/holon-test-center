@@ -9,4 +9,5 @@ public interface DisasterDao {
 	public Disaster findById(int disasterId);
 	public boolean delete(Disaster persistentInstance);
 	public ArrayList<Disaster> getAllDisasterCircles();
+	public int deleteAllDisasters();
 }

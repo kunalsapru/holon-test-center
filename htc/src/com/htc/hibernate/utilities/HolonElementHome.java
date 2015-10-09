@@ -132,4 +132,25 @@ public class HolonElementHome {
 		}
 		return listHolonElement;
 	}
+	
+	public int deleteAllHolonElements() {
+		Session session = null;
+		Transaction tx = null;
+		int deleteResponse = 0;
+		try {
+			session = HibernateSessionFactory.getSessionFactory().getCurrentSession();
+			tx = session.beginTransaction();
+			Query query = session.createQuery("delete HolonElement");
+			deleteResponse = query.executeUpdate();
+			tx.commit();
+			return deleteResponse;
+		} catch (RuntimeException re) {
+			log.info("deleteAllHolonElements failed");
+			if(tx!=null) { tx.rollback(); }
+		} finally {
+			HibernateSessionFactory.closeSession();
+		}
+		return deleteResponse;
+	}
+	
 }

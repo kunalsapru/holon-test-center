@@ -1,10 +1,12 @@
 package com.htc.hibernate.utilities;
 
 import java.util.ArrayList;
+
 import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
 import com.htc.hibernate.config.HibernateSessionFactory;
 import com.htc.hibernate.pojo.PowerLine;
 import com.htc.hibernate.pojo.PowerSwitch;
@@ -131,6 +133,26 @@ public class PowerSwitchHome {
 			HibernateSessionFactory.closeSession();
 		}
 		return powerSwitch;
+	}
+	
+	public int deleteAllPowerSwitches() {
+		Session session = null;
+		Transaction tx = null;
+		int deleteResponse = 0;
+		try {
+			session = HibernateSessionFactory.getSessionFactory().getCurrentSession();
+			tx = session.beginTransaction();
+			Query query = session.createQuery("delete PowerSwitch");
+			deleteResponse = query.executeUpdate();
+			tx.commit();
+			return deleteResponse;
+		} catch (RuntimeException re) {
+			log.info("deleteAllPowerSwitches failed");
+			if(tx!=null) { tx.rollback(); }
+		} finally {
+			HibernateSessionFactory.closeSession();
+		}
+		return deleteResponse;
 	}
 
 }

@@ -12,5 +12,6 @@ public interface PowerSourceDao {
 	public boolean delete(PowerSource persistentInstance);
 	public ArrayList<PowerSource> getAllPowerSource();
 	public ArrayList<PowerSource> findByHolonCoordinator(HolonObject holonCoordinator);
+	public int deleteAllPowerSources();
 
 }

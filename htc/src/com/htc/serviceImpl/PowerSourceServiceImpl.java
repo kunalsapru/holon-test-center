@@ -38,4 +38,9 @@ public class PowerSourceServiceImpl extends AbstractService implements PowerSour
 		return getPowerSourceDao().findByHolonCoordinator(holonCoordinator);
 	}
 
+	@Override
+	public int deleteAllPowerSources() {
+		return getPowerSourceDao().deleteAllPowerSources();
+	}
+
 }

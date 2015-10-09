@@ -53,4 +53,9 @@ public class HolonObjectDaoImpl implements HolonObjectDao {
 		return getHolonObjectHome().findAllHolonCoordinators();
 	}
 
+	@Override
+	public int deleteAllHolonObjects() {
+		return getHolonObjectHome().deleteAllHolonObjects();
+	}
+
 }

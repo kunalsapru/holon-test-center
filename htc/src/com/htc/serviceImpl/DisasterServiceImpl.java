@@ -15,28 +15,27 @@ public class DisasterServiceImpl extends AbstractService implements DisasterServ
 
 	@Override
 	public Disaster merge(Disaster detachedInstance) {
-		// TODO Auto-generated method stub
 		return getDisasterDao().merge(detachedInstance);
 	}
 
 	@Override
 	public Disaster findById(int disasterId) {
-		// TODO Auto-generated method stub
 		return getDisasterDao().findById(disasterId);
 	}
 
 	@Override
 	public boolean delete(Disaster persistentInstance) {
-		// TODO Auto-generated method stub
 		return getDisasterDao().delete(persistentInstance);
 	}
 
 	@Override
 	public ArrayList<Disaster> getAllDisasterCircles() {
-		// TODO Auto-generated method stub
 		return getDisasterDao().getAllDisasterCircles();
 	}
 
-	
+	@Override
+	public int deleteAllDisasters() {
+		return getDisasterDao().deleteAllDisasters();
+	}
 
 }

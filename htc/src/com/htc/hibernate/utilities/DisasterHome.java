@@ -1,9 +1,12 @@
 package com.htc.hibernate.utilities;
 
 import java.util.ArrayList;
+
 import org.apache.log4j.Logger;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
 import com.htc.hibernate.config.HibernateSessionFactory;
 import com.htc.hibernate.pojo.Disaster;
 
@@ -102,6 +105,25 @@ static Logger log = Logger.getLogger(DisasterHome.class);
 		}
 		return listDisaster;
 	}
-
+	
+	public int deleteAllDisasters() {
+		Session session = null;
+		Transaction tx = null;
+		int deleteResponse = 0;
+		try {
+			session = HibernateSessionFactory.getSessionFactory().getCurrentSession();
+			tx = session.beginTransaction();
+			Query query = session.createQuery("delete Disaster");
+			deleteResponse = query.executeUpdate();
+			tx.commit();
+			return deleteResponse;
+		} catch (RuntimeException re) {
+			log.info("deleteAllDisasters failed");
+			if(tx!=null) { tx.rollback(); }
+		} finally {
+			HibernateSessionFactory.closeSession();
+		}
+		return deleteResponse;
+	}
 
 }

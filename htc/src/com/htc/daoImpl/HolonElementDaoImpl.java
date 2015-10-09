@@ -1,7 +1,6 @@
 package com.htc.daoImpl;
 
 import java.util.ArrayList;
-
 import com.htc.dao.HolonElementDao;
 import com.htc.hibernate.pojo.HolonElement;
 import com.htc.hibernate.pojo.HolonObject;
@@ -47,6 +46,11 @@ public class HolonElementDaoImpl implements HolonElementDao {
 	@Override
 	public ArrayList<HolonElement> getHolonElements(HolonObject holonObject) {
 		return getHolonElementHome().getHolonElements(holonObject);
+	}
+
+	@Override
+	public int deleteAllHolonElements() {
+		return getHolonElementHome().deleteAllHolonElements();
 	}
 
 }

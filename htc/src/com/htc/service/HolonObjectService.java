@@ -13,5 +13,6 @@ public interface HolonObjectService {
 	public ArrayList<HolonObject> getAllHolonObject();
 	public ArrayList<HolonObject> findByHolon(Holon holon);
 	public ArrayList<HolonObject> findAllHolonCoordinators();
+	public int deleteAllHolonObjects();
 
 }

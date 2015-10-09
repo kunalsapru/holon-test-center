@@ -43,4 +43,9 @@ public class HolonObjectServiceImpl extends AbstractService implements HolonObje
 		return getHolonObjectDao().findAllHolonCoordinators();
 	}
 
+	@Override
+	public int deleteAllHolonObjects() {
+		return getHolonObjectDao().deleteAllHolonObjects();
+	}
+
 }

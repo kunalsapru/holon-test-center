@@ -44,8 +44,12 @@ public class PowerSourceDaoImpl implements PowerSourceDao {
 
 	@Override
 	public ArrayList<PowerSource> findByHolonCoordinator(HolonObject holonCoordinator) {
-		// TODO Auto-generated method stub
 		return getPowerSourceHome().findByHolonCoordinator(holonCoordinator);
+	}
+
+	@Override
+	public int deleteAllPowerSources() {
+		return getPowerSourceHome().deleteAllPowerSources();
 	}
 
 }

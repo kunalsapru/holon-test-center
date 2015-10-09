@@ -73,4 +73,9 @@ public class SupplierDaoImpl implements SupplierDao {
 		return supplierHome.getSupplierListForConsumerOrProducer(holonObject);
 	}
 
+	@Override
+	public int deleteAllSuppliers() {
+		return supplierHome.deleteAllSuppliers();
+	}
+
 }

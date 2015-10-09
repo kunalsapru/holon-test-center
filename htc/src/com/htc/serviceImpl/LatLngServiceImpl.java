@@ -39,10 +39,13 @@ public class LatLngServiceImpl extends AbstractService implements LatLngService 
 	}
 
 	@Override
-	public ArrayList<LatLng> findAllLatLngInsideTheCircle(Double lat,
-			Double lng, Double radius) {
-		// TODO Auto-generated method stub
+	public ArrayList<LatLng> findAllLatLngInsideTheCircle(Double lat, Double lng, Double radius) {
 		return getLatLngDao().findAllLatLngInsideTheCircle(lat,lng,radius);
+	}
+
+	@Override
+	public int deleteAllLatLngs() {
+		return getLatLngDao().deleteAllLatLngs();
 	}
 
 }
