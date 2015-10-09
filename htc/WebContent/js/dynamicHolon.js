@@ -9,7 +9,7 @@ function startDynamicHolon(currentEnergyRequired, holonObjectId) {
 	} else if(currentEnergyRequired > 0 && intervalFlag == 1) {
 		openDiv("dynamicHolonDiv");
 		myDynamicTimer = setInterval(function () {checkTimerDynamicHolon(currentEnergyRequired,holonObjectId)}, timeInMilliSeconds);
-		} else if(intervalFlag < 6){
+		} else if(currentEnergyRequired > 0 && intervalFlag < 6){
 			openDiv("dynamicHolonDiv");
 		} else {
 			intervalFlag = 0;//Re-initializing interval timer for new requests.
