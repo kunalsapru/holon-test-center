@@ -77,7 +77,7 @@
 	<li><a href="#" id="removeAllDisaster"><i class="fa fa-ban"></i>Remove All Disasters</a>
 	</ul>
 	</li>
-	<li><a href="view/simulation.jsp" id="startSimulation"><i class="fa fa-thumbs-up"></i>Start Simulation</a></li>
+	<li><a href="#" id="resetDatabase"><i class="fa fa-thumbs-up"></i>Reset Database</a></li>
 	</ul>
 	
   <a href="#" id="showmenu"> <i class="fa fa-align-justify"></i> </a> </nav>

@@ -284,29 +284,6 @@
 	top: 0%;
 	right: 0%;
 }
-#simulationDiv {
-	display: none;
-	position: absolute;
-	top: 17%;
-	left: 80%;
-	right: 1%;
-	width: auto;
-	height: auto;
-	max-width: 35%;
-	max-height: 70%;
-	margin: -100px 0 0 -250px;
-	background: #EAF4FF;
-	border: 5px solid rgb(128, 128, 128);
-	z-index: 1;
-	overflow: scroll;
-}
-
-#closeSimulationDiv {
-	float: right;
-	top: 0%;
-	right: 0%;
-}
-
 
 /* .button {
 	background-color:#E2E4DD;

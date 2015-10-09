@@ -9,6 +9,7 @@ var hoShape;
 
 $(document).ready(function() {
 
+	showHolonObjects();
 	var holonDrawingManager;
 	
 	$('#areConnected').click(function(evt) {
