@@ -1,6 +1,10 @@
 var intervalFlag = 0;
 var myDynamicTimer;
 var timeInMilliSeconds = 10000;
+
+function doNotStartDynamicHolon() {
+	swal("Cannot Start Dynamic Holon!", "Holon object is not part of any holon. Connect this holon object to a main line and then try again.", "info");
+}
 function startDynamicHolon(currentEnergyRequired, holonObjectId) {
 	$("#dynamicHolonLegend").html("This Holon Object will send a request after every "+(timeInMilliSeconds/1000)+" seconds");
 	if(currentEnergyRequired > 0 && intervalFlag == 0) {

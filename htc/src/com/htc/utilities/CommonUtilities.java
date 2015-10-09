@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
-import com.htc.action.AbstractAction;
 import com.htc.action.PowerSwitchAction;
 import com.htc.hibernate.pojo.Holon;
 import com.htc.hibernate.pojo.HolonElement;
@@ -21,9 +20,10 @@ import com.htc.hibernate.pojo.PowerLine;
 import com.htc.hibernate.pojo.PowerSource;
 import com.htc.hibernate.pojo.PowerSwitch;
 import com.htc.hibernate.pojo.Supplier;
+import com.htc.service.ServiceAware;
 import com.opensymphony.xwork2.ActionContext;
 
-public class CommonUtilities extends AbstractAction{
+public class CommonUtilities extends ServiceAware {
 
 	private static final long serialVersionUID = 1L;
 	private Map<Integer, PowerLine> listOfAllConnectedPowerLines = new TreeMap<Integer, PowerLine>();

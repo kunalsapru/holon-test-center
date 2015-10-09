@@ -288,9 +288,15 @@ function getHolonInfoWindowCallBack(data,options) {
 			"<span class='button' id='showHolonElement' title='Show Holon Elements' onclick='showHolonElements("+holonObjectId+")'><i class='fa fa-info'>&nbsp;Holon Elements</i></span>" +
 			"&nbsp;&nbsp;&nbsp;&nbsp;"+
 			"<span class='button' id='checkInbox' title='Inbox'><i class='fa fa-list'>&nbsp;Inbox</i></span>"+
-			"&nbsp;&nbsp;&nbsp;&nbsp;"+
-			"<span class='button' id='startDynamicHolon' title='Start dynamic holon module'><i class='fa fa-object-ungroup'>&nbsp;Start Dynamic Holon</i></span>"+
-			"</td></tr></table>");
+			"&nbsp;&nbsp;&nbsp;&nbsp;");
+	if(holonColor == "black") {
+		contentString = contentString.concat("<span class='button' id='doNotStartDynamicHolon' title='Start dynamic holon module'>" +
+		"<i class='fa fa-object-ungroup'>&nbsp;Start Dynamic Holon</i></span>");
+	} else {
+		contentString = contentString.concat("<span class='button' id='startDynamicHolon' title='Start dynamic holon module'>" +
+				"<i class='fa fa-object-ungroup'>&nbsp;Start Dynamic Holon</i></span>");
+	}
+	contentString = contentString.concat("</td></tr></table>");
 	if(coordHolonId===holonObjectId) {
 		contentString = contentString.concat(
 				"<hr /><table>"+
@@ -371,6 +377,9 @@ function getHolonInfoWindowCallBack(data,options) {
 	$('#startDynamicHolon').click(function() {
 		startDynamicHolon(currentEnergyRequired, holonObjectId);
 	}); 
+	$('#doNotStartDynamicHolon').click(function() {
+		doNotStartDynamicHolon();
+	});
 	$('#dissolveHolonID').click(function() {
 		dissolveHolon(cuEnergyHo, coordHolonId);
 	});
