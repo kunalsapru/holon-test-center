@@ -308,7 +308,7 @@ function getHolonInfoWindowCallBack(data,options) {
 				"<td>Maximum Production Capacity: "+maxEnergyProd +"</td></tr>"+
 				"<tr><td>Current Production: "+cuEnergyProd +"</td>"+
 				"<td>Original Energy Required: "+originalEnergyRequiredHolon +"</td></tr>");
-		if(flexibilityHolon > 0) {
+		if(flexibilityHolon > 0 && cuEnergyHo > 0) {
 			contentString = contentString.concat("<tr><td style='color:green'>Flexibility: "+flexibilityHolon +"</td>");
 			contentString = contentString.concat("<td><span class='button' id='distributeEnergyAmongHolonObjects' " +
 				"title='Distribute Holon energy among holon objects'><img src='css/images/distribute_energy.png'/><b>&nbsp;&nbsp;Distribute Energy</b></span>" +
