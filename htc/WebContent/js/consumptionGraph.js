@@ -26,10 +26,11 @@ function showConsumptionGraph(holonElementId,holonObjectId,holonType)
 }
 
 /**
+ * @callback getDataForConsumptionGraphCallBack
  * This method get sum of Consumption for all Holon Elements of the Holon Object 
  * i.e. Total Consumption of the Holon Object and calls the showGraphForHolonTypes method to show the graph
  * @param data data from the database having Holon Object Id & current Consumption of Holon Object
- * @param options This is used by the call back method. Any relevant information can be sent in this.
+ * @param options This is used by the callback method. Any relevant information can be sent in this.
  */
 function getDataForConsumptionGraphCallBack(data,options)
 {

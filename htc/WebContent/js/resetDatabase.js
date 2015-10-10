@@ -1,3 +1,11 @@
+/**
+ * This javascript file is used to reset the database.
+ */
+
+/**
+ * This method is used to reset the database. An ajax request to resetDatabase is made.
+ * 
+ */
 function resetDatabase() {
 	swal({
 		title: "Proceed with resetting entire database?",
@@ -19,6 +27,12 @@ function resetDatabase() {
 	});
 }
 
+/**
+ * @callback resetDatabaseCallBack.
+ * This is the callback function of the resetDatabase function.
+ * @param data data from database if true the database is reset else it is cleaned or Reset error
+ * @param options This is used by the callback method. Any relevant information can be sent in this.
+ */
 function resetDatabaseCallBack(data, options) {
 	if(data == "true") {
     	initialize(); // Function in googleMaps.js
