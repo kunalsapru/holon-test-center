@@ -29,7 +29,7 @@ public class CommonUtilities extends ServiceAware {
 
 	private static final long serialVersionUID = 1L;
 
-	//Global(to class only) member map and arraylist to be used by the recursive function connectedPowerLines(Integer powerLineId) 
+	//Global(to class only) member map and array list to be used by the recursive function connectedPowerLines(Integer powerLineId) 
 	private Map<Integer, PowerLine> listOfAllConnectedPowerLines = new TreeMap<Integer, PowerLine>();
 	private ArrayList<PowerLine> listOfAllNeighbouringConnectedPowerLines = new ArrayList<PowerLine>();
 	

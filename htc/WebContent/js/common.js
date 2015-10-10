@@ -3,7 +3,7 @@
  * @param actionName The name of the action that needds to be called.
  * @param dataAttributes The data attributes that needs to be sent to the concerned action.
  * @param callBack The method that will be called once AJAX request is complete.
- * @param options The options map which is used by the call back method. Any relevant information can be sent in this.
+ * @param options The options JSON which is used by call back method. Any relevant information can be sent in this.
  */
 function ajaxRequest(actionName, dataAttributes, callBack, options) {
 	$.ajax({

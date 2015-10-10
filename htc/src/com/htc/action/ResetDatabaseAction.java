@@ -3,10 +3,20 @@ package com.htc.action;
 import org.apache.log4j.Logger;
 import com.htc.utilities.CommonUtilities;
 
+/**
+ * This class contains functions which are used to reset database.
+ *
+ */
 public class ResetDatabaseAction extends CommonUtilities {
 	private static final long serialVersionUID = 1L;
 	static Logger log = Logger.getLogger(ResetDatabaseAction.class);
 	
+	/**
+	 * This method resets database and truncates tables in the following order
+	 *  supplier --> powerSwitch --> powerLine --> powerSource --> disaster --> holonElement --> holonObject --> latLng
+	 *  After resetting/clearing the entire database, this method returns the reset flag which can be 
+	 *  "false", "true" or "resetAlreadyCompleted" based on the database response.
+	 */
 	public void resetDatabase() {
 		String resetFlag = "false"; 
 		try {
