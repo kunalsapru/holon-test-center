@@ -543,13 +543,15 @@ public class CommonUtilities extends ServiceAware {
 	 * @return Connectivity status in the form of true or false.
 	 */
 	public boolean checkConnectivityBetweenHolonObjects(HolonObject holonObjectA, HolonObject holonObjectB) {
-		Integer powerLineIdA = getPowerLineService().getPowerLineByHolonObject(holonObjectA).getId();
+		Integer powerLineIdA = holonObjectA.getHolon()!=null?getPowerLineService().getPowerLineByHolonObject(holonObjectA).getId():null;
 		Integer holonObjectBId = holonObjectB.getId();
-		ArrayList<PowerLine> connectedPowerLines = connectedPowerLines(powerLineIdA);
-		for(PowerLine powerLine2 : connectedPowerLines) {
-			if(powerLine2.getType().equalsIgnoreCase(ConstantValues.SUBLINE)) {
-				if(holonObjectBId.equals(powerLine2.getHolonObject().getId())) {
-					return true;
+		ArrayList<PowerLine> connectedPowerLines = powerLineIdA != null?connectedPowerLines(powerLineIdA):null;
+		if(connectedPowerLines != null) {
+			for(PowerLine powerLine2 : connectedPowerLines) {
+				if(powerLine2.getType().equalsIgnoreCase(ConstantValues.SUBLINE)) {
+					if(holonObjectBId.equals(powerLine2.getHolonObject().getId())) {
+						return true;
+					}
 				}
 			}
 		}
