@@ -71,6 +71,12 @@ public class CommonUtilities extends ServiceAware {
 	}
 	
 	
+	/**
+	 * This method calculates the percentage power capacity remaining for the Power Line
+	 * @param x This is the current remaining power capacity of the power line
+	 * @param y This is the maximum capacity of the power line
+	 * @return It returns the percentage of the power capacity currently available in the power line 
+	 */
 	public static int getPercent(int x, int y) {
 		float xF=new Float(x);
 		float yF=new Float(y);
@@ -81,6 +87,11 @@ public class CommonUtilities extends ServiceAware {
 		return (int) perc;
 	}
 	
+	/**
+	 * This method returns the color of the line based on the current power capacity of the power line.
+	 * @param percentCap It is the current power capacity of the line in percent.
+	 * @return The color of the line. 
+	 */
 	public static String getLineColor(int percentCap) {
 		String color="brown";
 		if(0<percentCap && percentCap<=20) {
