@@ -1,7 +1,19 @@
+/**
+ * This javascript file is used for the consumption graph for both Holon Objects & Holon Elements.
+ * Highcharts.js is used for displaying the graph.
+ */
 
+
+/** 
+ * This method get the consumption of Holon Object or Holon Element.
+ * The current consumption of Holon Element is fetched directly and showGraphForHolonTypes is called to display graph.
+ * The current total consumption of Holon Object is fetched from database using showHolonObjectConsumption callback
+ * @param holonElementId id of the Holon Element
+ * @param holonObjectId id of the Holon Object
+ * @param holonType current Consumption incase of Holon Element & "ho" in case of Holon Object
+ */
 function showConsumptionGraph(holonElementId,holonObjectId,holonType)
 {
-	//$("#consumptionGraphBody").html("<p>Hrnjdjshd</p>");
 	if(holonType=="ho"){
 		var dataAttributes= {
 				holonObjectId : holonObjectId
@@ -10,13 +22,15 @@ function showConsumptionGraph(holonElementId,holonObjectId,holonType)
 	}else{
 		var currrentConsumption=holonType;
 		showGraphForHolonTypes(holonElementId,parseInt(currrentConsumption),"Holon Element");
-	}
-	
-//	openDiv("consumptionGraphBody");
-	
- //alert(holonObjectId);	
+	}	
 }
 
+/**
+ * This method get sum of Consumption for all Holon Elements of the Holon Object 
+ * i.e. Total Consumption of the Holon Object and calls the showGraphForHolonTypes method to show the graph
+ * @param data data from the database having Holon Object Id & current Consumption of Holon Object
+ * @param options This is used by the call back method. Any relevant information can be sent in this.
+ */
 function getDataForConsumptionGraphCallBack(data,options)
 {
 	var graphForConsumption;
@@ -26,6 +40,12 @@ function getDataForConsumptionGraphCallBack(data,options)
 	
 }
 
+/**
+ * This method shows the consumption graph of Holon Object /Holon Element 
+ * @param id id of Holon Object/ Holon Element
+ * @param currentConsumption value of the consumption by Holon Object/Holon Element
+ * @param holonType HolonType states whether it is Holon Object/Holon Element. 
+ */
 function showGraphForHolonTypes(id,currentConsumption,holonType)
 {
 	if(currentConsumption==0 || id==undefined ){
@@ -109,19 +129,12 @@ function showGraphForHolonTypes(id,currentConsumption,holonType)
 	            }())
 	        }],
 	        lang: {
-	            some_key: 'Close Chart',
-	            key:'Download Chart'
+	            some_key: 'Close Chart'
 	        },
 	        exporting: {
 	            buttons: {
 	                contextButton: {
 	                    enabled: false
-	                },
-	                exportButton: {
-	                    text: 'Download',
-	                    _titleKey: 'key',
-	                    // Use only the download related menu items from the default context button
-	                    menuItems: Highcharts.getOptions().exporting.buttons.contextButton.menuItems.splice(2)
 	                },
 	                closeButton: {
 	                    text: 'Close Chart',
