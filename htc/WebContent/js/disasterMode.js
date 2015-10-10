@@ -1,3 +1,11 @@
+/**
+ * This javascript file is used for the disaster Module
+ */
+
+/**
+ * This function is used if the user clicks on the disaster Mode option present in the left menu.
+ * Using this function the user is able to create a disaster circle on the map.
+ */
 function disasterModeSelected() {
 	if (disasterMode==false){
 		disasterMode=true;
@@ -38,6 +46,13 @@ function disasterModeSelected() {
 
 }
 
+/**
+ * This method is the callback function of the create disaster function.
+ * This function sets the disaster in the global list of disaster to be able to access the same.
+ * @callback createDisasterCircleCallback
+ * @param data data from the database containing the disasterId,Latitude,Longitude of the disaster,
+ * @param options This is used by the callback method. Any relevant information can be sent in this.
+ */
 function createDisasterCircleCallback(data,options){
 	var response= data.split("*");
 	var disasterCircleID= response[0];
@@ -45,15 +60,24 @@ function createDisasterCircleCallback(data,options){
 	var disasterCircleLongitude= response[2];
 	var disasterColor= '#888888';
 	createdDisasterCircle.setOptions({strokeColor:disasterColor,fillColor: disasterColor});
-	showInfoWindowForDisaster(disasterCircleID,diasaterCircleLatitude,disasterCircleLongitude,createdDisasterCircle);
+	attachClickEventForDisater(disasterCircleID,diasaterCircleLatitude,disasterCircleLongitude,createdDisasterCircle);
 	globalDisasterList.set(disasterCircleID,createdDisasterCircle);
 	
 }
 
+/**
+ * This method shows all the saved disasters from the database.
+ */
 function showSavedDisasters(){
 	ajaxRequest("getAllSavedDisasters", {}, getAllSavedDisastersCallback, {});
 }
 
+/**
+ * This method is the callback function of getAllSavedDisasters
+ * @callback getAllSavedDisastersCallback
+ * @param data data contains all the information about the saved disasters in the database.
+ * @param options This is used by the callback method. Any relevant information can be sent in this.
+ */
 function getAllSavedDisastersCallback(data,options){
 	if(data != "[]"){
 	var response=data.split("*");
@@ -76,14 +100,22 @@ function getAllSavedDisastersCallback(data,options){
 			     radius: parseInt(disasterCircleRadius),
 			     zIndex:-1
 			    });	
-			showInfoWindowForDisaster(disasterCircleId,disasterValuesLatitude,disasterValuesLongitude,disasterMarker);
+			attachClickEventForDisater(disasterCircleId,disasterValuesLatitude,disasterValuesLongitude,disasterMarker);
 			globalDisasterList.set(disasterCircleId,disasterMarker);
 		}
 	});
 	}
 }
 
-function showInfoWindowForDisaster(disasterId,disasterCircleLatitude,disasterCircleLongitude,createdDisasterCircle){
+/**
+ * This method attaches the click event for the disaster.
+ * This click event is used while deleting the particular disaster.
+ * @param disasterId id of the disaster
+ * @param disasterCircleLatitude latitude of the disaster
+ * @param disasterCircleLongitude longitude of the disaster
+ * @param createdDisasterCircle marker object of the created object on the map.
+ */
+function attachClickEventForDisater(disasterId,disasterCircleLatitude,disasterCircleLongitude,createdDisasterCircle){
 	google.maps.event.addListener(createdDisasterCircle, 'click', function(event) {
 		if(deleteSelectedDisasterMode){
 			var dataAttributes={
@@ -96,6 +128,9 @@ function showInfoWindowForDisaster(disasterId,disasterCircleLatitude,disasterCir
 }
 
 
+/**
+ * This function enables the user to delete particular disaster by clicking on it.
+ */
 function deleteSelectedDisaster(){
 	if(deleteSelectedDisasterMode == false){
 		deleteSelectedDisasterMode =true;
@@ -106,6 +141,9 @@ function deleteSelectedDisaster(){
 	}
 }
 
+/**
+ * This function deletes all the disasters from the database.
+ */
 function deleteAllDisaster(){
 	if(deleteAllDisasterMode== false){
 		deleteAllDisasterMode=true;
@@ -135,6 +173,12 @@ function deleteAllDisaster(){
 	}
 }
 
+/**
+ * This method is the callback of the deleteAllDisasterCircleFromDatabase.
+ * @callback deleteAllDisasterCircleFromDatabaseCallback
+ * @param data data contains all the deleted disater Id's to delete them from global list. 
+ * @param option This is used by the callback method. Any relevant information can be sent in this.
+ */
 function deleteAllDisasterCircleFromDatabaseCallback(data,option){
 	$("#removeAllDisaster").css("background-color", "rgb(26, 26, 26)");
 	deleteAllDisasterMode=false;
@@ -149,6 +193,12 @@ function deleteAllDisasterCircleFromDatabaseCallback(data,option){
 	}
 }
 
+/**
+ * This function is the callback of the function deleteDisasterCircleFromDatabase
+ * @callback deleteDisasterCircleFromDatabaseCallback
+ * @param data data contains the id of the disaster.
+ * @param options
+ */
 function deleteDisasterCircleFromDatabaseCallback(data,options){
 	var disasterId= data.split("*");
 	if(data!="failure" && disasterId[0] != undefined && disasterId[0] != null){
@@ -156,6 +206,10 @@ function deleteDisasterCircleFromDatabaseCallback(data,options){
 	}
 }
 
+/**
+ * This function removes the disaster Circle from the map.
+ * @param disasterId id of the disaster to be made invisible.
+ */
 function deleteDisasterMarkerFromGlobalList(disasterId){
 	var disasterCircleMarker= globalDisasterList.get(disasterId);
 	if(disasterCircleMarker!= null && disasterCircleMarker!= undefined && disasterCircleMarker!= ""){
