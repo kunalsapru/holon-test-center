@@ -5,18 +5,16 @@ var lineShape;
 $(document).ready(function(){
 	var lineDrawingManager;
 	var lineArray=[];
+	//Click event to add new Power Line
 	$('#addPowerLine').click(function() {
 		var bgColor=$(this).css("background-color");
 		if (drawPowerLineMode==false){
 			drawPowerLineMode=true;
 			$(this).css("background-color", "rgb(153,153,0)");
 			lineDrawingManager = new google.maps.drawing.DrawingManager({
+				// Draw the power line on the map.
 				drawingMode :google.maps.drawing.OverlayType.POLYLINE ,
 				drawingControl : false,
-//				drawingControlOptions : {
-//				position : google.maps.ControlPosition.TOP_CENTER,
-//				drawingModes : [ google.maps.drawing.OverlayType.POLYLINE ]
-//				},
 				polylineOptions : {
 					geodesic : true,
 					clickable : true,
@@ -52,9 +50,11 @@ $(document).ready(function(){
 		}
 
 	})
+	// Calls savePowerLineObject() function to save the Power Line Object in Database
 	$("#savePowerLineObject").click(function(event){
 		savePowerLineObject();						
 	});
+	// Click event on Cancel Button of Draw Power Line 
 	$("#cancelPowerLine").click(function(event){
 		if(createdPowerLineObject!=null && typeof createdPowerLineObject != 'undefined')
 		{
@@ -64,6 +64,11 @@ $(document).ready(function(){
 	});
 })
 
+/**
+ * This function save the Power Line object into the database.
+ * The saved powerLine can be either a newly created power line or an existing power line which is edited.
+ * It uses drawPowerLine to save newly created power line & editPowerLine to save edited value
+ */
 function savePowerLineObject(){
 	var startLat=$("#powerLineStartLat").text();
 	var startLng=$("#powerLineStartLng").text();
@@ -106,6 +111,12 @@ function savePowerLineObject(){
 	}
 }
 
+/**
+ * This function is the callback of editPowerLine
+ * @callback editPowerLineObjectCallBack
+ * @param data data contains information about the power Line to be shown in the info window. 
+ * @param options This is used by the callback method. Any relevant information can be sent in this.
+ */
 function editPowerLineObjectCallBack(data, options){
 	var powerLineId =data.split("*")[1];
 	var content = getLineInfoWindowContent(data);
@@ -116,9 +127,16 @@ function editPowerLineObjectCallBack(data, options){
 	$('#editPowerLineObject').click(function() {
 		editPowerLine(powerLineId);			
 	})
+	// Setting global list of power Line 
 	globalPlList.set(powerLineId, newLineShape);
 }
 
+/**
+ * This function is the callback of drawPoweLine function
+ * @callback drawPoweLineCallBack
+ * @param data data contains information of the power line 
+ * @param options This is used by the callback method. Any relevant information can be sent in this.
+ */
 function drawPoweLineCallBack(data, options){
 	var newLineShape = options["lineShape"];
 	var path = options["path"];
@@ -175,6 +193,10 @@ function drawPoweLineCallBack(data, options){
 	}
 }
 
+/**
+ * This function is called whwn the user edit the power line and call updatePowerLine action to update the new data
+ * @param powerLineId id of the power line
+ */
 function editPowerLine(powerLineId){
 	var dataAttributes= {
 			powerLineId : powerLineId,
@@ -182,6 +204,12 @@ function editPowerLine(powerLineId){
 	ajaxRequest("updatePowerLine", dataAttributes, editPowerLineCallBack, {});	
 }
 
+/**
+ * This function is the callback of updatePowerLine
+ * @editPowerLineCallBack
+ * @param data data contains information about the power line
+ * @param options This is used by the callback method. Any relevant information can be sent in this.
+ */
 function editPowerLineCallBack(data,options){
 	var powerLine = data.split("!");
 	var powerLineId=powerLine[2].trim();
@@ -193,6 +221,11 @@ function editPowerLineCallBack(data,options){
 	openDiv('lineObjectDetail');
 }
 
+/**
+ * This function finds the snapped location from the database
+ * @param lineLocation location to be snapped
+ * @returns location object
+ */
 function findSnappedLocation(lineLocation){
 	var finalLocation=lineLocation;
 	var listSize=globalPlList.size;
@@ -227,10 +260,19 @@ function findSnappedLocation(lineLocation){
 	return finalLocation;
 }
 
+/**
+ * This function shows the saved power lines from the database 
+ */
 function showSavedPowerLines(){
 	ajaxRequest("showPowerLines", {}, showPowerLinesCallBack, {});
 }
 
+/**
+ * This function is the callback of showPowerLines
+ * @callback showPowerLinesCallBack
+ * @param data data contains information about the saved power line.
+ * @param options This is used by the callback method. Any relevant information can be sent in this.
+ */
 function showPowerLinesCallBack(data, options){
 	var powerLineList = data.split("*");
 	var powerLines=[];
@@ -254,10 +296,16 @@ function showPowerLinesCallBack(data, options){
 			       map: map
 		});
 		addMessageWindow(line,powerLineId);
+		//Setting global list of Power Line
 		globalPlList.set(powerLineId, line);
 	}	
 }
 
+/**
+ * This method adds the click event to the power line
+ * @param line marker of the power line
+ * @param powerLineId id of that marker(Power line) object
+ */
 function addMessageWindow(line,powerLineId){		
 	google.maps.event.addListener(line, 'click', function(event) {
 		if(connectToPowerSourceMode==true || addPowerSourceToLineMode==true){
@@ -272,11 +320,15 @@ function addMessageWindow(line,powerLineId){
 					position:event.latLng,
 					powerLineId : powerLineId
 			}
+			// ajax request to get information about the power line
 			ajaxRequest("getPowerLineInfo", dataAttributes, getPowerLineInfoCallBack, options);		
 		}
 	});
 }
 
+/**
+ * This functions closes all the other info windows present on the map.
+ */
 function closeOtherInfoWindows(){
 	if(typeof currentSwitchInfoWindow != 'undefined' && currentSwitchInfoWindow != null){
 		currentSwitchInfoWindow.close();
@@ -292,6 +344,12 @@ function closeOtherInfoWindows(){
 	}
 }
 
+/**
+ * This function is the callback function of getPowerLineInfo
+ * @callback getPowerLineInfoCallBack
+ * @param data data contains information related to the power line
+ * @param options This is used by the callback method. Any relevant information can be sent in this.
+ */
 function getPowerLineInfoCallBack(data,options){
 	closeOtherInfoWindows();
 	var position=options["position"];
@@ -310,6 +368,11 @@ function getPowerLineInfoCallBack(data,options){
 }
 
 
+/**
+ * This function returns the content to be displayed on the info window.
+ * @param data data contains related information about the power line.
+ * @returns {String} the content string to be shown
+ */
 function getLineInfoWindowContent(data){
 	var respStr= data.split("*");
 	var isConnected=respStr[0];
@@ -364,6 +427,11 @@ function getLineInfoWindowContent(data){
 	return content;
 }
 
+/**
+ * This options update the power line global list 
+ * @param powerLineId id of the power line 
+ * @param toDelete is a boolean variable
+ */
 function updateGlobalPowerLineList(powerLineId,toDelete){
 	var dataAttributes= {
 			powerLineId : powerLineId,
@@ -374,6 +442,13 @@ function updateGlobalPowerLineList(powerLineId,toDelete){
 	ajaxRequest("updatePowerLine", dataAttributes, updatePowerLineCallBack, options);
 }
 
+/**
+ * This function is the callback of updatePowerLine. it update the power line global list by setting the
+ * value to null for the one power line whose toDelte is true
+ * @callback updatePowerLineCallBack
+ * @param data information related to the power line
+ * @param options This is used by the callback method. Any relevant information can be sent in this. Contains toDelete value.
+ */
 function updatePowerLineCallBack(data, options){
 	var toDelete=options['toDelete'];
 	var powerLine = data.split("!");
@@ -385,6 +460,7 @@ function updatePowerLineCallBack(data, options){
 	var endLat = location.split("^")[1].split("~")[0];
 	var endLng = location.split("^")[1].split("~")[1];
 	if(toDelete){
+		//Remove power line from the map.
 		globalPlList.get(powerLineId).setMap(null);
 	}
 	var line = new google.maps.Polyline({
@@ -401,6 +477,12 @@ function updatePowerLineCallBack(data, options){
 	globalPlList.set(powerLineId,line);
 }
 
+/**
+ * This function zooms to a particular power line
+ * @param powerLineId id of the power line
+ * @param powerLineLocationLatitude latitude of the power line where to zoom
+ * @param powerLineLocationLongitude longitude of the power line where to zoom
+ */
 function zoomToPowerLine(powerLineId, powerLineLocationLatitude, powerLineLocationLongitude) {
 	var location = new google.maps.LatLng(powerLineLocationLatitude, powerLineLocationLongitude);
 	var dataAttributes= {

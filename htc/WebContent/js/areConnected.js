@@ -24,8 +24,8 @@ function areHolonObjectsConnected(firstHolonObjectId,secondHolonObjectId)
 /**
  * This function is the callback for getConnectedStatusForHolons
  * @callback getConnectedStatusForHolonsCallback
- * @param data
- * @param options
+ * @param data data contains the connected status of the 2 holon objects
+ * @param options This is used by the callback method. Any relevant information can be sent in this.
  */
 function getConnectedStatusForHolonObjectsCallback(data,options) {
 	areConnectedMode=false;

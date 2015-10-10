@@ -197,7 +197,7 @@ function deleteAllDisasterCircleFromDatabaseCallback(data,option){
  * This function is the callback of the function deleteDisasterCircleFromDatabase
  * @callback deleteDisasterCircleFromDatabaseCallback
  * @param data data contains the id of the disaster.
- * @param options
+ * @param options This is used by the callback method. Any relevant information can be sent in this.
  */
 function deleteDisasterCircleFromDatabaseCallback(data,options){
 	var disasterId= data.split("*");
