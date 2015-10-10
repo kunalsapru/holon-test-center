@@ -127,6 +127,7 @@ public class DissolveAndDynamicHolonAction extends CommonUtilities {
 								responseDissolveHolon = "true";
 								Holon newHolon = bestHolonCoordinatorMatch.getHolon();
 								Holon oldHolon = holonCoordinator.getHolon();
+								//Leadership election between holon coordinators
 								BigDecimal competencyTrust1 = bestHolonCoordinatorMatch.getCoordinatorCompetency().multiply(bestHolonCoordinatorMatch.getTrustValue());
 								BigDecimal competencyTrust2 = holonCoordinator.getCoordinatorCompetency().multiply(holonCoordinator.getTrustValue());
 								if(competencyTrust1.compareTo(competencyTrust2) == -1) {
@@ -155,8 +156,8 @@ public class DissolveAndDynamicHolonAction extends CommonUtilities {
 								}
 								holonCoordinator.setHolon(newHolon);
 								getHolonObjectService().merge(holonCoordinator);
-								System.out.println("Old Holon --> "+oldHolon.getName());
-								System.out.println("New Holon --> "+newHolon.getName());
+								log.info("Old Holon --> "+oldHolon.getName());
+								log.info("New Holon --> "+newHolon.getName());
 							}
 						} else {
 							responseDissolveHolon = "noOtherHolonFound";
@@ -306,6 +307,7 @@ public class DissolveAndDynamicHolonAction extends CommonUtilities {
 							Holon newHolon = bestHolonCoordinatorMatch.getHolon();
 							Holon oldHolon = holonObject.getHolon();
 							if(holonObject.getIsCoordinator()) {
+								//Leadership election between holon coordinators
 								BigDecimal competencyTrust1 = bestHolonCoordinatorMatch.getCoordinatorCompetency().multiply(bestHolonCoordinatorMatch.getTrustValue());
 								BigDecimal competencyTrust2 = holonObject.getCoordinatorCompetency().multiply(holonObject.getTrustValue());
 								if(competencyTrust1.compareTo(competencyTrust2) == -1) {
@@ -327,8 +329,8 @@ public class DissolveAndDynamicHolonAction extends CommonUtilities {
 							}
 							holonObject.setHolon(newHolon);
 							getHolonObjectService().merge(holonObject);
-							System.out.println("Old Holon --> "+oldHolon.getName());
-							System.out.println("New Holon --> "+newHolon.getName());
+							log.info("Old Holon --> "+oldHolon.getName());
+							log.info("New Holon --> "+newHolon.getName());
 						}
 					}
 				}
@@ -341,7 +343,6 @@ public class DissolveAndDynamicHolonAction extends CommonUtilities {
 			}
 		} catch (Exception e) {
 			log.info("Exception "+e.getMessage()+" occurred in action startDynamicHolonMerger()");
-			e.printStackTrace();
 		}
 	}
 	
