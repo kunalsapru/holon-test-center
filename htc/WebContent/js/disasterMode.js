@@ -1,7 +1,4 @@
-function disasterModeSelected(){
-	
-	
-	
+function disasterModeSelected() {
 	if (disasterMode==false){
 		disasterMode=true;
 		$("#disasterMode").css("background-color", "rgb(153,153,0)");
@@ -31,9 +28,7 @@ function disasterModeSelected(){
 					radius : radius,
 					zIndex:-1
 					};
-			ajaxRequest("getAllPointsInsideCircle", dataAttributes, getAllPointsInsideCircleCallback, {});
-			
-	   
+			ajaxRequest("createDisasterCircle", dataAttributes, createDisasterCircleCallback, {});
 	});
 	} else {
 		$("#disasterMode").css("background-color", "rgb(26, 26, 26)");
@@ -43,7 +38,7 @@ function disasterModeSelected(){
 
 }
 
-function getAllPointsInsideCircleCallback(data,options){
+function createDisasterCircleCallback(data,options){
 	var response= data.split("*");
 	var disasterCircleID= response[0];
 	var diasaterCircleLatitude= response[1];
@@ -96,22 +91,8 @@ function showInfoWindowForDisaster(disasterId,disasterCircleLatitude,disasterCir
 			}
 			ajaxRequest("deleteDisasterCircleFromDatabase", dataAttributes, deleteDisasterCircleFromDatabaseCallback, {});
 			
-		}else{/*
-		var contentString=
-			"<div class='table'><table>"+
-			"<tr><td colspan='1' style='text-decoration: underline;'>Disaster Details</td></tr>"+
-			"<tr><td><b>Disaster Id: "+disasterId.replace(","," ") +"</td></tr></table></div>"+
-			
-		closeOtherInfoWindows();
-		var infowindowDisaster = new google.maps.InfoWindow({
-		      content: contentString,
-		      position:new google.maps.LatLng(disasterCircleLatitude,disasterCircleLongitude)
-		  });
-		infowindowDisaster.open(map,map);	
-		*/}
+		}
    });
-	
-	
 }
 
 
@@ -148,7 +129,7 @@ function deleteAllDisaster(){
 				deleteAllDisasterMode=false;
 			}
 		});
-	}else{
+	} else {
 		$("#removeAllDisaster").css("background-color", "rgb(26, 26, 26)");
 		deleteAllDisasterMode=false;
 	}
@@ -157,7 +138,7 @@ function deleteAllDisaster(){
 function deleteAllDisasterCircleFromDatabaseCallback(data,option){
 	$("#removeAllDisaster").css("background-color", "rgb(26, 26, 26)");
 	deleteAllDisasterMode=false;
-	//Get all ids from database and remove from the global list
+	//Remove all disaster IDs from the global list
 	if(data!= undefined && data!= null && data!="failure"){
 		var disasterIds=data.split("*");
 		$.each(disasterIds,function(key,value){

@@ -111,7 +111,7 @@
 		<action name="historyDistributeEnergyAmongHolonObjects" class="com.htc.action.HolonObjectAction" method="historyDistributeEnergyAmongHolonObjects" />
 		
 		<!-- Disaster related actions -->
-		<action name="getAllPointsInsideCircle" class="com.htc.action.DisasterAction" method="getAllPointsInsideCircle" />
+		<action name="createDisasterCircle" class="com.htc.action.DisasterAction" method="createDisasterCircle" />
 		<action name="deleteAllDisasterCircleFromDatabase" class="com.htc.action.DisasterAction" method="deleteAllDisasterCircleFromDatabase" />
 		<action name="deleteDisasterCircleFromDatabase" class="com.htc.action.DisasterAction" method="deleteDisasterCircleFromDatabase" />
 		<action name="getAllSavedDisasters" class="com.htc.action.DisasterAction" method="getAllSavedDisasters" />
