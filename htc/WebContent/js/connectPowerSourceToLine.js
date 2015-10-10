@@ -1,8 +1,9 @@
 /**
- * Abhinav
+ * This javascript file is used to connect Power source to Line.
  */
 $(document).ready(function() {
-
+	
+	// Click event for Connect Power Source to  Main Power Line
 	$('#connectPowerSource').click(function(evt) {
 		if (addPowerSourceToLineMode==false){
 			addPowerSourceToLineMode=true;
@@ -13,34 +14,17 @@ $(document).ready(function() {
 		}
 	})
 
+	// Click event for Create Disaster Mode in the left menu.
 	$("#disasterMode").click(function(){
-		
-		/*swal({
-			title: "Are you sure?",
-			text: "Do you really want to create the Disaster Mode?",
-			type: "warning",
-			showCancelButton: true,
-			confirmButtonColor: '#DD6B55',
-			confirmButtonText: 'Yes,create it!',
-			cancelButtonText: "No, Don't create it!",
-			closeOnConfirm: false,
-			closeOnCancel: false
-		},
-		function(isConfirm){
-	    if (isConfirm){
-	    	disasterModeSelected();
-	    } else {
-	      swal("Cancelled", "Disaster Mode not created", "info");
-	      disasterModeSelected();
-	    }
-		});
-*/
 		disasterModeSelected();
 	});
 	
+	//Click event for Remove Selected Disaster item on the left menu
 	$("#removeSelectedDisaster").click(function(){
 		deleteSelectedDisaster();
 	});
+	
+	//Click event for Remove All Disasters item on the left menu.
 	$("#removeAllDisaster").click(function(){
 		deleteAllDisaster();
 	});
