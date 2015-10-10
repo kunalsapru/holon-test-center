@@ -36,7 +36,7 @@
 		<action name="deleteHolonObject" class="com.htc.action.HolonObjectAction" method="deleteHolonObject" /> 
 		<action name="showHolonObjects" class="com.htc.action.HolonObjectAction" method="showHolonObjects" />
 		<action name="getDataForSupplierDetails" class="com.htc.action.HolonObjectAction" method="getDataForSupplierDetails" />
-		<action name="getConnectedStatusForHolons" class="com.htc.action.HolonObjectAction" method="getConnectedStatusForHolons" />
+		<action name="getConnectedStatusForHolonObjects" class="com.htc.action.HolonObjectAction" method="getConnectedStatusForHolonObjects" />
 		<action name="showHolonObjectConsumption" class="com.htc.action.ConsumptionGraphAction" method="showConsumptionGraph" />
 
 		<!-- Coordinator Related Actions -->

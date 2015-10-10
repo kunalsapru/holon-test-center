@@ -689,13 +689,18 @@ public class HolonObjectAction extends CommonUtilities {
 	/**
 	 * This method checks whether two holon objects are connected or not and then sets the response accordingly 
 	 */
-	public void getConnectedStatusForHolons() {
+	public void getConnectedStatusForHolonObjects() {
 		try {
-			Integer firstHolonObject = getRequest().getParameter("firstHolonObject")!=null?Integer.parseInt(getRequest().getParameter("firstHolonObject")):0;
-			Integer secondHolonObject = getRequest().getParameter("secondHolonObject")!=null?Integer.parseInt(getRequest().getParameter("secondHolonObject")):0;
-			HolonObject holonFirst = getHolonObjectService().findById(firstHolonObject);
-			HolonObject holonSecond = getHolonObjectService().findById(secondHolonObject);
-			boolean response = checkConnectivityBetweenHolonObjects(holonFirst,holonSecond);//Function call to check connectivity - defined in CommonUtilities.java
+			Integer firstHolonObject = getRequest().getParameter("firstHolonObjectId")!=null?Integer.parseInt(getRequest().getParameter("firstHolonObjectId")):0;
+			Integer secondHolonObject = getRequest().getParameter("secondHolonObjectId")!=null?Integer.parseInt(getRequest().getParameter("secondHolonObjectId")):0;
+			HolonObject holonObjectFirst = getHolonObjectService().findById(firstHolonObject);
+			HolonObject holonObjectSecond = getHolonObjectService().findById(secondHolonObject);
+			boolean response= false;
+			if(firstHolonObject!=secondHolonObject){
+				response = checkConnectivityBetweenHolonObjects(holonObjectFirst,holonObjectSecond);//Function call to check connectivity - defined in CommonUtilities.java
+			}else{
+				response=true;
+			}
 			String responseStr="Failure";
 			if(response) {//Preparing response to be sent to client side function
 				responseStr="Success"; 
@@ -704,7 +709,7 @@ public class HolonObjectAction extends CommonUtilities {
 			getResponse().getWriter().write(responseStr);
 		}
 		catch(Exception e) {
-			log.info("Exception occured at getConnectedStatusForHolons::"+e.getMessage());
+			log.info("Exception occured at getConnectedStatusForHolonObjects::"+e.getMessage());
 		}
 	}
 	
