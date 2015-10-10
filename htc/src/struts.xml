@@ -117,9 +117,9 @@
 		<action name="getAllSavedDisasters" class="com.htc.action.DisasterAction" method="getAllSavedDisasters" />
 		
 		<!-- Dissolve Holon and Dynamic Holon actions -->
-		<action name="dissolveHolon" class="com.htc.action.DissolveHolonAction" method="dissolveHolon" />
-		<action name="checkDynamicCurrentEnergyRequired" class="com.htc.action.DissolveHolonAction" method="checkDynamicCurrentEnergyRequired" />
-		<action name="startDynamicHolonMerger" class="com.htc.action.DissolveHolonAction" method="startDynamicHolonMerger" />
+		<action name="dissolveHolon" class="com.htc.action.DissolveAndDynamicHolonAction" method="dissolveHolon" />
+		<action name="checkDynamicCurrentEnergyRequired" class="com.htc.action.DissolveAndDynamicHolonAction" method="checkDynamicCurrentEnergyRequired" />
+		<action name="startDynamicHolonMerger" class="com.htc.action.DissolveAndDynamicHolonAction" method="startDynamicHolonMerger" />
 
 		<!-- Action to reset database -->
 		<action name="resetDatabase" class="com.htc.action.ResetDatabaseAction" method="resetDatabase" />

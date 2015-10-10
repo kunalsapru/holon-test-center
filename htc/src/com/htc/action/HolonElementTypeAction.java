@@ -1,12 +1,13 @@
 package com.htc.action;
 
 import java.util.ArrayList;
-
 import org.apache.log4j.Logger;
-
 import com.htc.hibernate.pojo.HolonElementType;
 import com.htc.utilities.CommonUtilities;
 
+/**
+ * This class contains all actions related to holon element type
+ */
 public class HolonElementTypeAction extends CommonUtilities {
 
 	private static final long serialVersionUID = 1L;
@@ -22,13 +23,10 @@ public class HolonElementTypeAction extends CommonUtilities {
 		String holonElementTypeName = getRequest().getParameter("holonElementTypeName")!=null?
 				getRequest().getParameter("holonElementTypeName"):"Default Value";//Getting HE name value from JSP
 		holonElementType.setName(holonElementTypeName); // Setting values in HE type object
-
 		//Calling service method to save the object in database and saving the auto-incremented ID in an integer
 		Integer newHolonElementTypeID = getHolonElementTypeService().persist(holonElementType);
-		
 		//Calling the response function and setting the content type of response.
 		getResponse().setContentType("text/html");
-		
 		try {
 			getResponse().getWriter().write("<tr><td onclick='deleteHolonElement("+newHolonElementTypeID+")'>"+newHolonElementTypeID+"</td><td>"+holonElementTypeName+"</td></tr>");
 		} catch (Exception e) {
@@ -46,17 +44,12 @@ public class HolonElementTypeAction extends CommonUtilities {
 				Integer.parseInt(getRequest().getParameter("holonElementTypeId")):0;//Getting HE ID value from JSP
 		String holonElementTypeName = getRequest().getParameter("holonElementTypeName")!=null?
 						getRequest().getParameter("holonElementTypeName"):"Default Value";//Getting HE name value from JSP
-				
 		HolonElementType holonElementType = getHolonElementTypeService().findById(holonElementTypeId); // Fetching holon element type from database
-				
 		holonElementType.setName(holonElementTypeName); // Setting new values in HE type object
-
 		//Editing holon element type object and saving in database 
 		HolonElementType holonElementType2 = getHolonElementTypeService().merge(holonElementType);
-		
 		//Calling the response function and setting the content type of response.
 		getResponse().setContentType("text/html");
-		
 		try {
 			getResponse().getWriter().write("Updated Name from DB = "+holonElementType2.getName());
 		} catch (Exception e) {
@@ -72,13 +65,10 @@ public class HolonElementTypeAction extends CommonUtilities {
 		Integer holonElementTypeId = getRequest().getParameter("holonElementTypeId")!=null?
 				Integer.parseInt(getRequest().getParameter("holonElementTypeId")):0;//Getting HE ID value from JSP
 		HolonElementType holonElementType = getHolonElementTypeService().findById(holonElementTypeId); // Fetching holon element type from database
-
-		//Editing holon element type object and saving in database 
+		//Deleting holon element type object 
 		boolean deleteStatus = getHolonElementTypeService().delete(holonElementType);
-		
 		//Calling the response function and setting the content type of response.
 		getResponse().setContentType("text/html");
-		
 		try {
 			getResponse().getWriter().write("Delete Status --> "+deleteStatus);
 		} catch (Exception e) {
@@ -91,19 +81,15 @@ public class HolonElementTypeAction extends CommonUtilities {
 	 * This action fetches list of all holon element types from database.
 	 */
 	public void getListHolonElementType(){
-
-		//Editing holon element type object and saving in database 
+		//Fetching holon element type objects from database
 		ArrayList<HolonElementType> holonElementTypes = getHolonElementTypeService().getAllHolonElementType();
-		
 		StringBuffer holonElementTypeNameList = new StringBuffer();
 		String holonElementTypeInfo;
 		for(HolonElementType holonElementType:holonElementTypes){
-			if(holonElementType.getProducer())
-			{
-			holonElementTypeInfo = holonElementType.getName().
+			if(holonElementType.getProducer()) {
+				holonElementTypeInfo = holonElementType.getName().
 					concat(" : (Max. Capacity:"+holonElementType.getMaxCapacity()).concat(", Min. Capacity:"+holonElementType.getMinCapacity()+")").concat(" : [Producer]");
-			}else
-			{
+			} else {
 				holonElementTypeInfo = holonElementType.getName().
 						concat(" : (Max. Capacity:"+holonElementType.getMaxCapacity()).concat(", Min. Capacity:"+holonElementType.getMinCapacity()+")").concat(" : [Consumer]");
 			}
@@ -112,7 +98,6 @@ public class HolonElementTypeAction extends CommonUtilities {
 		}
 		//Calling the response function and setting the content type of response.
 		getResponse().setContentType("text/html");
-		
 		try {
 			getResponse().getWriter().write(holonElementTypeNameList.toString());
 		} catch (Exception e) {
@@ -120,6 +105,5 @@ public class HolonElementTypeAction extends CommonUtilities {
 			e.printStackTrace();
 		}
 	}
-	
 
 }

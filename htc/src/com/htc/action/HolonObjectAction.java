@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
+import com.htc.hibernate.pojo.Holon;
 import com.htc.hibernate.pojo.HolonElement;
 import com.htc.hibernate.pojo.HolonObject;
 import com.htc.hibernate.pojo.HolonObjectType;
@@ -61,7 +62,6 @@ public class HolonObjectAction extends CommonUtilities {
 			holonObject.setTrustValue(trustValue);
 			//Calling service method to save the object in database and saving the auto-incremented ID in an integer
 			Integer newHolonObjectID = getHolonObjectService().persist(holonObject);
-			new HolonCoordinatorAction().chooseCoordinatorValue();
 			HolonObject holonObject2 = getHolonObjectService().findById(newHolonObjectID);
 			String hc_ne_location="";
 			Integer noOfHolons=0;
@@ -215,11 +215,10 @@ public class HolonObjectAction extends CommonUtilities {
 				//Calling service method to save the object in database and saving the auto-incremented ID in an integer
 				getHolonObjectService().merge(holonObject); //Saving the updated holon object in database.
 				HolonObject updatedHolonObject = getHolonObjectService().findById(hiddenHolonObjectId);
-				PowerLine powerLine = getPowerLineService().getPowerLineByHolonObject(updatedHolonObject);
-				HolonObject updatedHoCo = findConnectedHolonCoordinatorByHolon(updatedHolonObject.getHolon(), powerLine);
+				Holon holon = updatedHolonObject!=null?updatedHolonObject.getHolon():null;
 				String holonColor="black";
-				if(updatedHoCo!=null) {
-					holonColor=updatedHoCo.getHolon().getColor();
+				if(holon!=null) {
+					holonColor = holon.getColor();
 				}
 				StringBuffer hoResponse = new StringBuffer();
 				hoResponse.append(holonColor+"!");
@@ -239,7 +238,6 @@ public class HolonObjectAction extends CommonUtilities {
 		try {			
 			ArrayList<String> hoListArray = new ArrayList<String>();
 			HolonObject holonObject = null;
-			new HolonCoordinatorAction().chooseCoordinatorValue();
 			ArrayList<HolonObject> holonObjectList = getHolonObjectService().getAllHolonObject();//Fetching all holon objects from database
 			if(holonObjectList != null) {
 				for(int i=0; i<holonObjectList.size();i++){

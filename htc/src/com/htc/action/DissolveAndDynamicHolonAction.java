@@ -3,9 +3,7 @@ package com.htc.action;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Map;
-
 import org.apache.log4j.Logger;
-
 import com.htc.hibernate.pojo.Holon;
 import com.htc.hibernate.pojo.HolonObject;
 import com.htc.hibernate.pojo.PowerLine;
@@ -14,12 +12,21 @@ import com.htc.hibernate.pojo.Supplier;
 import com.htc.utilities.CommonUtilities;
 import com.htc.utilities.ConstantValues;
 
-public class DissolveHolonAction extends CommonUtilities {
+/**
+ * This class contains all methods that are used in dissolve holon module and start dynamic holon module.
+ */
+public class DissolveAndDynamicHolonAction extends CommonUtilities {
 	private static final long serialVersionUID = 1L;
-	static Logger log = Logger.getLogger(DissolveHolonAction.class);
+	static Logger log = Logger.getLogger(DissolveAndDynamicHolonAction.class);
 
+	/**
+	 *  This method is used to dissolve an entire holon into a suitable holon which fulfills the energy requirements of the holon that wants to dissolve.
+	 *  Only Holon Coordinator has access to this module.
+	 *  Holon will dissolve only if the flexibility of current holon is zero and current energy requirement is greater than zero.
+	 */
 	public void dissolveHolon() {
 		try {
+			//Fetching holon coordinator from database
 			Integer holonCoordinatorId = getRequest().getParameter("holonCoordinatorId")!=null?Integer.parseInt(getRequest().getParameter("holonCoordinatorId")):0;
 			String responseDissolveHolon = "false";
 			StringBuffer responseDissolveHolonTrue = new StringBuffer();
@@ -35,6 +42,7 @@ public class DissolveHolonAction extends CommonUtilities {
 					PowerLine powerLine = getPowerLineService().getPowerLineByHolonObject(holonCoordinator);
 					if(powerLine != null) {
 						ArrayList<HolonObject> connectedHolonObjectsOfAllHolons = getHolonObjectListByConnectedPowerLinesOfAllHolons(powerLine, "common");
+						//Function call to get list of holon coordinators of all holons to find a suitable new holon based on energy requirements
 						Map<String, ArrayList<HolonObject>> mapOfHolonCoordinatorsOfAllHolons = getHolonCoordinatorsOfAllHolons(connectedHolonObjectsOfAllHolons);
 						ArrayList<HolonObject> redHolonCoordinatorsList = mapOfHolonCoordinatorsOfAllHolons.get("redCoordinators");
 						ArrayList<HolonObject> yellowHolonCoordinatorsList = mapOfHolonCoordinatorsOfAllHolons.get("yellowCoordinators");
@@ -70,9 +78,11 @@ public class DissolveHolonAction extends CommonUtilities {
 							flexibilityHolonTemp = Integer.parseInt(holonEnergyDetailsTemp.get("flexibilityHolon"));
 							redBenchmarkEnergy = (flexibilityHolonTemp-currentEnergyRequiredHolonTemp)-currentEnergyRequiredHolon;
 							if(redBenchmarkEnergy >= 0) {
+								//Assigning the first possible best holon coordinator match. System will not check further for more suitable coordinators.
 								bestHolonCoordinatorMatch = redHolonCoordinator;
 							}
 						}
+						//System will check further for suitable coordinators only if bestHolonCoordinatorMatch is null 
 						if(bestHolonCoordinatorMatch == null && yellowHolonCoordinator != null) {
 							Integer currentEnergyRequiredHolonTemp = 0;
 							Integer flexibilityHolonTemp = 0;
@@ -81,9 +91,11 @@ public class DissolveHolonAction extends CommonUtilities {
 							flexibilityHolonTemp = Integer.parseInt(holonEnergyDetailsTemp.get("flexibilityHolon"));
 							yellowBenchmarkEnergy = (flexibilityHolonTemp-currentEnergyRequiredHolonTemp)-currentEnergyRequiredHolon;
 							if(yellowBenchmarkEnergy > redBenchmarkEnergy && yellowBenchmarkEnergy > 0) {
+								//Assigning the first possible best holon coordinator match. System will not check further for more suitable coordinators.
 								bestHolonCoordinatorMatch = yellowHolonCoordinator;
 							}
 						}
+						//System will check further for suitable coordinators only if bestHolonCoordinatorMatch is null
 						if(bestHolonCoordinatorMatch == null && greenHolonCoordinator != null) {
 							Integer currentEnergyRequiredHolonTemp = 0;
 							Integer flexibilityHolonTemp = 0;
@@ -92,9 +104,11 @@ public class DissolveHolonAction extends CommonUtilities {
 							flexibilityHolonTemp = Integer.parseInt(holonEnergyDetailsTemp.get("flexibilityHolon"));
 							greenBenchmarkEnergy = (flexibilityHolonTemp-currentEnergyRequiredHolonTemp)-currentEnergyRequiredHolon;
 							if(greenBenchmarkEnergy > yellowBenchmarkEnergy && greenBenchmarkEnergy > 0) {
+								//Assigning the first possible best holon coordinator match. System will not check further for more suitable coordinators.
 								bestHolonCoordinatorMatch = greenHolonCoordinator;
 							}
 						}
+						//System will check further for suitable coordinators only if bestHolonCoordinatorMatch is null
 						if(bestHolonCoordinatorMatch == null && blueHolonCoordinator != null) {
 							Integer currentEnergyRequiredHolonTemp = 0;
 							Integer flexibilityHolonTemp = 0;
@@ -103,7 +117,8 @@ public class DissolveHolonAction extends CommonUtilities {
 							flexibilityHolonTemp = Integer.parseInt(holonEnergyDetailsTemp.get("flexibilityHolon"));
 							blueBenchmarkEnergy = (flexibilityHolonTemp-currentEnergyRequiredHolonTemp)-currentEnergyRequiredHolon;
 							if(blueBenchmarkEnergy > greenBenchmarkEnergy && blueBenchmarkEnergy > 0) {
-								bestHolonCoordinatorMatch = yellowHolonCoordinator;
+								//Assigning the first possible best holon coordinator match. System will not check further for more suitable coordinators.
+								bestHolonCoordinatorMatch = blueHolonCoordinator;
 							}
 						}
 						if(bestHolonCoordinatorMatch != null) {
@@ -159,17 +174,20 @@ public class DissolveHolonAction extends CommonUtilities {
 			}
 		} catch (Exception e) {
 			log.info("Exception "+e.getMessage()+" occurred in action dissolveHolon()");
-			e.printStackTrace();
 		}
 	}
 	
+	/**
+	 * This method is used by start dynamic holon module and it checks for the current energy requirement of the holon object. 
+	 */
 	public void checkDynamicCurrentEnergyRequired() {
 		try {
 			Integer holonObjectId = getRequest().getParameter("holonObjectId")!=null?Integer.parseInt(getRequest().getParameter("holonObjectId")):0;
-			HolonObject holonObject = getHolonObjectService().findById(holonObjectId);
+			HolonObject holonObject = getHolonObjectService().findById(holonObjectId);//Fetching holon object from database
 			Integer currentEnergyRequired = 0;
 			Integer originalEnergyRequiredAfterCurrentProduction = 0;
 			if(holonObject != null) {
+				//Function call to fetch energy details of the holon object
 				Map<String, Integer> holonObjectEnergyDetails = getHolonObjectEnergyDetails(holonObject);
 				currentEnergyRequired = holonObjectEnergyDetails.get("currentEnergyRequired");
 				originalEnergyRequiredAfterCurrentProduction = holonObjectEnergyDetails.get("originalEnergyRequiredAfterCurrentProduction");
@@ -178,10 +196,12 @@ public class DissolveHolonAction extends CommonUtilities {
 			getResponse().getWriter().write(currentEnergyRequired+"~"+originalEnergyRequiredAfterCurrentProduction);
 		} catch (Exception e) {
 			log.info("Exception "+e.getMessage()+" occurred in action checkDynamicCurrentEnergyRequired()");
-			e.printStackTrace();
 		}
 	}
 	
+	/**
+	 * This method is part of start dynamic holon module and it merges the holon object with a suitable holon. 
+	 */
 	public void startDynamicHolonMerger() {
 		try {
 			Integer holonObjectId = getRequest().getParameter("holonObjectId")!=null?Integer.parseInt(getRequest().getParameter("holonObjectId")):0;
@@ -194,6 +214,7 @@ public class DissolveHolonAction extends CommonUtilities {
 			if(holonObject != null && originalEnergyRequiredAfterCurrentProduction > 0) {
 				PowerLine powerLine = getPowerLineService().getPowerLineByHolonObject(holonObject);
 				if(powerLine != null) {
+					//Fetching connected holon objects of all holons
 					ArrayList<HolonObject> connectedHolonObjectsOfAllHolons = getHolonObjectListByConnectedPowerLinesOfAllHolons(powerLine, "common");
 					Map<String, ArrayList<HolonObject>> mapOfHolonCoordinatorsOfAllHolons = getHolonCoordinatorsOfAllHolons(connectedHolonObjectsOfAllHolons);
 					ArrayList<HolonObject> redHolonCoordinatorsList = null;
@@ -234,7 +255,7 @@ public class DissolveHolonAction extends CommonUtilities {
 					Integer yellowBenchmarkEnergy = 0;
 					Integer greenBenchmarkEnergy = 0;
 					Integer blueBenchmarkEnergy = 0;
-					
+					//If conditions to find the best holon coordinator match
 					if(redHolonCoordinator != null) {
 						Integer currentEnergyRequiredHolonTemp = 0;
 						Integer flexibilityHolonTemp = 0;
