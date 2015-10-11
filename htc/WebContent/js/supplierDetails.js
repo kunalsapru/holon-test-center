@@ -40,7 +40,7 @@ $(document).ready(function() {
 })
 
 /**
- * show supplier details of particular holon object 
+ * This method gets the data required for supplier window that is accessible from holon object info window on map. 
  * @param holonObjectId holon object id
  */
 function showSupplierDetails(holonObjectId) {
@@ -119,6 +119,11 @@ function getDataForSupplierDetailsCallBack(data,options) {
 	openDiv("supplierDetailsBody");
 }
 
+/**
+ * This method is used to send energy messages to all connected holon objects which are producers.
+ *  Energy messages are sent to immediate peers which then send to their peers and so on.
+ * @param holonObjectId holon object id
+ */
 function sendMessageToAllProducers(holonObjectId) {
 	var dataAttributes= {
 			holonObjectId : holonObjectId
@@ -126,6 +131,11 @@ function sendMessageToAllProducers(holonObjectId) {
 	ajaxRequest("sendMessageToAllProducers", dataAttributes, sendMessageToAllProducersCallBack, {});
 }
 
+/**
+ * callback method for ajax request in sendMessageToAllProducers(holonObjectId) method
+ * @param data data from server side
+ * @param options data from client side
+ */
 function sendMessageToAllProducersCallBack(data, options) {
 	if(data == "SUCCESS") {
 		swal("Message sent", "Message has been sent to all connected producers", "info");
@@ -138,6 +148,10 @@ function distributeEnergyAmongHolonObjectsFlexibilityZero() {
 	swal("Flexibility insufficient or No energy required.", "Either flexibility of Holon is zero or there is no need for energy.", "info");
 }
 
+/**
+ * This method is used to prepare response for inbox of the holon object.   
+ * @param holonObjectId holon object id
+ */
 function checkInbox(holonObjectId) {
 	var dataAttributes= {
 			holonObjectId : holonObjectId
@@ -145,6 +159,9 @@ function checkInbox(holonObjectId) {
 	ajaxRequest("checkInbox", dataAttributes, checkInboxCallBack, dataAttributes);
 }
 
+/**
+ * This method is used to prepare response for inbox of the holon object. 
+ */
 function takeActionProducerInbox() {
 	var holonObjectId = $("#hiddenSupplierProducerId").val();
 	var takeAction = "yes"; 
@@ -156,6 +173,11 @@ function takeActionProducerInbox() {
 
 }
 
+/**
+ * callback method for the ajax calls in  checkInbox(holonObjectId) and takeActionProducerInbox() methods 
+ * @param data
+ * @param options
+ */
 function checkInboxCallBack(data, options) {
 	var supplierProducerHolonObjectId = options["holonObjectId"];
 	updateCoordinator(supplierProducerHolonObjectId);
@@ -225,6 +247,10 @@ function checkInboxCallBack(data, options) {
 	}
 }
 
+/**
+ * This method is used by holon coordinator to distribute energy among all holon objects of the same holon. 
+ * @param holonObjectId holon object id
+ */
 function distributeEnergyAmongHolonObjects(holonObjectId) {
 	var dataAttributes= {
 			holonObjectId : holonObjectId
@@ -233,6 +259,9 @@ function distributeEnergyAmongHolonObjects(holonObjectId) {
 	
 }
 
+/**
+ * This method is used by holon coordinator to distribute energy among all holon objects of the same holon.
+ */
 function distributeEnergyViaCoordinator() {
 	var holonObjectId = $("#hiddenSupplierCoordinatorId").val();
 	var takeAction = "yes"; 
@@ -244,11 +273,21 @@ function distributeEnergyViaCoordinator() {
 
 }
 
+/**
+ * callback for ajax calls in distributeEnergyViaCoordinator() method
+ * @param data data from server side
+ * @param options data from client side 
+ */
 function distributeEnergyViaCoordinatorCallBack(data, options) {
 	closeDiv("distributeEnergyAmongHolonObjectsDiv");
 	updateCoordinator(options["holonObjectId"]);	
 	swal("Energy distributed successfully!", "Energy has been distributed to the required holon objects. Please check their supplier details for more information.", "info");
 }
+/**
+ * callback for ajax calls in  distributeEnergyAmongHolonObjects(holonObjectId) method
+ * @param data data from server side
+ * @param options data from client side 
+ */
 function distributeEnergyAmongHolonObjectsCallBack(data, options) {
 	var holonCoordinatorId = options["holonObjectId"];
 	$("#hiddenSupplierCoordinatorId").val(holonCoordinatorId);
@@ -315,6 +354,10 @@ function distributeEnergyAmongHolonObjectsCallBack(data, options) {
 	openDiv("distributeEnergyAmongHolonObjectsDiv");
 }
 
+/**
+ *  This method prepares response for history module which is accessible from info window of holon coordinator.
+ * @param holonObjectId holon object id
+ */
 function historyDistributeEnergyAmongHolonObjects(holonObjectId) {
 	var dataAttributes= {
 			holonObjectId : holonObjectId
@@ -322,6 +365,11 @@ function historyDistributeEnergyAmongHolonObjects(holonObjectId) {
 	ajaxRequest("historyDistributeEnergyAmongHolonObjects", dataAttributes, historyDistributeEnergyAmongHolonObjectsCallBack, dataAttributes);
 }
 
+/**
+ * callback method for ajax call in historyDistributeEnergyAmongHolonObjects(holonObjectId) method
+ * @param data data from server
+ * @param options data from client 
+ */
 function historyDistributeEnergyAmongHolonObjectsCallBack(data, options) {
 	var inboxRow = "";
 	if(data != "") {
