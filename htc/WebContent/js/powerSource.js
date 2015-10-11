@@ -1,5 +1,5 @@
 /**
- * This code in this file creates a power source
+ * This code in this file acts on a power source object
  */
 $(document).ready(function() {
 	var psDrawingManager;
@@ -51,6 +51,9 @@ $(document).ready(function() {
 	});
 })
 
+/**
+ *Method to save edited or created power source 
+ */
 function savePowerObject() {
 	var psMaxProdCap=$("#psMaxProdCap").val();
 	var psStatus=$("#psStatus option:selected").val();
@@ -80,6 +83,11 @@ function savePowerObject() {
 	}
 }
 
+/**
+ * callback method for ajax request createPowerSourceObject from  savePowerObject() method
+ * @param data data returned from server
+ * @param options data passed from client side
+ */
 function createPowerSourceObjectCallBack(data,options) {
 	var resp = data.split("!");
 	var psId=resp[0];
@@ -94,7 +102,11 @@ function createPowerSourceObjectCallBack(data,options) {
 	addEventActionToPsObject(psId,createdPowerSourceObject);
 	globalPSrcList.set(psId,createdPowerSourceObject);
 }
-
+/**
+ * callback method for ajax request editPowerSourceObject from  savePowerObject() method
+ * @param data data returned from server
+ * @param options data passed from client side
+ */
 function editPowerSourceObjectCallBack(data,options) {
 	var resp = data.split("!");
 	var psId=resp[0];
@@ -116,6 +128,11 @@ function editPowerSourceObjectCallBack(data,options) {
 	globalPSrcList.set(psId,editedPowerSourceObject);
 }
 
+/**
+ * edit the power source
+ * @param powerSrcId id of the power source to be edited
+ * @param infowindowPsObject the infowindow object of the power source
+ */
 function editPowerSource(powerSrcId,infowindowPsObject) {
 	var dataAttributes= {
 			psId : powerSrcId
@@ -126,6 +143,11 @@ function editPowerSource(powerSrcId,infowindowPsObject) {
 	ajaxRequest("getPsObjectInfoWindow", dataAttributes, getPowerSrcDetailCallBack, options);
 }
 
+/**
+ * callback method for ajax request in editPowerSource(powerSrcId,infowindowPsObject) method
+ * @param data data returned from server
+ * @param option data passed from client side
+ */
 function getPowerSrcDetailCallBack(data, option) {
 	var resp =data.split("!");
 	var powerSrcId=resp[0];
@@ -157,6 +179,11 @@ function getPowerSrcDetailCallBack(data, option) {
 	getHolonCoordinatorFromDatabase(coName,"pwholonCoordinatorId","powerObjectDetail");	
 }
 
+/**
+ * adding info window and event objects to power source object 
+ * @param psId power source id
+ * @param createdPowerSourceObject power source object 
+ */
 function addEventActionToPsObject(psId,createdPowerSourceObject) {
 	google.maps.event.addListener(createdPowerSourceObject, 'click', function(event) {
 		if(addPowerSourceToLineMode==true) {
@@ -173,6 +200,11 @@ function addEventActionToPsObject(psId,createdPowerSourceObject) {
 	  });
 }
 
+/**
+ * callback method for ajax request in addEventActionToPsObject(psId,createdPowerSourceObject)method
+ * @param data data returned from server
+ * @param option data passed from client side
+ */
 function getPsObjectInfoWindowCallBack(data,option) {
 	var resp =data.split("!");
 	var powerSrcId=resp[0];
@@ -240,6 +272,12 @@ function getPsObjectInfoWindowCallBack(data,option) {
 		currentPsInfoWindowObject=infowindowPsObject;
 }
 
+/**
+ * switch on or switch off the power source
+ * @param powerSrc the power source to be acted upon
+ * @param powerSrcId id of the power source to be acted upon
+ * @param infowindowPsObject info window object of power source to be acted upon
+ */
 function powerSourceOnOff(powerSrc,powerSrcId,infowindowPsObject) {
 	var	dataAttributes = {
 					powerSrcId:powerSrcId,
@@ -252,7 +290,11 @@ function powerSourceOnOff(powerSrc,powerSrcId,infowindowPsObject) {
 		ajaxRequest("powerSourceOnOff", dataAttributes, powerSourceOnOffCallBack, options);
 		globalPSrcList.set(powerSrcId,powerSrc);
 }
-
+/**
+ * callback method for ajax request in powerSourceOnOff(powerSrc,powerSrcId,infowindowPsObject) method
+ * @param data data returned from server
+ * @param option data passed from client side
+ */
 function powerSourceOnOffCallBack(data, options) {
 	var powerSrc = options["powerSrc"];
 	var infowindowPsObject = options["infowindowPsObject"];
@@ -325,10 +367,18 @@ function powerSourceOnOffCallBack(data, options) {
 
 
 
+/**
+ *Show saved power sources 
+ */
 function showSavedPowerSources() {
 	ajaxRequest("showPowerSources", {}, showPowerSourcesCallBack, {});
 }
 
+/**
+ * callback method for ajax request in showSavedPowerSources() method
+ * @param data data returned from server
+ * @param option data passed from client side
+ */
 function showPowerSourcesCallBack(data,option) {
 	var res = data.replace("[", "").replace("]", "").split(',').join("");
 	//alert(res);
@@ -364,6 +414,10 @@ function showPowerSourcesCallBack(data,option) {
 	
 }
 
+/**
+ * Create power source circle on the map : not used 
+ * @param event
+ */
 function createPowerSource(event) {
 	var pSource = new google.maps.Circle({
 		 strokeColor:'#FF0000',
