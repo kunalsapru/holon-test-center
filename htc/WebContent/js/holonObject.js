@@ -562,9 +562,9 @@ function getDetailForPowerSourceIconCallBack(data,options)
 
 function attachMessage(holonObjectId, rectangleFromFactory) {
 	google.maps.event.addListener(rectangleFromFactory, 'click', function(event) {	
-		if(connectToPowerSourceMode)
+		if(connectHolonObjectToPowerLineMode)
 		{
-		connectToPowerSource(event.latLng,holonObjectId,"HolonObject");
+			connectPowerSourceOrHolonObjectToPowerLine(event.latLng,holonObjectId,"HolonObject");
 		}else if(areConnectedMode){
 			if(isConnectedFirst=="" && isConnectedSecond=="")
 				{

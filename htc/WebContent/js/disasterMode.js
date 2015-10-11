@@ -2,6 +2,23 @@
  * This javascript file is used for the disaster Module
  */
 
+$(document).ready(function(){
+	// Click event for Create Disaster Mode in the left menu.
+	$("#disasterMode").click(function(){
+		disasterModeSelected();
+	});
+	
+	//Click event for Remove Selected Disaster item on the left menu
+	$("#removeSelectedDisaster").click(function(){
+		deleteSelectedDisaster();
+	});
+	
+	//Click event for Remove All Disasters item on the left menu.
+	$("#removeAllDisaster").click(function(){
+		deleteAllDisaster();
+	});
+});
+
 /**
  * This function is used if the user clicks on the disaster Mode option present in the left menu.
  * Using this function the user is able to create a disaster circle on the map.

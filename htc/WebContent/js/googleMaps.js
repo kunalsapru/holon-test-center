@@ -15,7 +15,7 @@ $(document)
 					window.drawHolonObjectMode=false;
 					window.calculateDistanceMode=false;
 					window.addSwitchonPowerLineMode=false;
-					window.connectToPowerSourceMode=false;
+					window.connectHolonObjectToPowerLineMode=false;
 					window.areConnectedMode=false;
 					window.addPowerSourceMode=false;
 					window.addPowerSourceToLineMode=false;

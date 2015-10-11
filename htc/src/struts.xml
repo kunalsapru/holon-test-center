@@ -55,9 +55,6 @@
 		<action name="getPowerLineInfo" class="com.htc.action.PowerLineAction" method="getPowerLineInfo" />
 		<action name="updatePowerLine" class="com.htc.action.PowerLineAction" method="updatePowerLine" />
 		<action name="editPowerLine" class="com.htc.action.PowerLineAction" method="editPowerLine" />
-		
-		<!-- To connect a holon object to main line with the help of subline -->
-		<action name="connectToPowerSource" class="com.htc.action.PowerLineAction" method="connectToPowerSource" />
 
 		<!-- Start of Factory related actions -->
 		<action name="factoryDataGenerator" class="com.htc.factory.FactoryDataGeneratorAction" method="factoryDataGenerator" />

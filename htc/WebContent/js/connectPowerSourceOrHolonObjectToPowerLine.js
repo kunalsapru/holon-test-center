@@ -1,7 +1,6 @@
 /**
- * Abhinav
+ * This javscript file contains code for connecting either Holon Object or Power Source to Power Line.
  */
-
 var lineLocationForSubline="";
 var lineIdForSubline="";
 var hoLocationForSubline="";
@@ -10,21 +9,28 @@ var pSrcObjInd=false;
 var hoObjInd=false;
 
 $(document).ready(function() {
-
-	$('#connectToPowerSource').click(function(evt) {
-		if (connectToPowerSourceMode==false){
-			connectToPowerSourceMode=true;
+//Enable the connecting functionality of Holon Object to Power Line.
+	$('#connectHolonObjectToPowerLine').click(function(evt) {
+		if (connectHolonObjectToPowerLineMode==false){
+			connectHolonObjectToPowerLineMode=true;
 			$(this).css("background-color", "rgb(153,153,0)");
 		} else {
 			$(this).css("background-color", "rgb(26, 26, 26)");
-			connectToPowerSourceMode=false;
+			connectHolonObjectToPowerLineMode=false;
 		}
 	})
 
 
 })
 
-function connectToPowerSource(latLng,objectId,objectType)
+/**
+ * This function draws a power Line between Holon Object or Power Source.
+ * It captures the clicked object Type, it's id and its 'location
+ * @param latLng position of the Power Source or Holon Object or Power Line clicked
+ * @param objectId id of the Power Source or Holon Object or Power Line clicked
+ * @param objectType Power Source or Holon Object or Power Line clicked
+ */
+function connectPowerSourceOrHolonObjectToPowerLine(latLng,objectId,objectType)
 {
 	if(objectType=="PowerLine" )
 	{
@@ -73,6 +79,7 @@ function connectToPowerSource(latLng,objectId,objectType)
 		pSrcObjInd=false;
 		hoObjInd=false;
 		openDivForCapacity(lineLocationForSubline,hoLocationForSubline,hoIdForSubline,lineIdForSubline,lineType);
+		// Draw line between the Holon Object/ Power source and Power Line.
 		var line = new google.maps.Polyline({
 			path: [
 			       lineLocationForSubline, 
@@ -90,12 +97,17 @@ function connectToPowerSource(latLng,objectId,objectType)
 		hoIdForSubline="";
 
 	}
-	/*alert("The Location of the Clicked point is  "+latLng);
-					alert("The Id of the Clicked Object is "+objectId);
-					alert("The Type of Object is "+objectType);*/
 
 }
 
+/**
+ * This function opens the form to enter the capacity of the drawn Power line.
+ * @param lineLocationForSubline location of the line to draw the subline.
+ * @param hoLocationForSubline location of the Holon/Power source to draw the subline.
+ * @param hoIdForSubline id of the object.
+ * @param lineIdForSubline id of line
+ * @param lineType type of line
+ */
 function openDivForCapacity(lineLocationForSubline,hoLocationForSubline,hoIdForSubline,lineIdForSubline,lineType)
 {
 	$("#powerLineStartLat").text(hoLocationForSubline.lat());

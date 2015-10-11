@@ -22,7 +22,7 @@
 <script type="text/javascript" src="js/holonElement.js"></script>
 <script type="text/javascript" src="js/switch.js"></script>
 <script type="text/javascript" src="js/powerSource.js"></script>
-<script type="text/javascript" src="js/connectToPowerSource.js"></script>
+<script type="text/javascript" src="js/connectPowerSourceOrHolonObjectToPowerLine.js"></script>
 <script type="text/javascript" src="js/connectPowerSourceToLine.js"></script>
 <script type="text/javascript" src="js/consumptionGraph.js"></script>
 <script type="text/javascript" src="js/supplierDetails.js"></script>
@@ -50,7 +50,7 @@
 			<li><a href="#"><i class="fa fa-institution"></i>Holon Object<i class="fa fa-caret-down"></i></a>
 				<ul>
 					<li><a href="#" id="addHolonObject"><i class="fa fa-plus"></i>Add Holon Object</a></li>
-					<li><a href="#" id="connectToPowerSource"><i class="fa fa-plug"></i>Connect To Main Line</a></li>
+					<li><a href="#" id="connectHolonObjectToPowerLine"><i class="fa fa-plug"></i>Connect To Main Line</a></li>
 					<li><a href="#" id="areConnected"><i class="fa fa-exchange"></i>Are Connected ?</a></li>
 				</ul>
 			</li>

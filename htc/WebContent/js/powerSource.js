@@ -160,7 +160,7 @@ function getPowerSrcDetailCallBack(data, option) {
 function addEventActionToPsObject(psId,createdPowerSourceObject) {
 	google.maps.event.addListener(createdPowerSourceObject, 'click', function(event) {
 		if(addPowerSourceToLineMode==true) {
-			connectToPowerSource(event.latLng,psId,"PSObject");
+			connectPowerSourceOrHolonObjectToPowerLine(event.latLng,psId,"PSObject");
 		} else {
 			var dataAttributes= {
 			  psId : psId,
