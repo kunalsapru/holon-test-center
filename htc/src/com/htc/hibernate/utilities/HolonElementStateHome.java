@@ -15,6 +15,12 @@ import com.htc.hibernate.pojo.HolonElementState;
  */
 public class HolonElementStateHome {
 	static Logger log = Logger.getLogger(HolonElementStateHome.class);
+
+	/**
+	 * This function is used to save holon element state object in database
+	 * @param transientInstance the holon element state instance
+	 * @return newly created holon element state ID
+	 */
 	public Integer persist(HolonElementState transientInstance) {
 		Integer holonElementState_id=null;
 		Session session = null;
@@ -33,6 +39,11 @@ public class HolonElementStateHome {
 		return holonElementState_id;
 	}
 	
+	/**
+	 * This function is used to update holon element state object in database 
+	 * @param detachedInstance the holon element state object
+	 * @return the updated holon element state object
+	 */
 	public HolonElementState merge(HolonElementState detachedInstance) {
 		Session session = null;
 		Transaction tx = null;
@@ -51,6 +62,11 @@ public class HolonElementStateHome {
 		}
 	}
 
+	/**
+	 * This function is used to find holon element state object from database using holon element state ID
+	 * @param holonElementStateId the holon element state ID
+	 * @return the holon element state instance
+	 */
 	public HolonElementState findById(int id) {
 		Session session = null;
 		Transaction tx = null;
@@ -69,6 +85,11 @@ public class HolonElementStateHome {
 		}
 	}
 
+	/**
+	 * This function is used to delete holon element state object from database
+	 * @param persistentInstance the holon element state object
+	 * @return the delete status
+	 */
 	public boolean delete(HolonElementState persistentInstance) {
 		Session session = null;
 		Transaction tx = null;
@@ -89,6 +110,10 @@ public class HolonElementStateHome {
 		return deleteStatus;
 	}
 	
+	/**
+	 * This function is used to get all holon element state objects from database
+	 * @return array list of holon element state objects
+	 */
 	@SuppressWarnings("unchecked")
 	public ArrayList<HolonElementState> getAllHolonElementState() {
 		Session session = null;

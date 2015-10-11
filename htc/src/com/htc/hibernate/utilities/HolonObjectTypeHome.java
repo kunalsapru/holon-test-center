@@ -15,6 +15,12 @@ import com.htc.hibernate.pojo.HolonObjectType;
  */
 public class HolonObjectTypeHome {
 	static Logger log = Logger.getLogger(HolonObjectTypeHome.class);
+
+	/**
+	 * This function is used to save holon object type in database
+	 * @param transientInstance the holon object type instance
+	 * @return newly created holon object type ID
+	 */
 	public Integer persist(HolonObjectType transientInstance) {
 		Integer holonObjectType_id=null;
 		Session session = null;
@@ -33,6 +39,11 @@ public class HolonObjectTypeHome {
 		return holonObjectType_id;
 	}
 	
+	/**
+	 * This function is used to update holon object type instance in database
+	 * @param detachedInstance the holon object type
+	 * @return the updated holon object type instance
+	 */
 	public HolonObjectType merge(HolonObjectType detachedInstance) {
 		Session session = null;
 		Transaction tx = null;
@@ -51,6 +62,11 @@ public class HolonObjectTypeHome {
 		}
 	}
 
+	/**
+	 * This function is used to find holon object type in database using the id passed in the parameter
+	 * @param holonObjectTypeId the holon object type id
+	 * @return the holon object type instance
+	 */
 	public HolonObjectType findById(int id) {
 		Session session = null;
 		Transaction tx = null;
@@ -69,6 +85,11 @@ public class HolonObjectTypeHome {
 		}
 	}
 
+	/**
+	 * This function is used to delete holon object type instance from database
+	 * @param persistentInstance the holon object type instance
+	 * @return the delete status
+	 */
 	public boolean delete(HolonObjectType persistentInstance) {
 		Session session = null;
 		Transaction tx = null;
@@ -89,6 +110,10 @@ public class HolonObjectTypeHome {
 		return deleteStatus;
 	}
 	
+	/**
+	 * This function is used to get all holon object type instances from the database
+	 * @return array list of all holon object type instances
+	 */
 	@SuppressWarnings("unchecked")
 	public ArrayList<HolonObjectType> getAllHolonObjectType() {
 		Session session = null;

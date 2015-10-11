@@ -3,7 +3,7 @@ package com.htc.factory;
 import java.math.BigDecimal;
 import java.util.Map;
 import java.util.TreeMap;
-
+import org.apache.log4j.Logger;
 import com.htc.hibernate.pojo.HolonElement;
 import com.htc.hibernate.pojo.HolonElementState;
 import com.htc.hibernate.pojo.HolonElementType;
@@ -12,10 +12,17 @@ import com.htc.hibernate.pojo.HolonObjectType;
 import com.htc.hibernate.pojo.LatLng;
 import com.htc.utilities.CommonUtilities;
 
+/**
+ * This class contains functions that actually create holon objects and holon elements in database using the input from client side.
+ */
 public class FactoryUtilities extends CommonUtilities{
 	
 	private static final long serialVersionUID = 1L;
+	static Logger log = Logger.getLogger(FactoryUtilities.class);
 
+	/** This method creates holon objects and holon elements in database
+	 * @param holonObjectType_ProbabilityMap the map containing probability of holon object types that need to be created
+	 */
 	public void sendDataToFactory(Map<Integer, String> holonObjectType_ProbabilityMap) {
 		int cumulativeProbability = 0;
 		for(Integer holonObjectPriority: holonObjectType_ProbabilityMap.keySet()) {
@@ -35,11 +42,11 @@ public class FactoryUtilities extends CommonUtilities{
 		LatLng NorthlatLng2 = null;
 		LatLng SouthlatLng2 = null;
 		Integer newHolonObjectId = null;
-		
+		//Calling function that contains the algorithm for priority and probability concept
 		Map<Integer, Integer> finalMapAfterFactoryAlgorithm = algorithmForPriorityProbability(holonObjectType_ProbabilityMap, cumulativeProbability);
 		for(Integer holonObjectTypeId: finalMapAfterFactoryAlgorithm.keySet()) {
 			holonObjectType = getHolonObjectTypeService().findById(holonObjectTypeId);
-			System.out.println("Holon Object Type : "+holonObjectType.getName()+", No of Objects = "+finalMapAfterFactoryAlgorithm.get(holonObjectTypeId));
+			log.info("Holon Object Type : "+holonObjectType.getName()+", No of Objects = "+finalMapAfterFactoryAlgorithm.get(holonObjectTypeId));
 			int noOfObjects = finalMapAfterFactoryAlgorithm.get(holonObjectTypeId);
 			while(noOfObjects > 0){
 				latNE = Double.parseDouble(FactoryHolonObjectsLocation.mapLocations.get(0).split("~")[0].split("!")[0]);
@@ -58,12 +65,6 @@ public class FactoryUtilities extends CommonUtilities{
 				holonObject = new HolonObject();
 				holonObject.setLatLngByNeLocation(NorthlatLng2);
 				holonObject.setLatLngBySwLocation(SouthlatLng2);
-				
-/*				int holonCoordinatorId = randomNumber(1, 4); // Replace this with hibernate function to get minimum and maximum ID of holonCoordinator in DB.
-				if(holonCoordinatorId!=0) {
-					holonCoordinator = getHolonCoordinatorService().findById(holonCoordinatorId);
-					holonObject.setHolonCoordinator(holonCoordinator);
-				}*/
 				holonObject.setHolonObjectType(holonObjectType);
 				holonObject.setLineConnectedState(false);
 				holonObject.setCanCommunicate(true);
@@ -75,11 +76,11 @@ public class FactoryUtilities extends CommonUtilities{
 				//Calling service method to save the object in database and saving the auto-incremented ID in an integer
 				newHolonObjectId = getHolonObjectService().persist(holonObject);
 				HolonObject holonObject2 = getHolonObjectService().findById(newHolonObjectId);
-				System.out.println("New HolonObject ID = "+newHolonObjectId);
+				log.info("New HolonObject ID = "+newHolonObjectId);
 
 				//Adding 10 Holon Elements to the newly generated Holon Object
 				for(int i=0; i<10; i++) {
-					Integer holonElementTypeId = randomNumber(1, 6);// Replace this with hibernate function to get minimum and maximum ID of holonElementType in DB.
+					Integer holonElementTypeId = randomNumber(1, 6);
 					Integer holonElementStateId = 1;//Setting state to ON
 					HolonElementType holonElementType = getHolonElementTypeService().findById(holonElementTypeId);
 					HolonElementState holonElementState = getHolonElementStateService().findById(holonElementStateId);
@@ -94,14 +95,19 @@ public class FactoryUtilities extends CommonUtilities{
 					holonElement.setHolonObject(holonObject2);
 					//Calling service method to save the Element in database and saving the auto-incremented ID in an integer
 					Integer newHolonElementID = getHolonElementService().persist(holonElement);
-					System.out.println("NewLy Generated Holon Element ID --> "+newHolonElementID);
+					log.info("NewLy Generated Holon Element ID --> "+newHolonElementID);
 				}
-				
 				noOfObjects --;
 			}
 		}
 	}
 	
+	/**
+	 * This is the algorithm that takes into consideration the priority and probability(entered by user) of the holon object type that needs to be created
+	 * @param holonObjectType_ProbabilityMap the map containing probability of holon object type
+	 * @param cumulativeProbability the combined probability of all holon object type (enteerd by user)
+	 * @return
+	 */
 	public Map<Integer, Integer> algorithmForPriorityProbability(Map<Integer, String> holonObjectType_ProbabilityMap, int cumulativeProbability) {
 		Map<Integer, Integer> mapHolonObjectTypesOccurences = new TreeMap<Integer, Integer>();
 		int mapLocationSize = FactoryHolonObjectsLocation.mapLocations.size();
@@ -153,17 +159,12 @@ public class FactoryUtilities extends CommonUtilities{
 							}
 							cumulativeProbability -= calculatedProbability;
 							mapLocationSize -= noOfObjects;
-							System.out.println("cumulativeProbability = "+cumulativeProbability);
-							System.out.println("mapLocationSize = "+mapLocationSize);
-							System.out.println("No of Objects = "+noOfObjects);
-							System.out.println("Probability Map --> "+holonObjectType_ProbabilityMap);
-							System.out.println("mapHolonObjectTypesOccurences = "+mapHolonObjectTypesOccurences);
 						}
 					}
 					
 				}
 		} catch (NumberFormatException e) {
-			e.printStackTrace();
+			log.info("Exception "+e.getMessage()+" occurred in algorithmForPriorityProbability()");
 		}
 		return mapHolonObjectTypesOccurences;
 	}

@@ -1,46 +1,55 @@
 package com.htc.daoImpl;
 
 import java.util.ArrayList;
-
 import com.htc.dao.HolonElementStateDao;
 import com.htc.hibernate.pojo.HolonElementState;
 import com.htc.hibernate.utilities.HolonElementStateHome;
 
+/**
+ * This class is the implementation of HolonElementStateDao and calls respective functions of the next layer.
+ */
 public class HolonElementStateDaoImpl implements HolonElementStateDao {
 	
 	HolonElementStateHome holonElementStateHome = new HolonElementStateHome();
 
-	public HolonElementStateHome getHolonElementStateHome() {
-		return holonElementStateHome;
-	}
-
-	public void setHolonElementStateHome(HolonElementStateHome holonElementStateHome) {
-		this.holonElementStateHome = holonElementStateHome;
-	}
-
+	/* (non-Javadoc)
+	 * @see com.htc.dao.HolonElementStateDao#persist(com.htc.hibernate.pojo.HolonElementState)
+	 */
 	@Override
 	public Integer persist(HolonElementState transientInstance) {
-		return getHolonElementStateHome().persist(transientInstance);
+		return holonElementStateHome.persist(transientInstance);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.htc.dao.HolonElementStateDao#merge(com.htc.hibernate.pojo.HolonElementState)
+	 */
 	@Override
 	public HolonElementState merge(HolonElementState detachedInstance) {
-		return getHolonElementStateHome().merge(detachedInstance);
+		return holonElementStateHome.merge(detachedInstance);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.htc.dao.HolonElementStateDao#findById(int)
+	 */
 	@Override
 	public HolonElementState findById(int holonElementStateId) {
-		return getHolonElementStateHome().findById(holonElementStateId);
+		return holonElementStateHome.findById(holonElementStateId);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.htc.dao.HolonElementStateDao#delete(com.htc.hibernate.pojo.HolonElementState)
+	 */
 	@Override
 	public boolean delete(HolonElementState persistentInstance) {
-		return getHolonElementStateHome().delete(persistentInstance);
+		return holonElementStateHome.delete(persistentInstance);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.htc.dao.HolonElementStateDao#getAllHolonElementState()
+	 */
 	@Override
 	public ArrayList<HolonElementState> getAllHolonElementState() {
-		return getHolonElementStateHome().getAllHolonElementState();
+		return holonElementStateHome.getAllHolonElementState();
 	}
 
 }

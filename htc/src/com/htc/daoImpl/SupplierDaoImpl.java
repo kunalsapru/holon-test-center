@@ -9,7 +9,7 @@ import com.htc.hibernate.pojo.Supplier;
 import com.htc.hibernate.utilities.SupplierHome;
 
 /**
- * This class is the implementation of interface SupplierDao
+ * This class is the implementation of interface SupplierDao and calls respective functions of the next layer.
  *
  */
 public class SupplierDaoImpl implements SupplierDao {

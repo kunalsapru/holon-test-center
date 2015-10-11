@@ -16,6 +16,12 @@ import com.htc.hibernate.pojo.LatLng;
  */
 public class LatLngHome {
 	static Logger log = Logger.getLogger(LatLngHome.class);
+
+	/**
+	 * This function is used to save LatLng object in database
+	 * @param transientInstance the LatLng object
+	 * @return newly created LatLng ID
+	 */
 	public Integer persist(LatLng transientInstance) {
 		Integer latLng_id=null;
 		Session session = null;
@@ -34,6 +40,11 @@ public class LatLngHome {
 		return latLng_id;
 	}
 	
+	/**
+	 * This function is used to update LatLng object in database
+	 * @param detachedInstance the LatLng object
+	 * @return the updated LatLng object
+	 */
 	public LatLng merge(LatLng detachedInstance) {
 		Session session = null;
 		Transaction tx = null;
@@ -52,13 +63,18 @@ public class LatLngHome {
 		}
 	}
 
-	public LatLng findById(int id) {
+	/**
+	 * This function is used to find LatLng object in database using the latLngId
+	 * @param latLngId the latLng Id
+	 * @return the LatLng object
+	 */
+	public LatLng findById(int latLngId) {
 		Session session = null;
 		Transaction tx = null;
 		try {
 			session = HibernateSessionFactory.getSessionFactory().getCurrentSession();
 			tx = session.beginTransaction();
-			LatLng instance = (LatLng) session.get(LatLng.class, id);
+			LatLng instance = (LatLng) session.get(LatLng.class, latLngId);
 			tx.commit();
 			return instance;
 		} catch (RuntimeException re) {
@@ -70,6 +86,11 @@ public class LatLngHome {
 		}
 	}
 
+	/**
+	 * This function is used to delete a latLng object from database
+	 * @param persistentInstance the latLng object
+	 * @return the delete status
+	 */
 	public boolean delete(LatLng persistentInstance) {
 		Session session = null;
 		Transaction tx = null;
@@ -90,6 +111,10 @@ public class LatLngHome {
 		return deleteStatus;
 	}
 	
+	/**
+	 * This function is used to get all latLng objects from database
+	 * @return array list of latLng objects
+	 */
 	@SuppressWarnings("unchecked")
 	public ArrayList<LatLng> getAllLatLng() {
 		Session session = null;
@@ -110,6 +135,12 @@ public class LatLngHome {
 		return listLatLng;
 	}
 
+	/**
+	 * This function is used to find latLng object in database using the latitude and longitude passed in the parameter.
+	 * @param lat the latitude
+	 * @param lng the longitude
+	 * @return array list of latLng objects
+	 */
 	@SuppressWarnings("unchecked")
 	public ArrayList<LatLng> findByLocation(Double lat, Double lng) {
 		Session session = null;
@@ -134,6 +165,13 @@ public class LatLngHome {
 		return listLatLng;
 	}
 	
+	/**
+	 * This function is used to find all latLng objects in database that lie inside the disaster circle
+	 * @param lat the latitude
+	 * @param lng the longitude
+	 * @param radius the radius of the disaster circle
+	 * @return list of latLng objects
+	 */
 	@SuppressWarnings("unchecked")
 	public ArrayList<LatLng> findAllLatLngInsideTheCircle(Double lat,Double lng,Double radius) {
 		Session session = null;
@@ -159,6 +197,10 @@ public class LatLngHome {
 		return listLatLng;
 	}
 	
+	/**
+	 * This function deletes all latLng objects from database
+	 * @return the delete status
+	 */
 	public int deleteAllLatLngs() {
 		Session session = null;
 		Transaction tx = null;
