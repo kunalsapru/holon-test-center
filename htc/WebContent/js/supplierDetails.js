@@ -1,5 +1,5 @@
 /**
- * 
+ * This file calculates and shows the details about power suppliers 
  */
 $(document).ready(function() {
 	$("#closeShowSupply").click(function(event){
@@ -39,6 +39,10 @@ $(document).ready(function() {
 	});
 })
 
+/**
+ * show supplier details of particular holon object 
+ * @param holonObjectId holon object id
+ */
 function showSupplierDetails(holonObjectId) {
 	var dataAttributes= {
 			holonObjectId : holonObjectId
@@ -46,6 +50,11 @@ function showSupplierDetails(holonObjectId) {
 	ajaxRequest("getDataForSupplierDetails", dataAttributes, getDataForSupplierDetailsCallBack, dataAttributes);
 }
 
+/**
+ * callback method for ajax request in showSupplierDetails(holonObjectId) method
+ * @param data data from server side
+ * @param options data from client side
+ */
 function getDataForSupplierDetailsCallBack(data,options) {
 	var contentString = "<tr><td colspan='8' style='text-decoration: underline;'>Power Supply Details for Holon Object Id: "+options.holonObjectId+"</td></tr>"+
 	"<tr>"+
