@@ -6,33 +6,33 @@ $(document)
 					window.loadHolon=true;
 					window.clickedMarkerChangeImage="";
 					window.createdHolonObject=null; //Save object on overlaycomplete Action to use it later to set its holon color
-					window.createdPowerLineObject=null;
-					window.createdSubLineObject=null;
-					window.createdPowerSourceObject=null;
-					window.createdDisasterCircle=null;
-					window.showHolons=false;
-					window.drawPowerLineMode=false;
-					window.drawHolonObjectMode=false;
-					window.calculateDistanceMode=false;
-					window.addSwitchonPowerLineMode=false;
-					window.connectHolonObjectToPowerLineMode=false;
-					window.areConnectedMode=false;
-					window.addPowerSourceMode=false;
-					window.addPowerSourceToLineMode=false;
-					window.disasterMode=false;
-					window.deleteSelectedDisasterMode=false;
-					window.deleteAllDisasterMode=false;
-					window.globalHoList=new Map(); //Holon Object
-					window.globalPlList=new Map(); //Power Line
-					window.globalPsList=new Map(); //Power Switch
-					window.globalHKList=new Map(); //Holon Coordinator
-					window.globalPCList=new Map(); //Power Circle
-					window.globalPSrcList=new Map(); //Power Source
-					window.globalDisasterList= new Map(); //Disaster List
-					window.currentInfoWindowObject=null;
-					window.currentLineInfoWindowObject=null;
-					window.currentSwitchInfoWindow=null;
-					window.currentPsInfoWindowObject=null;
+					window.createdPowerLineObject=null;// Power Line object which has just been created
+					window.createdSubLineObject=null; // Subline object which has just been created
+					window.createdPowerSourceObject=null; //Power Source Object which has just been created
+					window.createdDisasterCircle=null; // The Disaster circle which has just been created 
+					window.showHolons=false; //Doen't let holons load more than once without clearing the map
+					window.drawPowerLineMode=false; // Draw Power Line mode indicator 
+					window.drawHolonObjectMode=false; // Draw Holon Object mode indicator
+					window.calculateDistanceMode=false; // Calculate Distance mode indicator
+					window.addSwitchonPowerLineMode=false; //Add power Switch mode indicator
+					window.connectHolonObjectToPowerLineMode=false;//Connect Holon to Powerline mode indicator
+					window.areConnectedMode=false;// Are Connected? functionality mode indicator
+					window.addPowerSourceMode=false;// Add Power Source mode indicator
+					window.addPowerSourceToLineMode=false; //Add Power Source to line mode indicator
+					window.disasterMode=false; // Disaster mode indicator
+					window.deleteSelectedDisasterMode=false; //Delete selected disaster mode indicator
+					window.deleteAllDisasterMode=false; // Delete all disaster mode indicator
+					window.globalHoList=new Map(); //Holon Object global map
+					window.globalPlList=new Map(); //Power Line object global map
+					window.globalPsList=new Map(); //Power Switch object global map
+					window.globalHKList=new Map(); //Holon Coordinator object global map
+					window.globalPCList=new Map(); //Power Circle object global map 
+					window.globalPSrcList=new Map(); //Power Source object global map 
+					window.globalDisasterList= new Map(); //Disaster List object global map
+					window.currentInfoWindowObject=null; // current open holon object info window object
+					window.currentLineInfoWindowObject=null; // current open line infowindow object
+					window.currentSwitchInfoWindow=null; // current open power switch info window object
+					window.currentPsInfoWindowObject=null; // current open power source info window object
 					window.ajaxReqStatus=false;
 					$("#addMasterHolonElementTypeDetail").hide();
 					$("#addMasterHolonElementStateDetail").hide();
@@ -144,6 +144,9 @@ $(document)
 					
 				});
 
+/**
+ * First called when the page is loaded
+ */
 function initialize() {
 	mapProp = {
 		center : new google.maps.LatLng(mapCenterLatitude, mapCenterLongitude),
@@ -157,6 +160,9 @@ function initialize() {
 
 }
 
+/**
+ * gets a list of holon object types from db
+ */
 function getHolonObjectTypesFromDatabase() {
 var types=["Fridge","Washing Machine"];
 var data="";
@@ -192,6 +198,12 @@ function openHolonElementStateforMasterTables(){
 	$("#addMasterHolonElementStateDetail").popup("open");
 }
 
+/**
+ * Get list of holon coordinators form database 
+ * @param holonCoordinatorName current coordinator name
+ * @param elementId Id of the current object
+ * @param divId jsp div which has to be opened
+ */
 function getHolonCoordinatorFromDatabase(holonCoordinatorName,elementId,divId)
 {
 	var options={};
@@ -245,6 +257,11 @@ function getHolonCoordinatorFromDatabaseCallBack(data,option)
 	openDiv(divId);
 }
 
+/**
+ * List of holon object types from db
+ * 
+ * @param holonObjectTypeName current holon object type
+ */
 function getHolonObjectTypeFromDatabase(holonObjectTypeName)
 {
 	var options={};
