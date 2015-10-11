@@ -57,7 +57,7 @@
 			<li><a href="#"><i class="fa  fa-certificate"></i>Power Source<i class="fa fa-caret-down"></i></a>
 				<ul>
 					<li><a href="#" id="addPowerSource"><i class="fa fa-plus"></i>Add Power Source</a></li>
-					<li><a href="#" id="connectPowerSource"><i class="fa fa-plug"></i>Connect Power Source</a></li>
+					<li><a href="#" id="connectPowerSource"><i class="fa fa-plug"></i>Connect To Main Line</a></li>
 				</ul>
 			</li>
 			<li><a href="#"><i class="fa fa-flash"></i>Power Line<i class="fa fa-caret-down"></i></a>
