@@ -91,7 +91,7 @@ function createPowerSourceObjectCallBack(data,options) {
 		psStatusColor="#0B6121";
 	}
 	createdPowerSourceObject.setOptions({strokeColor:psStatusColor,fillColor: psStatusColor});
-	addEventActionToPsObject(psId,createdPowerSourceObject)
+	addEventActionToPsObject(psId,createdPowerSourceObject);
 	globalPSrcList.set(psId,createdPowerSourceObject);
 }
 
