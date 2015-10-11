@@ -90,16 +90,19 @@ $(document).ready(function() {
 		closeDiv("holonObjectDetail");
 	});	
 	
-	$('#showHolonObjects').hover(function() {
+	$('#showHolonObjects').hover(function() {  // change cursor 
 		$('#showHolonObjects').css('cursor','pointer');
 			  });
 	
-	$("#close").click(function(){
+	$("#close").click(function(){ //close pop ups
 		$(this).parent().fadeOut("slow", function(c) {
         });
 	})
 })
 
+/**
+ * To save edited or created holon object
+ */
 function saveHolonObject(){
 	//alert("saveHolonObject");
 	var holonObjectPriority=$("#holonObjectPriority").val();
@@ -131,6 +134,13 @@ function saveHolonObject(){
 	}
 }
 
+
+
+/**
+ * Edit existing holon object
+ * @param holonObjectId Id of holon object to be edited
+ * @param infowindowHolonObject infowindow object of the holon object to be edited
+ */
 function editHolonObject(holonObjectId,infowindowHolonObject) {
 	//alert("editHolonObject");
 	var dataAttributes= {
@@ -141,7 +151,11 @@ function editHolonObject(holonObjectId,infowindowHolonObject) {
 	}
 	ajaxRequest("getHolonObjectInfoWindow", dataAttributes, getHolonDetailCallBack, options);
 }
-
+/**
+ * callback method for ajax request for the method editHolonObject(holonObjectId,infowindowHolonObject) 
+ * @param data  data returned from server 
+ * @param options data passed from client side
+ */
 function getHolonDetailCallBack(data, option) {
 	holonEditOptions = option;
 	var dataArray = data.split("!");
@@ -175,6 +189,11 @@ function getHolonDetailCallBack(data, option) {
 	 getHolonCoordinatorFromDatabase(holonCoordinatorName_Holon.trim(),"holonCoordinatorId","holonObjectDetail");	
 }
 
+/**
+ * callback method for ajax request editHolonObject from  the method saveHolonObject() 
+ * @param data  data returned from server 
+ * @param options data passed from client side
+ */
 function editHolonObjectCallBack(data, options){
 	
 	var resp=data.split("!");
@@ -192,6 +211,12 @@ function editHolonObjectCallBack(data, options){
 	globalHoList.set(holonObjectId,editedHolonObject);
 
 }
+
+/**
+ * callback method for ajax request createHolonObject from  the method saveHolonObject() 
+ * @param data  data returned from server 
+ * @param options data passed from client side
+ */
 function createHolonObjectCallBack(data, options) {
 	var dataArray = data.split("!");
 	var holonObjectId = dataArray[0];	
@@ -205,7 +230,11 @@ function createHolonObjectCallBack(data, options) {
 		showHolonCoIcons();
 		globalHoList.set(holonObjectId,createdHolonObject);
 	}
-
+/**
+ * callback method for ajax request for method editHolonObjectCallBack(data, options) and attachMessage(holonObjectId, rectangleFromFactory) 
+ * @param data  data returned from server 
+ * @param options data passed from client side
+ */
 function getHolonInfoWindowCallBack(data,options) {
 	var dataArray = data.split("!");
 	var holonObjectId = dataArray[0];
@@ -397,6 +426,12 @@ function getHolonInfoWindowCallBack(data,options) {
 	currentInfoWindowObject=infowindowHolonObject;
 }
 
+/**
+ * zoom the map to a paricular location 
+ * @param holonObjectId holon object id to which the map has to be zoomed 
+ * @param neLoc ne coordinates of the holon object/ centre of the power source
+ * @param type type of the object eg, holon object or power source 
+ */
 function zoomToHolon(holonObjectId,neLoc, type) {
 	var location = new google.maps.LatLng(neLoc.split("~")[0], neLoc.split("~")[1]);
 	if(type=="Holon Object") {
@@ -417,6 +452,9 @@ function zoomToHolon(holonObjectId,neLoc, type) {
 	map.setZoom(18);
 }
 
+/**
+ *Function to load holons on the map  
+ */
 function showHolonObjects() {
 	if(loadHolon){
 	$("#showHolonObjects").css("background-color", "rgb(153,153,0)");
@@ -437,7 +475,11 @@ function showHolonObjects() {
 		
 	}
 }
-
+/**
+ * callback method for ajax request for method showHolonObjects()  
+ * @param data  data returned from server 
+ * @param options data passed from client side
+ */
 function showHolonObjectsCallBack(data, options){
 	//alert(data);
 	var res = data.replace("[", "").replace("]", "").split(',').join("");
@@ -476,6 +518,10 @@ function showHolonObjectsCallBack(data, options){
 }
 
 
+/**
+ * method to show power icons on the holon objects 
+ * @param holonObjectId id of holon object on which icon has to be displayed
+ */
 function showPowerCircles(holonObjectId)
 {
 	var dataAttributes= {
@@ -484,7 +530,11 @@ function showPowerCircles(holonObjectId)
 	var options=dataAttributes;
 	ajaxRequest("getDetailForPowerSourceIcon", dataAttributes, getDetailForPowerSourceIconCallBack, options);
 }
-
+/**
+ * callback method for ajax request for method showPowerCircles(holonObjectId)  
+ * @param data  data returned from server 
+ * @param options data passed from client side
+ */
 function getDetailForPowerSourceIconCallBack(data,options)
 {
 	var resp = data.split("*");
@@ -560,6 +610,11 @@ function getDetailForPowerSourceIconCallBack(data,options)
 	globalPCList.set(holonObjectId,currecntPC);	
 }
 
+/**
+ * Function to create info window and attach event actions to the holon object
+ * @param holonObjectId  id of holon object for which info window has to be attached
+ * @param rectangleFromFactory the holon object from the map 
+ */
 function attachMessage(holonObjectId, rectangleFromFactory) {
 	google.maps.event.addListener(rectangleFromFactory, 'click', function(event) {	
 		if(connectHolonObjectToPowerLineMode)
@@ -597,7 +652,9 @@ function attachMessage(holonObjectId, rectangleFromFactory) {
 	  });
 }
 
-//Function to show holon coordinator Icons after any change
+/**
+ * Function to show holon coordinator Icons after any change
+ */
 function showHolonCoIcons()
 {
 	var redIcon= globalHKList.get("red");
@@ -624,6 +681,11 @@ function showHolonCoIcons()
 
 }
 
+/**
+ * callback method for ajax request for method showHolonCoIcons()
+ * @param data  data returned from server 
+ * @param options data passed from client side
+ */
 function getHoCoIconsCallBack(data,options) {
 	var result=data.split("*");
 	var holonObjectId="";
@@ -642,6 +704,11 @@ function getHoCoIconsCallBack(data,options) {
 	}
 }
 
+/**
+ * create co ordinator icon
+ * @param cLocation location of the icon 
+ * @returns {Marker} created icon 
+ */
 function createCoIcon(cLocation) {
 	 var coOrdCircle= new Marker({
 			map: map,
@@ -663,18 +730,31 @@ function createCoIcon(cLocation) {
 
 }
 
+
 function deleteHolonObject(holonObjectId) {
 	
 }
 
+/**
+ * to close a div
+ * @param id div id to be closed
+ */
 function closeDiv(id) {
 	$("#"+id).slideUp(100);
 }
 
+/**
+ *   to open  a div
+ * @param id div id to be opened
+ */
 function openDiv(id) {
 	$("#"+id).slideDown(100);
 }
 
+/**
+ * Removing icon from map
+ * @param objectId id of the object from which icon has to be removed
+ */
 function removeIconFromMap(objectId){
 	var holonObjectMarkerIcon = globalHKList.get(objectId);
 	console.log(holonObjectMarkerIcon.icon);
@@ -693,6 +773,10 @@ function removeIconFromMap(objectId){
 	
 }
 
+/**
+ *  adding icon from map
+ * @param objectId id of the object on which icon has to be placed
+ */
 function createIconOnMap(objectId){
 	
 	var holonObject= globalHoList.get(objectId);
