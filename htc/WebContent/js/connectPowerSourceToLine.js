@@ -3,7 +3,7 @@
  */
 $(document).ready(function() {
 	
-	// Click event to enable the mode Connect Power Source to  Main Power Line
+	// Click event to enable and disable the mode to Connect Power Source to Main Power Line
 	$('#connectPowerSource').click(function(evt) {
 		if (addPowerSourceToLineMode==false){
 			addPowerSourceToLineMode=true;
