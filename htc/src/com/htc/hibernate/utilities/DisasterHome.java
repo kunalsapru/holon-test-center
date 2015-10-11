@@ -15,7 +15,7 @@ static Logger log = Logger.getLogger(DisasterHome.class);
 	
 	/**
 	 * This function is used to save the disaster instance in database 
-	 * @param transientInstancethe disaster instance
+	 * @param transientInstance the disaster instance
 	 * @return newly created disaster instance ID
 	 */
 	public Integer persist(Disaster transientInstance) {
