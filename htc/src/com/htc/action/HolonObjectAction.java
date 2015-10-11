@@ -651,7 +651,7 @@ public class HolonObjectAction extends CommonUtilities {
 					for(HolonObject holonObjectProducer : listOfConnectedHolonObjects) {
 						Integer flexibility = getHolonObjectEnergyDetails(holonObjectProducer).get("flexibility");
 						Integer currentEnergyRequired = getHolonObjectEnergyDetails(holonObjectConsumer).get("currentEnergyRequired");
-						if(flexibility > 0 && currentEnergyRequired > 0) {
+						if(flexibility > 0 && holonObjectProducer.getCanCommunicate() && currentEnergyRequired > 0) {
 							Supplier supplier = new Supplier();
 							supplier.setCommunicationMode(ConstantValues.COMMUNICATION_MODE_COORDINATOR);
 							supplier.setHolonObjectConsumer(holonObjectConsumer);
