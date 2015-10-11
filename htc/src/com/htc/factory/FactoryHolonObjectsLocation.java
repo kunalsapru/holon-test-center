@@ -3,6 +3,10 @@ package com.htc.factory;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * This class contains location of all 56 holon objects that are created using factory.
+ *
+ */
 public class FactoryHolonObjectsLocation {
 
 	static ArrayList<String> mapLocations = new ArrayList<String>(Arrays.asList(

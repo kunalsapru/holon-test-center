@@ -7,7 +7,7 @@ import com.htc.hibernate.pojo.PowerSource;
 import com.htc.hibernate.pojo.Supplier;
 
 /**
- * This interface is used by the service implementation class SupplierServiceImpl to call the necessary functions
+ * This interface contains all functions related to supplier
  *
  */
 public interface SupplierDao {

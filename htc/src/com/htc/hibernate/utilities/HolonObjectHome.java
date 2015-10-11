@@ -18,6 +18,11 @@ import com.htc.hibernate.pojo.HolonObject;
 public class HolonObjectHome {
 	static Logger log = Logger.getLogger(HolonObjectHome.class);
 	
+	/**
+	 * This function is used to save holon object in database
+	 * @param transientInstance the holon object
+	 * @return newly created holon object ID
+	 */
 	public Integer persist(HolonObject transientInstance) {
 		Integer holonObject_id=null;
 		Session session = null;
@@ -36,6 +41,11 @@ public class HolonObjectHome {
 		return holonObject_id;
 	}
 	
+	/**
+	 * This function is used to update holon object in database
+	 * @param detachedInstance the holon object
+	 * @return the updated holon object
+	 */
 	public HolonObject merge(HolonObject detachedInstance) {
 		Session session = null;
 		Transaction tx = null;
@@ -54,6 +64,11 @@ public class HolonObjectHome {
 		}
 	}
 
+	/**
+	 * This function is used to find the holon object in database using the ID provided in the parameter
+	 * @param holonObjectId the holon object ID
+	 * @return the holon object
+	 */
 	public HolonObject findById(int id) {
 		Session session = null;
 		Transaction tx = null;
@@ -72,6 +87,11 @@ public class HolonObjectHome {
 		}
 	}
 	
+	/**
+	 * This function is used to find all holon objects of a particular holon (passed in the parameter)
+	 * @param holon the holon
+	 * @return array list of holon objects
+	 */
 	@SuppressWarnings("unchecked")
 	public ArrayList<HolonObject> findByHolon(Holon holon) {
 		Session session = null;
@@ -96,6 +116,11 @@ public class HolonObjectHome {
 		return listHolonObject;
 	}
 
+	/**
+	 * This function is used to delete the holon object from database
+	 * @param persistentInstance the holon object
+	 * @return the delete status
+	 */
 	public boolean delete(HolonObject persistentInstance) {
 		Session session = null;
 		Transaction tx = null;
@@ -116,6 +141,10 @@ public class HolonObjectHome {
 		return deleteStatus;
 	}
 	
+	/**
+	 * This function is used to get all holon objects from database
+	 * @return array list of holon objects
+	 */
 	@SuppressWarnings("unchecked")
 	public ArrayList<HolonObject> getAllHolonObject() {
 		Session session = null;
@@ -136,6 +165,10 @@ public class HolonObjectHome {
 		return listHolonObject;
 	}
 
+	/**
+	 * This function is used to find all holon objects from the database which are also holon coordinators
+	 * @return list of all holon coordinators
+	 */
 	@SuppressWarnings("unchecked")
 	public ArrayList<HolonObject> findAllHolonCoordinators() {
 		Session session = null;
@@ -158,6 +191,10 @@ public class HolonObjectHome {
 		return listHolonObject;
 	}
 	
+	/**
+	 * This function is used to delete all holon objects from database
+	 * @return the delete status
+	 */
 	public int deleteAllHolonObjects() {
 		Session session = null;
 		Transaction tx = null;

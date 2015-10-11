@@ -19,6 +19,11 @@ public class PowerSwitchHome {
 	
 	static Logger log = Logger.getLogger(PowerSwitchHome.class);
 	
+	/**
+	 * This function is used to save power switch object in database
+	 * @param transientInstance the power switch object
+	 * @return newly created power switch ID
+	 */
 	public Integer persist(PowerSwitch transientInstance) {
 		Integer powerSwitch_id=null;
 		Session session = null;
@@ -37,6 +42,11 @@ public class PowerSwitchHome {
 		return powerSwitch_id;
 	}
 	
+	/**
+	 * This function is used to update an existing power switch object in database
+	 * @param detachedInstance the power switch object
+	 * @return updated power switch object
+	 */
 	public PowerSwitch merge(PowerSwitch detachedInstance) {
 		Session session = null;
 		Transaction tx = null;
@@ -55,6 +65,11 @@ public class PowerSwitchHome {
 		}
 	}
 
+	/**
+	 * This function is used to find power switch object in database using power switch ID 
+	 * @param powerSwitchId the power switch ID
+	 * @return the power switch object
+	 */
 	public PowerSwitch findById(int id) {
 		Session session = null;
 		Transaction tx = null;
@@ -73,6 +88,11 @@ public class PowerSwitchHome {
 		}
 	}
 
+	/**
+	 * This function is used to delete power switch object from database
+	 * @param persistentInstance the power switch object
+	 * @return the delete status
+	 */
 	public boolean delete(PowerSwitch persistentInstance) {
 		Session session = null;
 		Transaction tx = null;
@@ -93,6 +113,10 @@ public class PowerSwitchHome {
 		return deleteStatus;
 	}
 	
+	/**
+	 * This function is used to get list of all power switch objects from database
+	 * @return list of power switch objects
+	 */
 	@SuppressWarnings("unchecked")
 	public ArrayList<PowerSwitch> getAllPowerSwitch() {
 		Session session = null;
@@ -113,6 +137,12 @@ public class PowerSwitchHome {
 		return listPowerSwitch;
 	}
 	
+	/**
+	 * This function checks whether a power switch exists between two power lines or not, if yes, it return the objects of that power switch
+	 * @param powerLineA the power line object A
+	 * @param powerLineB the power line object B
+	 * @return the power switch object
+	 */
 	public PowerSwitch checkSwitchStatusBetweenPowerLines(PowerLine powerLineA, PowerLine powerLineB) {
 		Session session = null;
 		Transaction tx = null;
@@ -135,6 +165,10 @@ public class PowerSwitchHome {
 		return powerSwitch;
 	}
 	
+	/**
+	 * This function deletes all power switch objects from database
+	 * @return the delete status
+	 */
 	public int deleteAllPowerSwitches() {
 		Session session = null;
 		Transaction tx = null;

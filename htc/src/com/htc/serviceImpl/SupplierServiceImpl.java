@@ -9,7 +9,7 @@ import com.htc.service.DaoAware;
 import com.htc.service.SupplierService;
 
 /**
- * This class is the implementation of interface SupplierService 
+ * This class is the implementation of interface SupplierService and calls respective functions of the next DAO layer. 
  *
  */
 public class SupplierServiceImpl extends DaoAware implements  SupplierService{

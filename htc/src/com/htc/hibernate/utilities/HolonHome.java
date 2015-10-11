@@ -15,6 +15,12 @@ import com.htc.hibernate.pojo.Holon;
  */
 public class HolonHome {
 	static Logger log = Logger.getLogger(HolonHome.class);
+
+	/**
+	 * This function is used to save holon in database
+	 * @param transientInstance the holon
+	 * @return newly created holon instance
+	 */
 	public Integer persist(Holon transientInstance) {
 		Integer holon_id=null;
 		Session session = null;
@@ -33,6 +39,11 @@ public class HolonHome {
 		return holon_id;
 	}
 	
+	/**
+	 * This function is used to update holon instance in database
+	 * @param detachedInstance the holon instance
+	 * @return the updated holon instance
+	 */
 	public Holon merge(Holon detachedInstance) {
 		Session session = null;
 		Transaction tx = null;
@@ -51,6 +62,11 @@ public class HolonHome {
 		}
 	}
 
+	/**
+	 * This function is used to find a holon instance in database using holon ID
+	 * @param holonId the holon ID
+	 * @return the holon instance
+	 */
 	public Holon findById(int id) {
 		Session session = null;
 		Transaction tx = null;
@@ -69,6 +85,11 @@ public class HolonHome {
 		}
 	}
 
+	/**
+	 * This function is used to delete holon instance from database
+	 * @param persistentInstance the holon instance
+	 * @return the delete status
+	 */
 	public boolean delete(Holon persistentInstance) {
 		Session session = null;
 		Transaction tx = null;
@@ -89,6 +110,10 @@ public class HolonHome {
 		return deleteStatus;
 	}
 	
+	/**
+	 * This function is used to get all holon instances from database
+	 * @return array list of holon instance
+	 */
 	@SuppressWarnings("unchecked")
 	public ArrayList<Holon> getAllHolon() {
 		Session session = null;

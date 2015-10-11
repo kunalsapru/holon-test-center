@@ -3,28 +3,34 @@ package com.htc.factory;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
-
 import org.apache.log4j.Logger;
-
 import com.htc.hibernate.pojo.HolonElementType;
 import com.htc.hibernate.pojo.HolonObjectType;
 import com.htc.utilities.CommonUtilities;
 
+/**
+ * This class contains functions that are used to take client input to create holon objects from factory.
+ *
+ */
 public class FactoryDataGeneratorAction extends CommonUtilities {
 
 	private static final long serialVersionUID = 1L;
 	static Logger log = Logger.getLogger(FactoryDataGeneratorAction.class);
 
+	/**
+	 * This method is used to take request parameters from client side and then call the necessary functions to create holon objects 
+	 */
 	public void factoryDataGenerator() {
 		try {
+			//Fetching request parameters
 			Integer totalHolonObjectTypes = getRequest().getParameter("totalHolonObjectTypes")!=null?Integer.parseInt(getRequest().getParameter("totalHolonObjectTypes")):0;
 			String htmlIdHolonObjectTypes = getRequest().getParameter("htmlIdHolonObjectTypes")!=null?getRequest().getParameter("htmlIdHolonObjectTypes"):"";
 			String htmlValuesHolonObjectTypes = getRequest().getParameter("htmlValuesHolonObjectTypes")!=null?getRequest().getParameter("htmlValuesHolonObjectTypes"):"";
 			String holonObjectTypesPriorities = getRequest().getParameter("holonObjectTypesPriorities")!=null?getRequest().getParameter("holonObjectTypesPriorities"):"";
 
-			System.out.println("No of HolonObject Types = "+totalHolonObjectTypes);
-			System.out.println("htmlIdHolonObjectTypes = "+htmlIdHolonObjectTypes);
-			System.out.println("htmlValuesHolonObjectTypes = "+htmlValuesHolonObjectTypes);
+			log.info("No of HolonObject Types = "+totalHolonObjectTypes);
+			log.info("htmlIdHolonObjectTypes = "+htmlIdHolonObjectTypes);
+			log.info("htmlValuesHolonObjectTypes = "+htmlValuesHolonObjectTypes);
 
 			String[] holonObjectTypesIdsList = htmlIdHolonObjectTypes.replaceAll("holonObjectType_", "").split("~~");
 			String[] holonObjectTypesValues = htmlValuesHolonObjectTypes.split("~~");
@@ -37,19 +43,18 @@ public class FactoryDataGeneratorAction extends CommonUtilities {
 				Integer holonObjectTypesPriority = Integer.parseInt(holonObjectTypesPrioritiesList[i]);
 				holonObjectTypeProbabilityMap.put(holonObjectTypesPriority, holonObjectTypeId+":"+objectTypeProbability);
 			}
-			
 			FactoryUtilities factoryUtilities = new FactoryUtilities();
-			factoryUtilities.sendDataToFactory(holonObjectTypeProbabilityMap);
-			
-			
+			factoryUtilities.sendDataToFactory(holonObjectTypeProbabilityMap);//Function call to send the manipulated client data to factory
 			getResponse().setContentType("text/html");
 			getResponse().getWriter().write("Holon Objects created successfully from factory.");
-			
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.info("Exception "+e.getMessage()+" occurred in factoryDataGenerator()");
 		}
 	}	
 
+	/**
+	 * This function is used to get list of all holon object types from database and send the response to client
+	 */
 	public void factoryListHolonObjectType() {
 		try {
 			ArrayList<HolonObjectType> holonObjectTypes = getHolonObjectTypeService().getAllHolonObjectType();
@@ -65,10 +70,12 @@ public class FactoryDataGeneratorAction extends CommonUtilities {
 			getResponse().getWriter().write(holonObjectTypeList.toString());
 		} catch(Exception e) {
 			log.info("Exception "+e.getMessage()+" occurred in factoryListHolonObjectType()");
-			e.printStackTrace();
 		}
 	}
 
+	/**
+	 * This function is used to get all holon elements types from database and send the response to client 
+	 */
 	public void factoryListHolonElementType() {
 		ArrayList<HolonElementType> holonElementTypes = getHolonElementTypeService().getAllHolonElementType();
 		StringBuffer holonElementTypeNameList = new StringBuffer();
@@ -91,7 +98,6 @@ public class FactoryDataGeneratorAction extends CommonUtilities {
 			getResponse().getWriter().write(holonElementTypeNameList.toString());
 		} catch (Exception e) {
 			log.debug("Exception "+e.getMessage()+" occurred in action factoryListHolonElementType()");
-			e.printStackTrace();
 		}
 	}
 
