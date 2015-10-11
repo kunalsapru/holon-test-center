@@ -7,10 +7,10 @@ import com.htc.hibernate.pojo.HolonObject;
 import com.htc.hibernate.pojo.LatLng;
 import com.htc.hibernate.pojo.PowerLine;
 import com.htc.hibernate.pojo.PowerSource;
-import com.htc.service.AbstractService;
+import com.htc.service.DaoAware;
 import com.htc.service.PowerLineService;
 
-public class PowerLineServiceImpl extends AbstractService implements PowerLineService{
+public class PowerLineServiceImpl extends DaoAware implements PowerLineService{
 
 	@Override
 	public Integer persist(PowerLine transientInstance) {

@@ -28,10 +28,10 @@ import com.htc.daoImpl.PowerSwitchDaoImpl;
 import com.htc.daoImpl.SupplierDaoImpl;
 
 /**
- * The Class AbstractService.
+ * This is the parent class of all service implementation classes. All DAO implementations are instantiated here.
  * 
  */
-public class AbstractService {
+public class DaoAware {
 	
 	private HolonDao holonDao = new HolonDaoImpl();
 	private HolonElementDao holonElementDao = new HolonElementDaoImpl();

@@ -3,10 +3,10 @@ package com.htc.serviceImpl;
 import java.util.ArrayList;
 
 import com.htc.hibernate.pojo.LatLng;
-import com.htc.service.AbstractService;
+import com.htc.service.DaoAware;
 import com.htc.service.LatLngService;
 
-public class LatLngServiceImpl extends AbstractService implements LatLngService {
+public class LatLngServiceImpl extends DaoAware implements LatLngService {
 
 	@Override
 	public Integer persist(LatLng transientInstance) {

@@ -3,10 +3,10 @@ package com.htc.serviceImpl;
 import java.util.ArrayList;
 import com.htc.hibernate.pojo.HolonObject;
 import com.htc.hibernate.pojo.PowerSource;
-import com.htc.service.AbstractService;
+import com.htc.service.DaoAware;
 import com.htc.service.PowerSourceService;
 
-public class PowerSourceServiceImpl extends AbstractService implements PowerSourceService {
+public class PowerSourceServiceImpl extends DaoAware implements PowerSourceService {
 
 	@Override
 	public Integer persist(PowerSource transientInstance) {

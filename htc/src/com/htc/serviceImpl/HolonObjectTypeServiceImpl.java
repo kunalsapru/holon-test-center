@@ -3,10 +3,10 @@ package com.htc.serviceImpl;
 import java.util.ArrayList;
 
 import com.htc.hibernate.pojo.HolonObjectType;
-import com.htc.service.AbstractService;
+import com.htc.service.DaoAware;
 import com.htc.service.HolonObjectTypeService;
 
-public class HolonObjectTypeServiceImpl extends AbstractService implements HolonObjectTypeService {
+public class HolonObjectTypeServiceImpl extends DaoAware implements HolonObjectTypeService {
 
 	@Override
 	public Integer persist(HolonObjectType transientInstance) {

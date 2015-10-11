@@ -15,7 +15,8 @@ import com.htc.serviceImpl.PowerSwitchServiceImpl;
 import com.htc.serviceImpl.SupplierServiceImpl;
 
 /**
- * The Class ServiceAware.
+ * This is the parent class of all action classes and also CommonUtilities class. All Service implementations are instantiated here.
+ * All actions use these service objects to call DAO layer functions which further interacts with hibernate session.
  * 
  */
 public abstract class ServiceAware extends ActionSupport {

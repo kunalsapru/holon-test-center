@@ -3,10 +3,10 @@ package com.htc.serviceImpl;
 import java.util.ArrayList;
 
 import com.htc.hibernate.pojo.Disaster;
-import com.htc.service.AbstractService;
+import com.htc.service.DaoAware;
 import com.htc.service.DisasterService;
 
-public class DisasterServiceImpl extends AbstractService implements DisasterService{
+public class DisasterServiceImpl extends DaoAware implements DisasterService{
 
 	@Override
 	public Integer persist(Disaster transientInstance) {
