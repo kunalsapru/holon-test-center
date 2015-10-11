@@ -7,6 +7,6 @@
 <title>HTC Error Page</title>
 </head>
 <body>
-<h1 style="color: red">Hurray!! This is an error page! Something is wrong with HTC application :(</h1>
+<h1 style="color: red">Oops!! This is an error page! Something is wrong with HTC application :(</h1>
 </body>
 </html>

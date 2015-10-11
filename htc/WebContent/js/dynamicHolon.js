@@ -2,9 +2,18 @@ var intervalFlag = 0;
 var myDynamicTimer;
 var timeInMilliSeconds = 10000;
 
+/**
+ * This function is called when we don't want to start dynamic holon module 
+ */
 function doNotStartDynamicHolon() {
 	swal("Cannot Start Dynamic Holon!", "Holon object is not part of any holon. Connect this holon object to a main line and then try again.", "info");
 }
+
+/**
+ * This function is called when we want to start dynamic holon module
+ * @param currentEnergyRequired the current energy of the concerned holon object
+ * @param holonObjectId the holon object ID
+ */
 function startDynamicHolon(currentEnergyRequired, holonObjectId) {
 	$("#dynamicHolonLegend").html("This Holon Object will send a request after every "+(timeInMilliSeconds/1000)+" seconds");
 	if(currentEnergyRequired > 0 && intervalFlag == 0) {
@@ -37,7 +46,7 @@ function checkTimerDynamicHolon(currentEnergyRequired,holonObjectId) {
 }
 
 /**
- * callback method for ajax request in checkTimerDynamicHolon(currentEnergyRequired,holonObjectId) method
+ * Callback method for ajax request in checkTimerDynamicHolon(currentEnergyRequired,holonObjectId) method
  * @param data data from server side
  * @param options data from client side
  */
@@ -182,10 +191,17 @@ function dissolveHolonCallBack(data, options) {
 	}
 }
 
+/**
+ * This method is called when we do not want to start the dissolve holon module 
+ */
 function dontDissolveHolon() {
 	swal("Cannot dissolve!", "This option works only when flexibility of Holon is zero and current energy requirement is greater than zero", "info");
 }
 
+/**
+ * This method is called when we want to abort subsequent requests in dynamic holon module. This function also closes the window in which messages were appearing.
+ * @param divToClose the window which needs to be closed
+ */
 function abortDynamicHolonRequests(divToClose) {
 	intervalFlag = 0;//Re-initializing interval timer for new requests.
 	$("#dynamicHolonDivTable").html("<tr style='display: none'><td colspan='2'></td></tr>");
