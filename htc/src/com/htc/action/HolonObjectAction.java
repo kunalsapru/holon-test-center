@@ -399,7 +399,8 @@ public class HolonObjectAction extends CommonUtilities {
 						}
 						if(!statusDuplicateMessage) {
 							Integer flexibility = getHolonObjectEnergyDetails(holonObjectProducer).get("flexibility");
-							if(flexibility > 0) {
+							//Messages will be send to producers only if flexibility is greater than zero and the producer can communicate.
+							if(flexibility > 0 && holonObjectProducer.getCanCommunicate()) {
 								holonObjectProducer.setFlexibility(flexibility);
 								getHolonObjectService().merge(holonObjectProducer);
 								Supplier supplier = new Supplier();
@@ -651,6 +652,8 @@ public class HolonObjectAction extends CommonUtilities {
 					for(HolonObject holonObjectProducer : listOfConnectedHolonObjects) {
 						Integer flexibility = getHolonObjectEnergyDetails(holonObjectProducer).get("flexibility");
 						Integer currentEnergyRequired = getHolonObjectEnergyDetails(holonObjectConsumer).get("currentEnergyRequired");
+						/*Energy is distributed only if flexibility of producer is greater than zero and it can communicate.
+						 * Also the current energy required for consumer must be greater than zero*/
 						if(flexibility > 0 && holonObjectProducer.getCanCommunicate() && currentEnergyRequired > 0) {
 							Supplier supplier = new Supplier();
 							supplier.setCommunicationMode(ConstantValues.COMMUNICATION_MODE_COORDINATOR);
@@ -672,7 +675,6 @@ public class HolonObjectAction extends CommonUtilities {
 						}
 					}
 				}
-
 			}
 
 			if(responseStr.length() > 0) {
@@ -698,7 +700,7 @@ public class HolonObjectAction extends CommonUtilities {
 			boolean response= false;
 			if(firstHolonObject!=secondHolonObject){
 				response = checkConnectivityBetweenHolonObjects(holonObjectFirst,holonObjectSecond);//Function call to check connectivity - defined in CommonUtilities.java
-			}else{
+			} else {
 				response=true;
 			}
 			String responseStr="Failure";
