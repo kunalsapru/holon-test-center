@@ -6,6 +6,12 @@
  * This method is used to reset the database. An ajax request to resetDatabase is made.
  * 
  */
+
+$(document).ready(function(){
+	$("#resetDatabase").click(function(event) {
+		resetDatabase();
+	});
+})
 function resetDatabase() {
 	swal({
 		title: "Proceed with resetting entire database?",
