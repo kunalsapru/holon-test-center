@@ -71,11 +71,7 @@ $(document).ready(function() {
 	}
 	
 	})
-	
-	$("#resetDatabase").click(function(event) {
-		resetDatabase();
-	});
-	
+		
 	$("#showHolonObjects").click(showHolonObjects);
 	
 	$("#saveHolonObject").click(function(event){
