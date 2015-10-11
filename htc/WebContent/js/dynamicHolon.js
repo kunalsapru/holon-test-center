@@ -23,6 +23,11 @@ function startDynamicHolon(currentEnergyRequired, holonObjectId) {
 			}
 }
 
+/**
+ * This method is used by start dynamic holon module and it checks for the current energy requirement of the holon object. 
+ * @param currentEnergyRequired current required energy
+ * @param holonObjectId id of holon object 
+ */
 function checkTimerDynamicHolon(currentEnergyRequired,holonObjectId) {
 	var dataAttributes= {
 			holonObjectId : holonObjectId,
@@ -31,6 +36,11 @@ function checkTimerDynamicHolon(currentEnergyRequired,holonObjectId) {
 	ajaxRequest("checkDynamicCurrentEnergyRequired", dataAttributes, checkDynamicCurrentEnergyRequiredCallBack, dataAttributes);
 }
 
+/**
+ * callback method for ajax request in checkTimerDynamicHolon(currentEnergyRequired,holonObjectId) method
+ * @param data data from server side
+ * @param options data from client side
+ */
 function checkDynamicCurrentEnergyRequiredCallBack(data, options) {
 	intervalFlag++;
 	var holonObjectId = options["holonObjectId"];
@@ -78,7 +88,11 @@ function checkDynamicCurrentEnergyRequiredCallBack(data, options) {
 		intervalFlag = 0;//Re-initializing interval timer for new requests.
 	}
 }
-
+/**
+ * callback method for ajax request sendMessageToAllProducers in checkDynamicCurrentEnergyRequiredCallBack(data, options) method
+ * @param data data from server side
+ * @param options data from client side
+ */
 function dynamicHolonSendMessageToAllProducersCallBack(data, options) {
 	if(data == "SUCCESS") {
 		$("#dynamicHolonDivTable").append("<tr><td>Request#"+intervalFlag+"-</td><td><b>Message sent:</b> Message has been sent to all connected producers.</td></tr>");
@@ -96,7 +110,11 @@ function dynamicHolonSendMessageToAllProducersCallBack(data, options) {
 	}
 }
 
-
+/**
+ * callback method for ajax request startDynamicHolonMerger in checkDynamicCurrentEnergyRequiredCallBack(data, options) method
+ * @param data data from server side
+ * @param options data from client side
+ */
 function startDynamicHolonMergerCallBack(data, options) {
 	if(data == "false") {
 		swal("Cannot find a new holon!", "Could not find another holon with sufficient energy requirements.", "info");
@@ -117,6 +135,13 @@ function startDynamicHolonMergerCallBack(data, options) {
 	intervalFlag = 0;//Re-initializing interval timer for new requests.
 }
 
+/**
+ * This method is used to dissolve an entire holon into a suitable holon which fulfills the energy requirements of the holon that wants to dissolve.
+ *  Only Holon Coordinator has access to this module.
+ *  Holon will dissolve only if the flexibility of current holon is zero and current energy requirement is greater than zero.
+ * @param currentEnergyRequirementHolon Current energy requirement of the holon 
+ * @param holonCoordinatorId holon co ordinator id
+ */
 function dissolveHolon(currentEnergyRequirementHolon, holonCoordinatorId) {
 	if(currentEnergyRequirementHolon > 0) {
 		var dataAttributes= {
@@ -128,6 +153,11 @@ function dissolveHolon(currentEnergyRequirementHolon, holonCoordinatorId) {
 	}
 }
 
+/**
+ * callback method for ajax request in dissolveHolon(currentEnergyRequirementHolon, holonCoordinatorId) method
+ * @param data data from server side
+ * @param options data from client side
+ */
 function dissolveHolonCallBack(data, options) {
 	if(data == "false") {
 		swal("Server response:Cannot dissolve!", "Either flexibility is greater than zero or current energy requirement is zero.", "info");
