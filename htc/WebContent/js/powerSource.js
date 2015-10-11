@@ -145,7 +145,7 @@ function getPowerSrcDetailCallBack(data, option) {
 	 $("#psMaxProdCap").val(maxProd);
 	 $("#psCurrentPord").val(currProd);
 	 $("#powerObjectActionState").val("Edit");
-	 $("#hoObjTitle").text("Edit Power Source");
+	 $("#powerObjTitle").text("Edit Power Source");
 	 $("#hiddenPowerObjectId").val(powerSrcId);
 	 $("#psStatus").empty();
 	 var selOptions= "<option value=1 selected>Yes</option><option value=0>No</option>"
