@@ -1,4 +1,6 @@
-
+/*
+ * This files contains power switch related functions
+ */
 $(document).ready(function() {	
 	
 	$("#switchOnPowerLine").click(function(event){		
@@ -17,6 +19,11 @@ $(document).ready(function() {
 
 
 
+/**
+ * create a power switch on the line
+ * @param latLng location of the switch
+ * @param powerLineId id of power line on which switch is being added
+ */
 function createPowerSwitch(latLng,powerLineId){
 	var circleSwitch = new google.maps.Circle({
 		 strokeColor: '#0B6121',
@@ -39,6 +46,11 @@ function createPowerSwitch(latLng,powerLineId){
 	ajaxRequest("createPowerSwitch", dataAttributes, createPowerSwitchCallBack, options);
 }
 
+/**
+ * callback method for ajax request from createPowerSwitch(latLng,powerLineId)
+ * @param data data from server side 
+ * @param options data from client side 
+ */
 function createPowerSwitchCallBack(data,options)
 {
 	var respData=data.split("*");
@@ -54,11 +66,19 @@ function createPowerSwitchCallBack(data,options)
 	
 } 
 
+/**
+ * To populate power sources on the map
+ */
 function showSavedPowerSwitches(){
 	
 	ajaxRequest("getListPowerSwitch", {}, getListPowerSwitchCallBack, {});
 }
 
+/**
+ * callback method for ajax request in showSavedPowerSwitches() method
+ * @param data data from server side
+ * @param options data from client side
+ */
 function getListPowerSwitchCallBack(data,options){
 	var powerSwitchList= data.split("*");
 	for(var i=0;i<powerSwitchList.length-1;i++)
@@ -90,6 +110,11 @@ function getListPowerSwitchCallBack(data,options){
 	
 }
 
+/**
+ * Method to add info window and events to power switches 
+ * @param circleSwitch the switch object
+ * @param powerSwitchId the id of the power switch object 
+ */
 function addSwitchInfo(circleSwitch, powerSwitchId)
 {
 	
@@ -107,6 +132,11 @@ function addSwitchInfo(circleSwitch, powerSwitchId)
    });
 }
 
+/**
+ * callback method for ajax request in addSwitchInfo(circleSwitch, powerSwitchId) method
+ * @param data data from client side
+ * @param options data from server side
+ */
 function getSwitchInfoCallBack(data, options)
 {
 	closeOtherInfoWindows();
@@ -148,6 +178,12 @@ function getSwitchInfoCallBack(data, options)
 }
 
 
+/**
+ * method to on or off power switch 
+ * @param circleSwitch power switch object
+ * @param powerSwitchId id of power switch
+ * @param infowindowHolonObject info window object of the power switch
+ */
 function SwitchOnOff(circleSwitch,powerSwitchId,infowindowHolonObject)
 {	 
 
@@ -166,6 +202,11 @@ function SwitchOnOff(circleSwitch,powerSwitchId,infowindowHolonObject)
 	
 }
 
+/**
+ * callback method for ajax request in SwitchOnOff(circleSwitch,powerSwitchId,infowindowHolonObject)
+ * @param data data from client side
+ * @param options data from server side 
+ */
 function powerSwitchOnOffCallBack(data,options){
 	var circleSwitch = options["circleSwitch"];
 	var infowindowHolonObject = options["infowindowHolonObject"];
