@@ -81,8 +81,9 @@
 				</ul>
 			</li>
 			<li><a href="#" id="resetDatabase"><i class="fa fa-undo"></i>Reset Database</a></li>
+			<li><a href="Group1_HTC_User Manual.pdf" id="htcDocumentation"><i class="fa fa-undo"></i>Documentation</a></li>
 		</ul>
-		<a href="#" id="showmenu"> <i class="fa fa-align-justify"></i> </a>
+		<a href="" id="showmenu"> <i class="fa fa-align-justify"></i> </a>
 	</nav>
 	<!-- /menu vertical -->
 
